@@ -10,8 +10,8 @@ To read a CSV file into a class, there are 7 basic steps
 7. Call GetRecord() for each row in the CSV file. 
 
 ## Examples
-- [Simple Example 1](.\Examples\Simple1.md) - In this simple example, the CSV file has a header row and the column names match the class properties perfectly.
-- [Simple Example 2](.\Examples\Simple2.md) - In this simple example, the CSV file has a header row and the column names DO NOT match the class properties perfectly.
+- [Simple Example 1](./Examples/Simple1.md) - In this simple example, the CSV file has a header row and the column names match the class properties perfectly.
+- [Simple Example 2](./Examples/Simple2.md) - In this simple example, the CSV file has a header row and the column names DO NOT match the class properties perfectly.
 
 
 ## Advanced Topics
