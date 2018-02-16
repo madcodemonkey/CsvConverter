@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/madcodemonkey/CsvConverter</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Initial release to NuGet.</releaseNotes>
+    <copyright>Copyright 2018</copyright>
+    <tags>CSV OpenXML</tags>
+  </metadata>
+</package>

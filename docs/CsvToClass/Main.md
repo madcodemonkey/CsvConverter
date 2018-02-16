@@ -5,7 +5,7 @@ To read a CSV file into a class, there are 7 basic steps
 2. Create a class
 3. Optional: Attribute the class with the [CsvConverter] attribute if the column name is different from the class property name.
 4. Instantiate the CsvToClassService class
-5. Optional: Set configration settings
+5. Optional: Set configration settings on the CsvToClassService instance (see Configuration property)
 6. In a while loop as long a CanRead() is true, you can read records
 7. Call GetRecord() for each row in the CSV file. 
 
