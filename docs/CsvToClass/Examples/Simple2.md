@@ -14,16 +14,16 @@ and this class
 ```c#
 public class Person
 {
-    [CsvConverter(ColumnName ="FName")]
+	[CsvConverter(ColumnName ="FName")]
 	public string FirstName { get; set; }
-	
-    [CsvConverter(ColumnName ="LName")]
-    public string LastName { get; set; }
-	
-   [CsvConverter(ColumnName ="ADAT34_R")]
-    public int Age { get; set; }
 
-    [CsvConverter(ColumnName ="PBF")]
+	[CsvConverter(ColumnName ="LName")]
+	public string LastName { get; set; }
+
+	[CsvConverter(ColumnName ="ADAT34_R")]
+	public int Age { get; set; }
+
+	[CsvConverter(ColumnName ="PBF")]
 	public double? PercentageBodyFat { get; set; }
 }
 ```

@@ -15,9 +15,9 @@ To read a CSV file into a class, there are 7 basic steps
 
 
 ## Advanced Topics
-- [Converters](.\Converters\Main.md)
-    - [Built in converters](.\Converters\Built-in.md)
-    - [Creating your own converters](.\Converters\Creating.md)
-- [Pre-processors](.\Preprocesors\Preprocesors.md)
-    - [Built in pre-processors](.\Preprocesors\Built-in.md)
-    - [Creating your own pre-processors](.\Preprocesors\Creating.md)
+- [Converters](./Converters/Main.md)
+    - [Built in converters](./Converters/Built-in.md)
+    - [Creating your own converters](./Converters/Creating.md)
+- [Pre-processors](./Preprocesors/Preprocesors.md)
+    - [Built in pre-processors](./Preprocesors/Built-in.md)
+    - [Creating your own pre-processors](./Preprocesors/Creating.md)
