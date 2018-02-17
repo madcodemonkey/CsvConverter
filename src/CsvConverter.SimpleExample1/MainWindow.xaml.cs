@@ -1,9 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Threading;
+using CsvConverter.ClassToCsv;
+using CsvConverter.CsvToClass;
 
 namespace SimpleExample1
 {
@@ -14,12 +17,39 @@ namespace SimpleExample1
             InitializeComponent();
         }
 
+      
 
         private void CreateCsvButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // TODO: Put your work here.
+                var dialog = SaveFile();
+                if (dialog.ShowDialog() != true)
+                    return;
+
+                Random rand = new Random(DateTime.Now.Second);
+                int numberToCreate = rand.Next(10, 100);
+
+                using (var fs = File.Create(dialog.FileName))
+                using (var sw = new StreamWriter(fs, Encoding.Default))
+                {
+                    var service = new ClassToCsvService<Person>(sw);
+                    for (int i = 0; i < numberToCreate; i++)
+                    {
+                        var newPerson = new Person()
+                        {
+                            FirstName = $"First{rand.Next(1,5000)}",
+                            LastName = $"Last{rand.Next(1, 5000)}",
+                            Age = rand.Next(5, 80),
+                            PercentageBodyFat = rand.Next(1, 20) / 1.2m,
+                            AvgHeartRate = rand.Next(60, 80) / 1.1
+                        };
+
+                        service.WriterRecord(newPerson);
+                    }
+                }
+
+                LogMessage($"Created {numberToCreate} people in {dialog.FileName}.");
             }
             catch (Exception ex)
             {
@@ -31,7 +61,25 @@ namespace SimpleExample1
         {
             try
             {
-                // TODO: Put your work here.
+                var dialog = new Microsoft.Win32.OpenFileDialog();
+                dialog.InitialDirectory = string.IsNullOrEmpty(CSVFile.Text) ?
+                "c:\\" : Path.GetDirectoryName(CSVFile.Text);
+                dialog.FileName = CSVFile.Text;
+                if (dialog.ShowDialog() != true)
+                    return;
+
+                using (var fs = File.OpenRead(dialog.FileName))
+                using (var sr = new StreamReader(fs, Encoding.Default))
+                {
+                    var csv = new CsvToClassService<Person>(sr);
+                    csv.Configuration.IgnoreBlankRows = true;
+
+                    while (csv.CanRead())
+                    {
+                        Person record = csv.GetRecord();
+                        LogMessage(record.ToString());
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -41,15 +89,22 @@ namespace SimpleExample1
 
         private void FindCsvFile_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog();
+            var dialog = SaveFile();
             if (dialog.ShowDialog() != true)
                 return;
 
             LogMessage(dialog.FileName);
         }
 
+        private Microsoft.Win32.SaveFileDialog SaveFile()
+        {
+            var dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.InitialDirectory = string.IsNullOrEmpty(CSVFile.Text) ?
+                "c:\\" : Path.GetDirectoryName(CSVFile.Text);
+            dialog.FileName = CSVFile.Text;
+            return dialog;
+        }
 
-     
 
         #region Logging
         private delegate void NoArgsDelegate();

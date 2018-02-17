@@ -11,13 +11,13 @@ To read a CSV file into a class, there are 7 basic steps
 
 ## Examples
 - [Simple Example 1](./Examples/Simple1.md) - In this simple example, the CSV file has a header row and the column names match the class properties perfectly.
-- [Simple Example 2](./Examples/Simple2.md) - In this simple example, the CSV file has a header row and the column names DO NOT match the class properties perfectly.
+- TODO: Needs work: [Simple Example 2](./Examples/Simple2.md) - In this simple example, the CSV file has a header row and the column names DO NOT match the class properties perfectly.
 
 
 ## Advanced Topics
-- [Converters](./Converters/Main.md)
-    - [Built in converters](./Converters/Built-in.md)
-    - [Creating your own converters](./Converters/Creating.md)
-- [Pre-processors](./Preprocesors/Preprocesors.md)
-    - [Built in pre-processors](./Preprocesors/Built-in.md)
-    - [Creating your own pre-processors](./Preprocesors/Creating.md)
+-  TODO: [Converters](./Converters/Converters-Main.md)
+    -   TODO: [Built in converters](./Converters/Built-in.md)
+    -  TODO: [Creating your own converters](./Converters/Creating.md)
+-  TODO: [Pre-processors](./Preprocesors/Preprocesors.md)
+    -  TODO: [Built in pre-processors](./Preprocesors/Built-in.md)
+    -  TODO: [Creating your own pre-processors](./Preprocesors/Creating.md)
