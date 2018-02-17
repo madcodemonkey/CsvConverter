@@ -3,7 +3,7 @@
 In this simple example, the CSV file has a header row and the column names DO NOT match the class properties perfectly.
 
 ## Simple Example
-Give this CSV file named c:\temp\people.csv
+Given this CSV file named c:\temp\person.csv
 ```
 FName,LName,ADAT34_R,PBF
 John,Smith,45,7.54
@@ -30,10 +30,10 @@ public class Person
 
 You can read it in by doing the following:
 ```c#
-using CsvConverter;
+using CsvConverter.CsvToClass;
 using System.IO;
 
-using (var fs = File.OpenRead("c:\\temp\\people.csv"))
+using (var fs = File.OpenRead("c:\\temp\\person.csv"))
 using (var sr = new StreamReader(fs, Encoding.Default))
 {                
 	var csv = new CsvToClassService<Person>(sr);

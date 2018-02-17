@@ -3,7 +3,7 @@
 In this simple example, the CSV file has a header row and the column names match the class properties perfectly.
 
 ## Simple Example
-Give this CSV file named c:\temp\person.csv
+Given this CSV file named c:\temp\person.csv
 ```
 Age,AvgHeartRate,FirstName,LastName,PercentageBodyFat
 16,56.3636363636364,First645,Last42,14.166666666666666666666666667
