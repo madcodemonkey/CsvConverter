@@ -1,4 +1,4 @@
-# Reading CSV files:  Creating your own Custom type converter
+# Reading CSV files:  Creating your own custom type converter
 
 Custom type converters can be created to handle different types **or**  to make a tweeks to strings before passing them to the default converter.  If your custom converter needs some special inputs (e.g., two integers) you may want to start out by creating a new attribute and then creating a converter to pass to it.
 
@@ -53,7 +53,7 @@ public class PercentCsvToClassConverter : ICsvToClassTypeConverter
 ```
 
 Notes:
-- In the CanOutputThisType method, we tell the system what this conveter can handle so that people don't use it on the incorrect type of attribute.
+- In the CanOutputThisType method, we tell the system what this conveter can handle so that people don't use it on the wrong property.
 - In the Initialize method, nothing is going on since it doesn't need anything from the attribute.
 - In the Convert method, it strips out the % sign and uses the default converter to convert a string into a decimal and then divide by 100.
 
@@ -88,8 +88,6 @@ namespace AdvExample1
     }
 }
 ```
-
-This new type converter will then be passed to your custom converter.
 
 ### Custom Converter
 All custom converters must implement the ICsvToClassTypeConverter interface, which is defined as follows:
@@ -149,6 +147,6 @@ namespace AdvExample1
 ```
 
 Notes:
-- In the CanOutputThisType method, we tell the system what this conveter can handle so that people don't use it on the incorrect type of attribute.
+- In the CanOutputThisType method, we tell the system what this conveter can handle so that people don't use it on the wrong property.
 - In the Initialize method, we check that the attribute being passed in is our custom one.
-- In the Convert method, we let the default converter do all the work.  If it gives us a null, we give it the default otherwise we check the range and adjust it if necessary.
+- In the Convert method, we let the default converter do all the work.  If it gives us a null, we give it the default; otherwise, we check the range and adjust it if necessary.

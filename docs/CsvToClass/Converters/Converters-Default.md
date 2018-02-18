@@ -19,12 +19,12 @@ public interface IStringToObjectDefaultConverters
 ```
 
 Notes
-- You can Add and remove converters using AddConverter and RemoveConverter.
+- You can add and remove converters using AddConverter and RemoveConverter.
 - These converters are type specific and will be called for a given type when a custom converter is NOT specified.
 - You could add a type converter for non-privitive types (Class properties, arrays, etc.). For example, if you want it to handle typeof(int[]), you could add a new converter to handle it. 
 
 ## Default type converters
-If you do NOT specify a type converter for a property, one of these default converters will be created for each privitive type found:
+If you do NOT specify a type converter for a property, one of these default converters will used:
 - StringToObjectBooleanTypeConverter
 - StringToObjectByteTypeConverter
 - StringToObjectDateTimeTypeConverter
@@ -38,5 +38,5 @@ If you do NOT specify a type converter for a property, one of these default conv
 
 Notes
 - If the default converter can't figure out how to convert a property, you will get an excpetion.  You have a couple of choose at that point:
-    - Mark the property as ignored when reading: [CsvConverter(IgnoreWhenReading = true)] 
-    - Create a custom converter an add an attribute above the property: [CsvToClassTypeConverter(typeof(DecimalToIntCsvToClassConverter))]
+    - Mark the property as "ignored when reading": [CsvConverter(IgnoreWhenReading = true)] 
+    - Create a custom converter and add an attribute above the property: [CsvToClassTypeConverter(typeof(DecimalToIntCsvToClassConverter))]
