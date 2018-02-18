@@ -7,7 +7,7 @@ namespace CsvConverter.CsvToClass
     {
         protected void ThrowCannotConvertError(Type theType, string stringValue, string columnName, int columnIndex, int rowNumber)
         {
-            throw new ArgumentException($"The {nameof(StringToObjectConverter)} converter cannot parse the string " +
+            throw new ArgumentException($"The {nameof(StringToObjectDefaultConverters)} converter cannot parse the string " +
               $"'{stringValue}' as a {theType.Name} on row number {rowNumber} in " +
               $"column {columnName} at column index {columnIndex}.");
         }

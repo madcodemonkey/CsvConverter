@@ -9,7 +9,7 @@ namespace CsvConverter.CsvToClass
             return outputType == typeof(string);
         }
 
-        public object Convert(Type targetType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectConverter defaultConverter)
+        public object Convert(Type targetType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectDefaultConverters defaultConverter)
         {
             return stringValue;
         }

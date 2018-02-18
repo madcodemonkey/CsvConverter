@@ -30,7 +30,7 @@ namespace CsvConverter.Tests.TypeConverters
             var classUnderTest = new DecimalToIntCsvToClassConverter();
          
             // Act
-            var actual = classUnderTest.Convert(typeof(decimal), inputData, ColumName, ColumnIndex, RowNumber, new StringToObjectConverter());
+            var actual = classUnderTest.Convert(typeof(decimal), inputData, ColumName, ColumnIndex, RowNumber, new StringToObjectDefaultConverters());
 
             // Assert
             Assert.AreEqual(expected, actual);
@@ -47,7 +47,7 @@ namespace CsvConverter.Tests.TypeConverters
             var classUnderTest = new DecimalToIntCsvToClassConverter();
 
             // Act
-            classUnderTest.Convert(typeof(decimal), inputData, ColumName, ColumnIndex, RowNumber, new StringToObjectConverter());
+            classUnderTest.Convert(typeof(decimal), inputData, ColumName, ColumnIndex, RowNumber, new StringToObjectDefaultConverters());
         }
 
 
@@ -70,7 +70,7 @@ namespace CsvConverter.Tests.TypeConverters
             var classUnderTest = new DecimalToIntCsvToClassConverter();
 
             // Act
-            var actual = classUnderTest.Convert(typeof(decimal?), inputData, ColumName, ColumnIndex, RowNumber, new StringToObjectConverter());
+            var actual = classUnderTest.Convert(typeof(decimal?), inputData, ColumName, ColumnIndex, RowNumber, new StringToObjectDefaultConverters());
 
             // Assert
             Assert.AreEqual(expected, actual);
@@ -87,7 +87,7 @@ namespace CsvConverter.Tests.TypeConverters
             var classUnderTest = new DecimalToIntCsvToClassConverter();
 
             // Act
-            classUnderTest.Convert(typeof(decimal?), actual, ColumName, ColumnIndex, RowNumber, new StringToObjectConverter());
+            classUnderTest.Convert(typeof(decimal?), actual, ColumName, ColumnIndex, RowNumber, new StringToObjectDefaultConverters());
         }
     }    
 }

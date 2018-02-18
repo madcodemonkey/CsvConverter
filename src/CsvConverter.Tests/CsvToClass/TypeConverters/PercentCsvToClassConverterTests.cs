@@ -19,7 +19,7 @@ namespace CsvConverter.Tests
             var classUnderTest = new PercentCsvToClassConverter();
             
             // Act
-            classUnderTest.Convert(typeof(decimal), "3d5%", ColumName, ColumnIndex, RowNumber, new StringToObjectConverter());
+            classUnderTest.Convert(typeof(decimal), "3d5%", ColumName, ColumnIndex, RowNumber, new StringToObjectDefaultConverters());
 
             // Assert
             throw new Exception("Should have encountered exception above because the string is invalid!");
@@ -36,7 +36,7 @@ namespace CsvConverter.Tests
             decimal expectedResult = decimal.Parse(expected);
 
             // Act
-            var actual = classUnderTest.Convert(typeof(decimal), inputData, ColumName, ColumnIndex, RowNumber, new StringToObjectConverter());
+            var actual = classUnderTest.Convert(typeof(decimal), inputData, ColumName, ColumnIndex, RowNumber, new StringToObjectDefaultConverters());
 
             // Assert
             Assert.AreEqual(expectedResult, actual);

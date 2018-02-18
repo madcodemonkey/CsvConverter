@@ -6,9 +6,9 @@ namespace CsvConverter.ClassToCsv
 {
     public delegate string ObjectToStringDelegate(object rawData, string stringFormat, bool nullable);
 
-    public class ObjectToStringConverter : IObjectToStringConverter
+    public class ObjectToStringDefaultConverters : IObjectToStringDefaultConverters
     {
-        public ObjectToStringConverter()
+        public ObjectToStringDefaultConverters()
         {
             RegisterBuiltInConverters();
         }

@@ -29,7 +29,7 @@ namespace CsvConverter.CsvToClass
 
         /// <summary>The string to object converter.  Used for converting strings into property values.  It will be injected 
         /// into custom type converters and used when no type converter is specified.</summary>
-        public IStringToObjectConverter Converter { get; set; } = new StringToObjectConverter();
+        public IStringToObjectDefaultConverters DefaultConverters { get; set; } = new StringToObjectDefaultConverters();
 
         public void Init()
         {
@@ -86,10 +86,10 @@ namespace CsvConverter.CsvToClass
                     // Default OR custom converter?
                     object newPropertyValue = mapping.CsvFieldTypeConverter == null ?
                         // DEFAULT
-                        Converter.Convert(mapping.PropInformation.PropertyType, fieldValue, mapping.ColumnName, columnIndex, RowNumber) :
+                        DefaultConverters.Convert(mapping.PropInformation.PropertyType, fieldValue, mapping.ColumnName, columnIndex, RowNumber) :
                         // CUSTOM
                         mapping.CsvFieldTypeConverter.Convert(mapping.PropInformation.PropertyType, fieldValue,
-                            mapping.ColumnName, columnIndex, RowNumber, Converter);
+                            mapping.ColumnName, columnIndex, RowNumber, DefaultConverters);
 
                     mapping.PropInformation.SetValue(newItem, newPropertyValue);
                 }

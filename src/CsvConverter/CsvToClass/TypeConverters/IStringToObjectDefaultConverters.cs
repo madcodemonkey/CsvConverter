@@ -3,7 +3,7 @@ using CsvConverter.TypeConverters;
 
 namespace CsvConverter.CsvToClass
 {
-    public interface IStringToObjectConverter
+    public interface IStringToObjectDefaultConverters
     {
         /// <summary>Adds a converter for a given type.</summary>
         /// <param name="outputType">The output Type of the converter</param>

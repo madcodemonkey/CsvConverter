@@ -15,11 +15,11 @@ namespace CsvConverter.ClassToCsv
         /// <param name="stringFormat">Any string formatting information that was in the main attribute</param>
         /// <param name="columnIndex">Index of the column</param>
         /// <param name="rowNumber">Row number of the column</param>
-        /// <param name="defaultConverter">The default property to string converter is injected in case you are only making minor tweaks to 
+        /// <param name="defaultConverters">The default property to string converter is injected in case you are only making minor tweaks to 
         /// the class property but still want the default conversion aferwards.</param>
         /// <returns>A string to write out to the CSV column</returns>
         string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, int rowNumber,
-            IObjectToStringConverter defaultConverter);
+            IObjectToStringDefaultConverters defaultConverters);
 
         /// <summary>Used to pass the attribute to the converter in case it needs any optional inputs.</summary>
         void Initialize(ClassToCsvTypeConverterAttribute attribute);

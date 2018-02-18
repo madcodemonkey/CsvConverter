@@ -11,7 +11,7 @@ namespace CsvConverter.ClassToCsv
         }
 
         public string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, 
-            int rowNumber, IObjectToStringConverter defaultConverter)
+            int rowNumber, IObjectToStringDefaultConverters defaultConverters)
         {
             if (value == null)
                 return null;

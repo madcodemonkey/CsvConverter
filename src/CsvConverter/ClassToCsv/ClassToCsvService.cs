@@ -32,7 +32,7 @@ namespace CsvConverter.ClassToCsv
 
         /// <summary>Converts the properties on a class to strings that can be written to a CSV field.  It will be injected 
         /// into custom type converters and used when no type converter is specified.</summary>
-        public IObjectToStringConverter Converter { get; set; } = new ObjectToStringConverter();
+        public IObjectToStringDefaultConverters DefaultConverters { get; set; } = new ObjectToStringDefaultConverters();
 
         public int RowNumber { get { return _rowWriter != null ? _rowWriter.RowNumber : 0; } }
 
@@ -113,7 +113,7 @@ namespace CsvConverter.ClassToCsv
                     {
                         if (string.IsNullOrWhiteSpace(columnMap.ClassPropertyDataFormat))
                             value = someObject.ToString();
-                        else value = Converter.Convert(columnMap.PropInformation.PropertyType,
+                        else value = DefaultConverters.Convert(columnMap.PropInformation.PropertyType,
                             columnMap.PropInformation.GetValue(record), columnMap.ClassPropertyDataFormat);
                     }
                     else value = null;
@@ -122,7 +122,7 @@ namespace CsvConverter.ClassToCsv
                 {
                     value = columnMap.ClassPropertyTypeConverter.Convert(columnMap.PropInformation.PropertyType,
                             columnMap.PropInformation.GetValue(record), columnMap.ClassPropertyDataFormat,
-                        columnMap.ColumnName, columnMap.ColumnIndex, currentRowNumber, Converter);
+                        columnMap.ColumnName, columnMap.ColumnIndex, currentRowNumber, DefaultConverters);
                 }
 
                 foreach(var postProcessor in columnMap.ClassPropertyPostprocessors)

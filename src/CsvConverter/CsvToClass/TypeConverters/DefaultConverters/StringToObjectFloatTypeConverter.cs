@@ -11,7 +11,7 @@ namespace CsvConverter.CsvToClass
             return outputType == typeof(float) || outputType == typeof(float?); ;
         }
 
-        public object Convert(Type targetType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectConverter defaultConverter)
+        public object Convert(Type targetType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectDefaultConverters defaultConverter)
         {
             if (string.IsNullOrWhiteSpace(stringValue))
             {

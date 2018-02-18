@@ -73,8 +73,8 @@
     <Compile Include="Common\RowTools\RowWriterTests.cs" />
     <Compile Include="CsvToClass\CsvToClassService_PreprocessorTests.cs" />
     <Compile Include="CsvToClass\CsvToClassService_AttributeTests.cs" />
-    <Compile Include="ClassToCsv\TypeConverters\ObjectToStringConverterTest.cs" />
-    <Compile Include="CsvToClass\TypeConverters\StringToObjectConverterTests.cs" />
+    <Compile Include="ClassToCsv\TypeConverters\ObjectToStringDefaultConvertersTest.cs" />
+    <Compile Include="CsvToClass\TypeConverters\StringToObjectDefaultConvertersTests.cs" />
     <Compile Include="Shared\Reflection\ReflectionAttributeExtensionsTest.cs" />
     <Compile Include="Shared\Reflection\ReflectionHelperTest.cs" />
     <Compile Include="Shared\Reflection\ReflectionCreateExtensionsTests.cs" />

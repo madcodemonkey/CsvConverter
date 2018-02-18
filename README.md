@@ -1,5 +1,9 @@
 # CsvConverter
 
+** BETA WARNING...This project is still undergoing changes **
+I should be done with most basic changes by the end of the week (February 23rd).
+
+
 A simple .NET library for writing and reading CSV files using a List of T as the input or received output of the operation.
 
 Follow these links to learn more about a specific topic:

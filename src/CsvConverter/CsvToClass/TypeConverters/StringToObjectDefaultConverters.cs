@@ -8,9 +8,9 @@ namespace CsvConverter.CsvToClass
     /// <remarks>I was originally going to write this as an extension and return an object from each call to AssignValue,
     /// but upon considering the thousands of calls that would be made to the AssignValue method I didn't think it 
     /// wise to create that many objects especially when most would be a "good" result and not used.</remarks>
-    public class StringToObjectConverter : IStringToObjectConverter
+    public class StringToObjectDefaultConverters : IStringToObjectDefaultConverters
     {
-        public StringToObjectConverter()
+        public StringToObjectDefaultConverters()
         {
             RegisterBuiltInConverters();
         }
@@ -72,7 +72,7 @@ namespace CsvConverter.CsvToClass
         }
 
         private Dictionary<Type, ICsvToClassTypeConverter> _converters = new Dictionary<Type, ICsvToClassTypeConverter>();
-        private IStringToObjectConverter _bogusConverter = new BogusStringToObjectConverter();
+        private IStringToObjectDefaultConverters _bogusConverter = new BogusStringToObjectDefaultConverter();
 
         private void RegisterBuiltInConverters()
         {
@@ -146,7 +146,7 @@ namespace CsvConverter.CsvToClass
     }
 
     #region  Bogus converter
-    internal class BogusStringToObjectConverter : IStringToObjectConverter
+    internal class BogusStringToObjectDefaultConverter : IStringToObjectDefaultConverters
     {
         public void AddConverter(Type outputType, ICsvToClassTypeConverter converter)
         {

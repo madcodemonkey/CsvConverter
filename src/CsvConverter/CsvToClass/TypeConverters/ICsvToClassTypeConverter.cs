@@ -17,9 +17,9 @@ namespace CsvConverter.CsvToClass
         /// <param name="columnName">Name of the column</param>
         /// <param name="columnIndex">Index of the column</param>
         /// <param name="rowNumber">Row number of the column</param>
-        /// <param name="defaultConverter">The default string to object converter is injected in case you are only making minor tweaks to 
+        /// <param name="defaultConverters">The default string to object converter is injected in case you are only making minor tweaks to 
         /// the CSV field input before using the default converter.</param>
-        object Convert(Type targetType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectConverter defaultConverter);
+        object Convert(Type targetType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectDefaultConverters defaultConverters);
 
         /// <summary>Used to pass the attribute to the converter in case it needs any optional inputs.</summary>
         void Initialize(CsvToClassTypeConverterAttribute attribute);

@@ -11,7 +11,7 @@ namespace CsvConverter.CsvToClass
             return outputType == typeof(decimal) || outputType == typeof(decimal?);
         }
         
-        public object Convert(Type outputType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectConverter defaultConverter)
+        public object Convert(Type outputType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectDefaultConverters defaultConverters)
         {
             if (string.IsNullOrWhiteSpace(stringValue))
             {
@@ -31,7 +31,7 @@ namespace CsvConverter.CsvToClass
             }
 
             // Assign the decimal
-            object someData = defaultConverter.Convert(outputType, stringValue, columnName, columnIndex, rowNumber);
+            object someData = defaultConverters.Convert(outputType, stringValue, columnName, columnIndex, rowNumber);
             if (someData != null)
             {
                 return (decimal)someData / 100.0m;

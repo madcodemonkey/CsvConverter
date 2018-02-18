@@ -6,14 +6,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CsvConverter.Tests
 {
     [TestClass]
-    public class StringToObjectConverterTests
+    public class StringToObjectDefaultConvertersTests
     {
-        private StringToObjectConverter _classUnderTest;
+        private StringToObjectDefaultConverters _classUnderTest;
 
         [TestInitialize]
         public void Init()
         {
-            _classUnderTest = new StringToObjectConverter();
+            _classUnderTest = new StringToObjectDefaultConverters();
         }
 
         #region string

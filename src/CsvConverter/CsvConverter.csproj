@@ -80,9 +80,9 @@
     <Compile Include="ClassToCsv\ClassToCsvService.cs" />
     <Compile Include="ClassToCsv\TypeConverters\ConverterSettingForBooleansEnum.cs" />
     <Compile Include="CsvToClass\TypeConverters\DefaultConverters\StringToObjectBooleanTypeConverter.cs" />
-    <Compile Include="CsvToClass\TypeConverters\IStringToObjectConverter.cs" />
-    <Compile Include="ClassToCsv\TypeConverters\IObjectToStringConverter.cs" />
-    <Compile Include="ClassToCsv\TypeConverters\ObjectToStringConverter.cs" />
+    <Compile Include="CsvToClass\TypeConverters\IStringToObjectDefaultConverters.cs" />
+    <Compile Include="ClassToCsv\TypeConverters\IObjectToStringDefaultConverters.cs" />
+    <Compile Include="ClassToCsv\TypeConverters\ObjectToStringDefaultConverters.cs" />
     <Compile Include="CsvToClass\TypeConverters\DefaultConverters\StringToObjectByteTypeConverter.cs" />
     <Compile Include="CsvToClass\TypeConverters\DefaultConverters\StringToObjectBaseTypeConverter.cs" />
     <Compile Include="CsvToClass\TypeConverters\DefaultConverters\StringToObjectDateTimeTypeConverter.cs" />
@@ -94,7 +94,7 @@
     <Compile Include="CsvToClass\TypeConverters\DefaultConverters\StringToObjectShortTypeConverter.cs" />
     <Compile Include="CsvToClass\TypeConverters\DefaultConverters\StringToObjectStringTypeConverter.cs" />
     <Compile Include="Shared\Reflection\ReflectionCreateExtensions.cs" />
-    <Compile Include="CsvToClass\TypeConverters\StringToObjectConverter.cs" />
+    <Compile Include="CsvToClass\TypeConverters\StringToObjectDefaultConverters.cs" />
     <Compile Include="ClassToCsv\TypeConverters\IClassToCsvTypeConverter.cs" />
     <Compile Include="ClassToCsv\TypeConverters\TrimClassToCsvTypeConverter.cs" />
     <Compile Include="CsvToClass\TypeConverters\CommaDelimitedIntArrayCsvToClassConverter.cs" />

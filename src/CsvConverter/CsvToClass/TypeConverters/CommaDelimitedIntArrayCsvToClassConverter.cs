@@ -10,7 +10,7 @@ namespace CsvConverter.CsvToClass
             return outputType == typeof(int[]);
         }
              
-        public object Convert(Type outputType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectConverter defaultConverter)
+        public object Convert(Type outputType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectDefaultConverters defaultConverters)
         {
             if (string.IsNullOrWhiteSpace(stringValue))
             {

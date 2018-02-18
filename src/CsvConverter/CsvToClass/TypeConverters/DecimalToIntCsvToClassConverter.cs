@@ -11,7 +11,7 @@ namespace CsvConverter.CsvToClass
             return outputType == typeof(int) || outputType == typeof(int?);
         }
 
-        public object Convert(Type outputType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectConverter defaultConverter)
+        public object Convert(Type outputType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectDefaultConverters defaultConverters)
         {
             if (string.IsNullOrWhiteSpace(stringValue))
             {
@@ -21,7 +21,7 @@ namespace CsvConverter.CsvToClass
                 return 0;
             }
 
-            var number = (decimal)defaultConverter.Convert(typeof(decimal), stringValue, columnName, columnIndex, rowNumber);
+            var number = (decimal)defaultConverters.Convert(typeof(decimal), stringValue, columnName, columnIndex, rowNumber);
             number = Math.Round(number, 0, MidpointRounding.AwayFromZero);
             return (int)number;
         }
