@@ -10,7 +10,7 @@ namespace CsvConverter.ClassToCsv
 
         /// <summary>You are passed the class property information and you must output a string or null that will be written into a CSV file column</summary>
         /// <param name="inputType">The type of the property that is your input.  In most cases it should be a primitive type (int, decimal, etc.).</param>
-        /// <param name="value">The object from a class property.  This should be a primitive in most cases</param>
+        /// <param name="value">The object from a class property.  This should be a primitive in most cases.  It's what you get when you call PropertyInfo GetValue method.</param>
         /// <param name="columnName">Name of the column</param>
         /// <param name="stringFormat">Any string formatting information that was in the main attribute</param>
         /// <param name="columnIndex">Index of the column</param>

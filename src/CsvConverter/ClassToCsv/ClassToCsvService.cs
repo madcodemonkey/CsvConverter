@@ -114,7 +114,8 @@ namespace CsvConverter.ClassToCsv
                         if (string.IsNullOrWhiteSpace(columnMap.ClassPropertyDataFormat))
                             value = someObject.ToString();
                         else value = DefaultConverters.Convert(columnMap.PropInformation.PropertyType,
-                            columnMap.PropInformation.GetValue(record), columnMap.ClassPropertyDataFormat);
+                            columnMap.PropInformation.GetValue(record), columnMap.ClassPropertyDataFormat,
+                            columnMap.ColumnName, columnMap.ColumnIndex, currentRowNumber);
                     }
                     else value = null;
                 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using CsvConverter.ClassToCsv;
 using CsvConverter.Shared;
+using CsvConverter.TypeConverters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CsvConverter.Tests.Shared
@@ -22,7 +23,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeStringProperty, string.Empty);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeStringProperty, string.Empty, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -33,8 +34,8 @@ namespace CsvConverter.Tests.Shared
         [DataRow("1/1/2017", "1/1/2017 12:00:00 AM", null)]
         [DataRow("1/1/2017", "1/1/2017 12:00:00 AM", "")]
         [DataRow("5/27/2017", "2017-05-27T00:00:00", "s")]
-        [DataRow("1/1/2017", "January 01", "m")]
-        [DataRow("1/1/2017", "January, 2017", "y")]
+        [DataRow("1/12/2017", "January 12", "m")]
+        // [DataRow("1/1/2017", "January, 2017", "y")] // Differs between windows 10 (January 2017) and Windows 7 (January, 2017)
         public void CanConvertDateTime(string inputData, string expectedData, string formatData)
         {
             // Arrange
@@ -45,7 +46,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeDateTimeProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeDateTimeProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -56,8 +57,8 @@ namespace CsvConverter.Tests.Shared
         [DataRow("1/1/2017", "1/1/2017 12:00:00 AM", null)]
         [DataRow("1/1/2017", "1/1/2017 12:00:00 AM", "")]
         [DataRow("5/27/2017", "2017-05-27T00:00:00", "s")]
-        [DataRow("1/1/2017", "January 01", "m")]
-        [DataRow("1/1/2017", "January, 2017", "y")]
+        [DataRow("1/12/2017", "January 12", "m")]
+        // [DataRow("1/1/2017", "January, 2017", "y")]  // Differs between windows 10 (January 2017) and Windows 7 (January, 2017)
         public void CanConvertNullableDateTime(string inputData, string expectedData, string formatData)
         {
             // Arrange
@@ -68,7 +69,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableDateTimeProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableDateTimeProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -85,7 +86,7 @@ namespace CsvConverter.Tests.Shared
         [DataRow("255", "255", "N0")]
         [DataRow("255", "255.0", "N1")]
         [DataRow("255", "255.00", "N2")]
-        [DataRow("20", "2,000 %", "P0")]
+        // [DataRow("20", "2,000 %", "P0")] // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
         public void CanConvertByte(string inputData, string expectedData, string formatData)
         {
             // Arrange
@@ -96,7 +97,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeByteProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeByteProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -111,7 +112,7 @@ namespace CsvConverter.Tests.Shared
         [DataRow("255", "255", "N0")]
         [DataRow("255", "255.0", "N1")]
         [DataRow("255", "255.00", "N2")]
-        [DataRow("20", "2,000 %", "P0")]
+       // [DataRow("20", "2,000 %", "P0")]  // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
         public void CanConvertNullableByte(string inputData, string expectedData, string formatData)
         {
             // Arrange
@@ -122,7 +123,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableByteProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableByteProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -132,17 +133,17 @@ namespace CsvConverter.Tests.Shared
 
         #region Boolean and Boolean?
         [DataTestMethod]
-        [DataRow(true, "1", BooleanConverterSetting.UseOneAndZero)]
-        [DataRow(false, "0", BooleanConverterSetting.UseOneAndZero)]
-        [DataRow(true, "T", BooleanConverterSetting.UseTandF)]
-        [DataRow(false, "F", BooleanConverterSetting.UseTandF)]
-        [DataRow(true, "True", BooleanConverterSetting.UseTrueAndFalse)]
-        [DataRow(false, "False", BooleanConverterSetting.UseTrueAndFalse)]
-        [DataRow(true, "Y", BooleanConverterSetting.UseYandN)]
-        [DataRow(false, "N", BooleanConverterSetting.UseYandN)]
-        [DataRow(true, "Yes", BooleanConverterSetting.UseYesAndNo)]
-        [DataRow(false, "No", BooleanConverterSetting.UseYesAndNo)]
-        public void CanConvertBoolean(bool inputData, string expectedData, BooleanConverterSetting settingForBooleans)
+        [DataRow(true, "1", BooleanOutputFormatEnum.UseOneAndZero)]
+        [DataRow(false, "0", BooleanOutputFormatEnum.UseOneAndZero)]
+        [DataRow(true, "T", BooleanOutputFormatEnum.UseTandF)]
+        [DataRow(false, "F", BooleanOutputFormatEnum.UseTandF)]
+        [DataRow(true, "True", BooleanOutputFormatEnum.UseTrueAndFalse)]
+        [DataRow(false, "False", BooleanOutputFormatEnum.UseTrueAndFalse)]
+        [DataRow(true, "Y", BooleanOutputFormatEnum.UseYandN)]
+        [DataRow(false, "N", BooleanOutputFormatEnum.UseYandN)]
+        [DataRow(true, "Yes", BooleanOutputFormatEnum.UseYesAndNo)]
+        [DataRow(false, "No", BooleanOutputFormatEnum.UseYesAndNo)]
+        public void CanConvertBoolean(bool inputData, string expectedData, BooleanOutputFormatEnum settingForBooleans)
         {
             // Arrange
             var data = new TypeToStringConverterTester();
@@ -151,28 +152,28 @@ namespace CsvConverter.Tests.Shared
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeBoolProperty));
             var classUnderTest = new ObjectToStringDefaultConverters();
-            classUnderTest.BooleanSetting = settingForBooleans;
+            classUnderTest.UpdateBooleanSettings(new BooleanConverterSettings() { OutputFormat = settingForBooleans });
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeBoolProperty, null);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeBoolProperty, null, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
         }
 
         [DataTestMethod]
-        [DataRow(null, null, BooleanConverterSetting.UseOneAndZero)]
-        [DataRow("true", "1", BooleanConverterSetting.UseOneAndZero)]
-        [DataRow("false", "0", BooleanConverterSetting.UseOneAndZero)]
-        [DataRow("true", "T", BooleanConverterSetting.UseTandF)]
-        [DataRow("false", "F", BooleanConverterSetting.UseTandF)]
-        [DataRow("true", "True", BooleanConverterSetting.UseTrueAndFalse)]
-        [DataRow("false", "False", BooleanConverterSetting.UseTrueAndFalse)]
-        [DataRow("true", "Y", BooleanConverterSetting.UseYandN)]
-        [DataRow("false", "N", BooleanConverterSetting.UseYandN)]
-        [DataRow("true", "Yes", BooleanConverterSetting.UseYesAndNo)]
-        [DataRow("false", "No", BooleanConverterSetting.UseYesAndNo)]
-        public void CanConvertNullableBoolean(string inputData, string expectedData, BooleanConverterSetting settingForBooleans)
+        [DataRow(null, null, BooleanOutputFormatEnum.UseOneAndZero)]
+        [DataRow("true", "1", BooleanOutputFormatEnum.UseOneAndZero)]
+        [DataRow("false", "0", BooleanOutputFormatEnum.UseOneAndZero)]
+        [DataRow("true", "T", BooleanOutputFormatEnum.UseTandF)]
+        [DataRow("false", "F", BooleanOutputFormatEnum.UseTandF)]
+        [DataRow("true", "True", BooleanOutputFormatEnum.UseTrueAndFalse)]
+        [DataRow("false", "False", BooleanOutputFormatEnum.UseTrueAndFalse)]
+        [DataRow("true", "Y", BooleanOutputFormatEnum.UseYandN)]
+        [DataRow("false", "N", BooleanOutputFormatEnum.UseYandN)]
+        [DataRow("true", "Yes", BooleanOutputFormatEnum.UseYesAndNo)]
+        [DataRow("false", "No", BooleanOutputFormatEnum.UseYesAndNo)]
+        public void CanConvertNullableBoolean(string inputData, string expectedData, BooleanOutputFormatEnum settingForBooleans)
         {
             // Arrange
             var data = new TypeToStringConverterTester();
@@ -180,10 +181,10 @@ namespace CsvConverter.Tests.Shared
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableBoolProperty));
             var classUnderTest = new ObjectToStringDefaultConverters();
-            classUnderTest.BooleanSetting = settingForBooleans;
+            classUnderTest.UpdateBooleanSettings(new BooleanConverterSettings() { OutputFormat = settingForBooleans });
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableBoolProperty, null);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableBoolProperty, null, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -199,7 +200,7 @@ namespace CsvConverter.Tests.Shared
         [DataRow("2000", "2,000", "N0")]
         [DataRow("2000", "2,000.0", "N1")]
         [DataRow("2000", "2,000.00", "N2")]
-        [DataRow("20", "2,000 %", "P0")]
+        //  [DataRow("20", "2,000 %", "P0")]  // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
         public void CanConvertShort(string inputData, string expectedData, string formatData)
         {
             // Arrange
@@ -210,7 +211,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeShortProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeShortProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -224,9 +225,10 @@ namespace CsvConverter.Tests.Shared
         [DataRow("2000", "2,000", "N0")]
         [DataRow("2000", "2,000.0", "N1")]
         [DataRow("2000", "2,000.00", "N2")]
-        [DataRow("20", "2,000 %", "P0")]
+        //   [DataRow("20", "2,000 %", "P0")]  // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
         public void CanConvertNullableShort(string inputData, string expectedData, string formatData)
         {
+
             // Arrange
             var data = new TypeToStringConverterTester();
             data.SomeNullableShortProperty = string.IsNullOrWhiteSpace(inputData) ? null : (short?)short.Parse(inputData);
@@ -235,7 +237,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableShortProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableShortProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -251,7 +253,7 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000, "2,000", "N0")]
         [DataRow(2000, "2,000.0", "N1")]
         [DataRow(2000, "2,000.00", "N2")]
-        [DataRow(20, "2,000 %", "P0")]
+        //   [DataRow(20, "2,000 %", "P0")]  // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
         public void CanConvertInt(int inputData, string expectedData, string formatData)
         {
             // Arrange
@@ -262,7 +264,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeIntProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeIntProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -276,7 +278,7 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000, "2,000", "N0")]
         [DataRow(2000, "2,000.0", "N1")]
         [DataRow(2000, "2,000.00", "N2")]
-        [DataRow(20, "2,000 %", "P0")]
+        //  [DataRow(20, "2,000 %", "P0")]  // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
         public void CanConvertNullableInt(int? inputData, string expectedData, string formatData)
         {
             // Arrange
@@ -287,7 +289,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableIntProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableIntProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -303,7 +305,7 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000L, "2,000", "N0")]
         [DataRow(2000L, "2,000.0", "N1")]
         [DataRow(2000L, "2,000.00", "N2")]
-        [DataRow(20L, "2,000 %", "P0")]
+        //  [DataRow(20L, "2,000 %", "P0")]  // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
         public void CanConvertLong(long inputData, string expectedData, string formatData)
         {
             // Arrange
@@ -314,7 +316,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeLongProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeLongProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -328,7 +330,7 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000L, "2,000", "N0")]
         [DataRow(2000L, "2,000.0", "N1")]
         [DataRow(2000L, "2,000.00", "N2")]
-        [DataRow(20L, "2,000 %", "P0")]
+        //  [DataRow(20L, "2,000 %", "P0")]  // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
         public void CanConvertNullableLong(long? inputData, string expectedData, string formatData)
         {
             // Arrange
@@ -339,7 +341,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableLongProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableLongProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -356,7 +358,7 @@ namespace CsvConverter.Tests.Shared
         [DataRow("2000.0", "2,000", "N0")]
         [DataRow("2000.0", "2,000.0", "N1")]
         [DataRow("2000.0", "2,000.00", "N2")]
-        [DataRow(".20", "20 %", "P0")]
+        //  [DataRow(".20", "20 %", "P0")]  // Differs between windows 10 (20%) & windows 7 (20 %)
         public void CanConvertDecimal(string inputString, string expectedData, string formatData)
         {
             // Arrange
@@ -367,7 +369,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeDecimalProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeDecimalProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -382,7 +384,7 @@ namespace CsvConverter.Tests.Shared
         [DataRow("2000.0", "2,000", "N0")]
         [DataRow("2000.0", "2,000.0", "N1")]
         [DataRow("2000.0", "2,000.00", "N2")]
-        [DataRow(".20", "20 %", "P0")]
+     //   [DataRow(".20", "20 %", "P0")]  // Differs between windows 10 (20%) & windows 7 (20 %)
         public void CanConvertNullabeDecimal(string inputString, string expectedData, string formatData)
         {
             // Arrange
@@ -393,7 +395,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullabeDecimalProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullabeDecimalProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -410,7 +412,7 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000.0, "2,000", "N0")]
         [DataRow(2000.0, "2,000.0", "N1")]
         [DataRow(2000.0, "2,000.00", "N2")]
-        [DataRow(.20, "20 %", "P0")]
+        //  [DataRow(.20, "20 %", "P0")]  // Differs between windows 10 (20%) & windows 7 (20 %)
         public void CanConvertDouble(double inputData, string expectedData, string formatData)
         {
             // Arrange
@@ -421,7 +423,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeDoubleProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeDoubleProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -436,7 +438,7 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000.0, "2,000", "N0")]
         [DataRow(2000.0, "2,000.0", "N1")]
         [DataRow(2000.0, "2,000.00", "N2")]
-        [DataRow(.20, "20 %", "P0")]
+        //   [DataRow(.20, "20 %", "P0")]  // Differs between windows 10 (20%) & windows 7 (20 %)
         public void CanConvertNullableDouble(double? inputData, string expectedData, string formatData)
         {
             // Arrange
@@ -447,7 +449,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableDoubleProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableDoubleProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -464,7 +466,7 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000.0f, "2,000", "N0")]
         [DataRow(2000.0f, "2,000.0", "N1")]
         [DataRow(2000.0f, "2,000.00", "N2")]
-        [DataRow(.20f, "20 %", "P0")]
+        //  [DataRow(.20f, "20 %", "P0")]  // Differs between windows 10 (20%) & windows 7 (20 %)
         public void CanConvertFloat(float inputData, string expectedData, string formatData)
         {
             // Arrange
@@ -475,7 +477,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeFloatProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeFloatProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
@@ -490,7 +492,7 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000.0f, "2,000", "N0")]
         [DataRow(2000.0f, "2,000.0", "N1")]
         [DataRow(2000.0f, "2,000.00", "N2")]
-        [DataRow(.20f, "20 %", "P0")]
+        //    [DataRow(.20f, "20 %", "P0")]  // Differs between windows 10 (20%) & windows 7 (20 %)
         public void CanConvertNullableFloat(float? inputData, string expectedData, string formatData)
         {
             // Arrange
@@ -501,7 +503,7 @@ namespace CsvConverter.Tests.Shared
             var classUnderTest = new ObjectToStringDefaultConverters();
 
             // Act
-            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableFloatProperty, formatData);
+            string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableFloatProperty, formatData, "Column1", 1, 1);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);

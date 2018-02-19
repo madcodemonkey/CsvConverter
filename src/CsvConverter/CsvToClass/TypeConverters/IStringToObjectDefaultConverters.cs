@@ -23,7 +23,7 @@ namespace CsvConverter.CsvToClass
 
         /// <summary>Finds a converter and attempts to cast it to the type specified.</summary>
         /// <typeparam name="T">Type to cast the conveter to</typeparam>
-        /// <param name="theType">The type that the conveter converts</param>
+        /// <param name="theType">The type that the converter converts</param>
         T FindConverter<T>(Type theType) where T : class;
 
         /// <summary>Indicates if a converter exists.  This is usually used prior to adding a converter to avoid an exception.</summary>
