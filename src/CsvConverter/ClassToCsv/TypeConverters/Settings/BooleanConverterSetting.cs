@@ -1,6 +1,6 @@
 ﻿namespace CsvConverter.ClassToCsv
 {
-    public enum ConverterSettingForBooleansEnum
+    public enum BooleanConverterSetting
     {
         UseTrueAndFalse = 1,
         UseOneAndZero,

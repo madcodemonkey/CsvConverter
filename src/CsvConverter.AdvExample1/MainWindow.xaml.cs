@@ -17,11 +17,12 @@ namespace AdvExample1
             InitializeComponent();
         }
 
-        private void CreateCsvButton_Click(object sender, RoutedEventArgs e)
+        #region Custom Converter
+        private void CustomConverterCreateCsvButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var dialog = SaveFile();
+                var dialog = SaveFile(CustomConverterCSVFile.Text);
                 if (dialog.ShowDialog() != true)
                     return;
 
@@ -55,14 +56,11 @@ namespace AdvExample1
             }
         }
 
-        private void LoadCsvButton_Click(object sender, RoutedEventArgs e)
+        private void CustomConverterLoadCsvButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var dialog = new Microsoft.Win32.OpenFileDialog();
-                dialog.InitialDirectory = string.IsNullOrEmpty(CSVFile.Text) ?
-                "c:\\" : Path.GetDirectoryName(CSVFile.Text);
-                dialog.FileName = CSVFile.Text;
+                var dialog = LoadFile(CustomConverterCSVFile.Text);
                 if (dialog.ShowDialog() != true)
                     return;
 
@@ -84,22 +82,109 @@ namespace AdvExample1
                 LogError(ex);
             }
         }
-        private void FindCsvFile_Click(object sender, RoutedEventArgs e)
+
+        private void CustomConverterFindCsvFile_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
             if (dialog.ShowDialog() != true)
                 return;
 
-            LogMessage(dialog.FileName);
+            CustomConverterCSVFile.Text = dialog.FileName;
+        }
+        #endregion
+
+
+        #region Custom Pre-Processor
+        private void CustomPreprocessorCreateCsvButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var dialog = SaveFile(CustomPreprocessorCSVFile.Text);
+                if (dialog.ShowDialog() != true)
+                    return;
+
+                Random rand = new Random(DateTime.Now.Second);
+                int numberToCreate = rand.Next(10, 100);
+
+                using (var fs = File.Create(dialog.FileName))
+                using (var sw = new StreamWriter(fs, Encoding.Default))
+                {
+                    var service = new ClassToCsvService<Car>(sw);
+                    for (int i = 0; i < numberToCreate; i++)
+                    {
+                        var newCar = new Car()
+                        {
+                            Make = rand.Next(1, 100) > 50 ? $"M{rand.Next(1, 5000000)}" : "M", 
+                            Model = rand.Next(1, 100) > 50 ? $"M{rand.Next(1, 5000000)}" : "M",
+                            Year = rand.Next(1995, 2018),
+                        };
+
+                        service.WriterRecord(newCar);
+                    }
+                }
+
+                LogMessage($"Created {numberToCreate} cars in {dialog.FileName}.");
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+            }
         }
 
+        private void CustomPreprocessorLoadCsvButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var dialog = LoadFile(CustomPreprocessorCSVFile.Text);
+                if (dialog.ShowDialog() != true)
+                    return;
 
-        private Microsoft.Win32.SaveFileDialog SaveFile()
+                using (var fs = File.OpenRead(dialog.FileName))
+                using (var sr = new StreamReader(fs, Encoding.Default))
+                {
+                    var csv = new CsvToClassService<Car>(sr);
+                    csv.Configuration.IgnoreBlankRows = true;
+
+                    while (csv.CanRead())
+                    {
+                        Car record = csv.GetRecord();
+                        LogMessage(record.ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+            }
+        }
+
+        private void CustomPreprocessorFindCsvFile_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            if (dialog.ShowDialog() != true)
+                return;
+
+            CustomPreprocessorCSVFile.Text = dialog.FileName;
+        }
+        #endregion
+
+
+
+        private Microsoft.Win32.OpenFileDialog LoadFile(string fileName)
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.InitialDirectory = string.IsNullOrEmpty(fileName) ?
+            "c:\\" : Path.GetDirectoryName(fileName);
+            dialog.FileName = fileName;
+            return dialog;
+        }
+
+        private Microsoft.Win32.SaveFileDialog SaveFile(string fileName)
         {
             var dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.InitialDirectory = string.IsNullOrEmpty(CSVFile.Text) ?
-                "c:\\" : Path.GetDirectoryName(CSVFile.Text);
-            dialog.FileName = CSVFile.Text;
+            dialog.InitialDirectory = string.IsNullOrEmpty(fileName) ?
+                "c:\\" : Path.GetDirectoryName(fileName);
+            dialog.FileName = fileName;
             return dialog;
         }
 

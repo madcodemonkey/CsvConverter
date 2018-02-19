@@ -132,17 +132,17 @@ namespace CsvConverter.Tests.Shared
 
         #region Boolean and Boolean?
         [DataTestMethod]
-        [DataRow(true, "1", ConverterSettingForBooleansEnum.UseOneAndZero)]
-        [DataRow(false, "0", ConverterSettingForBooleansEnum.UseOneAndZero)]
-        [DataRow(true, "T", ConverterSettingForBooleansEnum.UseTandF)]
-        [DataRow(false, "F", ConverterSettingForBooleansEnum.UseTandF)]
-        [DataRow(true, "True", ConverterSettingForBooleansEnum.UseTrueAndFalse)]
-        [DataRow(false, "False", ConverterSettingForBooleansEnum.UseTrueAndFalse)]
-        [DataRow(true, "Y", ConverterSettingForBooleansEnum.UseYandN)]
-        [DataRow(false, "N", ConverterSettingForBooleansEnum.UseYandN)]
-        [DataRow(true, "Yes", ConverterSettingForBooleansEnum.UseYesAndNo)]
-        [DataRow(false, "No", ConverterSettingForBooleansEnum.UseYesAndNo)]
-        public void CanConvertBoolean(bool inputData, string expectedData, ConverterSettingForBooleansEnum settingForBooleans)
+        [DataRow(true, "1", BooleanConverterSetting.UseOneAndZero)]
+        [DataRow(false, "0", BooleanConverterSetting.UseOneAndZero)]
+        [DataRow(true, "T", BooleanConverterSetting.UseTandF)]
+        [DataRow(false, "F", BooleanConverterSetting.UseTandF)]
+        [DataRow(true, "True", BooleanConverterSetting.UseTrueAndFalse)]
+        [DataRow(false, "False", BooleanConverterSetting.UseTrueAndFalse)]
+        [DataRow(true, "Y", BooleanConverterSetting.UseYandN)]
+        [DataRow(false, "N", BooleanConverterSetting.UseYandN)]
+        [DataRow(true, "Yes", BooleanConverterSetting.UseYesAndNo)]
+        [DataRow(false, "No", BooleanConverterSetting.UseYesAndNo)]
+        public void CanConvertBoolean(bool inputData, string expectedData, BooleanConverterSetting settingForBooleans)
         {
             // Arrange
             var data = new TypeToStringConverterTester();
@@ -161,18 +161,18 @@ namespace CsvConverter.Tests.Shared
         }
 
         [DataTestMethod]
-        [DataRow(null, null, ConverterSettingForBooleansEnum.UseOneAndZero)]
-        [DataRow("true", "1", ConverterSettingForBooleansEnum.UseOneAndZero)]
-        [DataRow("false", "0", ConverterSettingForBooleansEnum.UseOneAndZero)]
-        [DataRow("true", "T", ConverterSettingForBooleansEnum.UseTandF)]
-        [DataRow("false", "F", ConverterSettingForBooleansEnum.UseTandF)]
-        [DataRow("true", "True", ConverterSettingForBooleansEnum.UseTrueAndFalse)]
-        [DataRow("false", "False", ConverterSettingForBooleansEnum.UseTrueAndFalse)]
-        [DataRow("true", "Y", ConverterSettingForBooleansEnum.UseYandN)]
-        [DataRow("false", "N", ConverterSettingForBooleansEnum.UseYandN)]
-        [DataRow("true", "Yes", ConverterSettingForBooleansEnum.UseYesAndNo)]
-        [DataRow("false", "No", ConverterSettingForBooleansEnum.UseYesAndNo)]
-        public void CanConvertNullableBoolean(string inputData, string expectedData, ConverterSettingForBooleansEnum settingForBooleans)
+        [DataRow(null, null, BooleanConverterSetting.UseOneAndZero)]
+        [DataRow("true", "1", BooleanConverterSetting.UseOneAndZero)]
+        [DataRow("false", "0", BooleanConverterSetting.UseOneAndZero)]
+        [DataRow("true", "T", BooleanConverterSetting.UseTandF)]
+        [DataRow("false", "F", BooleanConverterSetting.UseTandF)]
+        [DataRow("true", "True", BooleanConverterSetting.UseTrueAndFalse)]
+        [DataRow("false", "False", BooleanConverterSetting.UseTrueAndFalse)]
+        [DataRow("true", "Y", BooleanConverterSetting.UseYandN)]
+        [DataRow("false", "N", BooleanConverterSetting.UseYandN)]
+        [DataRow("true", "Yes", BooleanConverterSetting.UseYesAndNo)]
+        [DataRow("false", "No", BooleanConverterSetting.UseYesAndNo)]
+        public void CanConvertNullableBoolean(string inputData, string expectedData, BooleanConverterSetting settingForBooleans)
         {
             // Arrange
             var data = new TypeToStringConverterTester();

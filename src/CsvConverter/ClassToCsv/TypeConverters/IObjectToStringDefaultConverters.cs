@@ -4,7 +4,7 @@ namespace CsvConverter.ClassToCsv
 {
     public interface IObjectToStringDefaultConverters
     {
-        ConverterSettingForBooleansEnum BooleanSetting { get; set; }
+        BooleanConverterSetting BooleanSetting { get; set; }
         string Convert(Type theType, object value, string stringFormat);
 
         /// <summary>Adds a converter for a given type.</summary>

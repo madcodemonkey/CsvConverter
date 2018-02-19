@@ -70,9 +70,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CustomPreProcessor\TextLengthEnforcerPreprocessor.cs" />
+    <Compile Include="CustomPreProcessor\TextLengthEnforcerPreprocessorAttribute.cs" />
+    <Compile Include="Data\Car.cs" />
     <Compile Include="Data\Person.cs" />
-    <Compile Include="TypeConverters\NumericRangeToClassConverter.cs" />
-    <Compile Include="Attributes\NumericRangeTypeConverterAttribute.cs" />
+    <Compile Include="CustomTypeConverter\NumericRangeToClassConverter.cs" />
+    <Compile Include="CustomTypeConverter\NumericRangeTypeConverterAttribute.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -13,7 +13,7 @@ namespace CsvConverter.ClassToCsv
             RegisterBuiltInConverters();
         }
 
-        public ConverterSettingForBooleansEnum BooleanSetting { get; set; } = ConverterSettingForBooleansEnum.UseTrueAndFalse;
+        public BooleanConverterSetting BooleanSetting { get; set; } = BooleanConverterSetting.UseTrueAndFalse;
 
         /// <summary>Converts a property into a string with an optional string format.</summary>
         /// <param name="theType">The type to convert.  Currently it only handles primitives.</param>
@@ -68,15 +68,15 @@ namespace CsvConverter.ClassToCsv
 
             switch (BooleanSetting)
             {
-                case ConverterSettingForBooleansEnum.UseTrueAndFalse:
+                case BooleanConverterSetting.UseTrueAndFalse:
                     return data ? "True" : "False";
-                case ConverterSettingForBooleansEnum.UseOneAndZero:
+                case BooleanConverterSetting.UseOneAndZero:
                     return data ? "1" : "0";
-                case ConverterSettingForBooleansEnum.UseTandF:
+                case BooleanConverterSetting.UseTandF:
                     return data ? "T" : "F";
-                case ConverterSettingForBooleansEnum.UseYandN:
+                case BooleanConverterSetting.UseYandN:
                     return data ? "Y" : "N";
-                case ConverterSettingForBooleansEnum.UseYesAndNo:
+                case BooleanConverterSetting.UseYesAndNo:
                     return data ? "Yes" : "No";
             }
 

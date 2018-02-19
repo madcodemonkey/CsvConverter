@@ -50,6 +50,7 @@
     <Compile Include="ClassToCsv\PostProcessor\IClassToCsvPostprocessor.cs" />
     <Compile Include="ClassToCsv\PostProcessor\ReplaceTextExactMatchPostProcessor.cs" />
     <Compile Include="ClassToCsv\PostProcessor\ReplaceTextEveryMatchPostProcessor.cs" />
+    <Compile Include="ClassToCsv\TypeConverters\Settings\BooleanConverterSetting.cs" />
     <Compile Include="Common\Attributes\CsvConverterAttribute.cs" />
     <Compile Include="ClassToCsv\Attributes\ClassToCsvTypeConverterAttribute.cs" />
     <Compile Include="CsvToClass\Attributes\CsvToClassDateTimeTypeConverterAttribute.cs" />
@@ -78,7 +79,6 @@
     <Compile Include="Common\RowTools\RowBase.cs" />
     <Compile Include="Common\RowTools\RowWriter.cs" />
     <Compile Include="ClassToCsv\ClassToCsvService.cs" />
-    <Compile Include="ClassToCsv\TypeConverters\ConverterSettingForBooleansEnum.cs" />
     <Compile Include="CsvToClass\TypeConverters\DefaultConverters\StringToObjectBooleanTypeConverter.cs" />
     <Compile Include="CsvToClass\TypeConverters\IStringToObjectDefaultConverters.cs" />
     <Compile Include="ClassToCsv\TypeConverters\IObjectToStringDefaultConverters.cs" />
@@ -96,15 +96,15 @@
     <Compile Include="Shared\Reflection\ReflectionCreateExtensions.cs" />
     <Compile Include="CsvToClass\TypeConverters\StringToObjectDefaultConverters.cs" />
     <Compile Include="ClassToCsv\TypeConverters\IClassToCsvTypeConverter.cs" />
-    <Compile Include="ClassToCsv\TypeConverters\TrimClassToCsvTypeConverter.cs" />
-    <Compile Include="CsvToClass\TypeConverters\CommaDelimitedIntArrayCsvToClassConverter.cs" />
+    <Compile Include="ClassToCsv\TypeConverters\IncludedConveters\TrimClassToCsvTypeConverter.cs" />
+    <Compile Include="CsvToClass\TypeConverters\IncludedConveters\CommaDelimitedIntArrayCsvToClassConverter.cs" />
     <Compile Include="Common\RowTools\IRowReader.cs" />
     <Compile Include="Shared\Reflection\ReflectionAttributeExtensions.cs" />
     <Compile Include="Shared\Reflection\ReflectionHelper.cs" />
     <Compile Include="Common\Mapper\PropertyMap.cs" />
-    <Compile Include="CsvToClass\TypeConverters\DecimalToIntCsvToClassConverter.cs" />
+    <Compile Include="CsvToClass\TypeConverters\IncludedConveters\DecimalToIntCsvToClassConverter.cs" />
     <Compile Include="CsvToClass\TypeConverters\ICsvToClassTypeConverter.cs" />
-    <Compile Include="CsvToClass\TypeConverters\PercentCsvToClassConverter.cs" />
+    <Compile Include="CsvToClass\TypeConverters\IncludedConveters\PercentCsvToClassConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CsvToClass\Mapper\CsvToClassPropertyMapper.cs" />
     <Compile Include="Common\RowTools\RowReader.cs" />

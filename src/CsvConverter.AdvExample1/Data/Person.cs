@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CsvConverter;
+using System.Collections.Generic;
 
 namespace AdvExample1
 {
@@ -12,6 +13,9 @@ namespace AdvExample1
 
         public decimal PercentageBodyFat { get; set; }
         public double AvgHeartRate { get; set; }
+
+        [CsvConverter(IgnoreWhenReading = true, IgnoreWhenWriting = true)]
+        public Person Parent { get; set; }
 
         public override string ToString()
         {
