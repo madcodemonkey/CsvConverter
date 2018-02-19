@@ -74,7 +74,7 @@
     <Compile Include="CustomPreProcessor\TextLengthEnforcerPreprocessorAttribute.cs" />
     <Compile Include="Data\Car.cs" />
     <Compile Include="Data\Person.cs" />
-    <Compile Include="CustomTypeConverter\NumericRangeToClassConverter.cs" />
+    <Compile Include="CustomTypeConverter\NumericRangeTypeConverter.cs" />
     <Compile Include="CustomTypeConverter\NumericRangeTypeConverterAttribute.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

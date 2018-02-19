@@ -1,5 +1,4 @@
 ﻿using CsvConverter;
-using System.Collections.Generic;
 
 namespace AdvExample1
 {
@@ -8,7 +7,7 @@ namespace AdvExample1
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        [NumericRangeTypeConverter(typeof(NumericRangeToClassConverter), Minimum = 1, Maximum = 50)]
+        [NumericRangeTypeConverter(typeof(NumericRangeTypeConverter), Minimum = 1, Maximum = 50)]
         public int Age { get; set; }
 
         public decimal PercentageBodyFat { get; set; }

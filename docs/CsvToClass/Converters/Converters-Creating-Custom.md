@@ -70,10 +70,10 @@ internal class CsvServiceConverterTestClass
 ```
 
 ---
-## Example 2 (create attribute AND converter)
+## Example 2 (create an attribute AND a converter)
 
 ### Creating a custom attribute for your custom converter
-In order for the reflection logic to pick up your custom attribute, it must inherit from CsvToClassTypeConverterAttribute
+In order for the reflection logic to pick up your custom attribute, your attributes must inherit from CsvToClassTypeConverterAttribute
 ```C#
 using System;
 using CsvConverter.CsvToClass;
@@ -99,14 +99,14 @@ public interface ICsvToClassTypeConverter
 	void Initialize(CsvToClassTypeConverterAttribute attribute);
 }
 ```
-So we could create a custom converter that looks like this
+So we could create a custom converter that looks like this:
 ```c#
 using System;
 using CsvConverter.CsvToClass;
 
 namespace AdvExample1
 {
-    public class NumericRangeToClassConverter : ICsvToClassTypeConverter
+    public class NumericRangeTypeConverter : ICsvToClassTypeConverter
     {
         private int _minimum = 0;
         private int _maximum = 20;
@@ -150,3 +150,36 @@ Notes:
 - In the CanOutputThisType method, we tell the system what this conveter can handle so that people don't use it on the wrong property.
 - In the Initialize method, we check that the attribute being passed in is our custom one.
 - In the Convert method, we let the default converter do all the work.  If it gives us a null, we give it the default; otherwise, we check the range and adjust it if necessary.
+
+Usage:
+```C#
+using CsvConverter;
+
+namespace AdvExample1
+{
+    public class Person
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        [NumericRangeTypeConverter(typeof(NumericRangeTypeConverter), Minimum = 1, Maximum = 50)]
+        public int Age { get; set; }
+
+        public decimal PercentageBodyFat { get; set; }
+        public double AvgHeartRate { get; set; }
+
+        [CsvConverter(IgnoreWhenReading = true, IgnoreWhenWriting = true)]
+        public Person Parent { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("FirstName: {0} LastName: {1} Age: {2} PercentageBodyFat: {3} AvgHeartRate: {4}",
+                FirstName,
+                LastName,
+                Age,
+                PercentageBodyFat,
+                AvgHeartRate);
+        }
+    }
+}
+```

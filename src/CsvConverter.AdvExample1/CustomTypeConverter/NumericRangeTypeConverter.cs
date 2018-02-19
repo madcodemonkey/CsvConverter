@@ -3,7 +3,7 @@ using CsvConverter.CsvToClass;
 
 namespace AdvExample1
 {
-    public class NumericRangeToClassConverter : ICsvToClassTypeConverter
+    public class NumericRangeTypeConverter : ICsvToClassTypeConverter
     {
         private int _minimum = 0;
         private int _maximum = 20;

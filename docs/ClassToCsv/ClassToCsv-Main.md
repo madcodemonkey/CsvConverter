@@ -14,12 +14,6 @@ To create a CSV file, there are 7 basic steps
 - [Simple Example 1](./Examples/Simple1.md) - In this simple example, the header will match the property names.
 - TODO: [Simple Example 2](./Examples/Simple2.md) - In this simple example, we will control the order and names of the CSV headers.
 
-
-
 ## Advanced Topics
--  TODO: [Converters](./Converters/Converters-Main.md)
-    -   TODO: [Built in converters](./Converters/Built-in.md)
-    -  TODO: [Creating your own converters](./Converters/Creating.md)
--  TODO: [Post-processors](./Postprocesors/Postprocesors.md)
-    -  TODO: [Built in post-processors](./Postprocesors/Built-in.md)
-    -  TODO: [Creating your own post-processors](./Postprocesors/Creating.md)
+- [Converters](./Converters/Converters-Main.md)
+- [Post-processors](./Postprocesors/Postprocesors.md)
