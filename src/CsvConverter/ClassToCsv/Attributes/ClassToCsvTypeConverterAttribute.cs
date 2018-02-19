@@ -4,7 +4,7 @@ namespace CsvConverter.ClassToCsv
 {
     /// <summary>When writing CSV files, this is optional type converter in case you want control how the string is written to the CSV file.</summary>   
 
-    [AttributeUsage(AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class ClassToCsvTypeConverterAttribute : Attribute
     {
         /// <summary>When writing CSV files, this is optional type converter in case you want control how the string is written to the CSV file.</summary>   

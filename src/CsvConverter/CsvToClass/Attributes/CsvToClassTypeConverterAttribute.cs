@@ -4,7 +4,7 @@ namespace CsvConverter.CsvToClass
 {
     /// <summary>When reading CSV files, this is optional type converter in case you want control how the string is converted.</summary>   
 
-    [AttributeUsage(AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class CsvToClassTypeConverterAttribute : Attribute
     {
         /// <summary>When reading CSV files, this is optional type converter in case you want control how the string is converted.</summary>   

@@ -32,10 +32,11 @@ namespace CsvConverter.ClassToCsv.Mapper
 
         protected override void UpdatePropertyConverter(PropertyMap newMap)
         {
-            ClassToCsvTypeConverterAttribute oneAttribute = newMap.PropInformation.HelpFindAttribute<ClassToCsvTypeConverterAttribute>();
+            List<ClassToCsvTypeConverterAttribute> attributeList = newMap.PropInformation.HelpFindAllAttributes<ClassToCsvTypeConverterAttribute>();
 
-            if (oneAttribute != null)
+            if (attributeList.Count == 1)
             {
+                ClassToCsvTypeConverterAttribute oneAttribute = attributeList[0];
                 var oneTypeConverter = oneAttribute.TypeConverter.HelpCreateAndCastToInterface<IClassToCsvTypeConverter>(
                     $"The '{newMap.PropInformation.Name}' property specified a type converter, but there is a problem!");
 
@@ -50,6 +51,11 @@ namespace CsvConverter.ClassToCsv.Mapper
                         $" ({oneAttribute.TypeConverter.Name}), but the convert does not work on a property " +
                         $"of type {newMap.PropInformation.PropertyType}!");
                 }
+            }
+            else if (attributeList.Count > 1)
+            {
+                throw new ArgumentException($"You can only have ONE attribute that derives from {nameof(ClassToCsvTypeConverterAttribute)} " +
+                    $"assigned to a given property!  There are two assigned to the class property named {newMap.PropInformation.Name}!");
             }
         }
 

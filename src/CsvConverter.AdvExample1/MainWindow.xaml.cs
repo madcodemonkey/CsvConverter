@@ -112,11 +112,14 @@ namespace AdvExample1
                     var service = new ClassToCsvService<Car>(sw);
                     for (int i = 0; i < numberToCreate; i++)
                     {
+                        double currentValue = rand.Next(2000, 60000) / 1.1;
                         var newCar = new Car()
                         {
-                            Make = rand.Next(1, 100) > 50 ? $"M{rand.Next(1, 5000000)}" : "M", 
+                            Make = rand.Next(1, 100) > 50 ? $"M{rand.Next(1, 5000000)}" : "M",
                             Model = rand.Next(1, 100) > 50 ? $"M{rand.Next(1, 5000000)}" : "M",
                             Year = rand.Next(1995, 2018),
+                            PurchasePrice = (decimal) currentValue * 1.2m,
+                            CurrentValue = currentValue
                         };
 
                         service.WriterRecord(newCar);

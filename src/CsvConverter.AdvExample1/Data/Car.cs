@@ -1,4 +1,6 @@
-﻿namespace AdvExample1
+﻿using CsvConverter.CsvToClass;
+
+namespace AdvExample1
 {
     public class Car
     {
@@ -10,12 +12,22 @@
 
         public int Year { get; set; }
 
+        [MoneyFormatterClassToCsvTypeConverter(typeof(MoneyFormatterClassToCsvTypeConverter), Format = "C2")]
+        [CsvToClassTypeConverter(typeof(MoneyTypeConverter))]
+        public decimal PurchasePrice { get; set; }
+        
+        [MoneyFormatterClassToCsvTypeConverter(typeof(MoneyFormatterClassToCsvTypeConverter), Format ="C2")]
+        [CsvToClassTypeConverter(typeof(MoneyTypeConverter))]
+        public double CurrentValue { get; set; }
+
         public override string ToString()
         {
-            return string.Format("Model: {0} Make: {1} Year: {2}",
+            return string.Format("Model: {0} Make: {1} Year: {2} PurchasePrice {3}  CurrentValue {4}",
                 Model,
                 Make,
-                Year);
+                Year,
+                PurchasePrice,
+                CurrentValue);
         }
     }
 }
