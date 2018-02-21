@@ -47,6 +47,7 @@
     <Compile Include="ClassToCsv\Attributes\ClassToCsvPostprocessorAttribute.cs" />
     <Compile Include="ClassToCsv\Attributes\ClassToCsvReplaceTextPostprocessorAttribute.cs" />
     <Compile Include="ClassToCsv\Configuration\ClassToCsvConfiguration.cs" />
+    <Compile Include="ClassToCsv\Mapper\ClassToCsvPropertyAttributeUpdater.cs" />
     <Compile Include="ClassToCsv\PostProcessor\IClassToCsvPostprocessor.cs" />
     <Compile Include="ClassToCsv\PostProcessor\ReplaceTextExactMatchPostProcessor.cs" />
     <Compile Include="ClassToCsv\PostProcessor\ReplaceTextEveryMatchPostProcessor.cs" />
@@ -60,6 +61,8 @@
     <Compile Include="ClassToCsv\TypeConverters\DefaultConverters\ObjectToStringIntTypeConverter.cs" />
     <Compile Include="ClassToCsv\TypeConverters\DefaultConverters\ObjectToStringLongTypeConverter.cs" />
     <Compile Include="ClassToCsv\TypeConverters\DefaultConverters\ObjectToStringShortTypeConverter.cs" />
+    <Compile Include="Common\Exceptions\CsvConverterAttributeException.cs" />
+    <Compile Include="Common\Mapper\IPropertyAttributeUpdater.cs" />
     <Compile Include="Common\TypeConverters\BooleanOutputFormatEnum.cs" />
     <Compile Include="Common\Attributes\CsvConverterAttribute.cs" />
     <Compile Include="ClassToCsv\Attributes\ClassToCsvTypeConverterAttribute.cs" />
@@ -80,6 +83,7 @@
     <Compile Include="ClassToCsv\Mapper\ClassToCsvPropertyMapper.cs" />
     <Compile Include="ClassToCsv\Mapper\IClassToCsvPropertyMap.cs" />
     <Compile Include="CsvToClass\Configuration\CsvToClassConfiguration.cs" />
+    <Compile Include="CsvToClass\Mapper\CsvToClassPropertyAttributeUpdater.cs" />
     <Compile Include="CsvToClass\Mapper\ICsvToClassPropertyMap.cs" />
     <Compile Include="Common\Mapper\IPropertyMap.cs" />
     <Compile Include="Common\Mapper\PropertyMapperBase.cs" />

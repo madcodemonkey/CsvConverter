@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CsvConverter.Tests.Readers
 {
     [TestClass]
-    public class CsvToClassPropertyMapperTests
+    public class CsvToClassPropertyMapper_CoreTests
     {
         public const int ColumnIndexDefaultValue = -1;
 

@@ -40,7 +40,7 @@ namespace CsvConverter.Tests.Services
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void CannotUseConverterIfTheConvertersOutputTypeDoesNoMatchThePropertyType()
         {
             // Arrange

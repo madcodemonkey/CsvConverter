@@ -6,6 +6,7 @@ using CsvConverter.Shared;
 
 namespace CsvConverter.CsvToClass.Mapper
 {
+
     public class CsvToClassPropertyMapper<T> : PropertyMapperBase<T>
     {
         private const int ColumnIndexDefaultValue = -1;
@@ -55,97 +56,9 @@ namespace CsvConverter.CsvToClass.Mapper
             // Base it on the property type
             return IsTypeAllowed(newMap.PropInformation.PropertyType);
         }
-
-
-        protected override void UpdatePropertyConverter(PropertyMap newMap)
-        {
-            List<CsvToClassTypeConverterAttribute> attributeList = newMap.PropInformation.HelpFindAllAttributes<CsvToClassTypeConverterAttribute>();
-            if (attributeList.Count == 1)           
-            {
-                CsvToClassTypeConverterAttribute oneAttribute = attributeList[0];
-
-                var oneTypeConverter = oneAttribute.TypeConverter.HelpCreateAndCastToInterface<ICsvToClassTypeConverter>(
-                    $"The '{newMap.PropInformation.Name}' property specified a type converter, but there is a problem!");
-
-                if (oneTypeConverter.CanOutputThisType(newMap.PropInformation.PropertyType) == false)
-                {
-                    throw new ArgumentException("Convert type mismatch!  The type converter " +
-                        $"{oneAttribute.TypeConverter.Name} cannot process the class property named {newMap.PropInformation.Name}, " +
-                        $"which is has a type of {newMap.PropInformation.PropertyType.Name}!");
-                }
-
-                oneTypeConverter.Initialize(oneAttribute);
-                newMap.CsvFieldTypeConverter = oneTypeConverter;
-            }
-            else if (attributeList.Count > 1)
-            {
-                throw new ArgumentException($"You can only have ONE attribute that derives from {nameof(CsvToClassTypeConverterAttribute)} " + 
-                    $"assigned to a given property!  There are two assigned to the class property named {newMap.PropInformation.Name}!");
-            }
-        }
-
-        protected override void UpdatePropertyProcessors(PropertyMap newMap)
-        {
-            List<CsvToClassPreprocessorAttribute> attributeList = newMap.PropInformation.HelpFindAllAttributes<CsvToClassPreprocessorAttribute>();
-            if (attributeList.Count == 0)
-                return;
-
-            foreach (var oneAttribute in attributeList)
-            {
-                var onePreprocessor = oneAttribute.Preprocessor.HelpCreateAndCastToInterface<ICsvToClassPreprocessor>(
-                    $"The '{newMap.PropInformation.Name}' property specified a preprocessor, but there is a problem!");
-
-                AddOnePreprocessor(oneAttribute, newMap, onePreprocessor);
-            }
-
-            // Sort the preprocessors if there is more than one.
-            if (newMap.CsvFieldPreprocessors.Count > 0)
-                newMap.CsvFieldPreprocessors = newMap.CsvFieldPreprocessors.OrderBy(o => o.Order).ToList();
-        }
-
-        protected override void UpdateClassProcessors(List<PropertyMap> mapList)
-        {
-            // Find preprocessors attributes on the class
-            List<CsvToClassPreprocessorAttribute> attributeList = typeof(T).HelpFindAllClassAttributes<CsvToClassPreprocessorAttribute>();
-            if (attributeList.Count == 0)
-                return;
-
-            foreach (var oneAttribute in attributeList)
-            {
-                var onePreprocessor = oneAttribute.Preprocessor.HelpCreateAndCastToInterface<ICsvToClassPreprocessor>("Could not create preprocessor!");
-                foreach (var map in mapList)
-                {
-                    if (map.IgnoreWhenReading)
-                        continue;
-
-                    // All properties get this preprocessor
-                    // OR
-                    // Only certain properties get this preprocessor
-                    if (oneAttribute.TargetPropertyType == null || oneAttribute.TargetPropertyType == map.PropInformation.PropertyType)
-                    {
-                        AddOnePreprocessor(oneAttribute, map, onePreprocessor);
-                    }
-                }
-            }
-        }
         #endregion // Protected
 
         #region Private
-        private void AddOnePreprocessor(CsvToClassPreprocessorAttribute oneAttribute, PropertyMap map, ICsvToClassPreprocessor preprocessor)
-        {
-            if (preprocessor.CanProcessType(map.PropInformation.PropertyType))
-            {
-                preprocessor.Initialize(oneAttribute);
-                map.CsvFieldPreprocessors.Add(preprocessor);
-            }
-            else
-            {
-                throw new ArgumentException($"The '{map.PropInformation.Name}' property specified a type preprocessor " +
-                    $" ({oneAttribute.Preprocessor.Name}), but the preprocessor does not work on a property " +
-                    $"of type {map.PropInformation.PropertyType}!");
-            }
-        }
-
         private void CreateIgnoreColumnMap(List<PropertyMap> columns, int columnIndex, string columnName)
         {
             var newItem = new PropertyMap

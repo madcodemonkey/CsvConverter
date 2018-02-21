@@ -8,6 +8,14 @@ namespace CsvConverter.Mapper
 {
     public abstract class PropertyMapperBase<T>
     {
+        private List<IPropertyAttributeUpdater> _attributeUpdaters = new List<IPropertyAttributeUpdater>();
+
+        public PropertyMapperBase()
+        {
+            _attributeUpdaters.Add(new ClassToCsv.Mapper.ClassToCsvPropertyAttributeUpdater<T>());
+            _attributeUpdaters.Add(new CsvToClass.Mapper.CsvToClassPropertyAttributeUpdater<T>());
+        }
+
         /// <summary>Looks for CsvConverterAttribute on the property using PropertyInfo
         /// and then updates any relevant info on the map</summary>
         /// <param name="newMap">The property map to examine</param>
@@ -44,17 +52,7 @@ namespace CsvConverter.Mapper
                 newMap.ClassPropertyDataFormat = oneAttribute.DataFormat;
 
         }
-
-
-        /// <summary>Used to update the property converters on the newly created map.</summary>
-        protected abstract void UpdatePropertyConverter(PropertyMap newMap);
-
-        /// <summary>Used to update the property processors (pre or post) on the newly created map</summary>
-        protected abstract void UpdatePropertyProcessors(PropertyMap newMap);
-
-        /// <summary>Used to update the Class level processors on the newly minted map list</summary>
-        protected abstract void UpdateClassProcessors(List<PropertyMap> mapList);
-
+        
 
         /// <summary>Interate over the class properties and generate map class for each.  
         /// It also calls several abstract methods so that attributes can be read off the properties.</summary>
@@ -74,11 +72,11 @@ namespace CsvConverter.Mapper
 
                 AddCsvConverterAttributesToTheMap(newMap, columnIndexDefaultValue);
 
-                UpdatePropertyConverter(newMap);
+                _attributeUpdaters.ForEach(au => au.UpdatePropertyConverter(newMap));
+                _attributeUpdaters.ForEach(au => au.UpdatePropertyProcessors(newMap));
 
                 if (ShouldMapBeAdd(newMap))
                 {
-                    UpdatePropertyProcessors(newMap);
                     mapList.Add(newMap);                    
                 }
             }
@@ -86,8 +84,8 @@ namespace CsvConverter.Mapper
             // Sort the columns the way the user wants them sorted or by column name
             mapList = mapList.OrderBy(o => o.ColumnIndex).ThenBy(o => o.ColumnName).ToList();
 
-            UpdateClassProcessors(mapList);
-
+            _attributeUpdaters.ForEach(au => au.UpdateClassProcessors(mapList));
+            
             return mapList;
         }
 

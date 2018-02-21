@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CsvConverter.Tests.Readers
 {
     [TestClass]
-    public class ClassToCsvPropertyMapperTests
+    public class ClassToCsvPropertyMapper_CoreTests
     {
         public const int ColumnIndexDefaultValue = 9999;
 
@@ -67,9 +67,9 @@ namespace CsvConverter.Tests.Readers
             Assert.AreEqual(result[1].ColumnName, "Age");
             Assert.AreEqual(result[2].ColumnName, "Name");
         }
-
+        
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void PlacingConverterOnPropertyItCannotCovertCausesAnException()
         {
             // Arrange

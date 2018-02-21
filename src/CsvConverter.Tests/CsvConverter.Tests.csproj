@@ -66,8 +66,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassToCsv\ClassToCsvService_PostprocessorTests.cs" />
-    <Compile Include="ClassToCsv\Mapper\ClassToCsvPropertyMapperTests.cs" />
+    <Compile Include="ClassToCsv\Mapper\ClassToCsvPropertyMapper_CoreTests.cs" />
+    <Compile Include="ClassToCsv\Mapper\ClassToCsvPropertyMapper_AttributeMismatchTests.cs" />
     <Compile Include="ClassToCsv\Postprocessor\ReplaceTextEveryMatchPostProcessorTests.cs" />
+    <Compile Include="CsvToClass\Mapper\CsvToClassPropertyMapper_AttributeMismatchTests.cs" />
     <Compile Include="CsvToClass\Preprocessor\StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessorTests.cs" />
     <Compile Include="CsvToClass\Preprocessor\TrimCsvToClassPreprocessorTests.cs" />
     <Compile Include="Common\RowTools\RowWriterTests.cs" />
@@ -85,7 +87,7 @@
     <Compile Include="CsvToClass\CsvToClassService_ConverterTests.cs" />
     <Compile Include="CsvToClass\CsvToClassService_NoHeaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CsvToClass\Mapper\CsvToClassPropertyMapperTests.cs" />
+    <Compile Include="CsvToClass\Mapper\CsvToClassPropertyMapper_CoreTests.cs" />
     <Compile Include="Common\RowTools\RowReaderTests.cs" />
     <Compile Include="CsvToClass\TypeConverters\DecimalToIntCsvToClassConverterTests.cs" />
     <Compile Include="CsvToClass\Preprocessor\TextRemoverCsvToClassPreprocessorTests.cs" />
