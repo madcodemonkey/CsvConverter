@@ -17,7 +17,9 @@ namespace CsvConverter.CsvToClass.Mapper
 
             foreach (var oneAttribute in attributeList)
             {
-                var onePreprocessor = oneAttribute.Preprocessor.HelpCreateAndCastToInterface<ICsvToClassPreprocessor>("Could not create preprocessor!");
+                var onePreprocessor = oneAttribute.Preprocessor.HelpCreateAndCastToInterface<ICsvToClassPreprocessor>(
+                    "Could not create preprocessor!  Make sure that you have not paired your converter with the WRONG attribute.");
+
                 foreach (var map in mapList)
                 {
                     if (map.IgnoreWhenReading)

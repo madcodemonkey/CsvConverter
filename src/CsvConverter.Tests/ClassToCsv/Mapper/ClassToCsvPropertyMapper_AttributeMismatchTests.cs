@@ -35,11 +35,11 @@ namespace ClassToCsv.Tests.ClassToCsv.Mapper
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void CanFindPostProcessorAttributeMismatch()
+        public void CanFindPreProcessorAttributeMismatch()
         {
             // Arrange
             var configuation = new ClassToCsvConfiguration() { };
-            var classUnderTest = new ClassToCsvPropertyMapper<ClassToCsvConverterMismatch>();
+            var classUnderTest = new ClassToCsvPropertyMapper<ClassToCsvPostProcessorMismatch1>();
 
             // Act
             List<IClassToCsvPropertyMap> result = classUnderTest.Map(configuation, ColumnIndexDefaultValue).ToList();
@@ -49,6 +49,24 @@ namespace ClassToCsv.Tests.ClassToCsv.Mapper
             Assert.Fail($"The {nameof(ReplaceTextEveryMatchPostProcessor)} should not be used with {nameof(CsvToClassPreprocessorAttribute)}.  " +
                 $"It should be paired with a custom attribute named {nameof(ClassToCsvReplaceTextPostprocessorAttribute)} and the mapper should find the problem and it did NOT!!");
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CanFindPreProcessorAttributeMismatchOnClass()
+        {
+            // Arrange
+            var configuation = new ClassToCsvConfiguration() { };
+            var classUnderTest = new ClassToCsvPropertyMapper<ClassToCsvPostProcessorMismatch2>();
+
+            // Act
+            List<IClassToCsvPropertyMap> result = classUnderTest.Map(configuation, ColumnIndexDefaultValue).ToList();
+
+
+            // Assert
+            Assert.Fail($"The {nameof(ReplaceTextEveryMatchPostProcessor)} should not be used with {nameof(CsvToClassPreprocessorAttribute)}.  " +
+                $"It should be paired with a custom attribute named {nameof(ClassToCsvReplaceTextPostprocessorAttribute)} and the mapper should find the problem and it did NOT!!");
+        }
+
     }
 
     internal class ClassToCsvConverterMismatch
@@ -57,11 +75,28 @@ namespace ClassToCsv.Tests.ClassToCsv.Mapper
 
         public int Age { get; set; }
 
+        // Using WRONG attribute with this converter
         [CsvToClassTypeConverter(typeof(TrimClassToCsvTypeConverter))]
         public string Name { get; set; }
     }
 
-    internal class ClassToCsvPostProcessorMismatch
+    internal class ClassToCsvPostProcessorMismatch1
+    {
+        [CsvConverter(ColumnIndex = 0)]
+        public int Order { get; set; }
+
+        [CsvConverter(ColumnIndex = 1)]
+        public int Age { get; set; }
+
+        // Using WRONG attribute with this post processor
+        [CsvConverter(ColumnIndex = 2)]
+        [CsvToClassPreprocessor(typeof(ReplaceTextEveryMatchPostProcessor))]
+        public string Name { get; set; }
+    }
+
+    // Using WRONG attribute with this post processor
+    [CsvToClassPreprocessor(typeof(ReplaceTextEveryMatchPostProcessor))]
+    internal class ClassToCsvPostProcessorMismatch2
     {
         [CsvConverter(ColumnIndex = 0)]
         public int Order { get; set; }
@@ -70,7 +105,6 @@ namespace ClassToCsv.Tests.ClassToCsv.Mapper
         public int Age { get; set; }
 
         [CsvConverter(ColumnIndex = 2)]
-        [CsvToClassPreprocessorAttribute(typeof(ReplaceTextEveryMatchPostProcessor))]
         public string Name { get; set; }
     }
 }

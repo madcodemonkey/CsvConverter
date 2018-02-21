@@ -43,7 +43,26 @@ namespace ClassToCsv.Tests.ClassToCsv.Mapper
             var configuation = new CsvToClassConfiguration() { IgnoreExtraCsvColumns = true };
 
             var colunns = new List<string>() { "Month", "Age", "Name" };
-            var classUnderTest = new CsvToClassPropertyMapper<CsvToClassConverterMismatch>();
+            var classUnderTest = new CsvToClassPropertyMapper<CsvToClassPreProcessorMismatch1>();
+
+            // Act
+            List<ICsvToClassPropertyMap> result = classUnderTest.Map(colunns, configuation).Values.ToList();
+
+
+            // Assert
+            Assert.Fail($"The {nameof(TextRemoverCsvToClassPreprocessor)} should not be used with {nameof(CsvToClassPreprocessorAttribute)}.  " +
+                $"It should be paired with a custom attribute named {nameof(CsvToClassPreprocessorAttribute)} and the mapper should find the problem and it did NOT!!");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CanFindPreProcessorAttributeMismatchOnClass()
+        {
+            // Arrange
+            var configuation = new CsvToClassConfiguration() { IgnoreExtraCsvColumns = true };
+
+            var colunns = new List<string>() { "Month", "Age", "Name" };
+            var classUnderTest = new CsvToClassPropertyMapper<CsvToClassPreProcessorMismatch2>();
 
             // Act
             List<ICsvToClassPropertyMap> result = classUnderTest.Map(colunns, configuation).Values.ToList();
@@ -61,11 +80,28 @@ namespace ClassToCsv.Tests.ClassToCsv.Mapper
 
         public int Age { get; set; }
 
+        // Using WRONG attribute with this converter
         [ClassToCsvTypeConverter(typeof(CommaDelimitedIntArrayCsvToClassConverter))]
         public string Name { get; set; }
     }
 
-    internal class CsvToClassPreProcessorMismatch
+    internal class CsvToClassPreProcessorMismatch1
+    {
+        [CsvConverter(ColumnIndex = 0)]
+        public int Order { get; set; }
+
+        [CsvConverter(ColumnIndex = 1)]
+        public int Age { get; set; }
+
+        // Using WRONG attribute with this pre-processor
+        [CsvConverter(ColumnIndex = 2)]
+        [ClassToCsvPostProcessor(typeof(TextRemoverCsvToClassPreprocessor))]
+        public string Name { get; set; }
+    }
+
+    // Using WRONG attribute with this pre-processor
+    [ClassToCsvPostProcessor(typeof(TextRemoverCsvToClassPreprocessor))]
+    internal class CsvToClassPreProcessorMismatch2
     {
         [CsvConverter(ColumnIndex = 0)]
         public int Order { get; set; }
@@ -74,7 +110,7 @@ namespace ClassToCsv.Tests.ClassToCsv.Mapper
         public int Age { get; set; }
 
         [CsvConverter(ColumnIndex = 2)]
-        [ClassToCsvPostProcessorAttribute(typeof(TextRemoverCsvToClassPreprocessor))]
         public string Name { get; set; }
     }
+
 }

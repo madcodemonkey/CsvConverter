@@ -16,7 +16,9 @@ namespace CsvConverter.ClassToCsv.Mapper
 
             foreach (var oneAttribute in attributeList)
             {
-                var onePostprocessor = oneAttribute.Postprocessor.HelpCreateAndCastToInterface<IClassToCsvPostprocessor>("Could not create post processor!");
+                var onePostprocessor = oneAttribute.Postprocessor.HelpCreateAndCastToInterface<IClassToCsvPostprocessor>(
+                    "Could not create post processor!  Make sure that you have not paired your converter with the WRONG attribute.");
+
                 foreach (var map in mapList)
                 {
                     if (map.IgnoreWhenWriting)
