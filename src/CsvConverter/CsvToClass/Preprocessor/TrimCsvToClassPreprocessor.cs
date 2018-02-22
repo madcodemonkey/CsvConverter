@@ -7,12 +7,14 @@ namespace CsvConverter.CsvToClass
     {
         public int Order { get; set; } = 999;
 
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassPreProcessor;
+
         public bool CanProcessType(Type theType)
         {
             return true;
         }
 
-        public void Initialize(CsvToClassPreprocessorAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
             Order = attribute.Order;
         }

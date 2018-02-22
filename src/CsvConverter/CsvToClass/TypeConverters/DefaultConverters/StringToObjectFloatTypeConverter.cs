@@ -44,10 +44,9 @@ namespace CsvConverter.CsvToClass
             return Convert(targetType, convertSpecialStrings, columnName, columnIndex, rowNumber, defaultConverter);
         }
 
-        public void Initialize(CsvToClassTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
             // Nothing on the attribute is needed
         }
     }
-
 }

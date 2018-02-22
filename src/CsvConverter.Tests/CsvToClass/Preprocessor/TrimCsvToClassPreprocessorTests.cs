@@ -21,7 +21,7 @@ namespace CsvConverter.Tests
         {
             // Arrange
             var classUnderTest = new TrimCsvToClassPreprocessor();
-            classUnderTest.Initialize(new CsvToClassPreprocessorAttribute(typeof(TrimCsvToClassPreprocessor)) { Order = 1 });
+            classUnderTest.Initialize(new CsvConverterOldAndNewValueAttribute(typeof(TrimCsvToClassPreprocessor)) { Order = 1 });
 
             //  Act
             string actualData =  classUnderTest.Work(inputData, ColumnName, ColumnIndex, RowNumber);

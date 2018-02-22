@@ -53,7 +53,7 @@ namespace CsvConverter.CsvToClass
 
         }
 
-        public void Initialize(CsvToClassTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
             if (attribute != null)
             {
@@ -63,5 +63,4 @@ namespace CsvConverter.CsvToClass
             }
         }
     }
-
 }

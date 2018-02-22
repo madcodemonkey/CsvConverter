@@ -81,21 +81,21 @@ namespace CsvConverter.Tests.Services
     internal class ClassTpCsvServicePostProcessorTester1
     {
         [CsvConverter(ColumnIndex = 0)]
-        [ClassToCsvReplaceTextPostprocessor(typeof(ReplaceTextEveryMatchPostProcessor), "0", null)]
+        [CsvConverterOldAndNewValue(typeof(ReplaceTextEveryMatchPostProcessor), OldValue = "0", NewValue = null)]
         public int Order { get; set; }
 
         [CsvConverter(ColumnIndex = 1)]
-        [ClassToCsvReplaceTextPostprocessor(typeof(ReplaceTextEveryMatchPostProcessor), "0", null)]
+        [CsvConverterOldAndNewValue(typeof(ReplaceTextEveryMatchPostProcessor), OldValue = "0", NewValue = null)]
         public int Age { get; set; }
 
         [CsvConverter(ColumnIndex = 2)]
-        [ClassToCsvReplaceTextPostprocessor(typeof(ReplaceTextEveryMatchPostProcessor), "Ch", "D")]
+        [CsvConverterOldAndNewValue(typeof(ReplaceTextEveryMatchPostProcessor), OldValue = "Ch", NewValue = "D")]
         public string Name { get; set; }
     }
 
 
-    [ClassToCsvReplaceTextPostprocessor(typeof(ReplaceTextEveryMatchPostProcessor), "0", null, TargetPropertyType = typeof(int), Order = 1)]
-    [ClassToCsvReplaceTextPostprocessor(typeof(ReplaceTextEveryMatchPostProcessor), "5", null, TargetPropertyType = typeof(int), Order = 2)]
+    [CsvConverterOldAndNewValue(typeof(ReplaceTextEveryMatchPostProcessor), OldValue = "0", NewValue = null, TargetPropertyType = typeof(int), Order = 1)]
+    [CsvConverterOldAndNewValue(typeof(ReplaceTextEveryMatchPostProcessor), OldValue = "5", NewValue = null, TargetPropertyType = typeof(int), Order = 2)]
     internal class ClassTpCsvServicePostProcessorTester2
     {
         [CsvConverter(ColumnIndex = 0)]

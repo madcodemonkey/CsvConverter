@@ -10,15 +10,19 @@ namespace CsvConverter.ClassToCsv
 
         public int Order { get; set; } = 1;
 
-        public void Initialize(ClassToCsvPostProcessorAttribute attribute)
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.ClassToCsvPostProcessor;
+
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
-            var postProcess = attribute as ClassToCsvReplaceTextPostprocessorAttribute;
+            var postProcess = attribute as CsvConverterOldAndNewValueAttribute;
             if (postProcess == null)
-                throw new ArgumentException($"Please use the {nameof(ClassToCsvReplaceTextPostprocessorAttribute)} attribute with this post processor ({nameof(ReplaceTextEveryMatchPostProcessor)}).");
+                throw new ArgumentException($"Please use the {nameof(CsvConverterOldAndNewValueAttribute)} attribute with this post processor ({nameof(ReplaceTextEveryMatchPostProcessor)}).");
 
             _newValue = postProcess.NewValue;
             _oldValue = postProcess.OldValue;
         }
+
+     
 
         public string Work(string csvField, string columnName, int columnIndex, int rowNumber)
         {            

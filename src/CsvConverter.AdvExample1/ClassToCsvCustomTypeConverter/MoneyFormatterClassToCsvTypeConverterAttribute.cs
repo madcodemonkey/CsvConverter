@@ -1,9 +1,9 @@
-﻿using CsvConverter.ClassToCsv;
+﻿using CsvConverter;
 using System;
 
 namespace AdvExample1
 {
-    public class MoneyFormatterClassToCsvTypeConverterAttribute : ClassToCsvTypeConverterAttribute
+    public class MoneyFormatterClassToCsvTypeConverterAttribute : CsvConverterCustomAttribute
     {
         public MoneyFormatterClassToCsvTypeConverterAttribute(Type typeConverter) : base(typeConverter) { }
 

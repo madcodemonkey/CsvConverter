@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using CsvConverter.ClassToCsv;
+using CsvConverter.CsvToClass;
 using CsvConverter.Shared;
 
 namespace CsvConverter.Mapper
 {
     public abstract class PropertyMapperBase<T>
     {
-        private List<IPropertyAttributeUpdater> _attributeUpdaters = new List<IPropertyAttributeUpdater>();
-
-        public PropertyMapperBase()
-        {
-            _attributeUpdaters.Add(new ClassToCsv.Mapper.ClassToCsvPropertyAttributeUpdater<T>());
-            _attributeUpdaters.Add(new CsvToClass.Mapper.CsvToClassPropertyAttributeUpdater<T>());
-        }
-
+        private IPropertyAttributeUpdater _classToCsvAttributeHelper = new ClassToCsv.Mapper.ClassToCsvPropertyAttributeUpdater<T>();
+        private IPropertyAttributeUpdater _csvToClassAttributeHelper = new CsvToClass.Mapper.CsvToClassPropertyAttributeUpdater<T>();
+                
         /// <summary>Looks for CsvConverterAttribute on the property using PropertyInfo
         /// and then updates any relevant info on the map</summary>
         /// <param name="newMap">The property map to examine</param>
@@ -72,8 +69,7 @@ namespace CsvConverter.Mapper
 
                 AddCsvConverterAttributesToTheMap(newMap, columnIndexDefaultValue);
 
-                _attributeUpdaters.ForEach(au => au.UpdatePropertyConverter(newMap));
-                _attributeUpdaters.ForEach(au => au.UpdatePropertyProcessors(newMap));
+                UpdatePropertyConverter(newMap);
 
                 if (ShouldMapBeAdd(newMap))
                 {
@@ -84,10 +80,69 @@ namespace CsvConverter.Mapper
             // Sort the columns the way the user wants them sorted or by column name
             mapList = mapList.OrderBy(o => o.ColumnIndex).ThenBy(o => o.ColumnName).ToList();
 
-            _attributeUpdaters.ForEach(au => au.UpdateClassProcessors(mapList));
+            UpdateClassProcessors(mapList);
             
             return mapList;
         }
+
+        private void UpdatePropertyConverter(PropertyMap newMap)
+        {
+            List<CsvConverterCustomAttribute> attributeList = newMap.PropInformation.HelpFindAllAttributes<CsvConverterCustomAttribute>();
+            foreach (var oneAttribute in attributeList)
+            {
+                var oneTypeConverter = oneAttribute.ConverterType.HelpCreateAndCastToInterface<ICsvConverter>(
+                    $"The '{newMap.PropInformation.Name}' property specified a {nameof(CsvConverterCustomAttribute)}, but there is a problem!  " +
+                    GetCustomConverterErrorMessage(oneAttribute));
+                                
+                switch (oneTypeConverter.ConverterType)
+                {
+                    case CsvConverterTypeEnum.ClassToCsvConverter:
+                        _classToCsvAttributeHelper.UpdatePropertyConverter(newMap, oneAttribute, oneTypeConverter);
+                        break;
+                    case CsvConverterTypeEnum.ClassToCsvPostProcessor:
+                        _classToCsvAttributeHelper.UpdatePropertyProcessors(newMap, oneAttribute, oneTypeConverter);
+                        break;
+                    case CsvConverterTypeEnum.CsvToClassConverter:
+                        _csvToClassAttributeHelper.UpdatePropertyConverter(newMap, oneAttribute, oneTypeConverter);
+                        break;
+                    case CsvConverterTypeEnum.CsvToClassPreProcessor:
+                        _csvToClassAttributeHelper.UpdatePropertyProcessors(newMap, oneAttribute, oneTypeConverter);
+                        break;
+                }
+            }
+        }
+
+        private void UpdateClassProcessors(List<PropertyMap> mapList)
+        {
+            // Find preprocessors attributes on the class
+            List<CsvConverterCustomAttribute> attributeList = typeof(T).HelpFindAllClassAttributes<CsvConverterCustomAttribute>();
+
+            foreach (var oneAttribute in attributeList)
+            {
+                var oneTypeConverter = oneAttribute.ConverterType.HelpCreateAndCastToInterface<ICsvConverter>(
+                    $"The {typeof(T).Name} class has specified a {nameof(CsvConverterCustomAttribute)}, but there is a problem!  " +
+                    GetCustomConverterErrorMessage(oneAttribute));
+
+                switch (oneTypeConverter.ConverterType)
+                {
+                    case CsvConverterTypeEnum.ClassToCsvPostProcessor:
+                        _classToCsvAttributeHelper.UpdateClassProcessors(mapList, oneAttribute, oneTypeConverter);
+                        break;
+                    case CsvConverterTypeEnum.CsvToClassPreProcessor:
+                        _csvToClassAttributeHelper.UpdateClassProcessors(mapList, oneAttribute, oneTypeConverter);
+                        break;
+                }
+            }
+        }
+
+        private string GetCustomConverterErrorMessage(CsvConverterCustomAttribute oneAttribute)
+        {
+            return $"All custom converters should inherit from either {nameof(IClassToCsvTypeConverter)}, {nameof(ICsvToClassTypeConverter)}, " +
+                    $"{nameof(IClassToCsvPostprocessor)} or {nameof(ICsvToClassPreprocessor)}. All of these interfaces inherit " +
+                    $"{nameof(ICsvConverter)} so the {nameof(oneAttribute.ConverterType)} type found in {nameof(CsvConverterCustomAttribute)} " +
+                    $"is not a proper converter.";
+        }
+
 
         /// <summary>Extracts column names for the AltColumnNames property on the CsvConverterAttribute</summary>
         /// <param name="columnNames">Comma delimited column names</param>

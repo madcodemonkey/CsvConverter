@@ -100,7 +100,7 @@ namespace CsvConverter.Tests.Readers
 
         public int Age { get; set; }
 
-        [ClassToCsvTypeConverter(typeof(TrimClassToCsvTypeConverter))]
+        [CsvConverterCustom(typeof(TrimClassToCsvTypeConverter))]
         public string Name { get; set; }
     }
 
@@ -108,7 +108,7 @@ namespace CsvConverter.Tests.Readers
     {
         public int Month { get; set; }
 
-        [ClassToCsvTypeConverter(typeof(TrimClassToCsvTypeConverter))]
+        [CsvConverterCustom(typeof(TrimClassToCsvTypeConverter))]
         public int Age { get; set; }
     
         public string Name { get; set; }

@@ -1,4 +1,5 @@
-﻿using CsvConverter.ClassToCsv;
+﻿using CsvConverter;
+using CsvConverter.ClassToCsv;
 using System;
 
 namespace AdvExample1
@@ -6,6 +7,10 @@ namespace AdvExample1
     public class MoneyFormatterClassToCsvTypeConverter: IClassToCsvTypeConverter
     {
         private string _formatString;
+
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.ClassToCsvConverter;
+
+        public int Order => 999;
 
         public bool CanHandleThisInputType(Type inputType)
         {
@@ -25,7 +30,7 @@ namespace AdvExample1
             return ((decimal)value).ToString(_formatString);            
         }
 
-        public void Initialize(ClassToCsvTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
             MoneyFormatterClassToCsvTypeConverterAttribute myAttribute = attribute as MoneyFormatterClassToCsvTypeConverterAttribute;
             if (myAttribute == null)

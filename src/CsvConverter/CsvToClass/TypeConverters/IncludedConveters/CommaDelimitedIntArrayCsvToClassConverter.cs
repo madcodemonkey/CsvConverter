@@ -5,6 +5,10 @@ namespace CsvConverter.CsvToClass
     /// <summary>Turns a comma delimited array of integers into an int array or throws an exception if they cannot be parsed.</summary>
     public class CommaDelimitedIntArrayCsvToClassConverter : ICsvToClassTypeConverter
     {
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassConverter;
+
+        public int Order => 999;
+
         public bool CanOutputThisType(Type outputType)
         {
             return outputType == typeof(int[]);
@@ -37,10 +41,9 @@ namespace CsvConverter.CsvToClass
         }
 
      
-        public void Initialize(CsvToClassTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
             
         }
     }
-
 }

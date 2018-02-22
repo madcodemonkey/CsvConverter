@@ -11,8 +11,8 @@ namespace CsvConverter.CsvToClass
         {
             return outputType == typeof(DateTime) || outputType == typeof(DateTime?);
         }
-          
-        public string DateParseExactFormat { get; set; }
+
+         public string DateParseExactFormat { get; set; }
         public IFormatProvider DateFormatProvider { get; set; } = CultureInfo.InvariantCulture;
         public DateTimeStyles DateStyle { get; set; } = DateTimeStyles.None;
 
@@ -44,7 +44,7 @@ namespace CsvConverter.CsvToClass
             return null;
         }
 
-        public void Initialize(CsvToClassTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
             if (attribute != null)
             {
@@ -55,7 +55,6 @@ namespace CsvConverter.CsvToClass
                     DateStyle = dateInteface.DateStyle;
                 }
             }
-
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using CsvConverter.CsvToClass;
+﻿using CsvConverter;
+using CsvConverter.CsvToClass;
 using System;
 
 namespace AdvExample1
@@ -11,12 +12,14 @@ namespace AdvExample1
 
         public int Order { get; set; } = 999;
 
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassPreProcessor;
+
         public bool CanProcessType(Type theType)
         {
             return theType == typeof(string);
         }
 
-        public void Initialize(CsvToClassPreprocessorAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
             var myAttribute = attribute as TextLengthEnforcerPreprocessorAttribute;
             if (myAttribute == null)

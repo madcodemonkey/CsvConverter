@@ -9,6 +9,9 @@ namespace CsvConverter.ClassToCsv
         {
             return inputType == typeof(float) || inputType == typeof(float?);
         }
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.ClassToCsvConverter;
+
+        public int Order { get; set; } = 999;
 
         public string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, int rowNumber, IObjectToStringDefaultConverters defaultConverters)
         {
@@ -28,7 +31,7 @@ namespace CsvConverter.ClassToCsv
             return data.ToString(stringFormat);
         }
 
-        public void Initialize(ClassToCsvTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
         }
     }

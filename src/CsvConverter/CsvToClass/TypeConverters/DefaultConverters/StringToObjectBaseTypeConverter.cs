@@ -5,6 +5,10 @@ namespace CsvConverter.CsvToClass
 {
     public abstract class StringToObjectBaseTypeConverter
     {
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassConverter;
+
+        public int Order => 999;
+
         protected void ThrowCannotConvertError(Type theType, string stringValue, string columnName, int columnIndex, int rowNumber)
         {
             throw new ArgumentException($"The {nameof(StringToObjectDefaultConverters)} converter cannot parse the string " +

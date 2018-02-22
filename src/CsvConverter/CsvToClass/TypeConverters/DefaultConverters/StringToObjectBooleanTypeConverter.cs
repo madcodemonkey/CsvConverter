@@ -41,10 +41,9 @@ namespace CsvConverter.CsvToClass
             return false; // Never reached!
         }
 
-        public void Initialize(CsvToClassTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
             // Nothing on the attribute is needed
         }
     }
-
 }

@@ -248,7 +248,7 @@ namespace CsvConverter.Tests.Services
 
     }
 
-    [CsvToClassPreprocessor(typeof(TrimCsvToClassPreprocessor), TargetPropertyType = typeof(string))]
+    [CsvConverterCustom(typeof(TrimCsvToClassPreprocessor), TargetPropertyType = typeof(string))]
     internal class CsvServiceTrimPreprocessorTestClass
     {
         public int Order { get; set; }
@@ -264,12 +264,12 @@ namespace CsvConverter.Tests.Services
         public int Order { get; set; }
         public string FirstName { get; set; }
 
-        [CsvToClassPreprocessor(typeof(TrimCsvToClassPreprocessor))]
+        [CsvConverterCustom(typeof(TrimCsvToClassPreprocessor))]
         public string LastName { get; set; }
     }
 
 
-    [CsvToClassPreprocessor(typeof(StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessor), TargetPropertyType = typeof(string))]
+    [CsvConverterCustom(typeof(StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessor), TargetPropertyType = typeof(string))]
     internal class CsvServiceWhiteSpacePreprocessorTestClass
     {
         public int Order { get; set; }
@@ -277,8 +277,8 @@ namespace CsvConverter.Tests.Services
         public string Name { get; set; }
     }
 
-    [CsvToClassPreprocessor(typeof(StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessor), TargetPropertyType = typeof(string), Order = 1)]
-    [CsvToClassPreprocessor(typeof(TrimCsvToClassPreprocessor), TargetPropertyType = typeof(string), Order = 2)]
+    [CsvConverterCustom(typeof(StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessor), TargetPropertyType = typeof(string), Order = 1)]
+    [CsvConverterCustom(typeof(TrimCsvToClassPreprocessor), TargetPropertyType = typeof(string), Order = 2)]
     internal class CsvServiceMultipleOnClassPreprocessorTestClass
     {
         public int Order { get; set; }
@@ -291,8 +291,8 @@ namespace CsvConverter.Tests.Services
     {
         public int Order { get; set; }
 
-        [CsvToClassPreprocessor(typeof(StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessor), Order = 1)]
-        [CsvToClassPreprocessor(typeof(TrimCsvToClassPreprocessor), Order = 2)]
+        [CsvConverterCustom(typeof(StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessor), Order = 1)]
+        [CsvConverterCustom(typeof(TrimCsvToClassPreprocessor), Order = 2)]
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }

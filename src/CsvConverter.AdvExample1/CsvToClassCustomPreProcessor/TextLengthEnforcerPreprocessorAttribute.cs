@@ -1,9 +1,9 @@
-﻿using CsvConverter.CsvToClass;
+﻿using CsvConverter;
 using System;
 
 namespace AdvExample1
 {
-    public class TextLengthEnforcerPreprocessorAttribute : CsvToClassPreprocessorAttribute
+    public class TextLengthEnforcerPreprocessorAttribute : CsvConverterCustomAttribute
     {
         public TextLengthEnforcerPreprocessorAttribute() : base(typeof(TextLengthEnforcerPreprocessor)) { }
 

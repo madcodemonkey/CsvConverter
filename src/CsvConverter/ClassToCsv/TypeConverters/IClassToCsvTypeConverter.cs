@@ -2,7 +2,7 @@
 
 namespace CsvConverter.ClassToCsv
 {
-    public interface IClassToCsvTypeConverter
+    public interface IClassToCsvTypeConverter : ICsvConverter
     {
         /// <summary>This method is called to make sure that the converter can process the type into a string.</summary>
         /// <param name="theType">The class property type of the source.</param>
@@ -20,8 +20,5 @@ namespace CsvConverter.ClassToCsv
         /// <returns>A string to write out to the CSV column</returns>
         string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, int rowNumber,
             IObjectToStringDefaultConverters defaultConverters);
-
-        /// <summary>Used to pass the attribute to the converter in case it needs any optional inputs.</summary>
-        void Initialize(ClassToCsvTypeConverterAttribute attribute);
     }
 }

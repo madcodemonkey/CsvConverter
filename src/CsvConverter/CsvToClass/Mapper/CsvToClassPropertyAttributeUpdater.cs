@@ -8,82 +8,80 @@ namespace CsvConverter.CsvToClass.Mapper
 {
     internal class CsvToClassPropertyAttributeUpdater<T> : IPropertyAttributeUpdater
     {
-        public void UpdateClassProcessors(List<PropertyMap> mapList)
+        public void UpdateClassProcessors(List<PropertyMap> mapList, CsvConverterCustomAttribute oneAttribute, ICsvConverter converter)
         {
-            // Find preprocessors attributes on the class
-            List<CsvToClassPreprocessorAttribute> attributeList = typeof(T).HelpFindAllClassAttributes<CsvToClassPreprocessorAttribute>();
-            if (attributeList.Count == 0)
-                return;
-
-            foreach (var oneAttribute in attributeList)
+            var onePreprocessor = converter as ICsvToClassPreprocessor;
+            if (onePreprocessor == null)
             {
-                var onePreprocessor = oneAttribute.Preprocessor.HelpCreateAndCastToInterface<ICsvToClassPreprocessor>(
-                    "Could not create preprocessor!  Make sure that you have not paired your converter with the WRONG attribute.");
+                throw new CsvConverterAttributeException($"The {typeof(T).Name} class has specified a type converter ({oneAttribute.ConverterType.Name}) " +
+                    $"that has declared itself as a {converter.ConverterType}, but the converter does " +
+                    $"not implement the {nameof(ICsvToClassPreprocessor)} interface.");
+            }
 
-                foreach (var map in mapList)
+            foreach (var map in mapList)
+            {
+                if (map.IgnoreWhenWriting)
+                    continue;
+
+                // All properties get this Post Processor
+                // OR
+                // Only certain properties get this Post Processor
+                if (oneAttribute.TargetPropertyType == null || oneAttribute.TargetPropertyType == map.PropInformation.PropertyType)
                 {
-                    if (map.IgnoreWhenReading)
-                        continue;
-
-                    // All properties get this preprocessor
-                    // OR
-                    // Only certain properties get this preprocessor
-                    if (oneAttribute.TargetPropertyType == null || oneAttribute.TargetPropertyType == map.PropInformation.PropertyType)
-                    {
-                        AddOnePreprocessor(oneAttribute, map, onePreprocessor);
-                    }
+                    AddOnePreprocessor(oneAttribute, map, onePreprocessor);
                 }
             }
         }
 
-        public void UpdatePropertyConverter(PropertyMap newMap)
+        public void UpdatePropertyConverter(PropertyMap newMap, CsvConverterCustomAttribute oneAttribute, ICsvConverter converter)
         {
-            List<CsvToClassTypeConverterAttribute> attributeList = newMap.PropInformation.HelpFindAllAttributes<CsvToClassTypeConverterAttribute>();
-            if (attributeList.Count == 1)
+            var csvToclassConverter = converter as ICsvToClassTypeConverter;
+            if (csvToclassConverter == null)
             {
-                CsvToClassTypeConverterAttribute oneAttribute = attributeList[0];
-
-                var oneTypeConverter = oneAttribute.TypeConverter.HelpCreateAndCastToInterface<ICsvToClassTypeConverter>(
-                    $"The '{newMap.PropInformation.Name}' property specified a type converter, but there is a problem!  " +
-                    "Make sure that you have not paired your converter with the WRONG attribute.");
-
-                if (oneTypeConverter.CanOutputThisType(newMap.PropInformation.PropertyType) == false)
-                {
-                    throw new CsvConverterAttributeException("Convert type mismatch!  The type converter " +
-                        $"{oneAttribute.TypeConverter.Name} cannot process the class property named {newMap.PropInformation.Name}, " +
-                        $"which is has a type of {newMap.PropInformation.PropertyType.Name}!");
-                }
-
-                oneTypeConverter.Initialize(oneAttribute);
-                newMap.CsvFieldTypeConverter = oneTypeConverter;
+                throw new CsvConverterAttributeException($"The '{newMap.PropInformation.Name}' property specified a type converter " +
+                     $" ({oneAttribute.ConverterType.Name}) that has declared itself as a csv to class converter, but the converter does " +
+                     $"not implement the {nameof(ICsvToClassTypeConverter)} interface.");
             }
-            else if (attributeList.Count > 1)
+
+            if (newMap.CsvFieldTypeConverter != null)
             {
-                throw new CsvConverterAttributeException($"You can only have ONE attribute that derives from {nameof(CsvToClassTypeConverterAttribute)} " +
-                    $"assigned to a given property!  There are two assigned to the class property named {newMap.PropInformation.Name}!");
+                throw new CsvConverterAttributeException($"The '{newMap.PropInformation.Name}' property has specified more than one csv to class converter!  " +
+                    "Only one csv to class  converter may be specified per property.");
             }
+
+
+            if (csvToclassConverter.CanOutputThisType(newMap.PropInformation.PropertyType))
+            {
+                csvToclassConverter.Initialize(oneAttribute);
+                newMap.CsvFieldTypeConverter = csvToclassConverter;
+            }
+            else
+            {
+                throw new CsvConverterAttributeException($"The '{newMap.PropInformation.Name}' property specified a type converter " +
+                    $" ({oneAttribute.ConverterType.Name}), but the convert does not work on a property " +
+                    $"of type {newMap.PropInformation.PropertyType}!");
+            }
+
+
         }
 
-        public void UpdatePropertyProcessors(PropertyMap newMap)
+        public void UpdatePropertyProcessors(PropertyMap newMap, CsvConverterCustomAttribute oneAttribute, ICsvConverter converter)
         {
-            List<CsvToClassPreprocessorAttribute> attributeList = newMap.PropInformation.HelpFindAllAttributes<CsvToClassPreprocessorAttribute>();
-            if (attributeList.Count == 0)
-                return;
-
-            foreach (var oneAttribute in attributeList)
+            var onePreprocessor = converter as ICsvToClassPreprocessor;
+            if (onePreprocessor == null)
             {
-                var onePreprocessor = oneAttribute.Preprocessor.HelpCreateAndCastToInterface<ICsvToClassPreprocessor>(
-                    $"The '{newMap.PropInformation.Name}' property specified a preprocessor, but there is a problem!  " +
-                    "Make sure that you have not paired your preprocessor with the WRONG attribute.");
-
-                AddOnePreprocessor(oneAttribute, newMap, onePreprocessor);
+                throw new CsvConverterAttributeException($"The '{newMap.PropInformation.Name}' property specified a type converter " +
+                     $" ({oneAttribute.ConverterType.Name}) that has declared itself as a {converter.ConverterType}, but the converter does " +
+                     $"not implement the {nameof(ICsvToClassPreprocessor)} interface.");
             }
-
+            
+            AddOnePreprocessor(oneAttribute, newMap, onePreprocessor);
+            
             // Sort the preprocessors if there is more than one.
             if (newMap.CsvFieldPreprocessors.Count > 0)
                 newMap.CsvFieldPreprocessors = newMap.CsvFieldPreprocessors.OrderBy(o => o.Order).ToList();
         }
-        private void AddOnePreprocessor(CsvToClassPreprocessorAttribute oneAttribute, PropertyMap map, ICsvToClassPreprocessor preprocessor)
+        private void AddOnePreprocessor(CsvConverterCustomAttribute oneAttribute, PropertyMap map, ICsvToClassPreprocessor preprocessor)
         {
             if (preprocessor.CanProcessType(map.PropInformation.PropertyType))
             {
@@ -93,7 +91,7 @@ namespace CsvConverter.CsvToClass.Mapper
             else
             {
                 throw new CsvConverterAttributeException($"The '{map.PropInformation.Name}' property specified a type preprocessor " +
-                    $" ({oneAttribute.Preprocessor.Name}), but the preprocessor does not work on a property " +
+                    $" ({oneAttribute.ConverterType.Name}), but the preprocessor does not work on a property " +
                     $"of type {map.PropInformation.PropertyType}!");
             }
         }

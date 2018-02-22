@@ -1,4 +1,4 @@
-﻿using CsvConverter.CsvToClass;
+﻿using CsvConverter;
 
 namespace AdvExample1
 {
@@ -13,11 +13,11 @@ namespace AdvExample1
         public int Year { get; set; }
 
         [MoneyFormatterClassToCsvTypeConverter(typeof(MoneyFormatterClassToCsvTypeConverter), Format = "C2")]
-        [CsvToClassTypeConverter(typeof(MoneyTypeConverter))]
+        [CsvConverterCustom(typeof(MoneyTypeConverter))]
         public decimal PurchasePrice { get; set; }
         
         [MoneyFormatterClassToCsvTypeConverter(typeof(MoneyFormatterClassToCsvTypeConverter), Format ="C2")]
-        [CsvToClassTypeConverter(typeof(MoneyTypeConverter))]
+        [CsvConverterCustom(typeof(MoneyTypeConverter))]
         public double CurrentValue { get; set; }
 
         public override string ToString()

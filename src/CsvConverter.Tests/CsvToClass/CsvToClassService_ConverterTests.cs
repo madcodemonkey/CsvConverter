@@ -105,7 +105,7 @@ namespace CsvConverter.Tests.Services
         public int Order { get; set; }
 
         
-        [CsvToClassTypeConverter(typeof(PercentCsvToClassConverter))]
+        [CsvConverterCustom(typeof(PercentCsvToClassConverter))]
         public decimal Percentage { get; set; }
     }
 
@@ -113,7 +113,7 @@ namespace CsvConverter.Tests.Services
     {
         public int Order { get; set; }
 
-        [CsvToClassTypeConverter(typeof(PercentCsvToClassConverter))]
+        [CsvConverterCustom(typeof(PercentCsvToClassConverter))]
         public double Percentage { get; set; }
     }
 
@@ -121,7 +121,7 @@ namespace CsvConverter.Tests.Services
     {
         public int Order { get; set; }
 
-        [CsvToClassTypeConverter(typeof(CommaDelimitedIntArrayCsvToClassConverter))]
+        [CsvConverterCustom(typeof(CommaDelimitedIntArrayCsvToClassConverter))]
         public int[] Ages { get; set; }
     }
 

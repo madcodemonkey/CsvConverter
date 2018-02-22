@@ -1,4 +1,4 @@
-﻿namespace CsvConverter.TypeConverters
+﻿namespace CsvConverter
 {
     public interface IDoubleConverterSettings
     {

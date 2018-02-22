@@ -6,6 +6,10 @@ namespace CsvConverter.CsvToClass
     /// <summary>Converts a string to a decimal value and the rounds it to the nearest integer.</summary>
     public class DecimalToIntCsvToClassConverter : ICsvToClassTypeConverter
     {
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassConverter;
+
+        public int Order => 999;
+
         public bool CanOutputThisType(Type outputType)
         {
             return outputType == typeof(int) || outputType == typeof(int?);
@@ -26,7 +30,7 @@ namespace CsvConverter.CsvToClass
             return (int)number;
         }
 
-        public void Initialize(CsvToClassTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
 
         }

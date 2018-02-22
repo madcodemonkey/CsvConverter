@@ -1,4 +1,5 @@
 ﻿using System;
+using CsvConverter;
 using CsvConverter.ClassToCsv;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -16,7 +17,7 @@ namespace ClassToCsv.Tests.ClassToCsv.Postprocessor
         public void CanReplaceText(string csvField, string oldValue, string newValue, string expectedResult)
         {
             // Arrange 
-            var attribute = new ClassToCsvReplaceTextPostprocessorAttribute(typeof(ReplaceTextEveryMatchPostProcessor), oldValue, newValue);
+            var attribute = new CsvConverterOldAndNewValueAttribute(typeof(ReplaceTextEveryMatchPostProcessor)) { OldValue = oldValue, NewValue = newValue };
 
             var classUnderTest = new ReplaceTextEveryMatchPostProcessor();
             classUnderTest.Initialize(attribute);
@@ -33,7 +34,7 @@ namespace ClassToCsv.Tests.ClassToCsv.Postprocessor
         public void PassingInTheWrongTypeOfPostProcessor_ResultsInException()
         {
             // Arrange 
-            var attribute = new ClassToCsvPostProcessorAttribute(typeof(ReplaceTextEveryMatchPostProcessor));
+            var attribute = new CsvConverterCustomAttribute(typeof(ReplaceTextEveryMatchPostProcessor));
             var classUnderTest = new ReplaceTextEveryMatchPostProcessor();
             classUnderTest.Initialize(attribute);
 
@@ -48,7 +49,7 @@ namespace ClassToCsv.Tests.ClassToCsv.Postprocessor
         public void SpecifyingAnOldValueOfNullIsNotAllowed_ResultsInException()
         {
             // Arrange 
-            var attribute = new ClassToCsvReplaceTextPostprocessorAttribute(typeof(ReplaceTextEveryMatchPostProcessor), null, "Some new value");
+            var attribute = new CsvConverterOldAndNewValueAttribute(typeof(ReplaceTextEveryMatchPostProcessor)) { OldValue = null, NewValue = "Some new value" };
             var classUnderTest = new ReplaceTextEveryMatchPostProcessor();
             classUnderTest.Initialize(attribute);
 
@@ -61,7 +62,7 @@ namespace ClassToCsv.Tests.ClassToCsv.Postprocessor
         public void SpecifyingAnOldValueOfZeroLengthIsNotAllowed_ResultsInException()
         {
             // Arrange 
-            var attribute = new ClassToCsvReplaceTextPostprocessorAttribute(typeof(ReplaceTextEveryMatchPostProcessor), "", "Some new value");
+            var attribute = new CsvConverterOldAndNewValueAttribute(typeof(ReplaceTextEveryMatchPostProcessor)) { OldValue = "", NewValue = "Some new value" };
             var classUnderTest = new ReplaceTextEveryMatchPostProcessor();
             classUnderTest.Initialize(attribute);
 

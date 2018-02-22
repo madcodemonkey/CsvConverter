@@ -9,12 +9,14 @@ namespace CsvConverter.ClassToCsv
         private string _oldValue;
 
         public int Order { get; set; } = 1;
-        
-        public void Initialize(ClassToCsvPostProcessorAttribute attribute)
+
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.ClassToCsvPostProcessor;
+
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
-            var postProcess = attribute as ClassToCsvReplaceTextPostprocessorAttribute;
+            var postProcess = attribute as CsvConverterOldAndNewValueAttribute;
             if (postProcess == null)
-                throw new ArgumentException($"Please use the {nameof(ClassToCsvReplaceTextPostprocessorAttribute)} attribute with this post processor ({nameof(ReplaceTextEveryMatchPostProcessor)}).");
+                throw new ArgumentException($"Please use the {nameof(CsvConverterOldAndNewValueAttribute)} attribute with this post processor ({nameof(ReplaceTextEveryMatchPostProcessor)}).");
             if (postProcess.OldValue == null)
                 throw new ArgumentException($"The string replace method will NOT allow you to specify a null for the old value!  This is the value it is searching for and null will not be found.");
             if (postProcess.OldValue == null || postProcess.OldValue.Length == 0)

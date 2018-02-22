@@ -3,7 +3,7 @@ using CsvConverter.Shared;
 
 namespace CsvConverter.CsvToClass
 {
-    public interface ICsvToClassTypeConverter
+    public interface ICsvToClassTypeConverter : ICsvConverter
     {
         /// <summary>This method is called to make sure that the convert can process the string into a object that 
         /// will eventually be assigned to a class property.</summary>
@@ -20,8 +20,5 @@ namespace CsvConverter.CsvToClass
         /// <param name="defaultConverters">The default string to object converter is injected in case you are only making minor tweaks to 
         /// the CSV field input before using the default converter.</param>
         object Convert(Type targetType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectDefaultConverters defaultConverters);
-
-        /// <summary>Used to pass the attribute to the converter in case it needs any optional inputs.</summary>
-        void Initialize(CsvToClassTypeConverterAttribute attribute);
     }
 }

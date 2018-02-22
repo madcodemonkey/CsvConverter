@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using CsvConverter;
 using CsvConverter.CsvToClass;
 using CsvConverter.Shared;
 
@@ -7,6 +8,10 @@ namespace AdvExample1
 {
     public class MoneyTypeConverter : ICsvToClassTypeConverter
     {
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassConverter;
+
+        public int Order => 999;
+
         public bool CanOutputThisType(Type outputType)
         {
             return outputType == typeof(decimal) || outputType == typeof(decimal?) ||
@@ -29,9 +34,10 @@ namespace AdvExample1
             return decimal.Parse(stringValue, NumberStyles.Currency);
         }
 
-        public void Initialize(CsvToClassTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
           
         }
+
     }
 }

@@ -29,10 +29,9 @@ namespace CsvConverter.CsvToClass
             return (byte)0; // never reached
         }
 
-        public void Initialize(CsvToClassTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
             // Nothing on the attribute is needed
         }
     }
-
 }

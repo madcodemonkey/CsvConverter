@@ -33,6 +33,5 @@ namespace CsvConverter
         /// prevent column from being created in the CSV file.
         /// READING CSV FILES:  Not used.</summary>
         public bool IgnoreWhenWriting { get; set; } = false;
-
     }
 }

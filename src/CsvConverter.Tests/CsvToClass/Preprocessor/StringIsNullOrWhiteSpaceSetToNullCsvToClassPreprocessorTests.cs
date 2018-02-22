@@ -20,7 +20,7 @@ namespace CsvConverter.Tests
         {
             // Arrange
             var classUnderTest = new StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessor();
-            classUnderTest.Initialize(new CsvToClassPreprocessorAttribute(typeof(StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessor)) { Order = 1});
+            classUnderTest.Initialize(new CsvConverterCustomAttribute(typeof(StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessor)) { Order = 1});
 
             //  Act
             string actualData =  classUnderTest.Work(inputData, ColumnName, ColumnIndex, RowNumber);

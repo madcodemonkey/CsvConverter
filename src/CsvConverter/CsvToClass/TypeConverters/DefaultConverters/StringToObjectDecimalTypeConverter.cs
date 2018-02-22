@@ -13,6 +13,7 @@ namespace CsvConverter.CsvToClass
         }
 
         public int NumberOfDecimalPlaces { get; set; } = -1;  // Not specified
+            
 
         public object Convert(Type targetType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectDefaultConverters defaultConverter)
         {
@@ -52,7 +53,7 @@ namespace CsvConverter.CsvToClass
             return Convert(targetType, convertSpecialStrings, columnName, columnIndex, rowNumber, defaultConverter);
         }
 
-        public void Initialize(CsvToClassTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
             if (attribute != null)
             {

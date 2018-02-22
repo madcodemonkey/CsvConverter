@@ -44,8 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassToCsv\Attributes\ClassToCsvPostprocessorAttribute.cs" />
-    <Compile Include="ClassToCsv\Attributes\ClassToCsvReplaceTextPostprocessorAttribute.cs" />
+    <Compile Include="Attributes\CsvConverterCustomAttribute.cs" />
+    <Compile Include="Attributes\CsvConverterDateTimeStylesAttribute.cs" />
+    <Compile Include="Attributes\CsvConverterDecimalPlacesAttribute.cs" />
+    <Compile Include="Attributes\CsvConverterOldAndNewValueAttribute.cs" />
     <Compile Include="ClassToCsv\Configuration\ClassToCsvConfiguration.cs" />
     <Compile Include="ClassToCsv\Mapper\ClassToCsvPropertyAttributeUpdater.cs" />
     <Compile Include="ClassToCsv\PostProcessor\IClassToCsvPostprocessor.cs" />
@@ -61,18 +63,15 @@
     <Compile Include="ClassToCsv\TypeConverters\DefaultConverters\ObjectToStringIntTypeConverter.cs" />
     <Compile Include="ClassToCsv\TypeConverters\DefaultConverters\ObjectToStringLongTypeConverter.cs" />
     <Compile Include="ClassToCsv\TypeConverters\DefaultConverters\ObjectToStringShortTypeConverter.cs" />
+    <Compile Include="Common\CsvConverterTypeEnum.cs" />
     <Compile Include="Common\Exceptions\CsvConverterAttributeException.cs" />
     <Compile Include="Common\Mapper\IPropertyAttributeUpdater.cs" />
     <Compile Include="Common\TypeConverters\BooleanOutputFormatEnum.cs" />
-    <Compile Include="Common\Attributes\CsvConverterAttribute.cs" />
-    <Compile Include="ClassToCsv\Attributes\ClassToCsvTypeConverterAttribute.cs" />
+    <Compile Include="Attributes\CsvConverterAttribute.cs" />
     <Compile Include="Common\TypeConverters\BooleanConverterSettings.cs" />
     <Compile Include="Common\TypeConverters\IBooleanConverterSettings.cs" />
-    <Compile Include="CsvToClass\Attributes\CsvToClassDateTimeTypeConverterAttribute.cs" />
-    <Compile Include="CsvToClass\Attributes\CsvToClassDecimalTypeConverterAttribute.cs" />
-    <Compile Include="CsvToClass\Attributes\CsvToClassDoubleTypeConverterAttribute.cs" />
-    <Compile Include="CsvToClass\Attributes\CsvToClassTypeConverterAttribute.cs" />
-    <Compile Include="CsvToClass\Attributes\CsvToClassPreprocessorAttribute.cs" />
+    <Compile Include="Common\ICsvConverter.cs" />
+    <Compile Include="CsvToClass\Preprocessor\TextReplacerCsvToClassPreprocessor.cs" />
     <Compile Include="Common\Mapper\ColumnMap.cs" />
     <Compile Include="Common\TypeConverters\DateConverterSettings.cs" />
     <Compile Include="Common\TypeConverters\DecimalConverterSettings.cs" />
@@ -88,7 +87,6 @@
     <Compile Include="Common\Mapper\IPropertyMap.cs" />
     <Compile Include="Common\Mapper\PropertyMapperBase.cs" />
     <Compile Include="CsvToClass\Preprocessor\ICsvToClassPreprocessor.cs" />
-    <Compile Include="CsvToClass\Preprocessor\TextRemoverCsvToClassPreprocessor.cs" />
     <Compile Include="CsvToClass\Preprocessor\StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessor.cs" />
     <Compile Include="CsvToClass\Preprocessor\TrimCsvToClassPreprocessor.cs" />
     <Compile Include="Common\RowTools\IRowWriter.cs" />

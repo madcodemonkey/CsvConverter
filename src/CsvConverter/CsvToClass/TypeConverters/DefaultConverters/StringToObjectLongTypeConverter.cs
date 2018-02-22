@@ -35,7 +35,7 @@ namespace CsvConverter.CsvToClass
             return (long)0;
         }
 
-        public void Initialize(CsvToClassTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
             // Nothing on the attribute is needed
         }

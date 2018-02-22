@@ -2,18 +2,13 @@
 
 namespace CsvConverter.CsvToClass
 {
-    public interface ICsvToClassPreprocessor
+    public interface ICsvToClassPreprocessor : ICsvConverter
     {
-        /// <summary>The order that the processor should be processed if there is more than one.</summary>
-        int Order { get; set; }
-
         /// <summary>This method is called to make sure that the preprocessor can handle the string when the
         /// target class property is of theType.  If it returns false, a preprocessor of this type is NOT
         /// created for the property and thus is not used.</summary>
         /// <param name="theType">The class property type that it will eventually be used for.</param>
         bool CanProcessType(Type theType);
-
-        void Initialize(CsvToClassPreprocessorAttribute attribute);
 
         /// <summary>Passes in a csv field.  It can be manipulated in any way you see fit and then 
         /// finally a string is returned for the service to process.</summary>

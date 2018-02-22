@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using CsvConverter.CsvToClass;
 using CsvConverter.RowTools;
+using CsvConverter.TypeConverters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -90,6 +91,21 @@ namespace CsvConverter.Tests.Services
         }
 
         [TestMethod]
+        public void StupidTest()
+        {
+            var converter = new CsvConverterDecimalPlacesAttribute(typeof(StringToObjectDecimalTypeConverter));
+            // converter.NumberOfDecimalPlaces = 4;
+
+            var ee = converter as CsvConverterCustomAttribute;
+
+            var dd = ee as IDoubleConverterSettings;
+
+            Assert.IsNotNull(dd);
+
+        }
+
+
+        [TestMethod]
         public void CanHandleSpecializedAttributes()
         {
             // Arrange
@@ -171,19 +187,19 @@ namespace CsvConverter.Tests.Services
     {
         public int Order { get; set; }
 
-        [CsvToClassDateTimeTypeConverter(DateParseExactFormat = "yyyy-MM-dd HH:mm:ss", DateStyle = DateTimeStyles.None)]
+        [CsvConverterDateTimeStyles(typeof(StringToObjectDateTimeTypeConverter),  DateParseExactFormat = "yyyy-MM-dd HH:mm:ss", DateStyle = DateTimeStyles.None)]
         public DateTime BirthDay { get; set; }
 
-        [CsvToClassDecimalTypeConverter(NumberOfDecimalPlaces = 2)]
+        [CsvConverterDecimalPlacesAttribute(typeof(StringToObjectDecimalTypeConverter), NumberOfDecimalPlaces = 2)]
         public decimal PercentageBodyFat { get; set; }
 
-        [CsvToClassDecimalTypeConverter(NumberOfDecimalPlaces = 1)]
+        [CsvConverterDecimalPlacesAttribute(typeof(StringToObjectDecimalTypeConverter), NumberOfDecimalPlaces = 1)]
         public decimal PercentageMuscle { get; set; }
 
-        [CsvToClassDoubleTypeConverter(NumberOfDecimalPlaces = 3)]
+        [CsvConverterDecimalPlacesAttribute(typeof(StringToObjectDoubleTypeConverter), NumberOfDecimalPlaces = 3)]
         public double Length { get; set; }
 
-        [CsvToClassDoubleTypeConverter(NumberOfDecimalPlaces = 4)]
+        [CsvConverterDecimalPlaces(typeof(StringToObjectDoubleTypeConverter), NumberOfDecimalPlaces = 4)]
         public double LengthArms { get; set; }
     }
 

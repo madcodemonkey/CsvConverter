@@ -189,7 +189,7 @@ namespace CsvConverter.Tests.Readers
             Assert.AreEqual(2, columnMap.CsvFieldPreprocessors.Count, "Should be two of them!");
 
 
-            Assert.AreEqual(typeof(TextRemoverCsvToClassPreprocessor), firstPreprocessor.GetType());
+            Assert.AreEqual(typeof(TextReplacerCsvToClassPreprocessor), firstPreprocessor.GetType());
             Assert.AreEqual(typeof(TrimCsvToClassPreprocessor), secondPreprocessor.GetType());
         }
 
@@ -265,13 +265,13 @@ namespace CsvConverter.Tests.Readers
       
     internal class ReaderAttributeTestExample
     {
-        [CsvToClassTypeConverter(typeof(DecimalToIntCsvToClassConverter))]
+        [CsvConverterCustom(typeof(DecimalToIntCsvToClassConverter))]
         public int Month { get; set; }
 
         public int Age { get; set; }
 
-        [CsvToClassPreprocessor(typeof(TextRemoverCsvToClassPreprocessor), StringInput = "#", Order = 1)]
-        [CsvToClassPreprocessor(typeof(TrimCsvToClassPreprocessor), Order = 2)]
+        [CsvConverterOldAndNewValue(typeof(TextReplacerCsvToClassPreprocessor), OldValue ="#", NewValue ="", Order = 1)]
+        [CsvConverterCustom(typeof(TrimCsvToClassPreprocessor), Order = 2)]
         public string Name { get; set; }
     }
 }

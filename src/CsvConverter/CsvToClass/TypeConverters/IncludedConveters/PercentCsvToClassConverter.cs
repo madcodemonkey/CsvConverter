@@ -5,7 +5,11 @@ namespace CsvConverter.CsvToClass
 {
     /// <summary>Turns a string that is a percentage into a decimal value or throws an exception if the conversion fails.</summary>
     public class PercentCsvToClassConverter : ICsvToClassTypeConverter
-    { 
+    {
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassConverter;
+
+        public int Order => 999;
+
         public bool CanOutputThisType(Type outputType)
         {
             return outputType == typeof(decimal) || outputType == typeof(decimal?);
@@ -43,7 +47,7 @@ namespace CsvConverter.CsvToClass
         }
 
 
-        public void Initialize(CsvToClassTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
 
         }

@@ -14,7 +14,7 @@ namespace CsvConverter.CsvToClass
             return stringValue;
         }
 
-        public void Initialize(CsvToClassTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
             
         }

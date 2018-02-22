@@ -1,4 +1,5 @@
 ﻿using System;
+using CsvConverter;
 using CsvConverter.CsvToClass;
 
 namespace AdvExample1
@@ -7,6 +8,11 @@ namespace AdvExample1
     {
         private int _minimum = 0;
         private int _maximum = 20;
+
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassConverter;
+
+        public int Order => 999;
+
         public bool CanOutputThisType(Type outputType)
         {
             return outputType == typeof(int) || outputType == typeof(int?);
@@ -29,7 +35,7 @@ namespace AdvExample1
             return dataAsNumber;
         }
 
-        public void Initialize(CsvToClassTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
             NumericRangeTypeConverterAttribute myAttribute = attribute as NumericRangeTypeConverterAttribute;
             if (myAttribute == null)
@@ -38,5 +44,6 @@ namespace AdvExample1
             _minimum = myAttribute.Minimum;
             _maximum = myAttribute.Maximum;
         }
+
     }
 }
