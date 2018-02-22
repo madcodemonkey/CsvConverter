@@ -5,7 +5,7 @@ using CsvConverter.TypeConverters;
 
 namespace CsvConverter.CsvToClass
 {
-    public class StringToObjectDoubleTypeConverter : StringToObjectBaseTypeConverter, ICsvToClassTypeConverter, IDoubleConverterSettings
+    public class StringToObjectDoubleTypeConverter : StringToObjectBaseTypeConverter, ICsvToClassTypeConverter, IDecimalPlacesSettings
     {
         public bool CanOutputThisType(Type outputType)
         {
@@ -57,7 +57,7 @@ namespace CsvConverter.CsvToClass
         {
             if (attribute != null)
             {
-                var numberInterface = attribute as IDoubleConverterSettings;
+                var numberInterface = attribute as IDecimalPlacesSettings;
                 if (numberInterface != null)
                     NumberOfDecimalPlaces = numberInterface.NumberOfDecimalPlaces;
             }

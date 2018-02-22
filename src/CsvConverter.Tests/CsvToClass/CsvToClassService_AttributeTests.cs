@@ -5,7 +5,7 @@ using CsvConverter.CsvToClass;
 using CsvConverter.RowTools;
 using CsvConverter.TypeConverters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+using Moq;using CsvConverter.Shared;
 
 namespace CsvConverter.Tests.Services
 {
@@ -89,22 +89,7 @@ namespace CsvConverter.Tests.Services
             Assert.IsNull(row4, "There is no 4th row!");
             rowReaderMock.VerifyAll();
         }
-
-        [TestMethod]
-        public void StupidTest()
-        {
-            var converter = new CsvConverterDecimalPlacesAttribute(typeof(StringToObjectDecimalTypeConverter));
-            // converter.NumberOfDecimalPlaces = 4;
-
-            var ee = converter as CsvConverterCustomAttribute;
-
-            var dd = ee as IDoubleConverterSettings;
-
-            Assert.IsNotNull(dd);
-
-        }
-
-
+             
         [TestMethod]
         public void CanHandleSpecializedAttributes()
         {

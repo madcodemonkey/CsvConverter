@@ -1,6 +1,6 @@
 ﻿namespace CsvConverter.TypeConverters
 {
-    public interface IDecimalConverterSettings
+    public interface IDecimalPlacesSettings
     {
         int NumberOfDecimalPlaces { get; set; }
     }

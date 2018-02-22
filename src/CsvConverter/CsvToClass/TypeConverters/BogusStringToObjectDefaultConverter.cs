@@ -43,12 +43,12 @@ namespace CsvConverter.CsvToClass
             throw new ArgumentException("You've replaced the default converter so there is no fallback converter!!!");
         }
 
-        public void UpdateDecimalSettings(IDecimalConverterSettings settings)
+        public void UpdateDecimalSettings(IDecimalPlacesSettings settings)
         {
             throw new ArgumentException("You've replaced the default converter so there is no fallback converter!!!");
         }
 
-        public void UpdateDoubleSettings(IDoubleConverterSettings settings)
+        public void UpdateDoubleSettings(IDecimalPlacesSettings settings)
         {
             throw new ArgumentException("You've replaced the default converter so there is no fallback converter!!!");
         }

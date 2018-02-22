@@ -1,9 +1,9 @@
 ﻿namespace CsvConverter.TypeConverters
 {
-    public class DecimalConverterSettings : IDecimalConverterSettings
+    public class DecimalPlacesSettings : IDecimalPlacesSettings
     {
-        public DecimalConverterSettings() { }
-        public DecimalConverterSettings(int numberOfDecimalPlaces)
+        public DecimalPlacesSettings() { }
+        public DecimalPlacesSettings(int numberOfDecimalPlaces)
         {
             NumberOfDecimalPlaces = numberOfDecimalPlaces;
         }

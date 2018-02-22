@@ -127,16 +127,16 @@ namespace CsvConverter.CsvToClass
             }
         }
 
-        public void UpdateDoubleSettings(IDoubleConverterSettings settings)
+        public void UpdateDoubleSettings(IDecimalPlacesSettings settings)
         {
-            var converter = FindConverter<IDoubleConverterSettings>(typeof(double));
+            var converter = FindConverter<IDecimalPlacesSettings>(typeof(double));
             if (converter != null)
                 converter.NumberOfDecimalPlaces = settings.NumberOfDecimalPlaces;
         }
 
-        public void UpdateDecimalSettings(IDecimalConverterSettings settings)
+        public void UpdateDecimalSettings(IDecimalPlacesSettings settings)
         {
-            var converter = FindConverter<IDecimalConverterSettings>(typeof(decimal));
+            var converter = FindConverter<IDecimalPlacesSettings>(typeof(decimal));
             if (converter != null)
                 converter.NumberOfDecimalPlaces = settings.NumberOfDecimalPlaces;
 

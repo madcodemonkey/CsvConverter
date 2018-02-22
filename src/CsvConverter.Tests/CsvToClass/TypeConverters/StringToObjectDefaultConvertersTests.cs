@@ -127,7 +127,7 @@ namespace CsvConverter.Tests
         [TestMethod]
         public void Double_CanRoundToGivenPrecision_NumberRoundedProperly()
         {
-            _classUnderTest.UpdateDoubleSettings(new DoubleConverterSettings(2));
+            _classUnderTest.UpdateDoubleSettings(new DecimalPlacesSettings(2));
             PropertyTester<double>(48.58, "48.5750001");
             PropertyTester<double>(48.57, "48.5749999");
         }
@@ -167,14 +167,14 @@ namespace CsvConverter.Tests
         [TestMethod]
         public void Decimal_CanRoundToGivenPrecision_NumberRoundedProperly()
         {
-            _classUnderTest.UpdateDecimalSettings(new DecimalConverterSettings(2));            
+            _classUnderTest.UpdateDecimalSettings(new DecimalPlacesSettings(2));            
             PropertyTester<decimal>(58.58m, "58.5750001");
             PropertyTester<decimal>(58.57m, "58.5749999");
 
-            _classUnderTest.UpdateDecimalSettings(new DecimalConverterSettings(1));
+            _classUnderTest.UpdateDecimalSettings(new DecimalPlacesSettings(1));
             PropertyTester<decimal>(58.6m, "58.5749999");
 
-            _classUnderTest.UpdateDecimalSettings(new DecimalConverterSettings(0));
+            _classUnderTest.UpdateDecimalSettings(new DecimalPlacesSettings(0));
             PropertyTester<decimal>(59.0m, "58.5749999");
         }
 
@@ -385,8 +385,7 @@ namespace CsvConverter.Tests
             PropertyTester<short?>(null, "5488e4$#@#");
         }
         #endregion
-
-
+        
         private void PropertyTester<T>(T expectedValue, string stringInputValue)
         {
             // Act

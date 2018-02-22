@@ -34,11 +34,11 @@ namespace CsvConverter.CsvToClass
         /// <param name="typeToConvert">Type of converter to remove.</param>
         void RemoveConverter(Type typeToConvert);
 
-        /// <summary>Updates the date settings of the double converter if it implements the IDoubleConverterSettings interface.</summary>
-        void UpdateDoubleSettings(IDoubleConverterSettings settings);
+        /// <summary>Updates the date settings of the double converter if it implements the IDecimalPlacesSettings interface.</summary>
+        void UpdateDoubleSettings(IDecimalPlacesSettings settings);
 
         /// <summary>Updates the date settings of the decimal converter if it implements the IDecimalConverterSettings interface.</summary>
-        void UpdateDecimalSettings(IDecimalConverterSettings settings);
+        void UpdateDecimalSettings(IDecimalPlacesSettings settings);
 
         /// <summary>Updates the date settings of the datetime converter if it implements the IDateConverterSettings interface.  Using these
         /// settings will case the DateTime.ParseExact method to be used as opposed to DateTime.Parse.</summary>
