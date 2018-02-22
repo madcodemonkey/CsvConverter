@@ -19,7 +19,7 @@ namespace CsvConverter.CsvToClass
             Order = attribute.Order;
         }
 
-        public string Work(string csvField, string columnName, int columnIndex, int rowNumber)
+        public string Convert(string csvField, string columnName, int columnIndex, int rowNumber)
         {            
             if (string.IsNullOrEmpty(csvField))
                 return csvField;

@@ -31,7 +31,7 @@ namespace CsvConverter.CsvToClass
         }
 
 
-        public string Work(string csvField, string columnName, int columnIndex, int rowNumber)
+        public string Convert(string csvField, string columnName, int columnIndex, int rowNumber)
         {
             if (string.IsNullOrWhiteSpace(csvField))
                 return csvField;

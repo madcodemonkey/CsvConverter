@@ -80,7 +80,7 @@ namespace CsvConverter.CsvToClass
                     // Run pre-converters
                     foreach (var preConverter in mapping.CsvToClassPreConverters)
                     {
-                        fieldValue = preConverter.Work(fieldValue, mapping.ColumnName, columnIndex, RowNumber);
+                        fieldValue = preConverter.Convert(fieldValue, mapping.ColumnName, columnIndex, RowNumber);
                     }
 
                     // Default OR custom type converter?

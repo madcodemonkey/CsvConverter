@@ -16,6 +16,6 @@ namespace CsvConverter.CsvToClass
         /// <param name="columnName">Name of the column</param>
         /// <param name="columnIndex">Index of the column</param>
         /// <param name="rowNumber">Row number of the column</param>
-        string Work(string csvField, string columnName, int columnIndex, int rowNumber);
+        string Convert(string csvField, string columnName, int columnIndex, int rowNumber);
     }
 }

@@ -30,7 +30,7 @@ namespace AdvExample1
             _characterToAddToShortStrings = myAttribute.CharacterToAddToShortStrings;
         }
 
-        public string Work(string csvField, string columnName, int columnIndex, int rowNumber)
+        public string Convert(string csvField, string columnName, int columnIndex, int rowNumber)
         {
             if (csvField != null)
             {
