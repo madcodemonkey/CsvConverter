@@ -14,7 +14,7 @@ namespace CsvConverter.ClassToCsv
         public int Order { get; set; } = 999;
 
         public string Convert(Type inputType, object value, string stringFormat, string columnName, 
-            int columnIndex, int rowNumber, IObjectToStringDefaultConverters defaultConverters)
+            int columnIndex, int rowNumber, IDefaultObjectToStringTypeConverterManager defaultConverters)
         {
             byte data;
             if (inputType.HelpIsNullable())                

@@ -3,31 +3,29 @@ using System;
 
 namespace CsvConverter.ClassToCsv
 {
-    public class ObjectToStringDecimalTypeConverter : IClassToCsvTypeConverter
+    public class ObjectToStringFloatTypeConverter : IClassToCsvTypeConverter
     {
         public bool CanHandleThisInputType(Type inputType)
         {
-            return inputType == typeof(decimal) || inputType == typeof(decimal?);
+            return inputType == typeof(float) || inputType == typeof(float?);
         }
-
         public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.ClassToCsvConverter;
 
         public int Order { get; set; } = 999;
 
-        public string Convert(Type inputType, object value, string stringFormat, string columnName,
-            int columnIndex, int rowNumber, IObjectToStringDefaultConverters defaultConverters)
+        public string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, int rowNumber, IDefaultObjectToStringTypeConverterManager defaultConverters)
         {
-            decimal data;
+            float data;
             if (inputType.HelpIsNullable())
             {
-                var rawNull = (decimal?)value;
+                var rawNull = (float?)value;
                 if (rawNull.HasValue == false)
                     return null;
                 data = rawNull.Value;
             }
             else
             {
-                data = (decimal)value;
+                data = (float)value;
             }
 
             return data.ToString(stringFormat);

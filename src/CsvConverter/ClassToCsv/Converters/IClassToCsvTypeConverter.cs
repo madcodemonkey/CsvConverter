@@ -19,6 +19,6 @@ namespace CsvConverter.ClassToCsv
         /// the class property but still want the default conversion aferwards.</param>
         /// <returns>A string to write out to the CSV column</returns>
         string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, int rowNumber,
-            IObjectToStringDefaultConverters defaultConverters);
+            IDefaultObjectToStringTypeConverterManager defaultConverters);
     }
 }

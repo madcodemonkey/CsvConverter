@@ -6,7 +6,7 @@ namespace CsvConverter.ClassToCsv
     /// <summary>This is passed to the default converters to remind anybody that has overriden a default
     /// converter that this is no fallback/default converter to they can use.  Default converters are passed
     /// to custom converters!!  Default converters must standalone!!</summary>
-    internal class BogusObjectToStringDefaultConverters : IObjectToStringDefaultConverters
+    internal class BogusDefaultObjectToStringTypeConverterManager : IDefaultObjectToStringTypeConverterManager
     {
         public void AddConverter(Type theType, IClassToCsvTypeConverter converter)
         {

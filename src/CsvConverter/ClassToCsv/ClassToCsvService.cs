@@ -32,7 +32,7 @@ namespace CsvConverter.ClassToCsv
 
         /// <summary>Converts the properties on a class to strings that can be written to a CSV field.  It will be injected 
         /// into custom type converters and used when no type converter is specified.</summary>
-        public IObjectToStringDefaultConverters DefaultConverters { get; set; } = new ObjectToStringDefaultConverters();
+        public IDefaultObjectToStringTypeConverterManager DefaultConverters { get; set; } = new DefaultObjectToStringTypeConverterManager();
 
         public int RowNumber { get { return _rowWriter != null ? _rowWriter.RowNumber : 0; } }
 

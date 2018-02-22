@@ -3,7 +3,7 @@ using System;
 
 namespace CsvConverter.ClassToCsv
 {
-    public interface IObjectToStringDefaultConverters
+    public interface IDefaultObjectToStringTypeConverterManager
     { 
         string Convert(Type theType, object value, string stringFormat, string columnName, int columnIndex, int rowNumber);
 

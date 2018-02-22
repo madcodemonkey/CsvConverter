@@ -3,30 +3,31 @@ using System;
 
 namespace CsvConverter.ClassToCsv
 {
-    public class ObjectToStringDateTypeConverter : IClassToCsvTypeConverter
+    public class ObjectToStringDecimalTypeConverter : IClassToCsvTypeConverter
     {
         public bool CanHandleThisInputType(Type inputType)
         {
-            return inputType == typeof(DateTime) || inputType == typeof(DateTime?);
+            return inputType == typeof(decimal) || inputType == typeof(decimal?);
         }
 
         public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.ClassToCsvConverter;
 
         public int Order { get; set; } = 999;
 
-        public string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, int rowNumber, IObjectToStringDefaultConverters defaultConverters)
+        public string Convert(Type inputType, object value, string stringFormat, string columnName,
+            int columnIndex, int rowNumber, IDefaultObjectToStringTypeConverterManager defaultConverters)
         {
-            DateTime data;
+            decimal data;
             if (inputType.HelpIsNullable())
             {
-                var rawNull = (DateTime?)value;
+                var rawNull = (decimal?)value;
                 if (rawNull.HasValue == false)
                     return null;
                 data = rawNull.Value;
             }
             else
             {
-                data = (DateTime)value;
+                data = (decimal)value;
             }
 
             return data.ToString(stringFormat);

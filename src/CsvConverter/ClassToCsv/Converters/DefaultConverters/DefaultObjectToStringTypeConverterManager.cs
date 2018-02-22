@@ -4,9 +4,9 @@ using CsvConverter.TypeConverters;
 
 namespace CsvConverter.ClassToCsv
 {
-    public class ObjectToStringDefaultConverters : IObjectToStringDefaultConverters
+    public class DefaultObjectToStringTypeConverterManager : IDefaultObjectToStringTypeConverterManager
     {
-        public ObjectToStringDefaultConverters()
+        public DefaultObjectToStringTypeConverterManager()
         {
             RegisterBuiltInConverters();
         }
@@ -62,7 +62,7 @@ namespace CsvConverter.ClassToCsv
         }
 
         private Dictionary<Type, IClassToCsvTypeConverter> _converters = new Dictionary<Type, IClassToCsvTypeConverter>();
-        private IObjectToStringDefaultConverters _bogusConverter = new BogusObjectToStringDefaultConverters();
+        private IDefaultObjectToStringTypeConverterManager _bogusConverter = new BogusDefaultObjectToStringTypeConverterManager();
 
 
         private void RegisterBuiltInConverters()

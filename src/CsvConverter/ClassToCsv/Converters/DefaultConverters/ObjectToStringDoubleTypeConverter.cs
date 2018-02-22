@@ -3,30 +3,31 @@ using System;
 
 namespace CsvConverter.ClassToCsv
 {
-    public class ObjectToStringShortTypeConverter : IClassToCsvTypeConverter
+    public class ObjectToStringDoubleTypeConverter : IClassToCsvTypeConverter
     {
         public bool CanHandleThisInputType(Type inputType)
         {
-            return inputType == typeof(short) || inputType == typeof(short?);
+            return inputType == typeof(double) || inputType == typeof(double?);
         }
 
         public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.ClassToCsvConverter;
 
         public int Order { get; set; } = 999;
 
-        public string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, int rowNumber, IObjectToStringDefaultConverters defaultConverters)
+        public string Convert(Type inputType, object value, string stringFormat, string columnName,
+            int columnIndex, int rowNumber, IDefaultObjectToStringTypeConverterManager defaultConverters)
         {
-            short data;
+            double data;
             if (inputType.HelpIsNullable())
             {
-                var rawNull = (short?)value;
+                var rawNull = (double?)value;
                 if (rawNull.HasValue == false)
                     return null;
                 data = rawNull.Value;
             }
             else
             {
-                data = (short)value;
+                data = (double)value;
             }
 
             return data.ToString(stringFormat);

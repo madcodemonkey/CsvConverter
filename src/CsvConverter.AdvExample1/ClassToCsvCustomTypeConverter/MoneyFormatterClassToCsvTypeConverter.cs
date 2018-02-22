@@ -19,7 +19,7 @@ namespace AdvExample1
         }
 
         public string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, 
-            int rowNumber, IObjectToStringDefaultConverters defaultConverters)
+            int rowNumber, IDefaultObjectToStringTypeConverterManager defaultConverters)
         {
             if (value == null)
                 return null;

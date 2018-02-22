@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CsvConverter.Tests.Shared
 {
     [TestClass]
-    public class ObjectToStringDefaultConvertersTest
+    public class DefaultObjectToStringTypeConverterManagerTest
     {
         [DataTestMethod]
         [DataRow(null, null)]
@@ -20,7 +20,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeStringProperty = inputData;
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeStringProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeStringProperty, string.Empty, "Column1", 1, 1);
@@ -43,7 +43,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeDateTimeProperty = DateTime.Parse(inputData);
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeDateTimeProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeDateTimeProperty, formatData, "Column1", 1, 1);
@@ -66,7 +66,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeNullableDateTimeProperty = string.IsNullOrWhiteSpace(inputData) ? (DateTime?)null : DateTime.Parse(inputData);
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableDateTimeProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableDateTimeProperty, formatData, "Column1", 1, 1);
@@ -94,7 +94,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeByteProperty = byte.Parse(inputData);
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeByteProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeByteProperty, formatData, "Column1", 1, 1);
@@ -120,7 +120,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeNullableByteProperty = string.IsNullOrWhiteSpace(inputData) ? null : (byte?)byte.Parse(inputData);
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableByteProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableByteProperty, formatData, "Column1", 1, 1);
@@ -151,7 +151,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeBoolProperty = inputData;
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeBoolProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
             classUnderTest.UpdateBooleanSettings(new BooleanConverterSettings() { OutputFormat = settingForBooleans });
 
             // Act
@@ -180,7 +180,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeNullableBoolProperty = string.IsNullOrWhiteSpace(inputData) ? null : (bool?)bool.Parse(inputData);
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableBoolProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
             classUnderTest.UpdateBooleanSettings(new BooleanConverterSettings() { OutputFormat = settingForBooleans });
 
             // Act
@@ -208,7 +208,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeShortProperty = short.Parse(inputData);
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeShortProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeShortProperty, formatData, "Column1", 1, 1);
@@ -234,7 +234,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeNullableShortProperty = string.IsNullOrWhiteSpace(inputData) ? null : (short?)short.Parse(inputData);
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableShortProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableShortProperty, formatData, "Column1", 1, 1);
@@ -261,7 +261,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeIntProperty = inputData;
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeIntProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeIntProperty, formatData, "Column1", 1, 1);
@@ -286,7 +286,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeNullableIntProperty = inputData;
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableIntProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableIntProperty, formatData, "Column1", 1, 1);
@@ -313,7 +313,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeLongProperty = inputData;
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeLongProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeLongProperty, formatData, "Column1", 1, 1);
@@ -338,7 +338,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeNullableLongProperty = inputData;
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableLongProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableLongProperty, formatData, "Column1", 1, 1);
@@ -366,7 +366,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeDecimalProperty = decimal.Parse(inputString);
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeDecimalProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeDecimalProperty, formatData, "Column1", 1, 1);
@@ -392,7 +392,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeNullabeDecimalProperty = string.IsNullOrWhiteSpace(inputString) ? null : (decimal?)decimal.Parse(inputString);
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullabeDecimalProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullabeDecimalProperty, formatData, "Column1", 1, 1);
@@ -420,7 +420,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeDoubleProperty = inputData;
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeDoubleProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeDoubleProperty, formatData, "Column1", 1, 1);
@@ -446,7 +446,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeNullableDoubleProperty = inputData;
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableDoubleProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableDoubleProperty, formatData, "Column1", 1, 1);
@@ -474,7 +474,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeFloatProperty = inputData;
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeFloatProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeFloatProperty, formatData, "Column1", 1, 1);
@@ -500,7 +500,7 @@ namespace CsvConverter.Tests.Shared
             data.SomeNullableFloatProperty = inputData;
 
             var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableFloatProperty));
-            var classUnderTest = new ObjectToStringDefaultConverters();
+            var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.SomeNullableFloatProperty, formatData, "Column1", 1, 1);

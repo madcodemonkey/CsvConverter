@@ -3,34 +3,35 @@ using System;
 
 namespace CsvConverter.ClassToCsv
 {
-    public class ObjectToStringIntTypeConverter : IClassToCsvTypeConverter
+    public class ObjectToStringDateTypeConverter : IClassToCsvTypeConverter
     {
         public bool CanHandleThisInputType(Type inputType)
         {
-            return inputType == typeof(int) || inputType == typeof(int?);
+            return inputType == typeof(DateTime) || inputType == typeof(DateTime?);
         }
 
         public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.ClassToCsvConverter;
 
         public int Order { get; set; } = 999;
 
-        public string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, int rowNumber, IObjectToStringDefaultConverters defaultConverters)
+        public string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, int rowNumber, IDefaultObjectToStringTypeConverterManager defaultConverters)
         {
-            int data;
+            DateTime data;
             if (inputType.HelpIsNullable())
             {
-                var rawNull = (int?)value;
+                var rawNull = (DateTime?)value;
                 if (rawNull.HasValue == false)
                     return null;
                 data = rawNull.Value;
             }
             else
             {
-                data = (int)value;
+                data = (DateTime)value;
             }
 
             return data.ToString(stringFormat);
         }
+
         public void Initialize(CsvConverterCustomAttribute attribute)
         {
         }
