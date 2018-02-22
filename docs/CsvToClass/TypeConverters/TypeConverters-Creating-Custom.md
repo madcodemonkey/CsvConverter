@@ -6,49 +6,60 @@ Custom type converters can be created to handle different types **or**  to make 
 ## Example 1 (Converter only)
 Here is the custom converter included with this project that does NOT have a custom attribute:
 ```c#
-public class PercentCsvToClassConverter : ICsvToClassTypeConverter
-{ 
-	public bool CanOutputThisType(Type outputType)
-	{
-		return outputType == typeof(decimal) || outputType == typeof(decimal?);
-	}
-	
-	public object Convert(Type outputType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectDefaultConverters defaultConverter)
-	{
-		if (string.IsNullOrWhiteSpace(stringValue))
-		{
-			if (outputType.HelpIsNullable())
-				return null;
+using System;
+using CsvConverter.Shared;
 
-			return 0.0m;
-		}
+namespace CsvConverter.CsvToClass
+{
+    /// <summary>Turns a string that is a percentage into a decimal value or throws an exception if the conversion fails.</summary>
+    public class PercentCsvToClassConverter : ICsvToClassTypeConverter
+    {
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassType;
 
-		// If there is a percentage sign attempt to handle it; 
-		// otherwise, differ to the default converter.
-		int indexOfPercentSign = stringValue.IndexOf("%");
-		if (indexOfPercentSign != -1)
-		{
-			// Remove the percentage sign
-			stringValue = stringValue.Remove(indexOfPercentSign);
-		}
+        public int Order => 999;
 
-		// Assign the decimal
-		object someData = defaultConverter.Convert(outputType, stringValue, columnName, columnIndex, rowNumber);
-		if (someData != null)
-		{
-			return (decimal)someData / 100.0m;
-		}
+        public bool CanOutputThisType(Type outputType)
+        {
+            return outputType == typeof(decimal) || outputType == typeof(decimal?);
+        }
+        
+        public object Convert(Type outputType, string stringValue, string columnName, int columnIndex, int rowNumber, IDefaultStringToObjectTypeConverterManager defaultConverters)
+        {
+            if (string.IsNullOrWhiteSpace(stringValue))
+            {
+                if (outputType.HelpIsNullable())
+                    return null;
 
-		throw new ArgumentException($"The {nameof(PercentCsvToClassConverter)} converter cannot parse the string " +
-			  $"'{stringValue}' as a {outputType.Name} on row number {rowNumber} in " +
-			  $"column {columnName} at column index {columnIndex}.");
-	}
+                return 0.0m;
+            }
+
+            // If there is a percentage sign attempt to handle it; 
+            // otherwise, differ to the default converter.
+            int indexOfPercentSign = stringValue.IndexOf("%");
+            if (indexOfPercentSign != -1)
+            {
+                // Remove the percentage sign
+                stringValue = stringValue.Remove(indexOfPercentSign);
+            }
+
+            // Assign the decimal
+            object someData = defaultConverters.Convert(outputType, stringValue, columnName, columnIndex, rowNumber);
+            if (someData != null)
+            {
+                return (decimal)someData / 100.0m;
+            }
+
+            throw new ArgumentException($"The {nameof(PercentCsvToClassConverter)} converter cannot parse the string " +
+                  $"'{stringValue}' as a {outputType.Name} on row number {rowNumber} in " +
+                  $"column {columnName} at column index {columnIndex}.");
+        }
 
 
-	public void Initialize(CsvToClassTypeConverterAttribute attribute)
-	{
+        public void Initialize(CsvConverterCustomAttribute attribute)
+        {
 
-	}
+        }
+    }
 }
 ```
 
@@ -59,13 +70,13 @@ Notes:
 
 Usage:
 ```c#
-internal class CsvServiceConverterTestClass
+public class CsvServiceConverterTestClass
 {
-	public int Order { get; set; }
+    public int Order { get; set; }
 
-	
-	[CsvToClassTypeConverter(typeof(PercentCsvToClassConverter))]
-	public decimal Percentage { get; set; }
+    
+    [CsvConverterCustom(typeof(PercentCsvToClassConverter))]
+    public decimal Percentage { get; set; }
 }
 ```
 
@@ -73,14 +84,14 @@ internal class CsvServiceConverterTestClass
 ## Example 2 (create an attribute AND a converter)
 
 ### Creating a custom attribute for your custom converter
-In order for the reflection logic to pick up your custom attribute, your attributes must inherit from CsvToClassTypeConverterAttribute
+In order for the reflection logic to pick up your custom attribute, your attributes must inherit from CsvConverterCustomAttribute
 ```C#
 using System;
-using CsvConverter.CsvToClass;
+using CsvConverter;
 
 namespace AdvExample1
 {
-    public class NumericRangeTypeConverterAttribute : CsvToClassTypeConverterAttribute
+    public class NumericRangeTypeConverterAttribute : CsvConverterCustomAttribute
     {
         public NumericRangeTypeConverterAttribute(Type typeConverter) : base(typeConverter) { }
         public int Minimum { get; set; } = 1;
@@ -92,16 +103,26 @@ namespace AdvExample1
 ### Custom Converter
 All custom converters must implement the ICsvToClassTypeConverter interface, which is defined as follows:
 ```C#
-public interface ICsvToClassTypeConverter
+public interface ICsvToClassTypeConverter : ICsvConverter
 {
 	bool CanOutputThisType(Type outputType);
-	object Convert(Type targetType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectConverter defaultConverter);
-	void Initialize(CsvToClassTypeConverterAttribute attribute);
+	object Convert(Type targetType, string stringValue, string columnName, int columnIndex, int rowNumber, IDefaultStringToObjectTypeConverterManager defaultConverters);	
 }
 ```
+and ICsvConverter is defined as follows:
+```c#
+public interface ICsvConverter
+{
+    CsvConverterTypeEnum ConverterType { get; }
+    int Order { get; }
+    void Initialize(CsvConverterCustomAttribute attribute);
+}
+```
+
 So we could create a custom converter that looks like this:
 ```c#
 using System;
+using CsvConverter;
 using CsvConverter.CsvToClass;
 
 namespace AdvExample1
@@ -111,17 +132,21 @@ namespace AdvExample1
         private int _minimum = 0;
         private int _maximum = 20;
 
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassType;
+
+        public int Order => 999;
+
         public bool CanOutputThisType(Type outputType)
         {
             return outputType == typeof(int) || outputType == typeof(int?);
         }
 
         public object Convert(Type outputType, string stringValue, string columnName,
-            int columnIndex, int rowNumber, IStringToObjectConverter defaultConverter)
+            int columnIndex, int rowNumber, IDefaultStringToObjectTypeConverterManager defaultConverter)
         {
             var data = defaultConverter.Convert(outputType, stringValue, columnName, columnIndex, rowNumber);
             if (data == null)
-                return _minimum;
+                return data;
 
             int dataAsNumber = (int)data;
             if (dataAsNumber < _minimum)
@@ -133,7 +158,7 @@ namespace AdvExample1
             return dataAsNumber;
         }
 
-        public void Initialize(CsvToClassTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
             NumericRangeTypeConverterAttribute myAttribute = attribute as NumericRangeTypeConverterAttribute;
             if (myAttribute == null)
@@ -142,6 +167,7 @@ namespace AdvExample1
             _minimum = myAttribute.Minimum;
             _maximum = myAttribute.Maximum;
         }
+
     }
 }
 ```
@@ -170,16 +196,6 @@ namespace AdvExample1
 
         [CsvConverter(IgnoreWhenReading = true, IgnoreWhenWriting = true)]
         public Person Parent { get; set; }
-
-        public override string ToString()
-        {
-            return string.Format("FirstName: {0} LastName: {1} Age: {2} PercentageBodyFat: {3} AvgHeartRate: {4}",
-                FirstName,
-                LastName,
-                Age,
-                PercentageBodyFat,
-                AvgHeartRate);
-        }
     }
 }
 ```

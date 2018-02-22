@@ -3,7 +3,7 @@
 There are a few custom converters included with this project that you can use:
 - TrimClassToCsvTypeConverter - Trims all fields of white space left and right of the text
 
-To use them, decorate the class property with the ClassToCsvTypeConverterAttribute:
+To use them, decorate the class property with the CsvConverterCustom:
 
 ```c#
 public class WriterAttributeTestExample
@@ -12,7 +12,7 @@ public class WriterAttributeTestExample
 
 	public int Age { get; set; }
 
-	[ClassToCsvTypeConverter(typeof(TrimClassToCsvTypeConverter))]
+	[CsvConverterCustom(typeof(TrimClassToCsvTypeConverter))]
 	public string Name { get; set; }
 }
 ```

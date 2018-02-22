@@ -5,14 +5,14 @@ There are a few custom converters included with this project that you can use:
 - DecimalToIntCsvToClassConverter - Converts a string to a decimal value and the rounds it to the nearest integer.
 - PercentCsvToClassConverter - Turns a string that is a percentage into a decimal value or throws an exception if the conversion fails.
 
-To use them, decorate the class property with the CsvToClassTypeConverterAttribute:
+To use them, decorate the class property with the CsvConverterCustomAttribute:
 
 ```c#
-internal class CsvServiceConverterMismatchTestClass
+public class CsvServiceConverterTestClass
 {
 	public int Order { get; set; }
-
-	[CsvToClassTypeConverter(typeof(PercentCsvToClassConverter))]
-	public double Percentage { get; set; }
+	
+	[CsvConverterCustom(typeof(PercentCsvToClassConverter))]
+	public decimal Percentage { get; set; }
 }
 ```

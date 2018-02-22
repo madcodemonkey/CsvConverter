@@ -6,28 +6,36 @@ Custom type converters can be created to handle different types **or**  to make 
 ## Example 1 (Converter only)
 Here is the custom converter included with this project that does NOT have a custom attribute:
 ```c#
-/// <summary>Trims all fields of white space left and right of the text.</summary>
-public class TrimClassToCsvTypeConverter : IClassToCsvTypeConverter
+using System;
+
+namespace CsvConverter.ClassToCsv
 {
-    public bool CanHandleThisInputType(Type inputType)
+    /// <summary>Trims all fields of white space left and right of the text.</summary>
+    public class TrimClassToCsvTypeConverter : IClassToCsvTypeConverter
     {
-        return inputType == typeof(string);
-    }
+        public bool CanHandleThisInputType(Type inputType)
+        {
+            return inputType == typeof(string);
+        }
+ 
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.ClassToCsvType;
 
-    public string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, 
-        int rowNumber, IObjectToStringDefaultConverters defaultConverters)
-    {
-        if (value == null)
-            return null;
+        public int Order { get; set; } = 999;
 
-        var theString =  value.ToString();
+        public string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, 
+            int rowNumber, IDefaultObjectToStringTypeConverterManager defaultConverters)
+        {
+            if (value == null)
+                return null;
 
-        return theString.Trim();
-    }
+            var theString =  value.ToString();
 
-    public void Initialize(ClassToCsvTypeConverterAttribute attribute)
-    {
+            return theString.Trim();
+        }
 
+        public void Initialize(CsvConverterCustomAttribute attribute)
+        {
+        }
     }
 }
 ```
@@ -38,13 +46,13 @@ Notes:
 
 Usage:
 ```c#
-internal class CoverterTypeMismatchTestExample
+public class WriterAttributeTestExample
 {
     public int Month { get; set; }
 
-    [ClassToCsvTypeConverter(typeof(TrimClassToCsvTypeConverter))]
     public int Age { get; set; }
 
+    [CsvConverterCustom(typeof(TrimClassToCsvTypeConverter))]
     public string Name { get; set; }
 }
 ```
@@ -53,16 +61,16 @@ internal class CoverterTypeMismatchTestExample
 ## Example 2 (create an attribute AND a converter)
 
 ### Creating a custom attribute for your custom converter
-In order for the reflection logic to pick up your custom attribute, your attributes must inherit from ClassToCsvTypeConverterAttribute
+In order for the reflection logic to pick up your custom attribute, your attributes must inherit from CsvConverterCustomAttribute
 ```C#
-using CsvConverter.ClassToCsv;
+using CsvConverter;
 using System;
 
 namespace AdvExample1
 {
-    public class MoneyFormatterClassToCsvTypeConverterAttribute : ClassToCsvTypeConverterAttribute
+    public class MoneyFormatterConverterAttribute : CsvConverterCustomAttribute
     {
-        public MoneyFormatterClassToCsvTypeConverterAttribute(Type typeConverter) : base(typeConverter) { }
+        public MoneyFormatterConverterAttribute(Type typeConverter) : base(typeConverter) { }
 
         public string Format { get; set; } = "C";
     }
@@ -72,16 +80,27 @@ namespace AdvExample1
 ### Custom Converter
 All custom converters must implement the IClassToCsvTypeConverter interface, which is defined as follows:
 ```C#
-public interface IClassToCsvTypeConverter
+public interface IClassToCsvTypeConverter : ICsvConverter
 {
     bool CanHandleThisInputType(Type inputType);
     string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, int rowNumber,
-        IObjectToStringDefaultConverters defaultConverters);
-    void Initialize(ClassToCsvTypeConverterAttribute attribute);
+        IDefaultObjectToStringTypeConverterManager defaultConverters);
 }
 ```
+and
+
+```C#
+public interface ICsvConverter
+{
+    CsvConverterTypeEnum ConverterType { get; }
+    int Order { get; }
+  void Initialize(CsvConverterCustomAttribute attribute);
+}
+```
+
 So we could create a custom converter that looks like this:
 ```c#
+using CsvConverter;
 using CsvConverter.ClassToCsv;
 using System;
 
@@ -91,6 +110,10 @@ namespace AdvExample1
     {
         private string _formatString;
 
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.ClassToCsvType;
+
+        public int Order => 999;
+
         public bool CanHandleThisInputType(Type inputType)
         {
             return inputType == typeof(decimal) || inputType == typeof(decimal?) ||
@@ -98,7 +121,7 @@ namespace AdvExample1
         }
 
         public string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, 
-            int rowNumber, IObjectToStringDefaultConverters defaultConverters)
+            int rowNumber, IDefaultObjectToStringTypeConverterManager defaultConverters)
         {
             if (value == null)
                 return null;
@@ -109,11 +132,11 @@ namespace AdvExample1
             return ((decimal)value).ToString(_formatString);            
         }
 
-        public void Initialize(ClassToCsvTypeConverterAttribute attribute)
+        public void Initialize(CsvConverterCustomAttribute attribute)
         {
-            MoneyFormatterClassToCsvTypeConverterAttribute myAttribute = attribute as MoneyFormatterClassToCsvTypeConverterAttribute;
+            MoneyFormatterConverterAttribute myAttribute = attribute as MoneyFormatterConverterAttribute;
             if (myAttribute == null)
-                throw new ArgumentException($"Please use the {nameof(MoneyFormatterClassToCsvTypeConverterAttribute)} attribute with this converter!");
+                throw new ArgumentException($"Please use the {nameof(MoneyFormatterConverterAttribute)} attribute with this converter!");
 
             _formatString = myAttribute.Format;
         }
@@ -128,26 +151,26 @@ Notes:
 
 Usage:
 ```C#
-using CsvConverter.CsvToClass;
+using CsvConverter;
 
 namespace AdvExample1
 {
     public class Car
     {
-        [TextLengthEnforcerPreprocessor(MaximumLength = 8, MinimumLength = 5, CharacterToAddToShortStrings = '*')]
+        [TextLengthEnforcerConverter(MaximumLength = 8, MinimumLength = 5, CharacterToAddToShortStrings = '*')]
         public string Model { get; set; }
 
-        [TextLengthEnforcerPreprocessor(MaximumLength = 6, MinimumLength = 4, CharacterToAddToShortStrings = '~')]
+        [TextLengthEnforcerConverter(MaximumLength = 6, MinimumLength = 4, CharacterToAddToShortStrings = '~')]
         public string Make { get; set; }
 
         public int Year { get; set; }
 
-        [MoneyFormatterClassToCsvTypeConverter(typeof(MoneyFormatterClassToCsvTypeConverter), Format = "C2")]
-        [CsvToClassTypeConverter(typeof(MoneyTypeConverter))]
+        [MoneyFormatterConverter(typeof(MoneyFormatterClassToCsvTypeConverter), Format = "C2")]
+        [CsvConverterCustom(typeof(MoneyTypeConverter))]
         public decimal PurchasePrice { get; set; }
         
-        [MoneyFormatterClassToCsvTypeConverter(typeof(MoneyFormatterClassToCsvTypeConverter), Format ="C2")] // TO CSV
-        [CsvToClassTypeConverter(typeof(MoneyTypeConverter))] // CSV to Object
+        [MoneyFormatterConverter(typeof(MoneyFormatterClassToCsvTypeConverter), Format ="C2")]
+        [CsvConverterCustom(typeof(MoneyTypeConverter))]
         public double CurrentValue { get; set; }
 
         public override string ToString()

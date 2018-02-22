@@ -9,11 +9,10 @@ To create a CSV file, there are 7 basic steps
 6. Add CsvConverter.ClassToCsv namespace to your using statements.
 7. Call WriterRecord() for each row you want to write in the CSV file. 
 
-
 ## Examples
 - [Simple Example 1](./Examples/Simple1.md) - In this simple example, the header will match the property names.
 - TODO: [Simple Example 2](./Examples/Simple2.md) - In this simple example, we will control the order and names of the CSV headers.
 
 ## Advanced Topics
-- [Converters](./Converters/Converters-Main.md)
-- [Post-processors](./Postprocesors/Postprocesors-Main.md)
+- [Type Converters](./TypeConverters/TypeConverters-Main.md) - Convert C# types into strings.  
+- [Post Converters](./PostConverters/PostConverters-Main.md) - Post processes a string after it comes out of a converter, but before it is written to the CSV file.

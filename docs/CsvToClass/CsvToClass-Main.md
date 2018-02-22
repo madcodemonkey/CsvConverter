@@ -16,5 +16,5 @@ To read a CSV file into a class, there are 8 basic steps
 
 
 ## Advanced Topics
--  [Converters](./Converters/Converters-Main.md)
--  [Pre-processors](./Preprocesors/Preprocesors.md)
+-  [Pre Converters](./PreConverters/PreConverters-Main.md)  - Do some pre-processing on the CSV column string BEFORE passing it to a type converters for further processing.
+-  [Type Converters](./TypeConverters/TypeConverters-Main.md) - Convert strings into C# types.  The string can come directly from the CSV file OR it could have passed through one or more pre-converters.
