@@ -3,7 +3,7 @@
 namespace CsvConverter.ClassToCsv
 {
     /// <summary>If the input string matches the old value exactly, it is replaced entirely with the new value.</summary>
-    public class ReplaceTextExactMatchPostConverter : IClassToCsvPostConverter
+    public class ReplaceTextExactMatchClassToCsvPostConverter : IClassToCsvPostConverter
     {
         private string _newValue;
         private string _oldValue;
@@ -16,7 +16,7 @@ namespace CsvConverter.ClassToCsv
         {
             var postProcess = attribute as CsvConverterOldAndNewValueAttribute;
             if (postProcess == null)
-                throw new ArgumentException($"Please use the {nameof(CsvConverterOldAndNewValueAttribute)} attribute with this post converter ({nameof(ReplaceTextEveryMatchPostConverter)}).");
+                throw new ArgumentException($"Please use the {nameof(CsvConverterOldAndNewValueAttribute)} attribute with this post converter ({nameof(ReplaceTextEveryMatchClassToCsvPostConverter)}).");
 
             _newValue = postProcess.NewValue;
             _oldValue = postProcess.OldValue;

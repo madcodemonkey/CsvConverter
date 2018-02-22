@@ -17,9 +17,9 @@ namespace ClassToCsv.Converters
         public void CanReplaceText(string csvField, string oldValue, string newValue, string expectedResult)
         {
             // Arrange 
-            var attribute = new CsvConverterOldAndNewValueAttribute(typeof(ReplaceTextEveryMatchPostConverter)) { OldValue = oldValue, NewValue = newValue };
+            var attribute = new CsvConverterOldAndNewValueAttribute(typeof(ReplaceTextEveryMatchClassToCsvPostConverter)) { OldValue = oldValue, NewValue = newValue };
 
-            var classUnderTest = new ReplaceTextEveryMatchPostConverter();
+            var classUnderTest = new ReplaceTextEveryMatchClassToCsvPostConverter();
             classUnderTest.Initialize(attribute);
 
             // Act
@@ -34,8 +34,8 @@ namespace ClassToCsv.Converters
         public void PassingInTheWrongTypeOfPostConverter_ResultsInException()
         {
             // Arrange 
-            var attribute = new CsvConverterCustomAttribute(typeof(ReplaceTextEveryMatchPostConverter));
-            var classUnderTest = new ReplaceTextEveryMatchPostConverter();
+            var attribute = new CsvConverterCustomAttribute(typeof(ReplaceTextEveryMatchClassToCsvPostConverter));
+            var classUnderTest = new ReplaceTextEveryMatchClassToCsvPostConverter();
             classUnderTest.Initialize(attribute);
 
             // Assert
@@ -49,8 +49,8 @@ namespace ClassToCsv.Converters
         public void SpecifyingAnOldValueOfNullIsNotAllowed_ResultsInException()
         {
             // Arrange 
-            var attribute = new CsvConverterOldAndNewValueAttribute(typeof(ReplaceTextEveryMatchPostConverter)) { OldValue = null, NewValue = "Some new value" };
-            var classUnderTest = new ReplaceTextEveryMatchPostConverter();
+            var attribute = new CsvConverterOldAndNewValueAttribute(typeof(ReplaceTextEveryMatchClassToCsvPostConverter)) { OldValue = null, NewValue = "Some new value" };
+            var classUnderTest = new ReplaceTextEveryMatchClassToCsvPostConverter();
             classUnderTest.Initialize(attribute);
 
             // Assert
@@ -62,8 +62,8 @@ namespace ClassToCsv.Converters
         public void SpecifyingAnOldValueOfZeroLengthIsNotAllowed_ResultsInException()
         {
             // Arrange 
-            var attribute = new CsvConverterOldAndNewValueAttribute(typeof(ReplaceTextEveryMatchPostConverter)) { OldValue = "", NewValue = "Some new value" };
-            var classUnderTest = new ReplaceTextEveryMatchPostConverter();
+            var attribute = new CsvConverterOldAndNewValueAttribute(typeof(ReplaceTextEveryMatchClassToCsvPostConverter)) { OldValue = "", NewValue = "Some new value" };
+            var classUnderTest = new ReplaceTextEveryMatchClassToCsvPostConverter();
             classUnderTest.Initialize(attribute);
 
             // Assert

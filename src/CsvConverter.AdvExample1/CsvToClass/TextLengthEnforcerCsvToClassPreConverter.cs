@@ -4,7 +4,7 @@ using System;
 
 namespace AdvExample1
 {
-    public class TextLengthEnforcerPreConverter : ICsvToClassPreConverter
+    public class TextLengthEnforcerCsvToClassPreConverter : ICsvToClassPreConverter
     {
         private char _characterToAddToShortStrings;
         private int _maximumLength;
@@ -21,9 +21,9 @@ namespace AdvExample1
 
         public void Initialize(CsvConverterCustomAttribute attribute)
         {
-            var myAttribute = attribute as TextLengthEnforcerPreConverterAttribute;
+            var myAttribute = attribute as TextLengthEnforcerConverterAttribute;
             if (myAttribute == null)
-                throw new ArgumentException($"Please use the {nameof(TextLengthEnforcerPreConverterAttribute)} attribute with this pre-converter!");
+                throw new ArgumentException($"Please use the {nameof(TextLengthEnforcerConverterAttribute)} attribute with this pre-converter!");
 
             _maximumLength = myAttribute.MaximumLength;
             _minimumLength = myAttribute.MinimumLength;

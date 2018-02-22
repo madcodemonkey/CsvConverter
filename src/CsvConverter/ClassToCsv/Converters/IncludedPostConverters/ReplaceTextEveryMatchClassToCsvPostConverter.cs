@@ -3,7 +3,7 @@
 namespace CsvConverter.ClassToCsv
 {
     /// <summary>All instances of the old value are replaced with the new value.</summary>
-    public class ReplaceTextEveryMatchPostConverter : IClassToCsvPostConverter
+    public class ReplaceTextEveryMatchClassToCsvPostConverter : IClassToCsvPostConverter
     {
         private string _newValue;
         private string _oldValue;
@@ -16,7 +16,7 @@ namespace CsvConverter.ClassToCsv
         {
             var postProcess = attribute as CsvConverterOldAndNewValueAttribute;
             if (postProcess == null)
-                throw new ArgumentException($"Please use the {nameof(CsvConverterOldAndNewValueAttribute)} attribute with this post converter ({nameof(ReplaceTextEveryMatchPostConverter)}).");
+                throw new ArgumentException($"Please use the {nameof(CsvConverterOldAndNewValueAttribute)} attribute with this post converter ({nameof(ReplaceTextEveryMatchClassToCsvPostConverter)}).");
             if (postProcess.OldValue == null)
                 throw new ArgumentException($"The string replace method will NOT allow you to specify a null for the old value!  This is the value it is searching for and null will not be found.");
             if (postProcess.OldValue == null || postProcess.OldValue.Length == 0)

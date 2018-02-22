@@ -49,9 +49,10 @@
     <Compile Include="Attributes\CsvConverterDecimalPlacesAttribute.cs" />
     <Compile Include="Attributes\CsvConverterOldAndNewValueAttribute.cs" />
     <Compile Include="ClassToCsv\Configuration\ClassToCsvConfiguration.cs" />
+    <Compile Include="ClassToCsv\Converters\IncludedPostConverters\ReplaceTextEveryMatchClassToCsvPostConverter.cs" />
+    <Compile Include="ClassToCsv\Converters\IncludedPostConverters\ReplaceTextExactMatchClassToCsvPostConverter.cs" />
     <Compile Include="ClassToCsv\Mapper\ClassToCsvPropertyAttributeUpdater.cs" />
     <Compile Include="ClassToCsv\Converters\IClassToCsvPostConverter.cs" />
-    <Compile Include="ClassToCsv\Converters\IncludedPostConverters\ReplaceTextEveryMatchPostConverter.cs" />
     <Compile Include="ClassToCsv\Converters\DefaultTypeConverters\BogusDefaultObjectToStringTypeConverterManager.cs" />
     <Compile Include="ClassToCsv\Converters\DefaultTypeConverters\DefaultObjectToStringTypeConverterManager.cs" />
     <Compile Include="ClassToCsv\Converters\DefaultTypeConverters\IDefaultObjectToStringTypeConverterManager.cs" />
@@ -64,7 +65,6 @@
     <Compile Include="ClassToCsv\Converters\DefaultTypeConverters\ObjectToStringIntTypeConverter.cs" />
     <Compile Include="ClassToCsv\Converters\DefaultTypeConverters\ObjectToStringLongTypeConverter.cs" />
     <Compile Include="ClassToCsv\Converters\DefaultTypeConverters\ObjectToStringShortTypeConverter.cs" />
-    <Compile Include="ClassToCsv\Converters\IncludedPostConverters\ReplaceTextExactMatchPostConverter.cs" />
     <Compile Include="Common\CsvConverterTypeEnum.cs" />
     <Compile Include="Common\Exceptions\CsvConverterAttributeException.cs" />
     <Compile Include="Common\Mapper\IPropertyAttributeUpdater.cs" />
@@ -74,6 +74,7 @@
     <Compile Include="Common\TypeConverters\DecimalPlacesSettings.cs" />
     <Compile Include="Common\TypeConverters\IBooleanConverterSettings.cs" />
     <Compile Include="Common\ICsvConverter.cs" />
+    <Compile Include="Common\TypeConverters\IDateConverterDetails.cs" />
     <Compile Include="Common\TypeConverters\IDecimalPlacesSettings.cs" />
     <Compile Include="CsvToClass\Converters\DefaultTypeConverters\BogusDefaultStringToObjectTypeConverterManager.cs" />
     <Compile Include="CsvToClass\Converters\DefaultTypeConverters\DefaultStringToObjectTypeConverterManager.cs" />

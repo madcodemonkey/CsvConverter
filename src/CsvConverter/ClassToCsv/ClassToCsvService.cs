@@ -6,7 +6,6 @@ using CsvConverter.ClassToCsv.Mapper;
 using CsvConverter.Mapper;
 using CsvConverter.RowTools;
 
-
 namespace CsvConverter.ClassToCsv
 {
     public class ClassToCsvService<T> where T : class, new()
@@ -64,7 +63,6 @@ namespace CsvConverter.ClassToCsv
                 }
                 else
                 {
-
                     var newMap = new PropertyMap
                     {
                         ColumnIndex = columnMap.ColumnIndex,
@@ -108,12 +106,11 @@ namespace CsvConverter.ClassToCsv
                 string value;
                 if (columnMap.ClassToCsvTypeConverter == null)
                 {
+                    // Used default converter
                     var someObject = columnMap?.PropInformation?.GetValue(record);
                     if (someObject != null)
                     {
-                        if (string.IsNullOrWhiteSpace(columnMap.ClassPropertyDataFormat))
-                            value = someObject.ToString();
-                        else value = DefaultConverters.Convert(columnMap.PropInformation.PropertyType,
+                        value = DefaultConverters.Convert(columnMap.PropInformation.PropertyType,
                             columnMap.PropInformation.GetValue(record), columnMap.ClassPropertyDataFormat,
                             columnMap.ColumnName, columnMap.ColumnIndex, currentRowNumber);
                     }
@@ -121,6 +118,7 @@ namespace CsvConverter.ClassToCsv
                 }
                 else
                 {
+                    // Custom converter found                    
                     value = columnMap.ClassToCsvTypeConverter.Convert(columnMap.PropInformation.PropertyType,
                             columnMap.PropInformation.GetValue(record), columnMap.ClassPropertyDataFormat,
                         columnMap.ColumnName, columnMap.ColumnIndex, currentRowNumber, DefaultConverters);

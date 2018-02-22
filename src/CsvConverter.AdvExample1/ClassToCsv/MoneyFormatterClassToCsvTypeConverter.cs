@@ -32,9 +32,9 @@ namespace AdvExample1
 
         public void Initialize(CsvConverterCustomAttribute attribute)
         {
-            MoneyFormatterClassToCsvTypeConverterAttribute myAttribute = attribute as MoneyFormatterClassToCsvTypeConverterAttribute;
+            MoneyFormatterConverterAttribute myAttribute = attribute as MoneyFormatterConverterAttribute;
             if (myAttribute == null)
-                throw new ArgumentException($"Please use the {nameof(MoneyFormatterClassToCsvTypeConverterAttribute)} attribute with this converter!");
+                throw new ArgumentException($"Please use the {nameof(MoneyFormatterConverterAttribute)} attribute with this converter!");
 
             _formatString = myAttribute.Format;
         }

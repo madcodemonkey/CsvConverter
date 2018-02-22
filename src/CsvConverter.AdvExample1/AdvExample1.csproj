@@ -70,15 +70,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ClassToCsvCustomTypeConverter\MoneyFormatterClassToCsvTypeConverter.cs" />
-    <Compile Include="ClassToCsvCustomTypeConverter\MoneyFormatterClassToCsvTypeConverterAttribute.cs" />
-    <Compile Include="CsvToClassCustomPreProcessor\TextLengthEnforcerPreConverter.cs" />
-    <Compile Include="CsvToClassCustomPreProcessor\TextLengthEnforcerPreprocessorAttribute.cs" />
-    <Compile Include="CsvToClassCustomTypeConverter\MoneyTypeConverter.cs" />
+    <Compile Include="ClassToCsv\MoneyFormatterClassToCsvTypeConverter.cs" />
+    <Compile Include="Attributes\TextLengthEnforcerConverterAttribute.cs" />
+    <Compile Include="Attributes\MoneyFormatterConverterAttribute.cs" />
+    <Compile Include="CsvToClass\TextLengthEnforcerCsvToClassPreConverter.cs" />
+    <Compile Include="CsvToClass\MoneyTypeConverter.cs" />
     <Compile Include="Data\Car.cs" />
     <Compile Include="Data\Person.cs" />
-    <Compile Include="CsvToClassCustomTypeConverter\NumericRangeTypeConverter.cs" />
-    <Compile Include="CsvToClassCustomTypeConverter\NumericRangeTypeConverterAttribute.cs" />
+    <Compile Include="CsvToClass\NumericRangeTypeConverter.cs" />
+    <Compile Include="Attributes\NumericRangeTypeConverterAttribute.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
