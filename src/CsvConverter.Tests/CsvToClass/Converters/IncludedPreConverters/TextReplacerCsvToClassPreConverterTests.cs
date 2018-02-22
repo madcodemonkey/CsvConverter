@@ -28,7 +28,7 @@ namespace CsvConverter.Tests
             classUnderTest.Initialize(new CsvConverterOldAndNewValueAttribute(typeof(TextReplacerCsvToClassPreConverter)) { Order = 1, OldValue = oldValue, NewValue = newValue });
 
             //  Act
-            string actualData =  classUnderTest.Work(inputData, ColumnName, ColumnIndex, RowNumber);
+            string actualData =  classUnderTest.Convert(inputData, ColumnName, ColumnIndex, RowNumber);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
