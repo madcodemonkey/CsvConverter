@@ -69,7 +69,7 @@ namespace CsvConverter.Mapper
 
                 AddCsvConverterAttributesToTheMap(newMap, columnIndexDefaultValue);
 
-                UpdatePropertyConverter(newMap);
+                FindConvertersOnOneProperty(newMap);
 
                 if (ShouldMapBeAdd(newMap))
                 {
@@ -80,12 +80,12 @@ namespace CsvConverter.Mapper
             // Sort the columns the way the user wants them sorted or by column name
             mapList = mapList.OrderBy(o => o.ColumnIndex).ThenBy(o => o.ColumnName).ToList();
 
-            UpdateClassProcessors(mapList);
+            FindConvertersOnTheClass(mapList);
             
             return mapList;
         }
 
-        private void UpdatePropertyConverter(PropertyMap newMap)
+        private void FindConvertersOnOneProperty(PropertyMap newMap)
         {
             List<CsvConverterCustomAttribute> attributeList = newMap.PropInformation.HelpFindAllAttributes<CsvConverterCustomAttribute>();
             foreach (var oneAttribute in attributeList)
@@ -96,25 +96,25 @@ namespace CsvConverter.Mapper
                                 
                 switch (oneTypeConverter.ConverterType)
                 {
-                    case CsvConverterTypeEnum.ClassToCsvConverter:
+                    case CsvConverterTypeEnum.ClassToCsvType:
                         _classToCsvAttributeHelper.UpdatePropertyConverter(newMap, oneAttribute, oneTypeConverter);
                         break;
-                    case CsvConverterTypeEnum.ClassToCsvPostProcessor:
-                        _classToCsvAttributeHelper.UpdatePropertyProcessors(newMap, oneAttribute, oneTypeConverter);
+                    case CsvConverterTypeEnum.ClassToCsvPost:
+                        _classToCsvAttributeHelper.UpdatePropertyPreOrPostConverters(newMap, oneAttribute, oneTypeConverter);
                         break;
-                    case CsvConverterTypeEnum.CsvToClassConverter:
+                    case CsvConverterTypeEnum.CsvToClassType:
                         _csvToClassAttributeHelper.UpdatePropertyConverter(newMap, oneAttribute, oneTypeConverter);
                         break;
-                    case CsvConverterTypeEnum.CsvToClassPreProcessor:
-                        _csvToClassAttributeHelper.UpdatePropertyProcessors(newMap, oneAttribute, oneTypeConverter);
+                    case CsvConverterTypeEnum.CsvToClassPre:
+                        _csvToClassAttributeHelper.UpdatePropertyPreOrPostConverters(newMap, oneAttribute, oneTypeConverter);
                         break;
                 }
             }
         }
 
-        private void UpdateClassProcessors(List<PropertyMap> mapList)
+        private void FindConvertersOnTheClass(List<PropertyMap> mapList)
         {
-            // Find preprocessors attributes on the class
+            // Find pre-converters attributes on the class
             List<CsvConverterCustomAttribute> attributeList = typeof(T).HelpFindAllClassAttributes<CsvConverterCustomAttribute>();
 
             foreach (var oneAttribute in attributeList)
@@ -125,11 +125,11 @@ namespace CsvConverter.Mapper
 
                 switch (oneTypeConverter.ConverterType)
                 {
-                    case CsvConverterTypeEnum.ClassToCsvPostProcessor:
-                        _classToCsvAttributeHelper.UpdateClassProcessors(mapList, oneAttribute, oneTypeConverter);
+                    case CsvConverterTypeEnum.ClassToCsvPost:
+                        _classToCsvAttributeHelper.UpdateClassConverters(mapList, oneAttribute, oneTypeConverter);
                         break;
-                    case CsvConverterTypeEnum.CsvToClassPreProcessor:
-                        _csvToClassAttributeHelper.UpdateClassProcessors(mapList, oneAttribute, oneTypeConverter);
+                    case CsvConverterTypeEnum.CsvToClassPre:
+                        _csvToClassAttributeHelper.UpdateClassConverters(mapList, oneAttribute, oneTypeConverter);
                         break;
                 }
             }
@@ -138,7 +138,7 @@ namespace CsvConverter.Mapper
         private string GetCustomConverterErrorMessage(CsvConverterCustomAttribute oneAttribute)
         {
             return $"All custom converters should inherit from either {nameof(IClassToCsvTypeConverter)}, {nameof(ICsvToClassTypeConverter)}, " +
-                    $"{nameof(IClassToCsvPostprocessor)} or {nameof(ICsvToClassPreprocessor)}. All of these interfaces inherit " +
+                    $"{nameof(IClassToCsvPostConverter)} or {nameof(ICsvToClassPreConverter)}. All of these interfaces inherit " +
                     $"{nameof(ICsvConverter)} so the {nameof(oneAttribute.ConverterType)} type found in {nameof(CsvConverterCustomAttribute)} " +
                     $"is not a proper converter.";
         }

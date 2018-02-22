@@ -3,9 +3,9 @@ using System;
 
 namespace AdvExample1
 {
-    public class TextLengthEnforcerPreprocessorAttribute : CsvConverterCustomAttribute
+    public class TextLengthEnforcerPreConverterAttribute : CsvConverterCustomAttribute
     {
-        public TextLengthEnforcerPreprocessorAttribute() : base(typeof(TextLengthEnforcerPreprocessor)) { }
+        public TextLengthEnforcerPreConverterAttribute() : base(typeof(TextLengthEnforcerPreConverter)) { }
 
         public char CharacterToAddToShortStrings { get; set; } = '~';
         public int MaximumLength { get; set; } = int.MaxValue;

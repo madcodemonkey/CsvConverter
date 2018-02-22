@@ -15,7 +15,7 @@
     </Window.Resources>
 
     <TabControl x:Name="tabControl">
-        <TabItem Header="Custom Converter">
+        <TabItem Header="Custom Type Converter">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -38,7 +38,7 @@
             </Grid>
         </TabItem>
 
-        <TabItem Header="Custom Pre-Processor">
+        <TabItem Header="Custom Pre-Converter">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -51,12 +51,12 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Label Content="CSV file location" Grid.Column="0" Height="28" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Center" />
-                    <TextBox Name="CustomPreprocessorCSVFile"  Grid.Column="1" Height="23" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Text="c:\temp\Car.csv"  />
-                    <Button Grid.Column="2" MinWidth="30" Click="CustomPreprocessorFindCsvFile_Click">...</Button>
+                    <TextBox Name="CustomPreConverterCSVFile"  Grid.Column="1" Height="23" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Text="c:\temp\Car.csv"  />
+                    <Button Grid.Column="2" MinWidth="30" Click="CustomPreConverterFindCsvFile_Click">...</Button>
                 </Grid>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Content="Create CSV" MinHeight="25" Margin="5" MinWidth="75" Click="CustomPreprocessorCreateCsvButton_Click" />
-                    <Button Content="Load CSV" MinHeight="25" Margin="5" MinWidth="75" Click="CustomPreprocessorLoadCsvButton_Click"  />
+                    <Button Content="Create CSV" MinHeight="25" Margin="5" MinWidth="75" Click="CustomPreConverterCreateCsvButton_Click" />
+                    <Button Content="Load CSV" MinHeight="25" Margin="5" MinWidth="75" Click="CustomPreConverterLoadCsvButton_Click"  />
                 </StackPanel>
             </Grid>
         </TabItem>

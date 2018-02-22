@@ -4,10 +4,10 @@ namespace AdvExample1
 {
     public class Car
     {
-        [TextLengthEnforcerPreprocessor(MaximumLength = 8, MinimumLength = 5, CharacterToAddToShortStrings = '*')]
+        [TextLengthEnforcerPreConverterAttribute(MaximumLength = 8, MinimumLength = 5, CharacterToAddToShortStrings = '*')]
         public string Model { get; set; }
 
-        [TextLengthEnforcerPreprocessor(MaximumLength = 6, MinimumLength = 4, CharacterToAddToShortStrings = '~')]
+        [TextLengthEnforcerPreConverterAttribute(MaximumLength = 6, MinimumLength = 4, CharacterToAddToShortStrings = '~')]
         public string Make { get; set; }
 
         public int Year { get; set; }

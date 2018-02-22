@@ -65,30 +65,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassToCsv\ClassToCsvService_PostprocessorTests.cs" />
+    <Compile Include="ClassToCsv\ClassToCsvService_PostConverterTests.cs" />
     <Compile Include="ClassToCsv\Mapper\ClassToCsvPropertyMapper_CoreTests.cs" />
-    <Compile Include="ClassToCsv\Postprocessor\ReplaceTextEveryMatchPostProcessorTests.cs" />
-    <Compile Include="ClassToCsv\Converters\DefaultConverters\DefaultObjectToStringTypeConverterManagerTest.cs" />
-    <Compile Include="CsvToClass\Preprocessor\StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessorTests.cs" />
-    <Compile Include="CsvToClass\Preprocessor\TextReplacerCsvToClassPreprocessorTests.cs" />
-    <Compile Include="CsvToClass\Preprocessor\TrimCsvToClassPreprocessorTests.cs" />
+    <Compile Include="ClassToCsv\Converters\DefaultTypeConverters\DefaultObjectToStringTypeConverterManagerTest.cs" />
+    <Compile Include="ClassToCsv\Converters\IncludedPostConverters\ReplaceTextEveryMatchPostConverterTests.cs" />
+    <Compile Include="CsvToClass\Converters\IncludedPreConverters\StringIsNullOrWhiteSpaceSetToNullCsvToClassPreConverterTests.cs" />
+    <Compile Include="CsvToClass\Converters\IncludedPreConverters\TextReplacerCsvToClassPreConverterTests.cs" />
     <Compile Include="Common\RowTools\RowWriterTests.cs" />
+    <Compile Include="CsvToClass\Converters\IncludedPreConverters\TrimCsvToClassPreConverterTests.cs" />
     <Compile Include="CsvToClass\CsvToClassService_PreprocessorTests.cs" />
     <Compile Include="CsvToClass\CsvToClassService_AttributeTests.cs" />
-    <Compile Include="CsvToClass\TypeConverters\StringToObjectDefaultConvertersTests.cs" />
+    <Compile Include="CsvToClass\Converters\DefaultTypeConverters\StringToObjectDefaultConvertersTests.cs" />
     <Compile Include="Shared\Reflection\ReflectionAttributeExtensionsTest.cs" />
     <Compile Include="Shared\Reflection\ReflectionHelperTest.cs" />
     <Compile Include="Shared\Reflection\ReflectionCreateExtensionsTests.cs" />
-    <Compile Include="ClassToCsv\Converters\IncludedConveters\TrimClassToCsvTypeConverterTests.cs" />
-    <Compile Include="CsvToClass\TypeConverters\PercentCsvToClassConverterTests.cs" />
-    <Compile Include="CsvToClass\TypeConverters\CommaDelimitedIntArrayCsvToClassConverterTests.cs" />
+    <Compile Include="ClassToCsv\Converters\IncludedTypeConverters\TrimClassToCsvTypeConverterTests.cs" />
+    <Compile Include="CsvToClass\Converters\IncludedTypeConverters\PercentCsvToClassConverterTests.cs" />
+    <Compile Include="CsvToClass\Converters\IncludedTypeConverters\CommaDelimitedIntArrayCsvToClassConverterTests.cs" />
     <Compile Include="CsvToClass\CsvToClassService_WithHeaderTests.cs" />
     <Compile Include="CsvToClass\CsvToClassService_ConverterTests.cs" />
     <Compile Include="CsvToClass\CsvToClassService_NoHeaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CsvToClass\Mapper\CsvToClassPropertyMapper_CoreTests.cs" />
     <Compile Include="Common\RowTools\RowReaderTests.cs" />
-    <Compile Include="CsvToClass\TypeConverters\DecimalToIntCsvToClassConverterTests.cs" />
+    <Compile Include="CsvToClass\Converters\IncludedTypeConverters\DecimalToIntCsvToClassConverterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

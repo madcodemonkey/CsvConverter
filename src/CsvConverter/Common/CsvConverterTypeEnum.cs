@@ -2,9 +2,9 @@
 {
     public enum CsvConverterTypeEnum
     {
-        ClassToCsvConverter,
-        ClassToCsvPostProcessor,
-        CsvToClassConverter,       
-        CsvToClassPreProcessor
+        ClassToCsvType,
+        ClassToCsvPost,
+        CsvToClassType,       
+        CsvToClassPre
     }
 }

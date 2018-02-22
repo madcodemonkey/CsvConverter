@@ -8,7 +8,7 @@ using Moq;
 namespace CsvConverter.Tests.Services
 {
     [TestClass]
-    public class CsvToClassService_PreprocessorTests
+    public class CsvToClassService_PreConverterTests
     {
         [TestMethod]
         public void DataFields_CanHandleExtraUnmappedCsvColumns()
@@ -23,14 +23,14 @@ namespace CsvConverter.Tests.Services
                 .Returns(new List<string> { "2", ".23", " Bob", "3" })
                 .Returns(new List<string> { "3", ".67", "James ", "3" });
 
-            var classUnderTest = new CsvToClassService<CsvServiceTrimPreprocessorTestClass>(rowReaderMock.Object);
+            var classUnderTest = new CsvToClassService<CsvServiceTrimPreConverterTestClass>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
-            CsvServiceTrimPreprocessorTestClass row1 = classUnderTest.GetRecord();
-            CsvServiceTrimPreprocessorTestClass row2 = classUnderTest.GetRecord();
-            CsvServiceTrimPreprocessorTestClass row3 = classUnderTest.GetRecord();
-            CsvServiceTrimPreprocessorTestClass row4 = classUnderTest.GetRecord();
+            CsvServiceTrimPreConverterTestClass row1 = classUnderTest.GetRecord();
+            CsvServiceTrimPreConverterTestClass row2 = classUnderTest.GetRecord();
+            CsvServiceTrimPreConverterTestClass row3 = classUnderTest.GetRecord();
+            CsvServiceTrimPreConverterTestClass row4 = classUnderTest.GetRecord();
 
             // Assert
             Assert.AreEqual(1, row1.Order);
@@ -51,7 +51,7 @@ namespace CsvConverter.Tests.Services
 
 
         [TestMethod]
-        public void DataFields_TrimExtraWith_TrimCtoCsvPreprocessor_OnClass()
+        public void DataFields_TrimExtraWith_TrimCtoCsvPreConverter_OnClass()
         {
             // Arrange
             var rowReaderMock = new Mock<IRowReader>();
@@ -63,14 +63,14 @@ namespace CsvConverter.Tests.Services
                 .Returns(new List<string> { "2", ".23", " Bob" })
                 .Returns(new List<string> { "3", ".67", "James " });
 
-            var classUnderTest = new CsvToClassService<CsvServiceTrimPreprocessorTestClass>(rowReaderMock.Object);
+            var classUnderTest = new CsvToClassService<CsvServiceTrimPreConverterTestClass>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
  
             // Act
-            CsvServiceTrimPreprocessorTestClass row1 = classUnderTest.GetRecord();
-            CsvServiceTrimPreprocessorTestClass row2 = classUnderTest.GetRecord();
-            CsvServiceTrimPreprocessorTestClass row3 = classUnderTest.GetRecord();
-            CsvServiceTrimPreprocessorTestClass row4 = classUnderTest.GetRecord();
+            CsvServiceTrimPreConverterTestClass row1 = classUnderTest.GetRecord();
+            CsvServiceTrimPreConverterTestClass row2 = classUnderTest.GetRecord();
+            CsvServiceTrimPreConverterTestClass row3 = classUnderTest.GetRecord();
+            CsvServiceTrimPreConverterTestClass row4 = classUnderTest.GetRecord();
 
             // Assert
             Assert.AreEqual(1, row1.Order);
@@ -90,7 +90,7 @@ namespace CsvConverter.Tests.Services
         }
 
         [TestMethod]
-        public void DataFields_TrimExtraWith_TrimCtoCsvPreprocessor_OnProperty()
+        public void DataFields_TrimExtraWith_TrimCtoCsvPreConverter_OnProperty()
         {
             // Arrange
             var rowReaderMock = new Mock<IRowReader>();
@@ -102,14 +102,14 @@ namespace CsvConverter.Tests.Services
                 .Returns(new List<string> { "2", " Bob", " Hope" })
                 .Returns(new List<string> { "3", " Ralph ", " Thomponson " });
 
-            var classUnderTest = new CsvToClassService<CsvServiceTrimPropPreprocessorTestClass>(rowReaderMock.Object);
+            var classUnderTest = new CsvToClassService<CsvServiceTrimPropPreConverterTestClass>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
-            CsvServiceTrimPropPreprocessorTestClass row1 = classUnderTest.GetRecord();
-            CsvServiceTrimPropPreprocessorTestClass row2 = classUnderTest.GetRecord();
-            CsvServiceTrimPropPreprocessorTestClass row3 = classUnderTest.GetRecord();
-            CsvServiceTrimPropPreprocessorTestClass row4 = classUnderTest.GetRecord();
+            CsvServiceTrimPropPreConverterTestClass row1 = classUnderTest.GetRecord();
+            CsvServiceTrimPropPreConverterTestClass row2 = classUnderTest.GetRecord();
+            CsvServiceTrimPropPreConverterTestClass row3 = classUnderTest.GetRecord();
+            CsvServiceTrimPropPreConverterTestClass row4 = classUnderTest.GetRecord();
 
             // Assert
             Assert.AreEqual(1, row1.Order);
@@ -129,7 +129,7 @@ namespace CsvConverter.Tests.Services
         }
         
         [TestMethod]
-        public void DataFields_CanSetFieldToNullIfEmptyOrWhitespaceWith_StringIsNullOrWhiteSpaceSetToNullCtoCsvPreprocessor_OnClass()
+        public void DataFields_CanSetFieldToNullIfEmptyOrWhitespaceWith_StringIsNullOrWhiteSpaceSetToNullCtoCsvPreConverter_OnClass()
         {
             // Arrange
             var rowReaderMock = new Mock<IRowReader>();
@@ -141,14 +141,14 @@ namespace CsvConverter.Tests.Services
                 .Returns(new List<string> { "2", ".23", "" })
                 .Returns(new List<string> { "3", ".67", "James " });
 
-            var classUnderTest = new CsvToClassService<CsvServiceWhiteSpacePreprocessorTestClass>(rowReaderMock.Object);
+            var classUnderTest = new CsvToClassService<CsvServiceWhiteSpacePreConverterTestClass>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
-            CsvServiceWhiteSpacePreprocessorTestClass row1 = classUnderTest.GetRecord();
-            CsvServiceWhiteSpacePreprocessorTestClass row2 = classUnderTest.GetRecord();
-            CsvServiceWhiteSpacePreprocessorTestClass row3 = classUnderTest.GetRecord();
-            CsvServiceWhiteSpacePreprocessorTestClass row4 = classUnderTest.GetRecord();
+            CsvServiceWhiteSpacePreConverterTestClass row1 = classUnderTest.GetRecord();
+            CsvServiceWhiteSpacePreConverterTestClass row2 = classUnderTest.GetRecord();
+            CsvServiceWhiteSpacePreConverterTestClass row3 = classUnderTest.GetRecord();
+            CsvServiceWhiteSpacePreConverterTestClass row4 = classUnderTest.GetRecord();
 
             // Assert
             Assert.AreEqual(1, row1.Order);
@@ -168,7 +168,7 @@ namespace CsvConverter.Tests.Services
         }
 
         [TestMethod]
-        public void DataFields_CanUseMultipleProcessors_OnClass()
+        public void DataFields_CanUseMultiplePreConvereters_OnClass()
         {
             // Arrange
             var rowReaderMock = new Mock<IRowReader>();
@@ -180,14 +180,14 @@ namespace CsvConverter.Tests.Services
                 .Returns(new List<string> { "2", " Bob", "  " })
                 .Returns(new List<string> { "3", " Ralph ", " Thomponson " });
 
-            var classUnderTest = new CsvToClassService<CsvServiceMultipleOnClassPreprocessorTestClass>(rowReaderMock.Object);
+            var classUnderTest = new CsvToClassService<CsvServiceMultipleOnClassPreConverterTestClass>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
-            CsvServiceMultipleOnClassPreprocessorTestClass row1 = classUnderTest.GetRecord();
-            CsvServiceMultipleOnClassPreprocessorTestClass row2 = classUnderTest.GetRecord();
-            CsvServiceMultipleOnClassPreprocessorTestClass row3 = classUnderTest.GetRecord();
-            CsvServiceMultipleOnClassPreprocessorTestClass row4 = classUnderTest.GetRecord();
+            CsvServiceMultipleOnClassPreConverterTestClass row1 = classUnderTest.GetRecord();
+            CsvServiceMultipleOnClassPreConverterTestClass row2 = classUnderTest.GetRecord();
+            CsvServiceMultipleOnClassPreConverterTestClass row3 = classUnderTest.GetRecord();
+            CsvServiceMultipleOnClassPreConverterTestClass row4 = classUnderTest.GetRecord();
 
             // Assert
             Assert.AreEqual(1, row1.Order);
@@ -207,7 +207,7 @@ namespace CsvConverter.Tests.Services
         }
 
         [TestMethod]
-        public void DataFields_CanUseMultipleProcessors_OnProperty()
+        public void DataFields_CanUseMultiplePreConverters_OnProperty()
         {
             // Arrange
             var rowReaderMock = new Mock<IRowReader>();
@@ -219,14 +219,14 @@ namespace CsvConverter.Tests.Services
                 .Returns(new List<string> { "2", " Bob", "  " })
                 .Returns(new List<string> { "3", " Ralph ", " Thomponson " });
 
-            var classUnderTest = new CsvToClassService<CsvServiceMultipleOnPropPreprocessorTestClass>(rowReaderMock.Object);
+            var classUnderTest = new CsvToClassService<CsvServiceMultipleOnPropPreConverterTestClass>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
-            CsvServiceMultipleOnPropPreprocessorTestClass row1 = classUnderTest.GetRecord();
-            CsvServiceMultipleOnPropPreprocessorTestClass row2 = classUnderTest.GetRecord();
-            CsvServiceMultipleOnPropPreprocessorTestClass row3 = classUnderTest.GetRecord();
-            CsvServiceMultipleOnPropPreprocessorTestClass row4 = classUnderTest.GetRecord();
+            CsvServiceMultipleOnPropPreConverterTestClass row1 = classUnderTest.GetRecord();
+            CsvServiceMultipleOnPropPreConverterTestClass row2 = classUnderTest.GetRecord();
+            CsvServiceMultipleOnPropPreConverterTestClass row3 = classUnderTest.GetRecord();
+            CsvServiceMultipleOnPropPreConverterTestClass row4 = classUnderTest.GetRecord();
 
             // Assert
             Assert.AreEqual(1, row1.Order);
@@ -248,8 +248,8 @@ namespace CsvConverter.Tests.Services
 
     }
 
-    [CsvConverterCustom(typeof(TrimCsvToClassPreprocessor), TargetPropertyType = typeof(string))]
-    internal class CsvServiceTrimPreprocessorTestClass
+    [CsvConverterCustom(typeof(TrimCsvToClassPreConverter), TargetPropertyType = typeof(string))]
+    internal class CsvServiceTrimPreConverterTestClass
     {
         public int Order { get; set; }
         public decimal Percentage { get; set; }
@@ -259,27 +259,27 @@ namespace CsvConverter.Tests.Services
         public string IgnoreName { get; set; }
     }
 
-    internal class CsvServiceTrimPropPreprocessorTestClass
+    internal class CsvServiceTrimPropPreConverterTestClass
     {
         public int Order { get; set; }
         public string FirstName { get; set; }
 
-        [CsvConverterCustom(typeof(TrimCsvToClassPreprocessor))]
+        [CsvConverterCustom(typeof(TrimCsvToClassPreConverter))]
         public string LastName { get; set; }
     }
 
 
-    [CsvConverterCustom(typeof(StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessor), TargetPropertyType = typeof(string))]
-    internal class CsvServiceWhiteSpacePreprocessorTestClass
+    [CsvConverterCustom(typeof(StringIsNullOrWhiteSpaceSetToNullCsvToClassPreConverter), TargetPropertyType = typeof(string))]
+    internal class CsvServiceWhiteSpacePreConverterTestClass
     {
         public int Order { get; set; }
         public decimal Percentage { get; set; }
         public string Name { get; set; }
     }
 
-    [CsvConverterCustom(typeof(StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessor), TargetPropertyType = typeof(string), Order = 1)]
-    [CsvConverterCustom(typeof(TrimCsvToClassPreprocessor), TargetPropertyType = typeof(string), Order = 2)]
-    internal class CsvServiceMultipleOnClassPreprocessorTestClass
+    [CsvConverterCustom(typeof(StringIsNullOrWhiteSpaceSetToNullCsvToClassPreConverter), TargetPropertyType = typeof(string), Order = 1)]
+    [CsvConverterCustom(typeof(TrimCsvToClassPreConverter), TargetPropertyType = typeof(string), Order = 2)]
+    internal class CsvServiceMultipleOnClassPreConverterTestClass
     {
         public int Order { get; set; }
         public string FirstName { get; set; }      
@@ -287,12 +287,12 @@ namespace CsvConverter.Tests.Services
     }
 
 
-    internal class CsvServiceMultipleOnPropPreprocessorTestClass
+    internal class CsvServiceMultipleOnPropPreConverterTestClass
     {
         public int Order { get; set; }
 
-        [CsvConverterCustom(typeof(StringIsNullOrWhiteSpaceSetToNullCsvToClassPreprocessor), Order = 1)]
-        [CsvConverterCustom(typeof(TrimCsvToClassPreprocessor), Order = 2)]
+        [CsvConverterCustom(typeof(StringIsNullOrWhiteSpaceSetToNullCsvToClassPreConverter), Order = 1)]
+        [CsvConverterCustom(typeof(TrimCsvToClassPreConverter), Order = 2)]
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }

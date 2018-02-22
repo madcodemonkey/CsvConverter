@@ -17,7 +17,7 @@ namespace AdvExample1
             InitializeComponent();
         }
 
-        #region Custom Converter
+        #region Custom Type Converter
         private void CustomConverterCreateCsvButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -94,12 +94,12 @@ namespace AdvExample1
         #endregion
 
 
-        #region Custom Pre-Processor
-        private void CustomPreprocessorCreateCsvButton_Click(object sender, RoutedEventArgs e)
+        #region Custom Pre-Converter
+        private void CustomPreConverterCreateCsvButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var dialog = SaveFile(CustomPreprocessorCSVFile.Text);
+                var dialog = SaveFile(CustomPreConverterCSVFile.Text);
                 if (dialog.ShowDialog() != true)
                     return;
 
@@ -134,11 +134,11 @@ namespace AdvExample1
             }
         }
 
-        private void CustomPreprocessorLoadCsvButton_Click(object sender, RoutedEventArgs e)
+        private void CustomPreConverterLoadCsvButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var dialog = LoadFile(CustomPreprocessorCSVFile.Text);
+                var dialog = LoadFile(CustomPreConverterCSVFile.Text);
                 if (dialog.ShowDialog() != true)
                     return;
 
@@ -161,13 +161,13 @@ namespace AdvExample1
             }
         }
 
-        private void CustomPreprocessorFindCsvFile_Click(object sender, RoutedEventArgs e)
+        private void CustomPreConverterFindCsvFile_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
             if (dialog.ShowDialog() != true)
                 return;
 
-            CustomPreprocessorCSVFile.Text = dialog.FileName;
+            CustomPreConverterCSVFile.Text = dialog.FileName;
         }
         #endregion
 

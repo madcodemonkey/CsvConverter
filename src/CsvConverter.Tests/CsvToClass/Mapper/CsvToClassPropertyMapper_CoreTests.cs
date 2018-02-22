@@ -161,12 +161,12 @@ namespace CsvConverter.Tests.Readers
             // Assert
             Assert.AreEqual(3, result.Count, "There should be one entry per CSV column");
             Assert.IsNotNull(columnMap);
-            Assert.IsNotNull(columnMap.CsvFieldTypeConverter);
-            Assert.AreEqual(typeof(DecimalToIntCsvToClassConverter), columnMap.CsvFieldTypeConverter.GetType());
+            Assert.IsNotNull(columnMap.CsvToClassTypeConverter);
+            Assert.AreEqual(typeof(DecimalToIntCsvToClassConverter), columnMap.CsvToClassTypeConverter.GetType());
         }
 
         [TestMethod]
-        public void CanFindPreprocessortAttributes()
+        public void CanFindPreConveterAttributes()
         {
             // Arrange
             var configuation = new CsvToClassConfiguration() { IgnoreExtraCsvColumns = true };
@@ -179,22 +179,19 @@ namespace CsvConverter.Tests.Readers
 
             // Get data
             var columnMap = result.FirstOrDefault(w => w.ColumnName == "Name");
-            var firstPreprocessor = columnMap?.CsvFieldPreprocessors?.FirstOrDefault(w => w.Order == 1);
-            var secondPreprocessor = columnMap?.CsvFieldPreprocessors?.FirstOrDefault(w => w.Order == 2);
+            var firstPreConverter = columnMap?.CsvToClassPreConverters?.FirstOrDefault(w => w.Order == 1);
+            var secondPreConverter = columnMap?.CsvToClassPreConverters?.FirstOrDefault(w => w.Order == 2);
 
             // Assert
             Assert.AreEqual(3, result.Count, "There should be one entry per CSV column");
             Assert.IsNotNull(columnMap);
-            Assert.IsNotNull(columnMap.CsvFieldPreprocessors, "Expecting to find preprocessors");
-            Assert.AreEqual(2, columnMap.CsvFieldPreprocessors.Count, "Should be two of them!");
+            Assert.IsNotNull(columnMap.CsvToClassPreConverters, "Expecting to find PreConverter");
+            Assert.AreEqual(2, columnMap.CsvToClassPreConverters.Count, "Should be two of them!");
 
 
-            Assert.AreEqual(typeof(TextReplacerCsvToClassPreprocessor), firstPreprocessor.GetType());
-            Assert.AreEqual(typeof(TrimCsvToClassPreprocessor), secondPreprocessor.GetType());
+            Assert.AreEqual(typeof(TextReplacerCsvToClassPreConverter), firstPreConverter.GetType());
+            Assert.AreEqual(typeof(TrimCsvToClassPreConverter), secondPreConverter.GetType());
         }
-
-       
-
     }
 
     internal class HeaderReaderExample1
@@ -270,8 +267,8 @@ namespace CsvConverter.Tests.Readers
 
         public int Age { get; set; }
 
-        [CsvConverterOldAndNewValue(typeof(TextReplacerCsvToClassPreprocessor), OldValue ="#", NewValue ="", Order = 1)]
-        [CsvConverterCustom(typeof(TrimCsvToClassPreprocessor), Order = 2)]
+        [CsvConverterOldAndNewValue(typeof(TextReplacerCsvToClassPreConverter), OldValue ="#", NewValue ="", Order = 1)]
+        [CsvConverterCustom(typeof(TrimCsvToClassPreConverter), Order = 2)]
         public string Name { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace AdvExample1
 {
     public class MoneyTypeConverter : ICsvToClassTypeConverter
     {
-        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassConverter;
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassType;
 
         public int Order => 999;
 
@@ -18,7 +18,7 @@ namespace AdvExample1
             outputType == typeof(double) || outputType == typeof(double);
         }
 
-        public object Convert(Type targetType, string stringValue, string columnName, int columnIndex, int rowNumber, IStringToObjectDefaultConverters defaultConverters)
+        public object Convert(Type targetType, string stringValue, string columnName, int columnIndex, int rowNumber, IDefaultStringToObjectTypeConverterManager defaultConverters)
         {
             if (string.IsNullOrWhiteSpace(stringValue))
             {

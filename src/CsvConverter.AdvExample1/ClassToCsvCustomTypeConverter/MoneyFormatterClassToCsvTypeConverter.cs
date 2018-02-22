@@ -8,7 +8,7 @@ namespace AdvExample1
     {
         private string _formatString;
 
-        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.ClassToCsvConverter;
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.ClassToCsvType;
 
         public int Order => 999;
 

@@ -7,7 +7,7 @@ namespace CsvConverter.CsvToClass.Mapper
     {
         bool IgnoreWhenReading { get; set; }
         List<string> AltColumnNames { get; set; }
-        List<ICsvToClassPreprocessor> CsvFieldPreprocessors { get; set; }
-        ICsvToClassTypeConverter CsvFieldTypeConverter { get; set; }
+        List<ICsvToClassPreConverter> CsvToClassPreConverters { get; set; }
+        ICsvToClassTypeConverter CsvToClassTypeConverter { get; set; }
     }
 }

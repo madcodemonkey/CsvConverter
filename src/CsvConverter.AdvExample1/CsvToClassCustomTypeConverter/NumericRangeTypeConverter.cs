@@ -9,7 +9,7 @@ namespace AdvExample1
         private int _minimum = 0;
         private int _maximum = 20;
 
-        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassConverter;
+        public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassType;
 
         public int Order => 999;
 
@@ -19,7 +19,7 @@ namespace AdvExample1
         }
 
         public object Convert(Type outputType, string stringValue, string columnName,
-            int columnIndex, int rowNumber, IStringToObjectDefaultConverters defaultConverter)
+            int columnIndex, int rowNumber, IDefaultStringToObjectTypeConverterManager defaultConverter)
         {
             var data = defaultConverter.Convert(outputType, stringValue, columnName, columnIndex, rowNumber);
             if (data == null)

@@ -6,14 +6,14 @@ namespace CsvConverter.ClassToCsv.Mapper
 {
     internal class ClassToCsvPropertyAttributeUpdater<T> : IPropertyAttributeUpdater
     {
-        public void UpdateClassProcessors(List<PropertyMap> mapList, CsvConverterCustomAttribute oneAttribute, ICsvConverter converter)
+        public void UpdateClassConverters(List<PropertyMap> mapList, CsvConverterCustomAttribute oneAttribute, ICsvConverter converter)
         {
-            var onePostprocessor = converter as IClassToCsvPostprocessor;
-            if (onePostprocessor == null)
+            var onePostConverter = converter as IClassToCsvPostConverter;
+            if (onePostConverter == null)
             {
                 throw new CsvConverterAttributeException($"The {typeof(T).Name} class has specified a type converter ({oneAttribute.ConverterType.Name}) " +
                     $"that has declared itself as a {converter.ConverterType}, but the converter does " +
-                    $"not implement the {nameof(IClassToCsvPostprocessor)} interface.");
+                    $"not implement the {nameof(IClassToCsvPostConverter)} interface.");
             }
                      
             foreach (var map in mapList)
@@ -21,12 +21,12 @@ namespace CsvConverter.ClassToCsv.Mapper
                 if (map.IgnoreWhenWriting)
                     continue;
 
-                // All properties get this Post Processor
+                // All properties get this Post Converter
                 // OR
-                // Only certain properties get this Post Processor
+                // Only certain properties get this Post Converter
                 if (oneAttribute.TargetPropertyType == null || oneAttribute.TargetPropertyType == map.PropInformation.PropertyType)
                 {
-                    AddOnePostProcessor(oneAttribute, map, onePostprocessor);
+                    AddOnePostConverter(oneAttribute, map, onePostConverter);
                 }
             }
         }
@@ -41,7 +41,7 @@ namespace CsvConverter.ClassToCsv.Mapper
                      $"not implement the {nameof(IClassToCsvTypeConverter)} interface.");
             }
 
-            if (newMap.ClassPropertyTypeConverter != null)
+            if (newMap.ClassToCsvTypeConverter != null)
             {
                 throw new CsvConverterAttributeException($"The '{newMap.PropInformation.Name}' property has specified more than one " + 
                     $"{converter.ConverterType} converter! Only one {converter.ConverterType} converter may be specified per property.");
@@ -51,7 +51,7 @@ namespace CsvConverter.ClassToCsv.Mapper
             if (classToCsvConverter.CanHandleThisInputType(newMap.PropInformation.PropertyType))
             {
                 classToCsvConverter.Initialize(oneAttribute);
-                newMap.ClassPropertyTypeConverter = classToCsvConverter;
+                newMap.ClassToCsvTypeConverter = classToCsvConverter;
             }
             else
             {
@@ -61,27 +61,27 @@ namespace CsvConverter.ClassToCsv.Mapper
             }
         }
 
-        public void UpdatePropertyProcessors(PropertyMap newMap, CsvConverterCustomAttribute oneAttribute, ICsvConverter converter)
+        public void UpdatePropertyPreOrPostConverters(PropertyMap newMap, CsvConverterCustomAttribute oneAttribute, ICsvConverter converter)
         {
-            var onePostProcessor = converter as IClassToCsvPostprocessor;
-            if (onePostProcessor == null)
+            var onePostConverter = converter as IClassToCsvPostConverter;
+            if (onePostConverter == null)
             {
                 throw new CsvConverterAttributeException($"The '{newMap.PropInformation.Name}' property specified a type converter " +
                      $" ({oneAttribute.ConverterType.Name}) that has declared itself as a {converter.ConverterType}, but the converter does " +
-                     $"not implement the {nameof(IClassToCsvPostprocessor)} interface.");
+                     $"not implement the {nameof(IClassToCsvPostConverter)} interface.");
             }
 
-            AddOnePostProcessor(oneAttribute, newMap, onePostProcessor);
+            AddOnePostConverter(oneAttribute, newMap, onePostConverter);
        
-            // Sort the post processors if there is more than one.
-            if (newMap.ClassPropertyPostprocessors.Count > 0)
-                newMap.ClassPropertyPostprocessors = newMap.ClassPropertyPostprocessors.OrderBy(o => o.Order).ToList();
+            // Sort the post converters if there is more than one.
+            if (newMap.ClassToCsvPostConverters.Count > 0)
+                newMap.ClassToCsvPostConverters = newMap.ClassToCsvPostConverters.OrderBy(o => o.Order).ToList();
         }
 
-        private void AddOnePostProcessor(CsvConverterCustomAttribute oneAttribute, PropertyMap map, IClassToCsvPostprocessor postProcessor)
+        private void AddOnePostConverter(CsvConverterCustomAttribute oneAttribute, PropertyMap map, IClassToCsvPostConverter postConverter)
         {
-            postProcessor.Initialize(oneAttribute);
-            map.ClassPropertyPostprocessors.Add(postProcessor);
+            postConverter.Initialize(oneAttribute);
+            map.ClassToCsvPostConverters.Add(postConverter);
         }
     }
 }

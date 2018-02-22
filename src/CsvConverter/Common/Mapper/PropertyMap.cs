@@ -30,12 +30,12 @@ namespace CsvConverter.Mapper
         /// <summary>Used when converting the data into a string.  Any standard C# format is allowed.  It can be used to format numbers, etc.</summary>
         public string ClassPropertyDataFormat { get; set; }
 
-        public List<IClassToCsvPostprocessor> ClassPropertyPostprocessors { get; set; } = new List<IClassToCsvPostprocessor>();
+        public List<IClassToCsvPostConverter> ClassToCsvPostConverters { get; set; } = new List<IClassToCsvPostConverter>();
 
 
         /// <summary>When writing classes to CSV files, this is an optional converter in case you do NOT want the property 
         /// coverted to a string using the default property type converters</summary>
-        public IClassToCsvTypeConverter ClassPropertyTypeConverter { get; set; }
+        public IClassToCsvTypeConverter ClassToCsvTypeConverter { get; set; }
         #endregion // Class To CSV
 
 
@@ -48,11 +48,11 @@ namespace CsvConverter.Mapper
         public bool IgnoreWhenReading { get; set; }
 
         /// <summary>When reading CSV files, these are optional preprocesors in case you need to manipulate the string that will eventually be used.</summary>
-        public List<ICsvToClassPreprocessor> CsvFieldPreprocessors { get; set; } = new List<ICsvToClassPreprocessor>();
+        public List<ICsvToClassPreConverter> CsvToClassPreConverters { get; set; } = new List<ICsvToClassPreConverter>();
 
         /// <summary>When reading CSV files, this is an optional converter in case you do NOT want the CSV field coverted to
         /// the same type as the class property or you just want more control over the conversion process.</summary>
-        public ICsvToClassTypeConverter CsvFieldTypeConverter { get; set; }
+        public ICsvToClassTypeConverter CsvToClassTypeConverter { get; set; }
         #endregion // CSV to Class
     }
 }

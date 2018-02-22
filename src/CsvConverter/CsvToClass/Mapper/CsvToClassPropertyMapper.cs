@@ -50,7 +50,7 @@ namespace CsvConverter.CsvToClass.Mapper
         protected override bool ShouldMapBeAdd(PropertyMap newMap)
         {
             // If a converter was specified, it will check the output type for mismatched
-            if (newMap.CsvFieldTypeConverter != null)
+            if (newMap.CsvToClassTypeConverter != null)
                 return true;
 
             // Base it on the property type
@@ -65,7 +65,7 @@ namespace CsvConverter.CsvToClass.Mapper
             {
                 ColumnIndex = columnIndex,
                 ColumnName = columnName,
-                CsvFieldTypeConverter = null,
+                CsvToClassTypeConverter = null,
                 IgnoreWhenReading = true,
                 PropInformation = null
             };

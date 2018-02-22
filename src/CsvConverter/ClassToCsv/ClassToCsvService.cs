@@ -106,7 +106,7 @@ namespace CsvConverter.ClassToCsv
                 }
 
                 string value;
-                if (columnMap.ClassPropertyTypeConverter == null)
+                if (columnMap.ClassToCsvTypeConverter == null)
                 {
                     var someObject = columnMap?.PropInformation?.GetValue(record);
                     if (someObject != null)
@@ -121,14 +121,14 @@ namespace CsvConverter.ClassToCsv
                 }
                 else
                 {
-                    value = columnMap.ClassPropertyTypeConverter.Convert(columnMap.PropInformation.PropertyType,
+                    value = columnMap.ClassToCsvTypeConverter.Convert(columnMap.PropInformation.PropertyType,
                             columnMap.PropInformation.GetValue(record), columnMap.ClassPropertyDataFormat,
                         columnMap.ColumnName, columnMap.ColumnIndex, currentRowNumber, DefaultConverters);
                 }
 
-                foreach(var postProcessor in columnMap.ClassPropertyPostprocessors)
+                foreach(var postConverter in columnMap.ClassToCsvPostConverters)
                 {
-                     value = postProcessor.Work(value, columnMap.ColumnName, columnMap.ColumnIndex, currentRowNumber);
+                     value = postConverter.Convert(value, columnMap.ColumnName, columnMap.ColumnIndex, currentRowNumber);
                 }
                 
 

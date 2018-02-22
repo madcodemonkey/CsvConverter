@@ -23,7 +23,7 @@ namespace CsvConverter.ClassToCsv.Mapper
                 return false;
 
             // If a converter was specified, it will check the output type for mismatched
-            if (newMap.CsvFieldTypeConverter != null)
+            if (newMap.CsvToClassTypeConverter != null)
                 return true;
 
             // Base it on the property type

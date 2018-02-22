@@ -29,7 +29,7 @@ namespace CsvConverter.CsvToClass
 
         /// <summary>The string to object converter.  Used for converting strings into property values.  It will be injected 
         /// into custom type converters and used when no type converter is specified.</summary>
-        public IStringToObjectDefaultConverters DefaultConverters { get; set; } = new StringToObjectDefaultConverters();
+        public IDefaultStringToObjectTypeConverterManager DefaultConverters { get; set; } = new DefaultStringToObjectTypeConverterManager();
 
         public void Init()
         {
@@ -77,18 +77,18 @@ namespace CsvConverter.CsvToClass
                     if (mapping.IgnoreWhenReading)
                         continue;
 
-                    // Run preprocessors
-                    foreach (var preprocessor in mapping.CsvFieldPreprocessors)
+                    // Run pre-converters
+                    foreach (var preConverter in mapping.CsvToClassPreConverters)
                     {
-                        fieldValue = preprocessor.Work(fieldValue, mapping.ColumnName, columnIndex, RowNumber);
+                        fieldValue = preConverter.Work(fieldValue, mapping.ColumnName, columnIndex, RowNumber);
                     }
 
-                    // Default OR custom converter?
-                    object newPropertyValue = mapping.CsvFieldTypeConverter == null ?
+                    // Default OR custom type converter?
+                    object newPropertyValue = mapping.CsvToClassTypeConverter == null ?
                         // DEFAULT
                         DefaultConverters.Convert(mapping.PropInformation.PropertyType, fieldValue, mapping.ColumnName, columnIndex, RowNumber) :
                         // CUSTOM
-                        mapping.CsvFieldTypeConverter.Convert(mapping.PropInformation.PropertyType, fieldValue,
+                        mapping.CsvToClassTypeConverter.Convert(mapping.PropInformation.PropertyType, fieldValue,
                             mapping.ColumnName, columnIndex, RowNumber, DefaultConverters);
 
                     mapping.PropInformation.SetValue(newItem, newPropertyValue);

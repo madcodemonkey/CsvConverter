@@ -7,7 +7,7 @@ namespace CsvConverter.ClassToCsv.Mapper
     {
         bool IgnoreWhenWriting { get; set; }
         string ClassPropertyDataFormat { get; set; }
-        IClassToCsvTypeConverter ClassPropertyTypeConverter { get; set; }
-        List<IClassToCsvPostprocessor> ClassPropertyPostprocessors { get; set; }
+        IClassToCsvTypeConverter ClassToCsvTypeConverter { get; set; }
+        List<IClassToCsvPostConverter> ClassToCsvPostConverters { get; set; }
     }
 }
