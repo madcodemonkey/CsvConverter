@@ -2,6 +2,10 @@
 
 namespace CsvConverter
 {
+    /// <summary>This is the basic custom converter attribute and is used for CSV to Class and Class to CSV operations
+    /// when custom converters are needed.  It can be used on a property for Type converters and on both a property
+    /// and class for pre and post processing converters.  This is the basic attribute were the converters do NOT 
+    /// require any special parameter inputs.  If you need special parameter inputs, you inherit from this attribute and add them.</summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = true)]
     public class CsvConverterCustomAttribute : Attribute
     {

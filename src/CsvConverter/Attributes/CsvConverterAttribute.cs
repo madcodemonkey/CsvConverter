@@ -2,6 +2,8 @@
 
 namespace CsvConverter
 {
+    /// <summary>This attribute is used for CSV to Class and Class to CSV operations.  It is mainly used for specifing 
+    /// column names and column order and to ignore columns when reading or writing files.</summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class CsvConverterAttribute : Attribute
     {
