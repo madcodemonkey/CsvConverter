@@ -98,6 +98,49 @@ namespace CsvConverter.Tests.Services
             Assert.IsNull(row3, "There is no third row!");
             rowReaderMock.VerifyAll();
         }
+
+        [TestMethod]
+        public void TypeConverterCanBePlacedOnTheClass()
+        {
+            // Arrange
+            var rowReaderMock = new Mock<IRowReader>();
+            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
+            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
+            rowReaderMock.SetupSequence(m => m.ReadRow())
+                .Returns(new List<string> { "Order", "Ages", "Pens" })
+                .Returns(new List<string> { "1", "3,4,5", "9,10,11" })
+                .Returns(new List<string> { "2", "6,7,8", "12,13,14" });
+
+            var classUnderTest = new CsvToClassService<CsvServiceConverterOnClassTest>(rowReaderMock.Object);
+            classUnderTest.Configuration.HasHeaderRow = true;
+
+            // Act
+            CsvServiceConverterOnClassTest row1 = classUnderTest.GetRecord();
+            CsvServiceConverterOnClassTest row2 = classUnderTest.GetRecord();
+            CsvServiceConverterOnClassTest row3 = classUnderTest.GetRecord();
+
+            // Assert
+            Assert.AreEqual(1, row1.Order);
+            Assert.AreEqual(3, row1.Ages[0]);
+            Assert.AreEqual(4, row1.Ages[1]);
+            Assert.AreEqual(5, row1.Ages[2]);
+            Assert.AreEqual(9, row1.Pens[0]);
+            Assert.AreEqual(10, row1.Pens[1]);
+            Assert.AreEqual(11, row1.Pens[2]);
+
+
+            Assert.AreEqual(2, row2.Order);
+            Assert.AreEqual(6, row2.Ages[0]);
+            Assert.AreEqual(7, row2.Ages[1]);
+            Assert.AreEqual(8, row2.Ages[2]);
+            Assert.AreEqual(12, row2.Pens[0]);
+            Assert.AreEqual(13, row2.Pens[1]);
+            Assert.AreEqual(14, row2.Pens[2]);
+
+            Assert.IsNull(row3, "There is no third row!");
+            rowReaderMock.VerifyAll();
+        }
+
     }
     
     internal class CsvServiceConverterTestClass
@@ -123,6 +166,17 @@ namespace CsvConverter.Tests.Services
 
         [CsvConverterCustom(typeof(CommaDelimitedIntArrayCsvToClassConverter))]
         public int[] Ages { get; set; }
+    }
+
+
+    [CsvConverterCustom(typeof(CommaDelimitedIntArrayCsvToClassConverter), TargetPropertyType =typeof(int[]))]
+    internal class CsvServiceConverterOnClassTest
+    {
+        public int Order { get; set; }
+
+        public int[] Ages { get; set; }
+
+        public int[] Pens { get; set; }
     }
 
 }

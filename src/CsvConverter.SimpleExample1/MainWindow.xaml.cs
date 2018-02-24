@@ -33,10 +33,10 @@ namespace SimpleExample1
                 using (var fs = File.Create(dialog.FileName))
                 using (var sw = new StreamWriter(fs, Encoding.Default))
                 {
-                    var service = new ClassToCsvService<Person>(sw);
+                    var service = new ClassToCsvService<Employee>(sw);
                     for (int i = 0; i < numberToCreate; i++)
                     {
-                        var newPerson = new Person()
+                        var newEmp = new Employee()
                         {
                             FirstName = $"First{rand.Next(1,5000)}",
                             LastName = $"Last{rand.Next(1, 5000)}",
@@ -45,11 +45,11 @@ namespace SimpleExample1
                             AvgHeartRate = rand.Next(60, 80) / 1.1
                         };
 
-                        service.WriterRecord(newPerson);
+                        service.WriterRecord(newEmp);
                     }
                 }
 
-                LogMessage($"Created {numberToCreate} people in {dialog.FileName}.");
+                LogMessage($"Created {numberToCreate} employees in {dialog.FileName}.");
             }
             catch (Exception ex)
             {
@@ -71,12 +71,12 @@ namespace SimpleExample1
                 using (var fs = File.OpenRead(dialog.FileName))
                 using (var sr = new StreamReader(fs, Encoding.Default))
                 {
-                    var csv = new CsvToClassService<Person>(sr);
+                    var csv = new CsvToClassService<Employee>(sr);
                     csv.Configuration.IgnoreBlankRows = true;
 
                     while (csv.CanRead())
                     {
-                        Person record = csv.GetRecord();
+                        Employee record = csv.GetRecord();
                         LogMessage(record.ToString());
                     }
                 }

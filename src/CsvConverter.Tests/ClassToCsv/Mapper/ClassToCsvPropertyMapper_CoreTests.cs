@@ -52,7 +52,7 @@ namespace CsvConverter.Tests.Readers
         }
 
         [TestMethod]
-        public void ColumnIndexChangesSortOrderIsAlphabetical()
+        public void ColumnIndexChangesSortOrder_MonthSortedAboveAgeAndNameColumns()
         {
             // Arrange
             var configuation = new ClassToCsvConfiguration() { };
@@ -70,7 +70,7 @@ namespace CsvConverter.Tests.Readers
         
         [TestMethod]
         [ExpectedException(typeof(CsvConverterAttributeException))]
-        public void PlacingConverterOnPropertyItCannotCovertCausesAnException()
+        public void PlacingConverterOnPropertyItCannotCovert_ResultsInAnException()
         {
             // Arrange
             var configuation = new ClassToCsvConfiguration() { };

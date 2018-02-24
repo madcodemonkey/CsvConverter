@@ -71,18 +71,16 @@ namespace CsvConverter.Mapper
 
                 FindCustomTypeConvertersOnOneProperty(newMap);
 
-                if (ShouldMapBeAdd(newMap))
-                {
-                    mapList.Add(newMap);                    
-                }
+                 mapList.Add(newMap);                    
             }
 
-            // Sort the columns the way the user wants them sorted or by column name
-            mapList = mapList.OrderBy(o => o.ColumnIndex).ThenBy(o => o.ColumnName).ToList();
-
             FindConvertersOnTheClass(mapList);
-            
-            return mapList;
+
+            // Sort the columns the way the user wants them sorted or by column name
+            return mapList.Where(map => ShouldMapBeAdd(map))
+                .OrderBy(o => o.ColumnIndex)
+                .ThenBy(o => o.ColumnName)
+                .ToList();            
         }
 
         private void FindCustomTypeConvertersOnOneProperty(PropertyMap newMap)
@@ -119,15 +117,23 @@ namespace CsvConverter.Mapper
 
             foreach (var oneAttribute in attributeList)
             {
+                if (oneAttribute.TargetPropertyType == null)
+                {
+                    throw new ArgumentException($"A {nameof(CsvConverterCustomAttribute)} was placed on the  {typeof(T).Name} " +
+                        $"class, but a {nameof(CsvConverterCustomAttribute.TargetPropertyType)} was NOT specified.");
+                }
+
                 var oneTypeConverter = oneAttribute.ConverterType.HelpCreateAndCastToInterface<ICsvConverter>(
                     $"The {typeof(T).Name} class has specified a {nameof(CsvConverterCustomAttribute)}, but there is a problem!  " +
                     GetCustomConverterErrorMessage(oneAttribute));
 
                 switch (oneTypeConverter.ConverterType)
                 {
+                    case CsvConverterTypeEnum.ClassToCsvType:
                     case CsvConverterTypeEnum.ClassToCsvPost:
                         _classToCsvAttributeHelper.UpdateClassConverters(mapList, oneAttribute, oneTypeConverter);
                         break;
+                    case CsvConverterTypeEnum.CsvToClassType:
                     case CsvConverterTypeEnum.CsvToClassPre:
                         _csvToClassAttributeHelper.UpdateClassConverters(mapList, oneAttribute, oneTypeConverter);
                         break;
