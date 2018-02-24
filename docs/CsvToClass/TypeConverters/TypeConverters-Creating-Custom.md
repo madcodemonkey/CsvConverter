@@ -18,7 +18,7 @@ namespace CsvConverter.CsvToClass
 
         public int Order => 999;
 
-        public bool CanOutputThisType(Type outputType)
+        public bool CanConvert(Type outputType)
         {
             return outputType == typeof(decimal) || outputType == typeof(decimal?);
         }
@@ -73,7 +73,6 @@ Usage:
 public class CsvServiceConverterTestClass
 {
     public int Order { get; set; }
-
     
     [CsvConverterCustom(typeof(PercentCsvToClassConverter))]
     public decimal Percentage { get; set; }
@@ -105,7 +104,7 @@ All custom converters must implement the ICsvToClassTypeConverter interface, whi
 ```C#
 public interface ICsvToClassTypeConverter : ICsvConverter
 {
-	bool CanOutputThisType(Type outputType);
+	bool CanConvert(Type outputType);
 	object Convert(Type targetType, string stringValue, string columnName, int columnIndex, int rowNumber, IDefaultStringToObjectTypeConverterManager defaultConverters);	
 }
 ```
@@ -136,7 +135,7 @@ namespace AdvExample1
 
         public int Order => 999;
 
-        public bool CanOutputThisType(Type outputType)
+        public bool CanConvert(Type outputType)
         {
             return outputType == typeof(int) || outputType == typeof(int?);
         }

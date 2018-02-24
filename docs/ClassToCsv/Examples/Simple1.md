@@ -6,7 +6,7 @@ In this simple example, the headers will match the property names.
 ## Simple Example
 Given this class
 ```c#
-public class Person
+public class Employee
 {
 	public string FirstName { get; set; }
 	public string LastName { get; set; }
@@ -38,10 +38,10 @@ int numberToCreate = rand.Next(10, 100);
 using (var fs = File.Create(dialog.FileName))
 using (var sw = new StreamWriter(fs, Encoding.Default))
 {
-	var service = new ClassToCsvService<Person>(sw);
+	var service = new ClassToCsvService<Employee>(sw);
 	for (int i = 0; i < numberToCreate; i++)
 	{
-		var newPerson = new Person()
+		var newEmployee = new Employee()
 		{
 			FirstName = $"First{rand.Next(1,5000)}",
 			LastName = $"Last{rand.Next(1, 5000)}",
@@ -50,7 +50,7 @@ using (var sw = new StreamWriter(fs, Encoding.Default))
 			AvgHeartRate = rand.Next(60, 80) / 1.1
 		};
 
-		service.WriterRecord(newPerson);
+		service.WriterRecord(newEmployee);
 	}
 }
 ```

@@ -13,7 +13,7 @@ namespace CsvConverter.ClassToCsv
     /// <summary>Trims all fields of white space left and right of the text.</summary>
     public class TrimClassToCsvTypeConverter : IClassToCsvTypeConverter
     {
-        public bool CanHandleThisInputType(Type inputType)
+        public bool CanConvert(Type inputType)
         {
             return inputType == typeof(string);
         }
@@ -82,7 +82,7 @@ All custom converters must implement the IClassToCsvTypeConverter interface, whi
 ```C#
 public interface IClassToCsvTypeConverter : ICsvConverter
 {
-    bool CanHandleThisInputType(Type inputType);
+    bool CanConvert(Type inputType);
     string Convert(Type inputType, object value, string stringFormat, string columnName, int columnIndex, int rowNumber,
         IDefaultObjectToStringTypeConverterManager defaultConverters);
 }
@@ -94,7 +94,7 @@ public interface ICsvConverter
 {
     CsvConverterTypeEnum ConverterType { get; }
     int Order { get; }
-  void Initialize(CsvConverterCustomAttribute attribute);
+    void Initialize(CsvConverterCustomAttribute attribute);
 }
 ```
 
@@ -114,7 +114,7 @@ namespace AdvExample1
 
         public int Order => 999;
 
-        public bool CanHandleThisInputType(Type inputType)
+        public bool CanConvert(Type inputType)
         {
             return inputType == typeof(decimal) || inputType == typeof(decimal?) ||
                 inputType == typeof(double) || inputType == typeof(double);

@@ -28,7 +28,7 @@ All custom converters must implement the ICsvToClassPreConverter interface, whic
 ```C#
 public interface ICsvToClassPreConverter : ICsvConverter
 {
-    bool CanProcessType(Type theType);
+    bool CanConvert(Type theType);
     string Convert(string csvField, string columnName, int columnIndex, int rowNumber);
 }
 ```
@@ -60,7 +60,7 @@ namespace AdvExample1
 
         public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassPre;
 
-        public bool CanProcessType(Type theType)
+        public bool CanConvert(Type theType)
         {
             return theType == typeof(string);
         }

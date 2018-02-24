@@ -3,7 +3,7 @@
 In this simple example, the CSV file has a header row and the column names match the class properties perfectly.
 
 ## Simple Example
-Given this CSV file named c:\temp\person.csv
+Given this CSV file named c:\temp\Employee.csv
 ```
 Age,AvgHeartRate,FirstName,LastName,PercentageBodyFat
 16,56.3636363636364,First645,Last42,14.166666666666666666666666667
@@ -14,7 +14,7 @@ Age,AvgHeartRate,FirstName,LastName,PercentageBodyFat
 ```
 and this class
 ```c#
-public class Person
+public class Employee
 {
 	public string FirstName { get; set; }
 	public string LastName { get; set; }
@@ -42,12 +42,12 @@ using System.IO;
 using (var fs = File.OpenRead(dialog.FileName))
 using (var sr = new StreamReader(fs, Encoding.Default))
 {
-	var csv = new CsvToClassService<Person>(sr);
+	var csv = new CsvToClassService<Employee>(sr);
 	csv.Configuration.IgnoreBlankRows = true;
 
 	while (csv.CanRead())
 	{
-		Person record = csv.GetRecord();
+		Employee record = csv.GetRecord();
 		LogMessage(record.ToString());
 	}
 }
