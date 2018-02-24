@@ -16,7 +16,7 @@ namespace CsvConverter.Mapper
         /// <summary>Looks for CsvConverterAttribute on the property using PropertyInfo
         /// and then updates any relevant info on the map</summary>
         /// <param name="newMap">The property map to examine</param>
-        private void AddCsvConverterAttributesToTheMap(PropertyMap newMap, int columnIndexDefaultValue)
+        private void FindCsvConverterAttributesOnOneProperty(PropertyMap newMap, int columnIndexDefaultValue)
         {
             CsvConverterAttribute oneAttribute = newMap.PropInformation.HelpFindAttribute<CsvConverterAttribute>();
             if (oneAttribute == null)
@@ -67,9 +67,9 @@ namespace CsvConverter.Mapper
                     PropInformation = info
                 };
 
-                AddCsvConverterAttributesToTheMap(newMap, columnIndexDefaultValue);
+                FindCsvConverterAttributesOnOneProperty(newMap, columnIndexDefaultValue);
 
-                FindConvertersOnOneProperty(newMap);
+                FindCustomTypeConvertersOnOneProperty(newMap);
 
                 if (ShouldMapBeAdd(newMap))
                 {
@@ -85,7 +85,7 @@ namespace CsvConverter.Mapper
             return mapList;
         }
 
-        private void FindConvertersOnOneProperty(PropertyMap newMap)
+        private void FindCustomTypeConvertersOnOneProperty(PropertyMap newMap)
         {
             List<CsvConverterCustomAttribute> attributeList = newMap.PropInformation.HelpFindAllAttributes<CsvConverterCustomAttribute>();
             foreach (var oneAttribute in attributeList)

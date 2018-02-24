@@ -21,7 +21,8 @@ namespace CsvConverter
         public Type ConverterType { get; set; }
 
         /// <summary>When this attribute is used to decorate a class, you can target a particular target type. 
-        /// It is NOT used when decorating a property!</summary>
+        /// It is NOT used when decorating a property! Also, when used on the class level it will NOT override
+        /// converters on the actual property.</summary>
         public Type TargetPropertyType { get; set; }
     }
 }
