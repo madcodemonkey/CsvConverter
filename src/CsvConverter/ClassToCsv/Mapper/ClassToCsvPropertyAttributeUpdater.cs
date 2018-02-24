@@ -48,7 +48,7 @@ namespace CsvConverter.ClassToCsv.Mapper
             }
 
 
-            if (classToCsvConverter.CanHandleThisInputType(newMap.PropInformation.PropertyType))
+            if (classToCsvConverter.CanConvert(newMap.PropInformation.PropertyType))
             {
                 classToCsvConverter.Initialize(oneAttribute);
                 newMap.ClassToCsvTypeConverter = classToCsvConverter;

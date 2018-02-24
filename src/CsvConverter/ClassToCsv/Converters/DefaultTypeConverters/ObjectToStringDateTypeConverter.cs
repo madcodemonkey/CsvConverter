@@ -5,7 +5,7 @@ namespace CsvConverter.ClassToCsv
 {
     public class ObjectToStringDateTypeConverter : IClassToCsvTypeConverter
     {
-        public bool CanHandleThisInputType(Type inputType)
+        public bool CanConvert(Type inputType)
         {
             return inputType == typeof(DateTime) || inputType == typeof(DateTime?);
         }

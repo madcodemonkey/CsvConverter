@@ -5,7 +5,7 @@ namespace CsvConverter.ClassToCsv
 {
     public class ObjectToStringFloatTypeConverter : IClassToCsvTypeConverter
     {
-        public bool CanHandleThisInputType(Type inputType)
+        public bool CanConvert(Type inputType)
         {
             return inputType == typeof(float) || inputType == typeof(float?);
         }

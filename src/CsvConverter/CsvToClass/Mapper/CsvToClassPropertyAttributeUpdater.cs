@@ -49,7 +49,7 @@ namespace CsvConverter.CsvToClass.Mapper
             }
 
 
-            if (csvToclassConverter.CanOutputThisType(newMap.PropInformation.PropertyType))
+            if (csvToclassConverter.CanConvert(newMap.PropInformation.PropertyType))
             {
                 csvToclassConverter.Initialize(oneAttribute);
                 newMap.CsvToClassTypeConverter = csvToclassConverter;
@@ -82,7 +82,7 @@ namespace CsvConverter.CsvToClass.Mapper
         }
         private void AddOnePreConverter(CsvConverterCustomAttribute oneAttribute, PropertyMap map, ICsvToClassPreConverter preConverter)
         {
-            if (preConverter.CanProcessType(map.PropInformation.PropertyType))
+            if (preConverter.CanConvert(map.PropInformation.PropertyType))
             {
                 preConverter.Initialize(oneAttribute);
                 map.CsvToClassPreConverters.Add(preConverter);

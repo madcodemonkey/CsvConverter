@@ -4,9 +4,9 @@ namespace CsvConverter.ClassToCsv
 {
     public interface IClassToCsvTypeConverter : ICsvConverter
     {
-        /// <summary>This method is called to make sure that the converter can process the type into a string.</summary>
-        /// <param name="theType">The class property type of the source.</param>
-        bool CanHandleThisInputType(Type inputType);
+        /// <summary>This method is called to make sure that the converter can process the specified type into a string.</summary>
+        /// <param name="inputType">The class property type that you must convert into a string.</param>
+        bool CanConvert(Type inputType);
 
         /// <summary>You are passed the class property information and you must output a string or null that will be written into a CSV file column</summary>
         /// <param name="inputType">The type of the property that is your input.  In most cases it should be a primitive type (int, decimal, etc.).</param>

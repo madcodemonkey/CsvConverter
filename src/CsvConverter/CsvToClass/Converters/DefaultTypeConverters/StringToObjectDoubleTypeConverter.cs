@@ -7,7 +7,7 @@ namespace CsvConverter.CsvToClass
 {
     public class StringToObjectDoubleTypeConverter : StringToObjectBaseTypeConverter, ICsvToClassTypeConverter, IDecimalPlacesSettings
     {
-        public bool CanOutputThisType(Type outputType)
+        public bool CanConvert(Type outputType)
         {
             return outputType == typeof(double) || outputType == typeof(double?);
         }

@@ -6,7 +6,7 @@ namespace CsvConverter.CsvToClass
 {
     public class StringToObjectFloatTypeConverter : StringToObjectBaseTypeConverter, ICsvToClassTypeConverter
     {
-        public bool CanOutputThisType(Type outputType)
+        public bool CanConvert(Type outputType)
         {
             return outputType == typeof(float) || outputType == typeof(float?); ;
         }

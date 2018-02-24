@@ -12,7 +12,7 @@ namespace AdvExample1
 
         public int Order => 999;
 
-        public bool CanOutputThisType(Type outputType)
+        public bool CanConvert(Type outputType)
         {
             return outputType == typeof(decimal) || outputType == typeof(decimal?) ||
             outputType == typeof(double) || outputType == typeof(double);

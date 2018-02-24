@@ -5,7 +5,7 @@ namespace CsvConverter.ClassToCsv
 {
     public class ObjectToStringShortTypeConverter : IClassToCsvTypeConverter
     {
-        public bool CanHandleThisInputType(Type inputType)
+        public bool CanConvert(Type inputType)
         {
             return inputType == typeof(short) || inputType == typeof(short?);
         }

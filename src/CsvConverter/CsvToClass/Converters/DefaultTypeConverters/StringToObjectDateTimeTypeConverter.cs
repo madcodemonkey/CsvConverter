@@ -7,7 +7,7 @@ namespace CsvConverter.CsvToClass
 {
     public class StringToObjectDateTimeTypeConverter : StringToObjectBaseTypeConverter, ICsvToClassTypeConverter, IDateConverterSettings
     {
-        public bool CanOutputThisType(Type outputType)
+        public bool CanConvert(Type outputType)
         {
             return outputType == typeof(DateTime) || outputType == typeof(DateTime?);
         }

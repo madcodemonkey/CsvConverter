@@ -6,7 +6,7 @@ namespace CsvConverter.ClassToCsv
 {
     public class ObjectToStringBooleanTypeConverter : IClassToCsvTypeConverter, IBooleanConverterSettings
     {
-        public bool CanHandleThisInputType(Type inputType)
+        public bool CanConvert(Type inputType)
         {
             return inputType == typeof(bool) || inputType == typeof(bool?);
         }

@@ -5,7 +5,7 @@ namespace CsvConverter.CsvToClass
 {
     public class StringToObjectBooleanTypeConverter : StringToObjectBaseTypeConverter, ICsvToClassTypeConverter
     {
-        public bool CanOutputThisType(Type outputType)
+        public bool CanConvert(Type outputType)
         {
             return outputType == typeof(bool) || outputType == typeof(bool?);
         }

@@ -20,7 +20,7 @@ namespace CsvConverter.CsvToClass
             if (converter == null)
                 throw new ArgumentNullException("Please specify a converter.  If you are trying to remove a converter, please use the RemoveConverter method.");
 
-            if (converter.CanOutputThisType(outputType) == false)
+            if (converter.CanConvert(outputType) == false)
                 throw new ArgumentException($"The converter cannot handle the {outputType.Name} output type.");
 
             _converters.Add(outputType, converter);

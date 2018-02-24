@@ -11,7 +11,7 @@ namespace CsvConverter.CsvToClass
 
         public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassPre;
 
-        public bool CanProcessType(Type theType)
+        public bool CanConvert(Type theType)
         {
             return true;
         }

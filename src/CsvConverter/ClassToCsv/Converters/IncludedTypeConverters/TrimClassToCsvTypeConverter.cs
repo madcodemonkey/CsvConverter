@@ -5,7 +5,7 @@ namespace CsvConverter.ClassToCsv
     /// <summary>Trims all fields of white space left and right of the text.</summary>
     public class TrimClassToCsvTypeConverter : IClassToCsvTypeConverter
     {
-        public bool CanHandleThisInputType(Type inputType)
+        public bool CanConvert(Type inputType)
         {
             return inputType == typeof(string);
         }

@@ -5,7 +5,7 @@ namespace CsvConverter.CsvToClass
 {
     public class StringToObjectLongTypeConverter : StringToObjectBaseTypeConverter, ICsvToClassTypeConverter
     {
-        public bool CanOutputThisType(Type outputType)
+        public bool CanConvert(Type outputType)
         {
             return outputType == typeof(long) || outputType == typeof(long?);
         }

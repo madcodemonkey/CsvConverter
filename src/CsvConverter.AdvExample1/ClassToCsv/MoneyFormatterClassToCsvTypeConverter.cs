@@ -12,7 +12,7 @@ namespace AdvExample1
 
         public int Order => 999;
 
-        public bool CanHandleThisInputType(Type inputType)
+        public bool CanConvert(Type inputType)
         {
             return inputType == typeof(decimal) || inputType == typeof(decimal?) ||
                 inputType == typeof(double) || inputType == typeof(double);
