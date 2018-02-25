@@ -51,9 +51,9 @@ namespace CsvConverter.ClassToCsv
                 Init();
 
             // Reset all column index
-            _csvColumnMapList.Where(w => w.ColumnIndex >= 0).ToList().ForEach(item => item.ColumnIndex = ColumnIndexDefaultValue);
+            _csvColumnMapList.Where(w => w.ColumnIndex > 0).ToList().ForEach(item => item.ColumnIndex = ColumnIndexDefaultValue);
 
-            var sortedItems = columnMaps.Where(w => w.ColumnIndex >= 0).OrderBy(o => o.ColumnIndex).ToList();
+            var sortedItems = columnMaps.Where(w => w.ColumnIndex > 0).OrderBy(o => o.ColumnIndex).ToList();
             foreach (var columnMap in sortedItems)
             {
                 var propMap = _csvColumnMapList.FirstOrDefault(w => string.Compare(w.ColumnName, columnMap.ColumnName) == 0);

@@ -5,7 +5,6 @@ using CsvConverter.Mapper;
 
 namespace CsvConverter.CsvToClass.Mapper
 {
-
     public class CsvToClassPropertyMapper<T> : PropertyMapperBase<T>
     {
         private const int ColumnIndexDefaultValue = -1;
@@ -33,12 +32,12 @@ namespace CsvConverter.CsvToClass.Mapper
             }
 
             // Map all the columns into a dictionary
-            // This will also discard any unmapped properties (column index still equal to -1)
+            // This will also discard any unmapped properties (column index still equal to ColumnIndexDefaultValue)
             var result = new Dictionary<int, ICsvToClassPropertyMap>();
 
             foreach (PropertyMap map in orderedMapList)
             {
-                if (map.ColumnIndex >= 0)
+                if (map.ColumnIndex > 0)
                     result.Add(map.ColumnIndex, map);
             }
 
@@ -82,9 +81,9 @@ namespace CsvConverter.CsvToClass.Mapper
             ResetColumnIndex(mapList);
 
             // Map CSV columns onto existing Properties
-            for (int columnIndex = 0; columnIndex < orderedHeaderColumns.Count; columnIndex++)
+            for (int columnIndex = 1; columnIndex <= orderedHeaderColumns.Count; columnIndex++)
             {
-                string field = orderedHeaderColumns[columnIndex];
+                string field = orderedHeaderColumns[columnIndex - 1];
                 if (string.IsNullOrWhiteSpace(field))
                 {
                     // The CSV file has a blank column at this index.  We can't map it to a property so create a mapping to ignore it!
@@ -97,7 +96,11 @@ namespace CsvConverter.CsvToClass.Mapper
 
                     // Find the column (even if it is being ignored) and map it to a column index!
                     List<PropertyMap> maps = SearchForColumnName(mapList, trimmedField);
-                    if (maps.Count == 0)
+                    if (maps.Count == 1)
+                    {
+                        maps[0].ColumnIndex = columnIndex;
+                    }
+                    else if (maps.Count == 0)
                     {
                         if (configuration.IgnoreExtraCsvColumns == false)
                         {
@@ -116,15 +119,11 @@ namespace CsvConverter.CsvToClass.Mapper
                         throw new ArgumentException($"You have more than one column mapped to the column name {trimmedField}.  Please check the " +
                             " Property names, ClassToCsv attributes ColumnName and AltColumnNames for duplicates.  A column can ONLY be mapped to a single property!");
                     }
-                    else
-                    {
-                        maps[0].ColumnIndex = columnIndex;
-                    }
                 }
             }
 
             // Remove any Properties that didn't match a CSV column
-            List<PropertyMap> unmapped = mapList.Where(w => w.ColumnIndex == -1).ToList();
+            List<PropertyMap> unmapped = mapList.Where(w => w.ColumnIndex == ColumnIndexDefaultValue).ToList();
             foreach (var item in unmapped)
                 mapList.Remove(item);
         }
@@ -134,7 +133,7 @@ namespace CsvConverter.CsvToClass.Mapper
         {
             foreach (var column in columns)
             {
-                column.ColumnIndex = -1; // Reset
+                column.ColumnIndex = ColumnIndexDefaultValue; // Reset
             }
         }
 
@@ -144,7 +143,7 @@ namespace CsvConverter.CsvToClass.Mapper
         /// <param name="trimmedField">Trimmed header field name.</param>
         private List<PropertyMap> SearchForColumnName(List<PropertyMap> mapList, string trimmedField)
         {
-            const int UnassignedColumnMap = -1;
+            const int UnassignedColumnMap = ColumnIndexDefaultValue;
             List<PropertyMap> result = mapList
                 .Where(w => w.ColumnIndex == UnassignedColumnMap && string.Compare(w.ColumnName, trimmedField, true) == 0)
                 .ToList();
@@ -175,7 +174,7 @@ namespace CsvConverter.CsvToClass.Mapper
             foreach (var item in unmapped)
                 mapList.Remove(item);
 
-            for (int columnIndex = 0; columnIndex < mapList.Count; columnIndex++)
+            for (int columnIndex = 1; columnIndex <= mapList.Count; columnIndex++)
             {
                 int count = mapList.Count(w => w.ColumnIndex == columnIndex);
                 if (count == 1)
@@ -185,7 +184,7 @@ namespace CsvConverter.CsvToClass.Mapper
                 {
                     throw new ArgumentException("Since the CSV file does not have a header column, every property that is " +
                         "not ignored should have a ColumnIndex specified.  Please use the ClassToCsv attribute on each " +
-                        "property in the class and specify a ColumnIndex or Ignore.  FYI, ColumnIndex is ZERO based.");
+                        "property in the class and specify a ColumnIndex or Ignore.  FYI, ColumnIndex is ONE based.");
                 }
 
                 throw new ArgumentException($"More than one property on the {typeof(T).Name} class is marked with a ColumnIndex of {columnIndex}.  " +

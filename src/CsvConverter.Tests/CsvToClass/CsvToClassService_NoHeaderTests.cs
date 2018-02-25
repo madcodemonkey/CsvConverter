@@ -16,18 +16,18 @@ namespace CsvConverter.Tests.Services
             // Arrange
             var rowReaderMock = new Mock<IRowReader>();
             rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);            
+            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
             rowReaderMock.SetupSequence(m => m.ReadRow())
                 .Returns(new List<string> { "4", "hello" })
-                .Returns(new List<string> { "6", " "});
+                .Returns(new List<string> { "6", " " });
 
-            var classUnderTest = new CsvToClassService<CsvServiceNoHeaderTestClass>(rowReaderMock.Object);
+            var classUnderTest = new CsvToClassService<CsvToClassServiceNoHeaderData>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = false;
 
             // Act
-            CsvServiceNoHeaderTestClass row1 = classUnderTest.GetRecord();
-            CsvServiceNoHeaderTestClass row2 = classUnderTest.GetRecord();
-            CsvServiceNoHeaderTestClass row3 = classUnderTest.GetRecord();
+            CsvToClassServiceNoHeaderData row1 = classUnderTest.GetRecord();
+            CsvToClassServiceNoHeaderData row2 = classUnderTest.GetRecord();
+            CsvToClassServiceNoHeaderData row3 = classUnderTest.GetRecord();
 
             // Assert
             Assert.AreEqual(4, row1.SomeIntProperty);
@@ -50,14 +50,14 @@ namespace CsvConverter.Tests.Services
                 .Returns(new List<string> { "4", "hello", "5" })
                 .Returns(new List<string> { "6", " ", "7" });
 
-            var classUnderTest = new CsvToClassService<CsvServiceNoHeaderTestClass>(rowReaderMock.Object);
+            var classUnderTest = new CsvToClassService<CsvToClassServiceNoHeaderData>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = false;
             classUnderTest.Configuration.IgnoreExtraCsvColumns = true;
 
             // Act
-            CsvServiceNoHeaderTestClass row1 = classUnderTest.GetRecord();
-            CsvServiceNoHeaderTestClass row2 = classUnderTest.GetRecord();
-            CsvServiceNoHeaderTestClass row3 = classUnderTest.GetRecord();
+            CsvToClassServiceNoHeaderData row1 = classUnderTest.GetRecord();
+            CsvToClassServiceNoHeaderData row2 = classUnderTest.GetRecord();
+            CsvToClassServiceNoHeaderData row3 = classUnderTest.GetRecord();
 
             // Assert
             Assert.AreEqual(4, row1.SomeIntProperty);
@@ -82,12 +82,12 @@ namespace CsvConverter.Tests.Services
                 .Returns(new List<string> { "4", "hello", "5" })
                 .Returns(new List<string> { "6", " ", "7" });
 
-            var classUnderTest = new CsvToClassService<CsvServiceNoHeaderTestClass>(rowReaderMock.Object);
+            var classUnderTest = new CsvToClassService<CsvToClassServiceNoHeaderData>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = false;
             classUnderTest.Configuration.IgnoreExtraCsvColumns = false;
 
             // Act
-            CsvServiceNoHeaderTestClass row = classUnderTest.GetRecord();
+            CsvToClassServiceNoHeaderData row = classUnderTest.GetRecord();
 
             // Assert
             Assert.Fail("Should have thrown an exception because extra columns were found.");
@@ -98,11 +98,11 @@ namespace CsvConverter.Tests.Services
 
     }
 
-    internal class CsvServiceNoHeaderTestClass
+    internal class CsvToClassServiceNoHeaderData
     {
-        [CsvConverterAttribute(ColumnIndex=0)]
+        [CsvConverterAttribute(ColumnIndex = 1)]
         public int SomeIntProperty { get; set; }
-        [CsvConverterAttribute(ColumnIndex= 1)]
+        [CsvConverterAttribute(ColumnIndex = 2)]
         public string SomeStringProperty { get; set; }
     }
 }

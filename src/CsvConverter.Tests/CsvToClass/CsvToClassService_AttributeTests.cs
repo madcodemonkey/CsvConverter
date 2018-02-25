@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using CsvConverter.CsvToClass;
 using CsvConverter.RowTools;
-using CsvConverter.TypeConverters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;using CsvConverter.Shared;
+using Moq;
 
 namespace CsvConverter.Tests.Services
 {
@@ -13,7 +12,7 @@ namespace CsvConverter.Tests.Services
     public class CsvToClassService_AttributeTests
     {
         [TestMethod]
-        public void CanSpecifyAnotherColumnName()
+        public void GetRecord_CanSpecifyAnotherColumnName_DifferentColumnNameMatchedToCorrectPropertyName()
         {
             // Arrange
             var rowReaderMock = new Mock<IRowReader>();
@@ -25,14 +24,14 @@ namespace CsvConverter.Tests.Services
                 .Returns(new List<string> { "2", "Bob", "Hope" })
                 .Returns(new List<string> { "3", "James", "Garner" });
 
-            var classUnderTest = new CsvToClassService<CsvServiceAttributeTestClass>(rowReaderMock.Object);
+            var classUnderTest = new CsvToClassService<CsvToClassServiceAttributeTestData1>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
-            CsvServiceAttributeTestClass row1 = classUnderTest.GetRecord();
-            CsvServiceAttributeTestClass row2 = classUnderTest.GetRecord();
-            CsvServiceAttributeTestClass row3 = classUnderTest.GetRecord();
-            CsvServiceAttributeTestClass row4 = classUnderTest.GetRecord();
+            CsvToClassServiceAttributeTestData1 row1 = classUnderTest.GetRecord();
+            CsvToClassServiceAttributeTestData1 row2 = classUnderTest.GetRecord();
+            CsvToClassServiceAttributeTestData1 row3 = classUnderTest.GetRecord();
+            CsvToClassServiceAttributeTestData1 row4 = classUnderTest.GetRecord();
 
             // Assert
             Assert.AreEqual(1, row1.Order);
@@ -52,7 +51,7 @@ namespace CsvConverter.Tests.Services
         }
 
         [TestMethod]
-        public void CanSpecifySecondaryColumnName()
+        public void GetRecord_CanSpecifySecondaryColumnName_AltColumnNamedMatchedToCorrectPropertyName()
         {
             // Arrange
             var rowReaderMock = new Mock<IRowReader>();
@@ -64,14 +63,14 @@ namespace CsvConverter.Tests.Services
                 .Returns(new List<string> { "2", "Bob", "Hope" })
                 .Returns(new List<string> { "3", "James", "Garner" });
 
-            var classUnderTest = new CsvToClassService<CsvServiceAttribute2TestClass>(rowReaderMock.Object);
+            var classUnderTest = new CsvToClassService<CsvToClassServiceAttributeTestData2>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
-            CsvServiceAttribute2TestClass row1 = classUnderTest.GetRecord();
-            CsvServiceAttribute2TestClass row2 = classUnderTest.GetRecord();
-            CsvServiceAttribute2TestClass row3 = classUnderTest.GetRecord();
-            CsvServiceAttribute2TestClass row4 = classUnderTest.GetRecord();
+            CsvToClassServiceAttributeTestData2 row1 = classUnderTest.GetRecord();
+            CsvToClassServiceAttributeTestData2 row2 = classUnderTest.GetRecord();
+            CsvToClassServiceAttributeTestData2 row3 = classUnderTest.GetRecord();
+            CsvToClassServiceAttributeTestData2 row4 = classUnderTest.GetRecord();
 
             // Assert
             Assert.AreEqual(1, row1.Order);
@@ -91,7 +90,7 @@ namespace CsvConverter.Tests.Services
         }
              
         [TestMethod]
-        public void CanHandleSpecializedAttributes()
+        public void GetRecord_CanHandleSpecializedAttributes()
         {
             // Arrange
             var rowReaderMock = new Mock<IRowReader>();
@@ -103,14 +102,14 @@ namespace CsvConverter.Tests.Services
                 .Returns(new List<string> { "2", "2018-05-27 14:40:13", "67.89004", "79.33212", "87.38278", "68.94783" })
                 .Returns(new List<string> { "3", "1999-01-01 14:40:24", "948.5334", "80.33212", "7645.322", "69.94783" });
 
-            var classUnderTest = new CsvToClassService<CsvServiceAttribute3TestClass>(rowReaderMock.Object);
+            var classUnderTest = new CsvToClassService<CsvToClassServiceAttributeTestData3>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
-            CsvServiceAttribute3TestClass row1 = classUnderTest.GetRecord();
-            CsvServiceAttribute3TestClass row2 = classUnderTest.GetRecord();
-            CsvServiceAttribute3TestClass row3 = classUnderTest.GetRecord();
-            CsvServiceAttribute3TestClass row4 = classUnderTest.GetRecord();
+            CsvToClassServiceAttributeTestData3 row1 = classUnderTest.GetRecord();
+            CsvToClassServiceAttributeTestData3 row2 = classUnderTest.GetRecord();
+            CsvToClassServiceAttributeTestData3 row3 = classUnderTest.GetRecord();
+            CsvToClassServiceAttributeTestData3 row4 = classUnderTest.GetRecord();
 
             // Assert
             Assert.AreEqual(1, row1.Order);
@@ -140,7 +139,7 @@ namespace CsvConverter.Tests.Services
 
     }
 
-    internal class CsvServiceAttributeTestClass
+    internal class CsvToClassServiceAttributeTestData1
     {
         public int Order { get; set; }
 
@@ -154,7 +153,7 @@ namespace CsvConverter.Tests.Services
         public int Age { get; set; }
     }
 
-    internal class CsvServiceAttribute2TestClass
+    internal class CsvToClassServiceAttributeTestData2
     {
         public int Order { get; set; }
 
@@ -168,20 +167,20 @@ namespace CsvConverter.Tests.Services
         public int Age { get; set; }
     }
 
-    internal class CsvServiceAttribute3TestClass
+    internal class CsvToClassServiceAttributeTestData3
     {
         public int Order { get; set; }
 
         [CsvConverterDateTimeStyles(typeof(StringToObjectDateTimeTypeConverter),  DateParseExactFormat = "yyyy-MM-dd HH:mm:ss", DateStyle = DateTimeStyles.None)]
         public DateTime BirthDay { get; set; }
 
-        [CsvConverterDecimalPlacesAttribute(typeof(StringToObjectDecimalTypeConverter), NumberOfDecimalPlaces = 2)]
+        [CsvConverterDecimalPlaces(typeof(StringToObjectDecimalTypeConverter), NumberOfDecimalPlaces = 2)]
         public decimal PercentageBodyFat { get; set; }
 
-        [CsvConverterDecimalPlacesAttribute(typeof(StringToObjectDecimalTypeConverter), NumberOfDecimalPlaces = 1)]
+        [CsvConverterDecimalPlaces(typeof(StringToObjectDecimalTypeConverter), NumberOfDecimalPlaces = 1)]
         public decimal PercentageMuscle { get; set; }
 
-        [CsvConverterDecimalPlacesAttribute(typeof(StringToObjectDoubleTypeConverter), NumberOfDecimalPlaces = 3)]
+        [CsvConverterDecimalPlaces(typeof(StringToObjectDoubleTypeConverter), NumberOfDecimalPlaces = 3)]
         public double Length { get; set; }
 
         [CsvConverterDecimalPlaces(typeof(StringToObjectDoubleTypeConverter), NumberOfDecimalPlaces = 4)]

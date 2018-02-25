@@ -18,30 +18,21 @@ namespace CsvConverter.Tests
         [DataRow("test ", "test")]
         [DataRow(" test ", "test")]
         [DataRow("   test   ", "test")]
-        public void CanTrimProperties(string inputData, string expectedData)
+        public void Convert_CanTrimProperties_PropertyTrimmed(string inputData, string expectedData)
         {
             // Arrange
-            var data = new TrimClassToCsvTypeTester();
+            var data = new TrimClassToCsvTypeTestData();
             data.MyStringProperty = inputData;
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TrimClassToCsvTypeTester>(nameof(TrimClassToCsvTypeTester.MyStringProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<TrimClassToCsvTypeTestData>(nameof(TrimClassToCsvTypeTestData.MyStringProperty));
 
             var classUnderTest = new TrimClassToCsvTypeConverter();
 
-
-            // object obj, PropertyInfo propInfo, string stringFormat, string columnName, int columnIndex, 
-            //int rowNumber, IPropertyToStringConverter defaultConverter
             // Act
             string actualData = classUnderTest.Convert(propInfo.PropertyType, data.MyStringProperty, null, ColumName, ColumnIndex, RowNumber, null);
 
             // Assert
             Assert.AreEqual(expectedData, actualData);
         }
-    }
-
-    internal class TrimClassToCsvTypeTester
-    {
-        public string MyStringProperty { get; set; }
-
     }
 }

@@ -27,10 +27,10 @@ namespace CsvConverter.Tests.Readers
 
             // Assert
             Assert.AreEqual(4, result.Count, "There should be one entry per CSV column");
-            Assert.IsTrue(result.Exists(w => w.ColumnName == "FirstName" && w.ColumnIndex == 0 && w.IgnoreWhenReading == false), "Problem with FirstName column");
-            Assert.IsTrue(result.Exists(w => w.ColumnName == "LastName" && w.ColumnIndex == 1 && w.IgnoreWhenReading == false), "Problem with LastName column");
-            Assert.IsTrue(result.Exists(w => w.ColumnName == "Age" && w.ColumnIndex == 2 && w.IgnoreWhenReading == false), "Problem with Age column");
-            Assert.IsTrue(result.Exists(w => w.ColumnName == "BODYTYPE" && w.ColumnIndex == 3 && w.IgnoreWhenReading == true), "Problem with BODYTYPE column");
+            Assert.IsTrue(result.Exists(w => w.ColumnName == "FirstName" && w.ColumnIndex == 1 && w.IgnoreWhenReading == false), "Problem with FirstName column");
+            Assert.IsTrue(result.Exists(w => w.ColumnName == "LastName" && w.ColumnIndex == 2 && w.IgnoreWhenReading == false), "Problem with LastName column");
+            Assert.IsTrue(result.Exists(w => w.ColumnName == "Age" && w.ColumnIndex == 3 && w.IgnoreWhenReading == false), "Problem with Age column");
+            Assert.IsTrue(result.Exists(w => w.ColumnName == "BODYTYPE" && w.ColumnIndex == 4 && w.IgnoreWhenReading == true), "Problem with BODYTYPE column");
         }
 
         [TestMethod]
@@ -64,8 +64,8 @@ namespace CsvConverter.Tests.Readers
 
             // Assert
             Assert.AreEqual(2, result.Count, "There should be one entry per CSV column");
-            Assert.IsTrue(result.Exists(w => w.ColumnName == "FirstName" && w.ColumnIndex == 0 && w.IgnoreWhenReading == false), "Problem with FirstName column");
-            Assert.IsTrue(result.Exists(w => w.ColumnName == "Age" && w.ColumnIndex == 1 && w.IgnoreWhenReading == false), "Problem with Age column");            
+            Assert.IsTrue(result.Exists(w => w.ColumnName == "FirstName" && w.ColumnIndex == 1 && w.IgnoreWhenReading == false), "Problem with FirstName column");
+            Assert.IsTrue(result.Exists(w => w.ColumnName == "Age" && w.ColumnIndex == 2 && w.IgnoreWhenReading == false), "Problem with Age column");            
         }
 
         [TestMethod]
@@ -206,13 +206,13 @@ namespace CsvConverter.Tests.Readers
 
     internal class HeaderReaderExample2
     {
-        [CsvConverterAttribute(ColumnIndex = 0)]
+        [CsvConverterAttribute(ColumnIndex = 1)]
         public string FirstName { get; set; }
 
-        [CsvConverterAttribute(ColumnIndex = 1)]
+        [CsvConverterAttribute(ColumnIndex = 2)]
         public string LastName { get; set; }
 
-        [CsvConverterAttribute(ColumnIndex = 2)]
+        [CsvConverterAttribute(ColumnIndex = 3)]
         public int Age { get; set; }
 
         [CsvConverterAttribute(IgnoreWhenReading = true)]

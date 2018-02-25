@@ -13,13 +13,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow(null, null)]
         [DataRow("", "")]
         [DataRow("Data", "Data")]
-        public void CanConvertString(string inputData, string expectedData)
+        public void Convert_CanConvertString_StringsConvertered(string inputData, string expectedData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeStringProperty = inputData;
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeStringProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeStringProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -36,13 +36,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow("5/27/2017", "2017-05-27T00:00:00", "s")]
         [DataRow("1/12/2017", "January 12", "m")]
         // [DataRow("1/1/2017", "January, 2017", "y")] // Differs between windows 10 (January 2017) and Windows 7 (January, 2017)
-        public void CanConvertDateTime(string inputData, string expectedData, string formatData)
+        public void Convert_CanConvertDateTime_DatesConverted(string inputData, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeDateTimeProperty = DateTime.Parse(inputData);
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeDateTimeProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeDateTimeProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -59,13 +59,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow("5/27/2017", "2017-05-27T00:00:00", "s")]
         [DataRow("1/12/2017", "January 12", "m")]
         // [DataRow("1/1/2017", "January, 2017", "y")]  // Differs between windows 10 (January 2017) and Windows 7 (January, 2017)
-        public void CanConvertNullableDateTime(string inputData, string expectedData, string formatData)
+        public void Convert_CanConvertNullableDateTime_DatesConverted(string inputData, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeNullableDateTimeProperty = string.IsNullOrWhiteSpace(inputData) ? (DateTime?)null : DateTime.Parse(inputData);
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableDateTimeProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeNullableDateTimeProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -74,7 +74,6 @@ namespace CsvConverter.Tests.Shared
             // Assert
             Assert.AreEqual(expectedData, actualData);
         }
-
         #endregion
 
         #region Byte and Byte?
@@ -87,13 +86,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow("255", "255.0", "N1")]
         [DataRow("255", "255.00", "N2")]
         // [DataRow("20", "2,000 %", "P0")] // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
-        public void CanConvertByte(string inputData, string expectedData, string formatData)
+        public void Convert_CanConvertByte_BytesConverted(string inputData, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeByteProperty = byte.Parse(inputData);
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeByteProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeByteProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -113,13 +112,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow("255", "255.0", "N1")]
         [DataRow("255", "255.00", "N2")]
        // [DataRow("20", "2,000 %", "P0")]  // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
-        public void CanConvertNullableByte(string inputData, string expectedData, string formatData)
+        public void Convert_CanConvertNullableByte_BytesConverted(string inputData, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeNullableByteProperty = string.IsNullOrWhiteSpace(inputData) ? null : (byte?)byte.Parse(inputData);
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableByteProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeNullableByteProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -128,7 +127,6 @@ namespace CsvConverter.Tests.Shared
             // Assert
             Assert.AreEqual(expectedData, actualData);
         }
-
         #endregion
 
         #region Boolean and Boolean?
@@ -143,14 +141,14 @@ namespace CsvConverter.Tests.Shared
         [DataRow(false, "N", BooleanOutputFormatEnum.UseYandN)]
         [DataRow(true, "Yes", BooleanOutputFormatEnum.UseYesAndNo)]
         [DataRow(false, "No", BooleanOutputFormatEnum.UseYesAndNo)]
-        public void CanConvertBoolean(bool inputData, string expectedData, BooleanOutputFormatEnum settingForBooleans)
+        public void Convert_CanConvertBoolean_BoolConverted(bool inputData, string expectedData, BooleanOutputFormatEnum settingForBooleans)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
 
             data.SomeBoolProperty = inputData;
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeBoolProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeBoolProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
             classUnderTest.UpdateBooleanSettings(new BooleanConverterSettings() { OutputFormat = settingForBooleans });
 
@@ -173,13 +171,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow("false", "N", BooleanOutputFormatEnum.UseYandN)]
         [DataRow("true", "Yes", BooleanOutputFormatEnum.UseYesAndNo)]
         [DataRow("false", "No", BooleanOutputFormatEnum.UseYesAndNo)]
-        public void CanConvertNullableBoolean(string inputData, string expectedData, BooleanOutputFormatEnum settingForBooleans)
+        public void Convert_CanConvertNullableBoolean_BoolConverted(string inputData, string expectedData, BooleanOutputFormatEnum settingForBooleans)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeNullableBoolProperty = string.IsNullOrWhiteSpace(inputData) ? null : (bool?)bool.Parse(inputData);
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableBoolProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeNullableBoolProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
             classUnderTest.UpdateBooleanSettings(new BooleanConverterSettings() { OutputFormat = settingForBooleans });
 
@@ -189,7 +187,6 @@ namespace CsvConverter.Tests.Shared
             // Assert
             Assert.AreEqual(expectedData, actualData);
         }
-
         #endregion
 
         #region Short and Short?
@@ -201,13 +198,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow("2000", "2,000.0", "N1")]
         [DataRow("2000", "2,000.00", "N2")]
         //  [DataRow("20", "2,000 %", "P0")]  // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
-        public void CanConvertShort(string inputData, string expectedData, string formatData)
+        public void Convert_CanConvertShort_ShortConverted(string inputData, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeShortProperty = short.Parse(inputData);
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeShortProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeShortProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -226,14 +223,14 @@ namespace CsvConverter.Tests.Shared
         [DataRow("2000", "2,000.0", "N1")]
         [DataRow("2000", "2,000.00", "N2")]
         //   [DataRow("20", "2,000 %", "P0")]  // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
-        public void CanConvertNullableShort(string inputData, string expectedData, string formatData)
+        public void Convert_CanConvertNullableShort_ShortConverted(string inputData, string expectedData, string formatData)
         {
 
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeNullableShortProperty = string.IsNullOrWhiteSpace(inputData) ? null : (short?)short.Parse(inputData);
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableShortProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeNullableShortProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -254,13 +251,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000, "2,000.0", "N1")]
         [DataRow(2000, "2,000.00", "N2")]
         //   [DataRow(20, "2,000 %", "P0")]  // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
-        public void CanConvertInt(int inputData, string expectedData, string formatData)
+        public void Convert_CanConvertInt_IntConverted(int inputData, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeIntProperty = inputData;
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeIntProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeIntProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -279,13 +276,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000, "2,000.0", "N1")]
         [DataRow(2000, "2,000.00", "N2")]
         //  [DataRow(20, "2,000 %", "P0")]  // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
-        public void CanConvertNullableInt(int? inputData, string expectedData, string formatData)
+        public void Convert_CanConvertNullableInt_IntConverted(int? inputData, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeNullableIntProperty = inputData;
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableIntProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeNullableIntProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -306,13 +303,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000L, "2,000.0", "N1")]
         [DataRow(2000L, "2,000.00", "N2")]
         //  [DataRow(20L, "2,000 %", "P0")]  // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
-        public void CanConvertLong(long inputData, string expectedData, string formatData)
+        public void Convert_CanConvertLong_LongConverted(long inputData, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeLongProperty = inputData;
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeLongProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeLongProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -331,13 +328,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000L, "2,000.0", "N1")]
         [DataRow(2000L, "2,000.00", "N2")]
         //  [DataRow(20L, "2,000 %", "P0")]  // Differs between windows 10 (2,000%) & windows 7 (2,000 %)
-        public void CanConvertNullableLong(long? inputData, string expectedData, string formatData)
+        public void Convert_CanConvertNullableLong_LongConverted(long? inputData, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeNullableLongProperty = inputData;
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableLongProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeNullableLongProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -359,13 +356,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow("2000.0", "2,000.0", "N1")]
         [DataRow("2000.0", "2,000.00", "N2")]
         //  [DataRow(".20", "20 %", "P0")]  // Differs between windows 10 (20%) & windows 7 (20 %)
-        public void CanConvertDecimal(string inputString, string expectedData, string formatData)
+        public void Convert_CanConvertDecimal_DecimalConverted(string inputString, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeDecimalProperty = decimal.Parse(inputString);
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeDecimalProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeDecimalProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -385,13 +382,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow("2000.0", "2,000.0", "N1")]
         [DataRow("2000.0", "2,000.00", "N2")]
      //   [DataRow(".20", "20 %", "P0")]  // Differs between windows 10 (20%) & windows 7 (20 %)
-        public void CanConvertNullabeDecimal(string inputString, string expectedData, string formatData)
+        public void Convert_CanConvertNullabeDecimal_DecimalConverted(string inputString, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeNullabeDecimalProperty = string.IsNullOrWhiteSpace(inputString) ? null : (decimal?)decimal.Parse(inputString);
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullabeDecimalProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeNullabeDecimalProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -413,13 +410,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000.0, "2,000.0", "N1")]
         [DataRow(2000.0, "2,000.00", "N2")]
         //  [DataRow(.20, "20 %", "P0")]  // Differs between windows 10 (20%) & windows 7 (20 %)
-        public void CanConvertDouble(double inputData, string expectedData, string formatData)
+        public void Convert_CanConvertDouble_DoubleConverted(double inputData, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeDoubleProperty = inputData;
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeDoubleProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeDoubleProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -439,13 +436,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000.0, "2,000.0", "N1")]
         [DataRow(2000.0, "2,000.00", "N2")]
         //   [DataRow(.20, "20 %", "P0")]  // Differs between windows 10 (20%) & windows 7 (20 %)
-        public void CanConvertNullableDouble(double? inputData, string expectedData, string formatData)
+        public void Convert_CanConvertNullableDouble_DoubleConverted(double? inputData, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeNullableDoubleProperty = inputData;
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableDoubleProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeNullableDoubleProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -467,13 +464,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000.0f, "2,000.0", "N1")]
         [DataRow(2000.0f, "2,000.00", "N2")]
         //  [DataRow(.20f, "20 %", "P0")]  // Differs between windows 10 (20%) & windows 7 (20 %)
-        public void CanConvertFloat(float inputData, string expectedData, string formatData)
+        public void Convert_CanConvertFloat_FloatConverted(float inputData, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeFloatProperty = inputData;
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeFloatProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeFloatProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -493,13 +490,13 @@ namespace CsvConverter.Tests.Shared
         [DataRow(2000.0f, "2,000.0", "N1")]
         [DataRow(2000.0f, "2,000.00", "N2")]
         //    [DataRow(.20f, "20 %", "P0")]  // Differs between windows 10 (20%) & windows 7 (20 %)
-        public void CanConvertNullableFloat(float? inputData, string expectedData, string formatData)
+        public void Convert_CanConvertNullableFloat_FloatConverted(float? inputData, string expectedData, string formatData)
         {
             // Arrange
-            var data = new TypeToStringConverterTester();
+            var data = new DefaultTypeConverterTestData();
             data.SomeNullableFloatProperty = inputData;
 
-            var propInfo = ReflectionHelper.FindPropertyInfoByName<TypeToStringConverterTester>(nameof(data.SomeNullableFloatProperty));
+            var propInfo = ReflectionHelper.FindPropertyInfoByName<DefaultTypeConverterTestData>(nameof(data.SomeNullableFloatProperty));
             var classUnderTest = new DefaultObjectToStringTypeConverterManager();
 
             // Act
@@ -509,37 +506,5 @@ namespace CsvConverter.Tests.Shared
             Assert.AreEqual(expectedData, actualData);
         } 
         #endregion
-    }
-
-    internal class TypeToStringConverterTester
-    {
-        public String SomeStringProperty { get; set; }
-        public DateTime SomeDateTimeProperty { get; set; }
-        public DateTime? SomeNullableDateTimeProperty { get; set; }
-
-        public bool SomeBoolProperty { get; set; }
-        public bool? SomeNullableBoolProperty { get; set; }
-
-        public byte SomeByteProperty { get; set; }
-        public byte? SomeNullableByteProperty { get; set; }
-
-        public int SomeIntProperty { get; set; }
-        public int? SomeNullableIntProperty { get; set; }
-
-        public long SomeLongProperty { get; set; }
-        public long? SomeNullableLongProperty { get; set; }
-
-        public short SomeShortProperty { get; set; }
-        public short? SomeNullableShortProperty { get; set; }
-
-        public decimal SomeDecimalProperty { get; set; }
-        public decimal? SomeNullabeDecimalProperty { get; set; }
-
-        public double SomeDoubleProperty { get; set; }
-        public double? SomeNullableDoubleProperty { get; set; }
-
-        public float SomeFloatProperty { get; set; }
-        public float? SomeNullableFloatProperty { get; set; }
-
     }
 }

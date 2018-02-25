@@ -8,7 +8,7 @@ namespace CsvConverter
     public class CsvConverterAttribute : Attribute
     {
         /// <summary>READING CSV FILES: It is used ONLY when there is NOT a header row.  If the CSV file has a header row this is ignored.  
-        /// If there is NOT a header row, this is mandatory and represents the column index (zero based) position of the column in the CSV file.
+        /// If there is NOT a header row, this is mandatory and represents the column index (ONE based) position of the column in the CSV file.
         /// WRITING CSV FILES: It is used to determine the column order of the CSV files.  If not specified, we will order by ColumnName.</summary>
         public int ColumnIndex { get; set; } = int.MaxValue;
 

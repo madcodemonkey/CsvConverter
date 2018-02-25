@@ -68,9 +68,10 @@ namespace CsvConverter.CsvToClass
 
             var newItem = new T();
 
-            for (int columnIndex = 0; columnIndex < oneRow.Count; columnIndex++)
+            for (int columnIndex = 1; columnIndex <= oneRow.Count; columnIndex++)
             {
-                string fieldValue = oneRow[columnIndex];
+                int zeroBasedIndex = columnIndex - 1;
+                string fieldValue = oneRow[zeroBasedIndex];
                 ICsvToClassPropertyMap mapping;
                 if (_csvColumnMapList.TryGetValue(columnIndex, out mapping))
                 {

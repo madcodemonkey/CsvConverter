@@ -13,11 +13,11 @@ namespace CsvConverter.Tests.Readers
         public const int ColumnIndexDefaultValue = 9999;
 
         [TestMethod]
-        public void CanFindDataFormat()
+        public void Map_CanFindDataFormat_DataFormatStringIsFound()
         {
             // Arrange
             var configuation = new ClassToCsvConfiguration() { };
-            var classUnderTest = new ClassToCsvPropertyMapper<DataFormatAttributeTestExample>();
+            var classUnderTest = new ClassToCsvPropertyMapper<ClassToCsvPropertyMapperTestData1>();
 
             // Act
             List<IClassToCsvPropertyMap> result = classUnderTest.Map(configuation, ColumnIndexDefaultValue).ToList();
@@ -35,11 +35,11 @@ namespace CsvConverter.Tests.Readers
         }
 
         [TestMethod]
-        public void DefaultColumSortOrderIsAlphabetical()
+        public void Map_DefaultColumSortOrderIsAlphabetical_MonthsSortedAlphbetically()
         {
             // Arrange
             var configuation = new ClassToCsvConfiguration() { };
-            var classUnderTest = new ClassToCsvPropertyMapper<WriterAttributeTestExample>();
+            var classUnderTest = new ClassToCsvPropertyMapper<ClassToCsvPropertyMapperTestData2>();
 
             // Act
             List<IClassToCsvPropertyMap> result = classUnderTest.Map(configuation, ColumnIndexDefaultValue).ToList();
@@ -52,11 +52,11 @@ namespace CsvConverter.Tests.Readers
         }
 
         [TestMethod]
-        public void ColumnIndexChangesSortOrder_MonthSortedAboveAgeAndNameColumns()
+        public void Map_ColumnIndexChangesSortOrder_MonthSortedAboveAgeAndNameColumns()
         {
             // Arrange
             var configuation = new ClassToCsvConfiguration() { };
-            var classUnderTest = new ClassToCsvPropertyMapper<WriterColumnIndexSortOrderTestExample>();
+            var classUnderTest = new ClassToCsvPropertyMapper<ClassToCsvPropertyMapperTestData3>();
 
             // Act
             List<IClassToCsvPropertyMap> result = classUnderTest.Map(configuation, ColumnIndexDefaultValue).ToList();
@@ -70,11 +70,11 @@ namespace CsvConverter.Tests.Readers
         
         [TestMethod]
         [ExpectedException(typeof(CsvConverterAttributeException))]
-        public void PlacingConverterOnPropertyItCannotCovert_ResultsInAnException()
+        public void Map_PlacingConverterOnPropertyItCannotCovert_ResultsInAnException()
         {
             // Arrange
             var configuation = new ClassToCsvConfiguration() { };
-            var classUnderTest = new ClassToCsvPropertyMapper<CoverterTypeMismatchTestExample>();
+            var classUnderTest = new ClassToCsvPropertyMapper<ClassToCsvPropertyMapperTypeMismatchData>();
 
             // Act
             List<IClassToCsvPropertyMap> result = classUnderTest.Map(configuation, ColumnIndexDefaultValue).ToList();
@@ -85,16 +85,16 @@ namespace CsvConverter.Tests.Readers
     }
 
 
-    internal class DataFormatAttributeTestExample
+    internal class ClassToCsvPropertyMapperTestData1
     {
-        [CsvConverterAttribute(DataFormat = "C2")]
+        [CsvConverter(DataFormat = "C2")]
         public decimal Amount { get; set; }
 
-        [CsvConverterAttribute(DataFormat = "P1")]
+        [CsvConverter(DataFormat = "P1")]
         public decimal Percentage { get; set; }
     }
 
-    internal class WriterAttributeTestExample
+    internal class ClassToCsvPropertyMapperTestData2
     {
         public int Month { get; set; }
 
@@ -104,7 +104,7 @@ namespace CsvConverter.Tests.Readers
         public string Name { get; set; }
     }
 
-    internal class CoverterTypeMismatchTestExample
+    internal class ClassToCsvPropertyMapperTypeMismatchData
     {
         public int Month { get; set; }
 
@@ -114,9 +114,9 @@ namespace CsvConverter.Tests.Readers
         public string Name { get; set; }
     }
 
-    internal class WriterColumnIndexSortOrderTestExample
+    internal class ClassToCsvPropertyMapperTestData3
     {
-        [CsvConverterAttribute(ColumnIndex = 1)]
+        [CsvConverter(ColumnIndex = 1)]
         public int Month { get; set; }
 
         public int Age { get; set; }

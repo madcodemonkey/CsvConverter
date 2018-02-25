@@ -10,11 +10,11 @@ namespace ClassToCsv.Converters
     {
         [DataTestMethod]
         [DataRow("cat", "c", "b", "bat")]
-        [DataRow("" , "c", "b", "")]
+        [DataRow("", "c", "b", "")]
         [DataRow(" ", "c", "b", " ")]
-        [DataRow("0", "0", "" , "")]
-        [DataRow("0", "0 ", "" , "0")]
-        public void CanReplaceText(string csvField, string oldValue, string newValue, string expectedResult)
+        [DataRow("0", "0", "", "")]
+        [DataRow("0", "0 ", "", "0")]
+        public void Convert_CanReplaceText_DataReplaced(string csvField, string oldValue, string newValue, string expectedResult)
         {
             // Arrange 
             var attribute = new CsvConverterOldAndNewValueAttribute(typeof(ReplaceTextEveryMatchClassToCsvPostConverter)) { OldValue = oldValue, NewValue = newValue };
@@ -31,7 +31,7 @@ namespace ClassToCsv.Converters
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void PassingInTheWrongTypeOfPostConverter_ResultsInException()
+        public void Initialize_PassingInTheWrongTypeOfPostConverter_ResultsInException()
         {
             // Arrange 
             var attribute = new CsvConverterCustomAttribute(typeof(ReplaceTextEveryMatchClassToCsvPostConverter));
@@ -40,13 +40,11 @@ namespace ClassToCsv.Converters
 
             // Assert
             Assert.Fail("Should have received an exception for passing in wrong type of attribute.");
-
-
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void SpecifyingAnOldValueOfNullIsNotAllowed_ResultsInException()
+        public void Initialize_SpecifyingAnOldValueOfNullIsNotAllowed_ResultsInException()
         {
             // Arrange 
             var attribute = new CsvConverterOldAndNewValueAttribute(typeof(ReplaceTextEveryMatchClassToCsvPostConverter)) { OldValue = null, NewValue = "Some new value" };
@@ -58,8 +56,8 @@ namespace ClassToCsv.Converters
         }
 
         [TestMethod]
-         [ExpectedException(typeof(ArgumentException))]
-        public void SpecifyingAnOldValueOfZeroLengthIsNotAllowed_ResultsInException()
+        [ExpectedException(typeof(ArgumentException))]
+        public void Initialize_SpecifyingAnOldValueOfZeroLengthIsNotAllowed_ResultsInException()
         {
             // Arrange 
             var attribute = new CsvConverterOldAndNewValueAttribute(typeof(ReplaceTextEveryMatchClassToCsvPostConverter)) { OldValue = "", NewValue = "Some new value" };
@@ -70,6 +68,4 @@ namespace ClassToCsv.Converters
             Assert.Fail("Should have received an exception for passing in a bad old value.");
         }
     }
-
-    
 }

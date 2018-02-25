@@ -65,7 +65,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassToCsv\ClassToCsvService_HeaderTests.cs" />
+    <Compile Include="ClassToCsv\ClassToCsvService_NoHeaderTests.cs" />
     <Compile Include="ClassToCsv\ClassToCsvService_PostConverterTests.cs" />
+    <Compile Include="ClassToCsv\Converters\DefaultTypeConverters\Data\DefaultTypeConverterTestData.cs" />
+    <Compile Include="ClassToCsv\Converters\IncludedTypeConverters\Data\TrimClassToCsvTypeTestData.cs" />
+    <Compile Include="ClassToCsv\FakesAndData\FakeRowWriter.cs" />
     <Compile Include="ClassToCsv\Mapper\ClassToCsvPropertyMapper_CoreTests.cs" />
     <Compile Include="ClassToCsv\Converters\DefaultTypeConverters\DefaultObjectToStringTypeConverterManagerTest.cs" />
     <Compile Include="ClassToCsv\Converters\IncludedPostConverters\ReplaceTextEveryMatchPostConverterTests.cs" />
@@ -73,9 +78,9 @@
     <Compile Include="CsvToClass\Converters\IncludedPreConverters\TextReplacerCsvToClassPreConverterTests.cs" />
     <Compile Include="Common\RowTools\RowWriterTests.cs" />
     <Compile Include="CsvToClass\Converters\IncludedPreConverters\TrimCsvToClassPreConverterTests.cs" />
-    <Compile Include="CsvToClass\CsvToClassService_PreprocessorTests.cs" />
     <Compile Include="CsvToClass\CsvToClassService_AttributeTests.cs" />
     <Compile Include="CsvToClass\Converters\DefaultTypeConverters\StringToObjectDefaultConvertersTests.cs" />
+    <Compile Include="CsvToClass\CsvToClassService_PreConverterTests.cs" />
     <Compile Include="Shared\Reflection\ReflectionAttributeExtensionsTest.cs" />
     <Compile Include="Shared\Reflection\ReflectionHelperTest.cs" />
     <Compile Include="Shared\Reflection\ReflectionCreateExtensionsTests.cs" />

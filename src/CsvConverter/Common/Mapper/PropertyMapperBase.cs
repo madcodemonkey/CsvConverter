@@ -41,7 +41,15 @@ namespace CsvConverter.Mapper
 
             // Was an index specified?
             if (oneAttribute.ColumnIndex != int.MaxValue)
+            {
+                if (oneAttribute.ColumnIndex < 1)
+                {
+                    throw new ArgumentException($"The {newMap.PropInformation.Name} property on " +
+                        $"the {typeof(T).Name} class has specified a column index less than 1 using " +
+                        $"the {nameof(CsvConverterAttribute)} attribute!  Column indexes are ONE based.");
+                }
                 newMap.ColumnIndex = oneAttribute.ColumnIndex;
+            }
             else newMap.ColumnIndex = columnIndexDefaultValue;
 
             // Was data format specified?
