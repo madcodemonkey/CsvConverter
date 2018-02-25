@@ -1,6 +1,6 @@
  # Writing CSV files: Creating your own type converters
 
-Custom type converters can be created to handle different types **or**  to make a tweeks to strings before passing them to the default converter.  If your custom converter needs some special inputs (e.g., two integers) you may want to start out by creating a new attribute and then creating a converter to pass to it.
+Custom type converters can be created to handle different types **or**  you can pass the object to the default converter and then tweeks to string it outputs.  If your custom converter needs some special inputs (e.g., two integers) you may want to start out by creating a new attribute and then creating a converter to pass to it.
 
 Examples
 - [Example 1](./TypeConverters-Creating-Custom-Example1.md) - Type converter only with NO custom attribute.

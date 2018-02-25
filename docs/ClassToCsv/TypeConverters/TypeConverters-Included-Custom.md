@@ -3,7 +3,7 @@
 There are a few custom converters included with this project that you can use:
 - TrimClassToCsvTypeConverter - Trims all fields of white space left and right of the text
 
-To use them, decorate the class property with the CsvConverterCustom:
+To use them, decorate the class property with the CsvConverterCustomAttribute:
 
 ```c#
 public class WriterAttributeTestExample

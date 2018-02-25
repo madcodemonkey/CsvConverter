@@ -66,6 +66,6 @@ Age,AvgHeartRate,FirstName,LastName,PercentageBodyFat
 
 Notes
 - The columns are sorted in alphabetical order by default
-- To control how columns are output using the [CsvConveter(ColumnIndex=0)] attribute.  The column indexes are ONE based.
+- To control how columns are output using the [CsvConveter(ColumnIndex=1)] attribute.  The column indexes are ONE based.
 - This example code can be found in [Github](https://github.com/madcodemonkey/CsvConverter/tree/master/src/CsvConverter.SimpleExample1)
 

@@ -3,7 +3,7 @@ using CsvConverter.Shared;
 
 namespace CsvConverter.CsvToClass
 {
-    /// <summary>Converts a string to a decimal value and the rounds it to the nearest integer.</summary>
+    /// <summary>Converts a string to a decimal value and then rounds it to the nearest integer.</summary>
     public class DecimalToIntCsvToClassConverter : ICsvToClassTypeConverter
     {
         public CsvConverterTypeEnum ConverterType => CsvConverterTypeEnum.CsvToClassType;
