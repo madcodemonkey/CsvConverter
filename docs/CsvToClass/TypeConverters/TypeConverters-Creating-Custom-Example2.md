@@ -94,7 +94,7 @@ namespace AdvExample1
 ```
 
 Notes:
-- In the CanConvert method, we tell the system what this conveter can handle so that people don't use it on the wrong property.
+- In the CanConvert method, we tell the system what this converter can handle so that people don't use it on the wrong property.
 - In the Initialize method, we check that the attribute being passed in is our custom one.
 - In the Convert method, we let the default converter do all the work.  If it gives us a null, we give it the default; otherwise, we check the range and adjust it if necessary.
 

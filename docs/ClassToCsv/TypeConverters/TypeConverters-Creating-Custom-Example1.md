@@ -37,7 +37,7 @@ namespace CsvConverter.ClassToCsv
 ```
 
 Notes:
-- In the CanHandleThisInputType method, we tell the system what this conveter can handle so that people don't use it on the wrong property.
+- In the CanHandleThisInputType method, we tell the system what this converter can handle so that people don't use it on the wrong property.
 - In the Initialize method, nothing is going on since it doesn't need anything from the attribute.
 
 Usage:

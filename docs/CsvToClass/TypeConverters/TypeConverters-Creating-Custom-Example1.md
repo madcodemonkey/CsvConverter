@@ -60,7 +60,7 @@ namespace CsvConverter.CsvToClass
 ```
 
 Notes:
-- In the CanConvert method, we tell the system what this conveter can handle so that people don't use it on the wrong property.
+- In the CanConvert method, we tell the system what this converter can handle so that people don't use it on the wrong property.
 - In the Initialize method, nothing is going on since it doesn't need anything from the attribute.
 - In the Convert method, it strips out the % sign and uses the default converter to convert a string into a decimal and then divide by 100.
 

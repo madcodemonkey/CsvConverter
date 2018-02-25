@@ -96,7 +96,7 @@ namespace AdvExample1
 ```
 
 Notes:
-- In the CanConvert method, we tell the system what this pre-conveter can handle so that people don't use it on the wrong property.
+- In the CanConvert method, we tell the system what this pre-converter can handle so that people don't use it on the wrong property.
 - In the Initialize method, we check that the attribute being passed in is our custom one.
 - In the Convert method, we do our string work.
 
