@@ -1,6 +1,6 @@
  # Writing CSV files: Default converters
 
- All the default converters are held within the ClassToCsvService class DefaultConverters property, which helps it convert an object into a string.  These are the default/fallback converters that are used when no custom convterter is specified via an attribute.  These converters convert class properties into strings.  The default set of converters only handle privitives, so arrays and classes are ignored by default.  Once a default converter converts an object into a string, it is written out to the CSV file.  The DefaultConverters property is called in the CreateDataRow() method, which is called by the public WriterRecord method, if a custom type converter is not specified and is passed to the custom converter if one is specified.
+ All the default type converters are held within the ClassToCsvService class DefaultConverters property, which helps it convert an object into a string.  These are the default/fallback type converters that are used when no custom type converter is specified via an attribute.  These type converters convert class properties into strings.  The default set of converters only handle privitives, so arrays and classes are ignored by default.  Once a default type converter converts an object into a string, it is written out to the CSV file.  The DefaultConverters property is called in the CreateDataRow() method, which is called by the public WriterRecord method, if a custom type converter is not specified and is passed to the custom type converter if one is specified.
 
 The DefaultConverters property will return an interface of IDefaultObjectToStringTypeConverterManager, which is defined as follows:
 ```C#
@@ -19,7 +19,7 @@ Notes
 - You can add and remove converters using AddConverter and RemoveConverter.
 - These converters are type specific and will be called for a given type when a custom converter is NOT specified.
 - You could add a type converter for non-privitive types (Class properties, arrays, etc.). For example, if you want it to handle typeof(int[]), you could add a new converter to handle it. 
-- There are some settings for booleans  that you can update as well.
+- There are some settings for booleans that you can update as well which specify how you would like it written (T, F, True, False, Yes, No, etc.).
 
 ## Default type converters
 If you do NOT specify a type converter for a property, one of these default converters will used:
@@ -34,6 +34,6 @@ If you do NOT specify a type converter for a property, one of these default conv
 - ObjectToStringShortTypeConverter
 
 Notes
-- If the default converter can't figure out how to convert a property, you will get an excpetion.  You have a couple of choose at that point:
+- If the default type converter can't figure out how to convert a property, you will get an excpetion.  You have a couple of choose at that point:
     - Mark the property as "ignored when writing": [CsvConverter(IgnoreWhenWriting = true)] 
     - Create a custom converter and add an attribute above the property:  [CsvConverterCustom(typeof(TrimClassToCsvTypeConverter))]

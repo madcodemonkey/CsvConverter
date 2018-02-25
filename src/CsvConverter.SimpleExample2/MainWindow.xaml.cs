@@ -1,9 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Threading;
+using CsvConverter.ClassToCsv;
+using CsvConverter.CsvToClass;
 
 namespace SimpleExample2
 {
@@ -15,15 +18,63 @@ namespace SimpleExample2
         }
 
 
+
         private void CreateCsvButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // TODO: Put your work here.
+                var dialog = SaveFile();
+                if (dialog.ShowDialog() != true)
+                    return;
+
+                Random rand = new Random(DateTime.Now.Second);
+                int numberToCreate = rand.Next(10, 100);
+
+                using (var fs = File.Create(dialog.FileName))
+                using (var sw = new StreamWriter(fs, Encoding.Default))
+                {
+                    var service = new ClassToCsvService<Frog>(sw);
+                   // service.Configuration.HasHeaderRow = false;
+
+                    for (int i = 0; i < numberToCreate; i++)
+                    {
+                        var newEmp = new Frog()
+                        {
+                            FirstName = $"First{rand.Next(1, 5000)}",
+                            LastName = $"Last{rand.Next(1, 5000)}",
+                            Age = rand.Next(5, 80),
+                            Color = PickRandomColor(rand.Next(1, 5)),
+                            AverageNumberOfSpots = rand.Next(5, 20) / 1.1m
+                        };
+
+                        service.WriterRecord(newEmp);
+                    }
+                }
+
+                LogMessage($"Created {numberToCreate} frogs in {dialog.FileName}.");
             }
             catch (Exception ex)
             {
                 LogError(ex);
+            }
+        }
+
+        private string PickRandomColor(int number)
+        {
+            switch(number)
+            {
+                case 1:
+                    return "Red";
+                case 2:
+                    return "Blue";
+                case 3:
+                    return "White";
+                case 4:
+                    return "Gray";
+                case 5:
+                    return "Black";
+                default:
+                    return "Green";
             }
         }
 
@@ -31,7 +82,26 @@ namespace SimpleExample2
         {
             try
             {
-                // TODO: Put your work here.
+                var dialog = new Microsoft.Win32.OpenFileDialog();
+                dialog.InitialDirectory = string.IsNullOrEmpty(CSVFile.Text) ?
+                "c:\\" : Path.GetDirectoryName(CSVFile.Text);
+                dialog.FileName = CSVFile.Text;
+                if (dialog.ShowDialog() != true)
+                    return;
+
+                using (var fs = File.OpenRead(dialog.FileName))
+                using (var sr = new StreamReader(fs, Encoding.Default))
+                {
+                    var csv = new CsvToClassService<Frog>(sr);
+                    csv.Configuration.HasHeaderRow = false;
+                    csv.Configuration.IgnoreBlankRows = true;
+
+                    while (csv.CanRead())
+                    {
+                        Frog record = csv.GetRecord();
+                        LogMessage(record.ToString());
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -39,18 +109,28 @@ namespace SimpleExample2
             }
         }
 
-
         private void FindCsvFile_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog();
+            var dialog = SaveFile();
             if (dialog.ShowDialog() != true)
                 return;
 
             LogMessage(dialog.FileName);
         }
 
+        private Microsoft.Win32.SaveFileDialog SaveFile()
+        {
+            var dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.InitialDirectory = string.IsNullOrEmpty(CSVFile.Text) ?
+                "c:\\" : Path.GetDirectoryName(CSVFile.Text);
+            dialog.FileName = CSVFile.Text;
+            return dialog;
+        }
 
-     
+
+
+
+
         #region Logging
         private delegate void NoArgsDelegate();
         private void ClearButton_Click(object sender, RoutedEventArgs e)

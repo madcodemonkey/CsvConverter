@@ -1,7 +1,6 @@
  # Writing CSV files: Creating your own post-converters
 
-TODO: Show users how to create their own post-converters by using IClassToCsvPostConverter 
+Custom post-converters can be created to process the CSV field string AFTER it has been converted to a string by a TYPE converter but BEFORE it is written to the CSV file.  This can be handy if you need to erase a value or augment the string is some way.
 
-Also show creating your own attribute by inheriting from CsvConverterCustomAttribute
-
-and show how the attribute is passed into the post-converters so you can retrieve attribute values to use in your custom post-converters.
+Examples
+- [Example1](./PostConverters-Creating-Custom-Example1.md) - post-converter with a custom attribute.

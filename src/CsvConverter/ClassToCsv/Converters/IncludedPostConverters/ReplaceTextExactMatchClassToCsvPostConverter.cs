@@ -20,9 +20,7 @@ namespace CsvConverter.ClassToCsv
 
             _newValue = postProcess.NewValue;
             _oldValue = postProcess.OldValue;
-        }
-
-     
+        }     
 
         public string Convert(string csvField, string columnName, int columnIndex, int rowNumber)
         {            

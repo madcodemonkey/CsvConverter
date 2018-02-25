@@ -2,7 +2,7 @@
 
 namespace CsvConverter.CsvToClass
 {
-    /// <summary>If the CSV field contains a null OR blank text, it changes it into a null.</summary>
+    /// <summary>If the CSV field contains null OR blank text, it changes it into a null.</summary>
     public class StringIsNullOrWhiteSpaceSetToNullCsvToClassPreConverter : ICsvToClassPreConverter
     {
         public int Order { get; set; } = 999;

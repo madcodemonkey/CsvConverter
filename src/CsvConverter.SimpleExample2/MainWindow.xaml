@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Label Content="CSV file location" Grid.Column="0" Height="28" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Center" />
-            <TextBox Name="CSVFile"  Grid.Column="1" Height="23" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch"  />
+            <TextBox Name="CSVFile"  Grid.Column="1" Height="23" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch"  Text="c:\temp\Frogs.csv" />
             <Button Name="FindCsvFile" Grid.Column="2" MinWidth="30" Click="FindCsvFile_Click">...</Button>
         </Grid>
 

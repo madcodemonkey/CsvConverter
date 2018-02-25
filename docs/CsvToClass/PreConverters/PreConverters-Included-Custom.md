@@ -1,14 +1,14 @@
 # Reading CSV files: Custom  pre-converters included with this library
 
 There are a few custom pre-converters included with this project that you can use:
-- StringIsNullOrWhiteSpaceSetToNullCsvToClassPreConverter - If the CSV field contains a null OR blank text, it changes it into a null. 
-    - Should be used with the CsvConverterCustomAttribute attribute
-- TextReplacerCsvToClassPreConverter - Replaces the text specified in the OldValue attribute with text in the NewValue attribute
-    - Should be used with the CsvConverterOldAndNewValueAttribute attribute.
-- TrimCsvToClassPreConverter - Trims all fields of white space left and right of the text.
-    - Should be used with the CsvConverterCustomAttribute attribute
+- **StringIsNullOrWhiteSpaceSetToNullCsvToClassPreConverter** - If the CSV field contains null OR blank text, it changes it into a null. 
+    - Should be used with the default *CsvConverterCustomAttribute* attribute
+- **TextReplacerCsvToClassPreConverter** - Replaces the text specified in the OldValue attribute with text in the NewValue attribute
+    - Should be used with the special *CsvConverterOldAndNewValueAttribute* attribute.
+- **TrimCsvToClassPreConverter** - Trims all fields of white space left and right of the text.
+    - Should be used with the default *CsvConverterCustomAttribute* attribute
 
-To use them, decorate the class property the proper attribute (see above).:
+To use them, decorate the class property the proper attribute (see above):
 
 ```c#
 public class CsvServiceMultipleOnPropPreConverterTestClass
