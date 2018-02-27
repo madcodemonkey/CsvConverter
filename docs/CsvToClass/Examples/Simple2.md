@@ -1,4 +1,4 @@
-# Reading CSV files: Simple Example 3
+# Reading CSV files: Simple Example 2
 
 In this simple example, the CSV file does NOT have a header row.
 

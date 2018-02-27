@@ -1,4 +1,4 @@
-# Reading CSV files:  Simple Example 2
+# Reading CSV files:  Simple Example 3
 
 In this simple example, the CSV file has a header row and the column names DO NOT match the class properties perfectly.
 
