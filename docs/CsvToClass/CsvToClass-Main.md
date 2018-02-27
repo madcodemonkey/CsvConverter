@@ -12,8 +12,8 @@ To read a CSV file into a class, there are 8 basic steps
 
 ## Examples
 - [Simple Example 1](./Examples/Simple1.md) - In this simple example, the CSV file has a header row and the column names match the class properties perfectly.
-- [Simple Example 2](./Examples/Simple3.md) - In this simple example, the CSV file does NOT have a header row.
-- [Simple Example 3](./Examples/Simple2.md) - In this simple example, the CSV file has a header row and the column names DO NOT match the class properties perfectly.
+- [Simple Example 2](./Examples/Simple2.md) - In this simple example, the CSV file does NOT have a header row.
+- [Simple Example 3](./Examples/Simple3.md) - In this simple example, the CSV file has a header row and the column names DO NOT match the class properties perfectly.
 
 
 ## Advanced Topics
