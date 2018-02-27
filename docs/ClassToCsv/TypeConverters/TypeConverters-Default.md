@@ -34,6 +34,6 @@ If you do NOT specify a type converter for a property, one of these default conv
 - ObjectToStringShortTypeConverter
 
 Notes
-- If the default type converter can't figure out how to convert a property, you will get an excpetion.  You have a couple of choose at that point:
+- If the default type converter can't figure out how to convert a property, you will get an excpetion.  You have a couple of options at that point:
     - Mark the property as "ignored when writing": [CsvConverter(IgnoreWhenWriting = true)] 
     - Create a custom converter and add an attribute above the property:  [CsvConverterCustom(typeof(TrimClassToCsvTypeConverter))]

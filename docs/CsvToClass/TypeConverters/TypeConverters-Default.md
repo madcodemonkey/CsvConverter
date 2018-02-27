@@ -38,6 +38,6 @@ If you do NOT specify a type converter for a property, one of these default type
 - StringToObjectStringTypeConverter
 
 Notes
-- If the default type converter can't figure out how to convert a property, you will get an excpetion.  You have a couple of choose at that point:
+- If the default type converter can't figure out how to convert a property, you will get an excpetion.  You have a couple of options at that point:
     - Mark the property as "ignored when reading": [CsvConverter(IgnoreWhenReading = true)] 
     - Create a custom type converter and add an attribute above the property: [CsvConverterCustom(typeof(DecimalToIntCsvToClassConverter))]
