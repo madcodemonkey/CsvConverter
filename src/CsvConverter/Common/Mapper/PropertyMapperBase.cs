@@ -10,6 +10,7 @@ namespace CsvConverter.Mapper
 {
     public abstract class PropertyMapperBase<T>
     {
+        protected Type _theClassType = typeof(T);
         private IPropertyAttributeUpdater _classToCsvAttributeHelper = new ClassToCsv.Mapper.ClassToCsvPropertyAttributeUpdater<T>();
         private IPropertyAttributeUpdater _csvToClassAttributeHelper = new CsvToClass.Mapper.CsvToClassPropertyAttributeUpdater<T>();
                 
@@ -45,7 +46,7 @@ namespace CsvConverter.Mapper
                 if (oneAttribute.ColumnIndex < 1)
                 {
                     throw new ArgumentException($"The {newMap.PropInformation.Name} property on " +
-                        $"the {typeof(T).Name} class has specified a column index less than 1 using " +
+                        $"the {_theClassType.Name} class has specified a column index less than 1 using " +
                         $"the {nameof(CsvConverterAttribute)} attribute!  Column indexes are ONE based.");
                 }
                 newMap.ColumnIndex = oneAttribute.ColumnIndex;
@@ -66,7 +67,7 @@ namespace CsvConverter.Mapper
         {
             var mapList = new List<PropertyMap>();
 
-            foreach (PropertyInfo info in typeof(T).GetProperties())
+            foreach (PropertyInfo info in _theClassType.GetProperties())
             {
                 var newMap = new PropertyMap()
                 {
@@ -121,18 +122,18 @@ namespace CsvConverter.Mapper
         private void FindConvertersOnTheClass(List<PropertyMap> mapList)
         {
             // Find pre-converters attributes on the class
-            List<CsvConverterCustomAttribute> attributeList = typeof(T).HelpFindAllClassAttributes<CsvConverterCustomAttribute>();
+            List<CsvConverterCustomAttribute> attributeList = _theClassType.HelpFindAllClassAttributes<CsvConverterCustomAttribute>();
 
             foreach (var oneAttribute in attributeList)
             {
                 if (oneAttribute.TargetPropertyType == null)
                 {
-                    throw new ArgumentException($"A {nameof(CsvConverterCustomAttribute)} was placed on the  {typeof(T).Name} " +
+                    throw new ArgumentException($"A {nameof(CsvConverterCustomAttribute)} was placed on the {_theClassType.Name} " +
                         $"class, but a {nameof(CsvConverterCustomAttribute.TargetPropertyType)} was NOT specified.");
                 }
 
                 var oneTypeConverter = oneAttribute.ConverterType.HelpCreateAndCastToInterface<ICsvConverter>(
-                    $"The {typeof(T).Name} class has specified a {nameof(CsvConverterCustomAttribute)}, but there is a problem!  " +
+                    $"The {_theClassType.Name} class has specified a {nameof(CsvConverterCustomAttribute)}, but there is a problem!  " +
                     GetCustomConverterErrorMessage(oneAttribute));
 
                 switch (oneTypeConverter.ConverterType)

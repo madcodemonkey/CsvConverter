@@ -105,7 +105,7 @@ namespace CsvConverter.CsvToClass.Mapper
                         if (configuration.IgnoreExtraCsvColumns == false)
                         {
                             throw new ArgumentException($"The CSV file contains a column named '{trimmedField}', but we were unable to match it to a " +
-                                  $"property on the {typeof(T).Name} class!  You can add a property named '{trimmedField}' to the class or " +
+                                  $"property on the {_theClassType.Name} class!  You can add a property named '{trimmedField}' to the class or " +
                                   $"put a ClassToCsv attribute on a property and specify a ColumnName as '{trimmedField}' or " +
                                   $"put a ClassToCsv attribute on a property and specify Ignore = true or " +
                                   "set IgnoreExtraCsvColumns = true in configuration.");
@@ -116,8 +116,9 @@ namespace CsvConverter.CsvToClass.Mapper
                     }
                     else if (maps.Count > 1)
                     {
-                        throw new ArgumentException($"You have more than one column mapped to the column name {trimmedField}.  Please check the " +
-                            " Property names, ClassToCsv attributes ColumnName and AltColumnNames for duplicates.  A column can ONLY be mapped to a single property!");
+                        throw new ArgumentException($"You have more than one column mapped to the column name {trimmedField} on the {_theClassType.Name} class!.  " +
+                            $"Please check the Property names, {nameof(CsvConverterAttribute)} ColumnName and AltColumnNames for duplicates.  A column can " +
+                            $"ONLY be mapped to a single property!");
                     }
                 }
             }
@@ -183,12 +184,13 @@ namespace CsvConverter.CsvToClass.Mapper
                 if (count == 0)
                 {
                     throw new ArgumentException("Since the CSV file does not have a header column, every property that is " +
-                        "not ignored should have a ColumnIndex specified.  Please use the ClassToCsv attribute on each " +
-                        "property in the class and specify a ColumnIndex or Ignore.  FYI, ColumnIndex is ONE based.");
+                        $"not ignored should have a ColumnIndex specified.  Please use the {nameof(CsvConverterAttribute)} " +
+                        $"attribute on each property in the {_theClassType.Name} class and specify a ColumnIndex or Ignore.  " +
+                        $"FYI, ColumnIndex is ONE based.");
                 }
 
-                throw new ArgumentException($"More than one property on the {typeof(T).Name} class is marked with a ColumnIndex of {columnIndex}.  " +
-                    "Only one property can be marked with a given column index!");
+                throw new ArgumentException($"More than one property on the {_theClassType.Name} class is marked with a ColumnIndex " +
+                    $"of {columnIndex}.  Only one property can be marked with a given column index!");
             }
         }
         #endregion // Private
