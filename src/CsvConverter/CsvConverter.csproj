@@ -48,6 +48,7 @@
     <Compile Include="Attributes\CsvConverterDateTimeStylesAttribute.cs" />
     <Compile Include="Attributes\CsvConverterDecimalPlacesAttribute.cs" />
     <Compile Include="Attributes\CsvConverterOldAndNewValueAttribute.cs" />
+    <Compile Include="Attributes\CsvConverterMathRoundingAttribute.cs" />
     <Compile Include="ClassToCsv\Configuration\ClassToCsvConfiguration.cs" />
     <Compile Include="ClassToCsv\Converters\IncludedPostConverters\ReplaceTextEveryMatchClassToCsvPostConverter.cs" />
     <Compile Include="ClassToCsv\Converters\IncludedPostConverters\ReplaceTextExactMatchClassToCsvPostConverter.cs" />

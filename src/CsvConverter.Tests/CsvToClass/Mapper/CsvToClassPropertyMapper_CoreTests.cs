@@ -18,7 +18,7 @@ namespace CsvConverter.Tests.Readers
             //  The BODYTYPE CSV field is extra
             // Arrange
             var configuation = new CsvToClassConfiguration() { IgnoreExtraCsvColumns = true };
-            
+
             var colunns = new List<string>() { "FIRSTNAME", "LASTNAME", "AGE", "BODYTYPE" };
             var classUnderTest = new CsvToClassPropertyMapper<HeaderReaderExample1>();
 
@@ -44,7 +44,7 @@ namespace CsvConverter.Tests.Readers
             var classUnderTest = new CsvToClassPropertyMapper<HeaderReaderExample1>();
 
             // Act
-            classUnderTest.Map(colunns, configuation).Values.ToList(); 
+            classUnderTest.Map(colunns, configuation).Values.ToList();
 
             // Assert
             throw new Exception("There should have been an exception due to the unmapped CSV field!");
@@ -65,7 +65,7 @@ namespace CsvConverter.Tests.Readers
             // Assert
             Assert.AreEqual(2, result.Count, "There should be one entry per CSV column");
             Assert.IsTrue(result.Exists(w => w.ColumnName == "FirstName" && w.ColumnIndex == 1 && w.IgnoreWhenReading == false), "Problem with FirstName column");
-            Assert.IsTrue(result.Exists(w => w.ColumnName == "Age" && w.ColumnIndex == 2 && w.IgnoreWhenReading == false), "Problem with Age column");            
+            Assert.IsTrue(result.Exists(w => w.ColumnName == "Age" && w.ColumnIndex == 2 && w.IgnoreWhenReading == false), "Problem with Age column");
         }
 
         [TestMethod]
@@ -91,12 +91,12 @@ namespace CsvConverter.Tests.Readers
             var classUnderTest = new CsvToClassPropertyMapper<HeaderReaderExample2>();
 
             // Act
-            List<ICsvToClassPropertyMap> result = classUnderTest.Map(null, configuation).Values.ToList(); 
+            List<ICsvToClassPropertyMap> result = classUnderTest.Map(null, configuation).Values.ToList();
 
             // Assert
             Assert.AreEqual(3, result.Count, "There should be one entry per property!");
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ColumnName_MappingColumnToMoreThanOnePropertyWillCauseAnExcpetion1()
@@ -105,7 +105,7 @@ namespace CsvConverter.Tests.Readers
             // Arrange
             var configuation = new CsvToClassConfiguration() { IgnoreExtraCsvColumns = true };
 
-            var colunns = new List<string>() { "FIRSTNAME", "LASTNAME", "AGE"  };
+            var colunns = new List<string>() { "FIRSTNAME", "LASTNAME", "AGE" };
             var classUnderTest = new CsvToClassPropertyMapper<HeaderReaderMappingError1Example>();
 
             // Act
@@ -200,74 +200,74 @@ namespace CsvConverter.Tests.Readers
         public string LastName { get; set; }
         public int Age { get; set; }
 
-        [CsvConverterAttribute(IgnoreWhenReading = true)]
+        [CsvConverter(IgnoreWhenReading = true)]
         public decimal PercentageBodyFat { get; set; }
     }
 
     internal class HeaderReaderExample2
     {
-        [CsvConverterAttribute(ColumnIndex = 1)]
+        [CsvConverter(ColumnIndex = 1)]
         public string FirstName { get; set; }
 
-        [CsvConverterAttribute(ColumnIndex = 2)]
+        [CsvConverter(ColumnIndex = 2)]
         public string LastName { get; set; }
 
-        [CsvConverterAttribute(ColumnIndex = 3)]
+        [CsvConverter(ColumnIndex = 3)]
         public int Age { get; set; }
 
-        [CsvConverterAttribute(IgnoreWhenReading = true)]
+        [CsvConverter(IgnoreWhenReading = true)]
         public decimal PercentageBodyFat { get; set; }
     }
 
     internal class HeaderReaderMappingError1Example
     {
-        [CsvConverterAttribute(ColumnName = "FirstName")]
+        [CsvConverter(ColumnName = "FirstName")]
         public string First1 { get; set; }
 
-        [CsvConverterAttribute(ColumnName = "FirstName")]
+        [CsvConverter(ColumnName = "FirstName")]
         public string First2 { get; set; }
 
         public int Age { get; set; }
 
-        [CsvConverterAttribute(IgnoreWhenReading = true)]
+        [CsvConverter(IgnoreWhenReading = true)]
         public decimal PercentageBodyFat { get; set; }
     }
 
     internal class HeaderReaderMappingError2Example
-    {        
+    {
         public string FirstName { get; set; }
 
-        [CsvConverterAttribute(ColumnName = "FirstName")]
+        [CsvConverter(ColumnName = "FirstName")]
         public string First2 { get; set; }
 
         public int Age { get; set; }
 
-        [CsvConverterAttribute(IgnoreWhenReading = true)]
+        [CsvConverter(IgnoreWhenReading = true)]
         public decimal PercentageBodyFat { get; set; }
     }
-    
+
     internal class HeaderReaderMappingError3Example
     {
-        [CsvConverterAttribute(AltColumnNames = "FirstName")]
+        [CsvConverter(AltColumnNames = "FirstName")]
         public string First1 { get; set; }
 
-        [CsvConverterAttribute(AltColumnNames = "FirstName")]
+        [CsvConverter(AltColumnNames = "FirstName")]
         public string First2 { get; set; }
 
         public int Age { get; set; }
 
-        [CsvConverterAttribute(IgnoreWhenReading = true)]
+        [CsvConverter(IgnoreWhenReading = true)]
         public decimal PercentageBodyFat { get; set; }
     }
-      
+
     internal class ReaderAttributeTestExample
     {
-        [CsvConverterCustom(typeof(DecimalToIntCsvToClassConverter))]
+        [CsvConverterMathRounding(typeof(DecimalToIntCsvToClassConverter), AllowRounding = true, Mode = MidpointRounding.AwayFromZero)]
         public int Month { get; set; }
 
         public int Age { get; set; }
 
-        [CsvConverterOldAndNewValue(typeof(TextReplacerCsvToClassPreConverter), OldValue ="#", NewValue ="", Order = 1)]
+        [CsvConverterOldAndNewValue(typeof(TextReplacerCsvToClassPreConverter), OldValue = "#", NewValue = "", Order = 1)]
         [CsvConverterCustom(typeof(TrimCsvToClassPreConverter), Order = 2)]
         public string Name { get; set; }
     }
