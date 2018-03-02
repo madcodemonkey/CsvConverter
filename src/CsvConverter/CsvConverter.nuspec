@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/madcodemonkey/CsvConverter</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial release to NuGet.</releaseNotes>
+    <releaseNotes>Pushing version with symbols.</releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags>CSV converter</tags>
   </metadata>
