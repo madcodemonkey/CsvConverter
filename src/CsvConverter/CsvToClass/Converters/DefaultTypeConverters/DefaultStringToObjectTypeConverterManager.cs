@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CsvConverter.Shared;
 using CsvConverter.TypeConverters;
 
 namespace CsvConverter.CsvToClass
@@ -39,7 +40,7 @@ namespace CsvConverter.CsvToClass
             else
             {
                 throw new ArgumentException("Unable to find a converter in order to convert the data " +
-                    $"'{stringValue}' into the data type {theType.Name} on row number {rowNumber} in the " +
+                    $"'{stringValue}' into the data type {theType.HelpTypeToString()} on row number {rowNumber} in the " +
                     $"'{columnName}' field at CSV column index {columnIndex}.");
             }
         }

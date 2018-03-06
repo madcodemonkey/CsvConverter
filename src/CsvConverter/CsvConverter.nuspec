@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/madcodemonkey/CsvConverter</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Including XML document files to see try and get intellisense working.</releaseNotes>
+    <releaseNotes>Fixed default type converter error message so that it writes out nullable types properly when describing a class property type rather than writing out the word Nullable.</releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags>CSV converter</tags>
   </metadata>
