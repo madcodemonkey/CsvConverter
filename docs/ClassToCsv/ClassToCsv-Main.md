@@ -3,7 +3,7 @@
 To create a CSV file, there are 7 basic steps
 1. Add the CsvConverter NuGet package to your project
 2. Create a class
-3. Optional: Attribute the class with the [CsvConverter] attribute if the column name should be different from the class property name.  You can also control the order the columns are written by using the ONE based ColumnIndex as well.
+3. Optional: Attribute the class with the [CsvConverter] attribute if the column names should be different from the class property names.  You can also control the order the columns are written by using the ONE based ColumnIndex as well.
 4. Instantiate the ClassToCsvService class
 5. Optional: Set configration settings on the ClassToCsvService instance (see Configuration property)
 6. Add CsvConverter.ClassToCsv namespace to your using statements.
