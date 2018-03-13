@@ -7,6 +7,8 @@ using CsvConverter.RowTools;
 
 namespace CsvConverter.CsvToClass
 {
+    /// <summary>Converts CSV rows into class instances.  The class instances will of type T.</summary>
+    /// <typeparam name="T">Class instance type</typeparam>
     public class CsvToClassService<T> where T : class, new()
     {
         private IRowReader _rowReader;
@@ -14,11 +16,17 @@ namespace CsvConverter.CsvToClass
         private int? _columnCount = null;
         private bool _initialized = false;
 
+        /// <summary>Constructor for dependency injection that is used primarly for testing; however, a user could override how 
+        /// a row is read by implementing the interface.</summary>
+        /// <param name="rowReader"></param>
         public CsvToClassService(IRowReader rowReader)
         {
             _rowReader = rowReader ?? throw new ArgumentNullException("Row reader cannot be null. Note that this constructor is mainly used for testing purposes.");
         }
 
+        /// <summary>Constructor.  This is the standard constructor were you pass in a StreamReader that is already connected to an
+        /// open stream.</summary>
+        /// <param name="sr">An instance of StreamReader that is already attached to an open file stream.</param>
         public CsvToClassService(StreamReader sr)
         {
             _rowReader = new RowReader(sr);
@@ -31,6 +39,8 @@ namespace CsvConverter.CsvToClass
         /// into custom type converters and used when no type converter is specified.</summary>
         public IDefaultStringToObjectTypeConverterManager DefaultConverters { get; set; } = new DefaultStringToObjectTypeConverterManager();
 
+        /// <summary>If called explicitly by the user, it will read the header row and create mappings; otherwise, it will be called
+        /// the first tiem you call GetRecord.</summary>
         public void Init()
         {
             if (_csvColumnMapList == null)
@@ -39,13 +49,17 @@ namespace CsvConverter.CsvToClass
             _initialized = true;
         }
 
+        /// <summary>Indicates if there is more to read from the file.</summary>
+        /// <returns></returns>
         public bool CanRead()
         {
             return _rowReader != null && _rowReader.CanRead();
         }
 
+        /// <summary>Indicates the current row number.</summary>
         public int RowNumber { get { return _rowReader != null ? _rowReader.RowNumber : 0; } }
 
+        /// <summary>Reads a row, creates an instance of a class of type T and populates the class with data from the row.</summary>
         public T GetRecord()
         {
             if (_initialized == false)
@@ -103,6 +117,7 @@ namespace CsvConverter.CsvToClass
             return newItem;
         }
 
+        /// <summary>Gets a list of the current column mappings.</summary>
         public List<ColumnMap> GetColumnMaps()
         {
             var result = new List<ColumnMap>();
