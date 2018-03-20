@@ -69,6 +69,7 @@
     <Compile Include="ClassToCsv\Converters\DefaultTypeConverters\ObjectToStringShortTypeConverter.cs" />
     <Compile Include="Common\CsvConverterTypeEnum.cs" />
     <Compile Include="Common\Exceptions\CsvConverterAttributeException.cs" />
+    <Compile Include="Common\Exceptions\CsvConverterException.cs" />
     <Compile Include="Common\Mapper\IPropertyAttributeUpdater.cs" />
     <Compile Include="Common\TypeConverters\BooleanOutputFormatEnum.cs" />
     <Compile Include="Attributes\CsvConverterAttribute.cs" />

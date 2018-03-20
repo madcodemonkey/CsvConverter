@@ -40,7 +40,7 @@ namespace CsvConverter.CsvToClass
         public IDefaultStringToObjectTypeConverterManager DefaultConverters { get; set; } = new DefaultStringToObjectTypeConverterManager();
 
         /// <summary>If called explicitly by the user, it will read the header row and create mappings; otherwise, it will be called
-        /// the first tiem you call GetRecord.</summary>
+        /// the first time you call GetRecord.</summary>
         public void Init()
         {
             if (_csvColumnMapList == null)
@@ -86,27 +86,34 @@ namespace CsvConverter.CsvToClass
             {
                 int zeroBasedIndex = columnIndex - 1;
                 string fieldValue = oneRow[zeroBasedIndex];
-                ICsvToClassPropertyMap mapping;
-                if (_csvColumnMapList.TryGetValue(columnIndex, out mapping))
+                ICsvToClassPropertyMap columnMap;
+                if (_csvColumnMapList.TryGetValue(columnIndex, out columnMap))
                 {
-                    if (mapping.IgnoreWhenReading)
+                    if (columnMap.IgnoreWhenReading)
                         continue;
 
-                    // Run pre-converters
-                    foreach (var preConverter in mapping.CsvToClassPreConverters)
+                    try
                     {
-                        fieldValue = preConverter.Convert(fieldValue, mapping.ColumnName, columnIndex, RowNumber);
+                        // Run pre-converters
+                        foreach (var preConverter in columnMap.CsvToClassPreConverters)
+                        {
+                            fieldValue = preConverter.Convert(fieldValue, columnMap.ColumnName, columnIndex, RowNumber);
+                        }
+
+                        // Default OR custom type converter?
+                        object newPropertyValue = columnMap.CsvToClassTypeConverter == null ?
+                            // DEFAULT
+                            DefaultConverters.Convert(columnMap.PropInformation.PropertyType, fieldValue, columnMap.ColumnName, columnIndex, RowNumber) :
+                            // CUSTOM
+                            columnMap.CsvToClassTypeConverter.Convert(columnMap.PropInformation.PropertyType, fieldValue,
+                                columnMap.ColumnName, columnIndex, RowNumber, DefaultConverters);
+
+                        columnMap.PropInformation.SetValue(newItem, newPropertyValue);
                     }
-
-                    // Default OR custom type converter?
-                    object newPropertyValue = mapping.CsvToClassTypeConverter == null ?
-                        // DEFAULT
-                        DefaultConverters.Convert(mapping.PropInformation.PropertyType, fieldValue, mapping.ColumnName, columnIndex, RowNumber) :
-                        // CUSTOM
-                        mapping.CsvToClassTypeConverter.Convert(mapping.PropInformation.PropertyType, fieldValue,
-                            mapping.ColumnName, columnIndex, RowNumber, DefaultConverters);
-
-                    mapping.PropInformation.SetValue(newItem, newPropertyValue);
+                    catch (Exception ex)
+                    {
+                        throw new CsvConverterException($"Problem with the {columnMap.ColumnName} column on row {RowNumber}:  {ex.Message}  See the inner exception for more details.", ex);
+                    }
                 }
                 else if (Configuration.IgnoreExtraCsvColumns == false)
                 {

@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/madcodemonkey/CsvConverter</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Fixed default type converter error message so that it writes out nullable types properly when describing a class property type rather than writing out the word Nullable.</releaseNotes>
+    <releaseNotes>Without the column name and row it is hard to determine where the error is occuring, so I added additional information when exceptions occur when reading or writing CSV files.</releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags>CSV converter</tags>
   </metadata>

@@ -8,6 +8,8 @@ using CsvConverter.RowTools;
 
 namespace CsvConverter.ClassToCsv
 {
+    /// <summary>Converts Class int a CSV row.  The class instances will of type T.</summary>
+    /// <typeparam name="T">Class instance type</typeparam>
     public class ClassToCsvService<T> where T : class, new()
     {
         private const int ColumnIndexDefaultValue = 9999;
@@ -16,11 +18,14 @@ namespace CsvConverter.ClassToCsv
         private bool _headerWritten = false;
         private bool _initialized = false;
 
+        /// <summary>Constructor for dependency injection that is used primarly for testing; however, a user could override how 
+        /// a row is written by implementing the interface.</summary>
         public ClassToCsvService(IRowWriter rowWriter)
         {
             _rowWriter = rowWriter ?? throw new ArgumentNullException("Row writer cannot be null. Note that this constructor is mainly used for testing purposes.");
         }
 
+        /// <summary>Constructor.  This is the standard constructor were you pass in a StreamWriter that is already connected to an open stream.</summary>
         public ClassToCsvService(StreamWriter sw)
         {
             _rowWriter = new RowWriter(sw);
@@ -33,8 +38,11 @@ namespace CsvConverter.ClassToCsv
         /// into custom type converters and used when no type converter is specified.</summary>
         public IDefaultObjectToStringTypeConverterManager DefaultConverters { get; set; } = new DefaultObjectToStringTypeConverterManager();
 
+        /// <summary>Indicates the current row number.</summary>
         public int RowNumber { get { return _rowWriter != null ? _rowWriter.RowNumber : 0; } }
 
+        /// <summary>If called explicitly by the user, it will create the header mappings; otherwise, it will be called
+        /// the first time you call WriterRecord.</summary>
         public void Init()
         {
             if (_csvColumnMapList == null)
@@ -76,6 +84,8 @@ namespace CsvConverter.ClassToCsv
             _csvColumnMapList = _csvColumnMapList.OrderBy(o => o.ColumnIndex).ToList();
         }
 
+        /// <summary>Writes a single row to the CSV file.</summary>
+        /// <param name="record">What to write to the CSV file</param>
         public void WriterRecord(T record)
         {
             if (_initialized == false)
@@ -103,40 +113,46 @@ namespace CsvConverter.ClassToCsv
                     continue;
                 }
 
-                string value;
-                if (columnMap.ClassToCsvTypeConverter == null)
+                try
                 {
-                    // Used default converter
-                    var someObject = columnMap?.PropInformation?.GetValue(record);
-                    if (someObject != null)
+                    string value;
+                    if (columnMap.ClassToCsvTypeConverter == null)
                     {
-                        value = DefaultConverters.Convert(columnMap.PropInformation.PropertyType,
-                            columnMap.PropInformation.GetValue(record), columnMap.ClassPropertyDataFormat,
-                            columnMap.ColumnName, columnMap.ColumnIndex, currentRowNumber);
+                        // Used default converter
+                        var someObject = columnMap?.PropInformation?.GetValue(record);
+                        if (someObject != null)
+                        {
+                            value = DefaultConverters.Convert(columnMap.PropInformation.PropertyType,
+                                columnMap.PropInformation.GetValue(record), columnMap.ClassPropertyDataFormat,
+                                columnMap.ColumnName, columnMap.ColumnIndex, currentRowNumber);
+                        }
+                        else value = null;
                     }
-                    else value = null;
-                }
-                else
-                {
-                    // Custom converter found                    
-                    value = columnMap.ClassToCsvTypeConverter.Convert(columnMap.PropInformation.PropertyType,
-                            columnMap.PropInformation.GetValue(record), columnMap.ClassPropertyDataFormat,
-                        columnMap.ColumnName, columnMap.ColumnIndex, currentRowNumber, DefaultConverters);
-                }
+                    else
+                    {
+                        // Custom converter found                    
+                        value = columnMap.ClassToCsvTypeConverter.Convert(columnMap.PropInformation.PropertyType,
+                                columnMap.PropInformation.GetValue(record), columnMap.ClassPropertyDataFormat,
+                            columnMap.ColumnName, columnMap.ColumnIndex, currentRowNumber, DefaultConverters);
+                    }
 
-                foreach(var postConverter in columnMap.ClassToCsvPostConverters)
-                {
-                     value = postConverter.Convert(value, columnMap.ColumnName, columnMap.ColumnIndex, currentRowNumber);
-                }
-                
+                    foreach (var postConverter in columnMap.ClassToCsvPostConverters)
+                    {
+                        value = postConverter.Convert(value, columnMap.ColumnName, columnMap.ColumnIndex, currentRowNumber);
+                    }
 
-                if (value == null)
-                {
-                    row.Add(string.Empty);
-                    continue;
+                    if (value == null)
+                    {
+                        row.Add(string.Empty);
+                        continue;
+                    }
+
+                    row.Add(value.ToString());
                 }
-                                
-                row.Add(value.ToString());
+                catch (Exception ex)
+                {
+                    throw new CsvConverterException($"Problem with the {columnMap.ColumnName} column on row {RowNumber}:  {ex.Message}  See the inner exception for more details.", ex);
+                }
             }
 
             return row;
