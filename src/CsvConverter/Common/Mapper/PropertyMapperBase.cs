@@ -10,6 +10,7 @@ namespace CsvConverter.Mapper
 {
     public abstract class PropertyMapperBase<T>
     {
+        /// <summary>Shorthand way of getting to the class type.</summary>
         protected Type _theClassType = typeof(T);
         private IPropertyAttributeUpdater _classToCsvAttributeHelper = new ClassToCsv.Mapper.ClassToCsvPropertyAttributeUpdater<T>();
         private IPropertyAttributeUpdater _csvToClassAttributeHelper = new CsvToClass.Mapper.CsvToClassPropertyAttributeUpdater<T>();
@@ -17,6 +18,7 @@ namespace CsvConverter.Mapper
         /// <summary>Looks for CsvConverterAttribute on the property using PropertyInfo
         /// and then updates any relevant info on the map</summary>
         /// <param name="newMap">The property map to examine</param>
+        /// <param name="columnIndexDefaultValue">The default column index value (csv to class and class to csv use different values)</param>
         private void FindCsvConverterAttributesOnOneProperty(PropertyMap newMap, int columnIndexDefaultValue)
         {
             CsvConverterAttribute oneAttribute = newMap.PropInformation.HelpFindAttribute<CsvConverterAttribute>();

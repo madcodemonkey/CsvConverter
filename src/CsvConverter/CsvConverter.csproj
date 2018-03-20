@@ -50,6 +50,7 @@
     <Compile Include="Attributes\CsvConverterDecimalPlacesAttribute.cs" />
     <Compile Include="Attributes\CsvConverterOldAndNewValueAttribute.cs" />
     <Compile Include="Attributes\CsvConverterMathRoundingAttribute.cs" />
+    <Compile Include="CsvToClass\Attributes\CsvToClassConverterDateTimeAttribute.cs" />
     <Compile Include="ClassToCsv\Configuration\ClassToCsvConfiguration.cs" />
     <Compile Include="ClassToCsv\Converters\IncludedPostConverters\ReplaceTextEveryMatchClassToCsvPostConverter.cs" />
     <Compile Include="ClassToCsv\Converters\IncludedPostConverters\ReplaceTextExactMatchClassToCsvPostConverter.cs" />
@@ -79,6 +80,8 @@
     <Compile Include="Common\ICsvConverter.cs" />
     <Compile Include="Common\TypeConverters\IDateConverterDetails.cs" />
     <Compile Include="Common\TypeConverters\IDecimalPlacesSettings.cs" />
+    <Compile Include="CsvToClass\Attributes\CsvToClassConverterDecimalAttribute.cs" />
+    <Compile Include="CsvToClass\Attributes\CsvToClassConverterDoubleAttribute.cs" />
     <Compile Include="CsvToClass\Converters\DefaultTypeConverters\BogusDefaultStringToObjectTypeConverterManager.cs" />
     <Compile Include="CsvToClass\Converters\DefaultTypeConverters\DefaultStringToObjectTypeConverterManager.cs" />
     <Compile Include="CsvToClass\Converters\DefaultTypeConverters\IDefaultStringToObjectTypeConverterManager.cs" />
@@ -127,6 +130,8 @@
     <Compile Include="Common\RowTools\RowReader.cs" />
     <Compile Include="CsvToClass\CsvToClassService.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="CsvToClass\Attributes\ReadMe.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
