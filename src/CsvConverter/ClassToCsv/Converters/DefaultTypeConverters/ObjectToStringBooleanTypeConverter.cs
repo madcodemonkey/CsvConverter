@@ -50,8 +50,15 @@ namespace CsvConverter.ClassToCsv
             return data.ToString();
         }
 
+        /// <summary>Initializes the converter with an attribute</summary>
         public void Initialize(CsvConverterCustomAttribute attribute)
         {
+            if (attribute != null)
+            {
+                var settings = attribute as ClassToCsvConverterBooleanAttribute;
+                if (settings != null)
+                    OutputFormat = settings.OutputFormat;
+            }
         }
     }
 }

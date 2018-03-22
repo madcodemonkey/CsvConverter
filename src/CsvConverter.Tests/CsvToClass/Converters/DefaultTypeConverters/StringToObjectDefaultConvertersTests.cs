@@ -216,6 +216,7 @@ namespace CsvConverter.Tests
             PropertyTester<bool>(true, "true");
             PropertyTester<bool>(true, "t");
             PropertyTester<bool>(true, "y");
+            PropertyTester<bool>(true, "yes");
             PropertyTester<bool>(true, "1");
 
             PropertyTester<bool>(false, "FALSE");
@@ -223,6 +224,7 @@ namespace CsvConverter.Tests
             PropertyTester<bool>(false, "false");
             PropertyTester<bool>(false, "f");
             PropertyTester<bool>(false, "n");
+            PropertyTester<bool>(false, "no");
             PropertyTester<bool>(false, "0");
         }
 

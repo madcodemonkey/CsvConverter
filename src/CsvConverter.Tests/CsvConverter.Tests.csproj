@@ -74,6 +74,7 @@
     <Compile Include="ClassToCsv\Mapper\ClassToCsvPropertyMapper_CoreTests.cs" />
     <Compile Include="ClassToCsv\Converters\DefaultTypeConverters\DefaultObjectToStringTypeConverterManagerTest.cs" />
     <Compile Include="ClassToCsv\Converters\IncludedPostConverters\ReplaceTextEveryMatchPostConverterTests.cs" />
+    <Compile Include="CsvToClass\Converters\DefaultTypeConverters\StringToObjectDateTimeTypeConverterTests.cs" />
     <Compile Include="CsvToClass\Converters\IncludedPreConverters\StringIsNullOrWhiteSpaceSetToNullCsvToClassPreConverterTests.cs" />
     <Compile Include="CsvToClass\Converters\IncludedPreConverters\TextReplacerCsvToClassPreConverterTests.cs" />
     <Compile Include="Common\RowTools\RowWriterTests.cs" />

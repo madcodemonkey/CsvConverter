@@ -26,12 +26,12 @@ namespace CsvConverter.CsvToClass
             }
 
             var lower = stringValue.Trim().ToLower();
-            if (lower == "y" || lower == "true" || lower == "t" || lower == "1")
+            if (lower == "true" || lower == "t" || lower == "y" || lower == "yes" || lower == "1")
             {
                 return true;
             }
 
-            if (lower == "n" || lower == "false" || lower == "f" || lower == "0")
+            if (lower == "false" || lower == "f" || lower == "n" || lower == "no" || lower == "0")
             {
                 return false;
             }
