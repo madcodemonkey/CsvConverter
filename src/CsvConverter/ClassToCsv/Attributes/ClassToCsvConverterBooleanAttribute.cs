@@ -4,7 +4,7 @@ using CsvConverter.TypeConverters;
 namespace CsvConverter.ClassToCsv
 {
     /// <summary>A shortcut way of using the ObjectToStringBooleanTypeConverter</summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class ClassToCsvConverterBooleanAttribute : CsvConverterCustomAttribute
     {
         public ClassToCsvConverterBooleanAttribute(BooleanOutputFormatEnum outputFormat) : base(typeof(ObjectToStringBooleanTypeConverter))

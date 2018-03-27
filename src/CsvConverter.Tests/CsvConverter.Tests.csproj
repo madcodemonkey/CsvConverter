@@ -65,6 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassToCsv\Attributes\ClassToCsvConverterBooleanAttributeTests.cs" />
     <Compile Include="ClassToCsv\ClassToCsvService_HeaderTests.cs" />
     <Compile Include="ClassToCsv\ClassToCsvService_NoHeaderTests.cs" />
     <Compile Include="ClassToCsv\ClassToCsvService_PostConverterTests.cs" />

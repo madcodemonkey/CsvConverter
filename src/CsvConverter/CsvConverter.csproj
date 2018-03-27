@@ -134,6 +134,7 @@
   <ItemGroup>
     <Content Include="ClassToCsv\Attributes\ReadMe.txt" />
     <Content Include="CsvToClass\Attributes\ReadMe.txt" />
+    <Content Include="Notes.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
