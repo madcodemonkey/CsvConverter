@@ -4,17 +4,27 @@ using System.IO;
 
 namespace CsvConverter.RowTools
 {
+    /// <summary>A class for reading rows.</summary>
     public class RowReader : RowBase, IRowReader
     {
         private StreamReader _streamReader;
         private int _lengthBeforeExit;
+
+        /// <summary>Constructor</summary>
+        /// <param name="sr">An instance of a StreamReader class.</param>
         public RowReader(StreamReader sr)
         {
             _streamReader = sr ?? throw new ArgumentNullException("StreadReader cannot be null.");
         }
+
+        /// <summary>Indicates if a row is blank (contains no data)</summary>
         public bool IsRowBlank { get; private set; } = true;
+
+        /// <summary>The column count of the previous row.  Column count should remain the same across all rows.</summary>
         public int LastColumnCount { get; private set; }
 
+        /// <summary>Indicates if we can read more data.</summary>
+        /// <returns></returns>
         public bool CanRead()
         {
             return _streamReader.EndOfStream == false;
@@ -33,10 +43,10 @@ namespace CsvConverter.RowTools
             if (CanRead() == false)
                 return result;
 
-            string oneLine = ReadOneLine();            
+            string oneLine = ReadOneLine();
 
             bool inEscape = false;
-            bool priorEscape = false;            
+            bool priorEscape = false;
             for (int i = 0; i < oneLine.Length; i++)
             {
                 char c = oneLine[i];

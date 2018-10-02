@@ -1,1 +1,0 @@
-﻿These attributes are shorthand ways of using common CsvConverter attributes that are specific to converting CSV files to Classes.

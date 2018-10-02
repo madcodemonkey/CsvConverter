@@ -4,10 +4,13 @@ using System.IO;
 
 namespace CsvConverter.RowTools
 {
+    /// <summary>A class for writing rows to a file</summary>
     public class RowWriter : RowBase, IRowWriter
     {
         private readonly StreamWriter _streamWriter;
 
+        /// <summary>Constructor</summary>
+        /// <param name="sw">An instance of the StreamWriter class.</param>
         public RowWriter(StreamWriter sw)
         {
             _streamWriter = sw ?? throw new ArgumentNullException("StreamWriter cannot be null.");
@@ -21,14 +24,16 @@ namespace CsvConverter.RowTools
             RowNumber++;
         }
 
+        /// <summary>Writes all the data in teh fieldList to a row in the file.</summary>
+        /// <param name="fieldList">Data to write to the file.</param>
         public void Write(List<string> fieldList)
         {
             if (fieldList == null)
-                throw new ArgumentNullException("fieldList cannot be null."); 
+                throw new ArgumentNullException("fieldList cannot be null.");
 
             _sb.Length = 0;
             int indexOfLastField = fieldList.Count - 1;
-            for(int index = 0; index < fieldList.Count; index++)
+            for (int index = 0; index < fieldList.Count; index++)
             {
                 string field = fieldList[index];
                 if (field != null)
@@ -50,10 +55,10 @@ namespace CsvConverter.RowTools
         }
 
         private void EscapeTheText(string field)
-        {            
+        {
             _sb.Append(EscapeChar);
 
-            for(int index = 0; index < field.Length; index++)            
+            for (int index = 0; index < field.Length; index++)
             {
                 char oneChar = field[index];
 
@@ -72,7 +77,7 @@ namespace CsvConverter.RowTools
                 }
             }
 
-           _sb.Append(EscapeChar);
+            _sb.Append(EscapeChar);
         }
     }
 }

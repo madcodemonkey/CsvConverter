@@ -1,17 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
-using CsvConverter.ClassToCsv;
-using CsvConverter.ClassToCsv.Mapper;
-using CsvConverter.CsvToClass;
-using CsvConverter.CsvToClass.Mapper;
 
 namespace CsvConverter.Mapper
 {
-
     /// <summary>Used to determine how a CSV column should map on to a property of a class.</summary>
-    public class PropertyMap : ICsvToClassPropertyMap, IClassToCsvPropertyMap
+    public class PropertyMap 
     {
+        private readonly string _defaultColumnName;
+        private readonly int _defaultColumnIndex;
+        public PropertyMap(PropertyInfo propInfo, int columnIndex)
+        {
+            PropInformation = propInfo;
+            ColumnName = propInfo != null ? propInfo.Name : null;
+            _defaultColumnName = ColumnName;
+            ColumnIndex = columnIndex;
+            _defaultColumnIndex = columnIndex;
+        }
+
         /// <summary>Index of the column in the CSV file.</summary>
         public int ColumnIndex { get; set; }
 
@@ -20,39 +26,47 @@ namespace CsvConverter.Mapper
 
         /// <summary>Class property information.  This is where the CSV data will go.</summary>
         public PropertyInfo PropInformation { get; set; }
-        
 
 
-        #region Class To CSV
+        #region Writing
         /// <summary>Indicates that the property should NOT be written into the CSV file.</summary>
         public bool IgnoreWhenWriting { get; set; }
-
-        /// <summary>Used when converting the data into a string.  Any standard C# format is allowed.  It can be used to format numbers, etc.</summary>
-        public string ClassPropertyDataFormat { get; set; }
-
-        public List<IClassToCsvPostConverter> ClassToCsvPostConverters { get; set; } = new List<IClassToCsvPostConverter>();
-
+  
+        /// <summary>When writing CSV files, these are optional postprocesors in case you need to 
+        /// manipulate the string that will eventually be written to the csv file.  These are called
+        /// after the converters have done their work.</summary>
+        public List<ICsvConverter> PostConverters { get; set; } = new List<ICsvConverter>();
 
         /// <summary>When writing classes to CSV files, this is an optional converter in case you do NOT want the property 
         /// coverted to a string using the default property type converters</summary>
-        public IClassToCsvTypeConverter ClassToCsvTypeConverter { get; set; }
-        #endregion // Class To CSV
+        public ICsvConverter WriteConverter { get; set; }
+        #endregion 
 
-
-
-        #region CSV to Class
-        /// <summary>We support one alternate column name</summary>
+        #region Reading
+        /// <summary>Although you can specify multiple alternate column names ultimately 
+        /// only one column can be mapped to a property!</summary>
         public List<string> AltColumnNames { get; set; }
 
         /// <summary>Indicates that the CSV column should be ignored and its value not not assigned to a class property.</summary>
         public bool IgnoreWhenReading { get; set; }
 
         /// <summary>When reading CSV files, these are optional preprocesors in case you need to manipulate the string that will eventually be used.</summary>
-        public List<ICsvToClassPreConverter> CsvToClassPreConverters { get; set; } = new List<ICsvToClassPreConverter>();
+        public List<ICsvConverter> PreConverters { get; set; } = new List<ICsvConverter>();
 
         /// <summary>When reading CSV files, this is an optional converter in case you do NOT want the CSV field coverted to
         /// the same type as the class property or you just want more control over the conversion process.</summary>
-        public ICsvToClassTypeConverter CsvToClassTypeConverter { get; set; }
-        #endregion // CSV to Class
+        public ICsvConverter ReadConverter { get; set; }
+        #endregion 
+
+        public bool IsDefaultColumnName()
+        {
+            return string.Compare(ColumnName, _defaultColumnName, true, CultureInfo.InvariantCulture) == 0;
+        }
+
+        public bool IsDefaultColumnIndex()
+        {
+            return _defaultColumnIndex == ColumnIndex;
+        }
+
     }
 }
