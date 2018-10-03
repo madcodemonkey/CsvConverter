@@ -3,7 +3,7 @@
 namespace CsvConverter
 {
     /// <summary>Trims all fields of white space left and right of the text.</summary>
-    public class CsvConverterStringTrimmer : CsvConverterTypeBase, ICsvConverter
+    public class CsvConverterStringTrimmer : CsvConverterStringBase, ICsvConverterString
     {
         /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>

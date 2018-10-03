@@ -2,11 +2,11 @@
 
 namespace CsvConverter
 {
-    /// <summary>Replaces the text specified in the OldValue attribute with text in the NewValue attribute.</summary>
-    public class CsvConverterStringReplaceTextExactMatch : CsvConverterStringBase, ICsvConverterString
+    public class CsvConverterStringReplaceTextEveryMatch : CsvConverterStringBase, ICsvConverterString
     {
         private string _newValue;
         private string _oldValue;
+        private bool _oldValueCannotBeProcessByStringReplace = true; // While uninitialized this needs to be true or the string Replace method will throw an exception.
 
         /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>
@@ -34,7 +34,7 @@ namespace CsvConverter
         /// original string is left untouched.</summary>
         public string GetWriteData(Type inputType, object value, string columnName, int columnIndex, int rowNumber)
         {
-           return Convert(value == null ? null : (string) value);
+            return Convert(value == null ? null : (string)value);
         }
 
         /// <summary>Performs operations on a CSV value BEFORE the type converter is called.
@@ -46,11 +46,19 @@ namespace CsvConverter
         /// <returns></returns>
         private string Convert(string value)
         {
-            if (value == _oldValue)
-                return _newValue;
+            // DO NOT let a null or zero length _oldValue reach the string Replace method because it will throw an exception!
+            if (_oldValueCannotBeProcessByStringReplace)
+            {
+                if (value == null || value.Length == 0)
+                    return _newValue;
+                else return value;
+            }
 
-            return value;
+            // Avoid null reference exception
+            if (value == null)
+                return value;
 
+            return value.Replace(_oldValue, _newValue);
         }
 
         /// <summary>Initializes the converter with an attribute</summary>
@@ -66,6 +74,8 @@ namespace CsvConverter
 
             _newValue = oneAttribute.NewValue;
             _oldValue = oneAttribute.OldValue;
+            _oldValueCannotBeProcessByStringReplace = _oldValue == null || _oldValue.Length == 0;
+
         }
     }
 

@@ -1,12 +1,11 @@
 ﻿using CsvConverter.Reflection;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace CsvConverter
 {
-    /// <summary>Base class of class to csv type converters.</summary>
+
+    /// <summary>Base class for all converters.</summary>
     public abstract class CsvConverterTypeBase
     {
         /// <summary>Initializes the converter with an attribute</summary>

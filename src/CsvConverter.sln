@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsvConverter.Core.Integrati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCoreExample1", "CsvConverter.SimpleCoreExample1\SimpleCoreExample1.csproj", "{6D022FAC-E925-41E4-9421-397C8E4A5A52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvConverter.Core.Tests", "CsvConverter.Core.Tests\CsvConverter.Core.Tests.csproj", "{7D3167CA-8A03-4455-89A7-5F99B33E77A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6D022FAC-E925-41E4-9421-397C8E4A5A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D022FAC-E925-41E4-9421-397C8E4A5A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D022FAC-E925-41E4-9421-397C8E4A5A52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D3167CA-8A03-4455-89A7-5F99B33E77A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D3167CA-8A03-4455-89A7-5F99B33E77A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D3167CA-8A03-4455-89A7-5F99B33E77A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D3167CA-8A03-4455-89A7-5F99B33E77A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

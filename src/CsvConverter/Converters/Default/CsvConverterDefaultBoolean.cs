@@ -1,5 +1,6 @@
 ﻿using CsvConverter.Reflection;
 using System;
+using System.Globalization;
 
 namespace CsvConverter
 {
@@ -42,13 +43,20 @@ namespace CsvConverter
                 return booleanValue;
             }
 
+            if (string.Compare(value, TrueValue, true, CultureInfo.InstalledUICulture) == 0)
+                return true;
+
+            if (string.Compare(value, FalseValue, true, CultureInfo.InstalledUICulture) == 0)
+                return false;
+
+
             var lower = value.Trim().ToLower();
-            if (lower == TrueValue || lower == "true" || lower == "t" || lower == "y" || lower == "yes" || lower == "1")
+            if (lower == "true" || lower == "t" || lower == "y" || lower == "yes" || lower == "1")
             {
                 return true;
             }
 
-            if (lower == FalseValue || lower == "false" || lower == "f" || lower == "n" || lower == "no" || lower == "0")
+            if (lower == "false" || lower == "f" || lower == "n" || lower == "no" || lower == "0")
             {
                 return false;
             }
@@ -92,8 +100,5 @@ namespace CsvConverter
                 }
             }
         }
-
-
-
     }
 }

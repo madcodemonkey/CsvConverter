@@ -293,11 +293,33 @@ namespace CsvConverter.Mapper
 
         private void AddOnePropertyPreOrPostConverter(PropertyMap newMap, ICsvConverter converter, CsvConverterStringAttribute oneAttribute)
         {
-            if (oneAttribute.IsPostConverter)
-                newMap.PostConverters.Add(converter);
+            if (converter is ICsvConverterString stringConvert)
+            {
+                if (oneAttribute.IsPostConverter)
+                {
+                    newMap.PostConverters.Add(stringConvert);
+                    if (newMap.PostConverters.Count > 1)
+                    {
+                        newMap.PostConverters = newMap.PostConverters.OrderBy(o => o.Order).ToList();
+                    }
+                }
 
-            if (oneAttribute.IsPreConverter)
-                newMap.PreConverters.Add(converter);
+                if (oneAttribute.IsPreConverter)
+                {
+                    newMap.PreConverters.Add(stringConvert);
+                    if (newMap.PreConverters.Count > 1)
+                    {
+                        newMap.PreConverters = newMap.PreConverters.OrderBy(o => o.Order).ToList();
+                    }
+                }
+            }
+            else
+            {
+                string typeOfConverter = oneAttribute.IsPreConverter ? "PRE" : "POST";
+                throw new CsvConverterAttributeException($"The {newMap.PropInformation.Name} property on " +
+                            $"the {_theClassType.Name} class has specified a {typeOfConverter} converter " +
+                            $"that does not implement the {nameof(ICsvConverterString)} interface!");
+            }
         }
 
         private void UpdateColumnInformation(PropertyMap newMap, CsvConverterBaseAttribute oneAttribute)

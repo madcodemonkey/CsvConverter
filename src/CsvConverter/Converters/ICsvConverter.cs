@@ -2,6 +2,7 @@
 
 namespace CsvConverter
 {
+
     /// <summary>Main interface for all converters</summary>
     public interface ICsvConverter
     {

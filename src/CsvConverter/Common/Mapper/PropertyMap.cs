@@ -35,7 +35,7 @@ namespace CsvConverter.Mapper
         /// <summary>When writing CSV files, these are optional postprocesors in case you need to 
         /// manipulate the string that will eventually be written to the csv file.  These are called
         /// after the converters have done their work.</summary>
-        public List<ICsvConverter> PostConverters { get; set; } = new List<ICsvConverter>();
+        public List<ICsvConverterString> PostConverters { get; set; } = new List<ICsvConverterString>();
 
         /// <summary>When writing classes to CSV files, this is an optional converter in case you do NOT want the property 
         /// coverted to a string using the default property type converters</summary>
@@ -51,7 +51,7 @@ namespace CsvConverter.Mapper
         public bool IgnoreWhenReading { get; set; }
 
         /// <summary>When reading CSV files, these are optional preprocesors in case you need to manipulate the string that will eventually be used.</summary>
-        public List<ICsvConverter> PreConverters { get; set; } = new List<ICsvConverter>();
+        public List<ICsvConverterString> PreConverters { get; set; } = new List<ICsvConverterString>();
 
         /// <summary>When reading CSV files, this is an optional converter in case you do NOT want the CSV field coverted to
         /// the same type as the class property or you just want more control over the conversion process.</summary>
