@@ -13,12 +13,12 @@ namespace CsvConverter.Mapper
 {
     /// <summary>Base object for mapping  CSV columns to class properties</summary>
     /// <typeparam name="T">Class instance type</typeparam>
-    public class PropertyMapper<T>
+    public class ColumnToPropertyMapper<T>
     {
         /// <summary>Constructor.</summary>
         /// <param name="defaultFactory">The default type converter factory, which is passed into any 
         /// attributes found during the mapping process so that they can create a default converter if necessary.</param>
-        public PropertyMapper(CsvConverterConfiguration configuration, IDefaultTypeConverterFactory defaultFactory,
+        public ColumnToPropertyMapper(CsvConverterConfiguration configuration, IDefaultTypeConverterFactory defaultFactory,
             int columnIndexDefaultValue)
         {
             _columnIndexDefaultValue = columnIndexDefaultValue;
@@ -31,13 +31,13 @@ namespace CsvConverter.Mapper
         /// <param name="columnIndexDefaultValue">The default value to give a column.  It's only relevant if the 
         /// column is never found.  So, in most cases it is 9999.</param>
         /// <returns>List of property maps sorted by column index</returns>
-        public List<PropertyMap> CreateWriteMap()
+        public List<ColumnToPropertyMap> CreateWriteMap()
         {
-            var mapList = new List<PropertyMap>();
+            var mapList = new List<ColumnToPropertyMap>();
 
             foreach (PropertyInfo info in _theClassType.GetProperties())
             {
-                var oneMap = new PropertyMap(info, _columnIndexDefaultValue);
+                var oneMap = new ColumnToPropertyMap(info, _columnIndexDefaultValue);
 
                 CreateAllUserSpecifiedConvertersForOneProperty(oneMap);
 
@@ -54,9 +54,9 @@ namespace CsvConverter.Mapper
                 .ToList();
         }
 
-        public Dictionary<int, PropertyMap> CreateReadMap(List<string> headerColumns)
+        public Dictionary<int, ColumnToPropertyMap> CreateReadMap(List<string> headerColumns)
         {
-            List<PropertyMap> columnList = CreateWriteMap();
+            List<ColumnToPropertyMap> columnList = CreateWriteMap();
 
             if (_configuration.HasHeaderRow)
             {
@@ -71,9 +71,9 @@ namespace CsvConverter.Mapper
 
             // Map all the columns into a dictionary
             // This will also discard any unmapped properties (column index still equal to ColumnIndexDefaultValue)
-            var result = new Dictionary<int, PropertyMap>();
+            var result = new Dictionary<int, ColumnToPropertyMap>();
 
-            foreach (PropertyMap map in columnList)
+            foreach (ColumnToPropertyMap map in columnList)
             {
                 if (map.ColumnIndex > 0)
                     result.Add(map.ColumnIndex, map);
@@ -89,7 +89,7 @@ namespace CsvConverter.Mapper
         /// <param name="orderedHeaderColumns">A list of header fields from the CSV file in the order the appear in the CSV.  The position of the
         /// header column will be used to determine the column index.</param>
         /// <param name="configuration">Configuration information.</param>
-        private void MapClassPropertiesToCsvHeaderColumnNames(List<PropertyMap> mapList, List<string> orderedHeaderColumns)
+        private void MapClassPropertiesToCsvHeaderColumnNames(List<ColumnToPropertyMap> mapList, List<string> orderedHeaderColumns)
         {
 
             ResetColumnIndex(mapList);
@@ -109,7 +109,7 @@ namespace CsvConverter.Mapper
                     string trimmedField = field.Trim();
 
                     // Find the column (even if it is being ignored) and map it to a column index!
-                    List<PropertyMap> maps = SearchForColumnName(mapList, trimmedField);
+                    List<ColumnToPropertyMap> maps = SearchForColumnName(mapList, trimmedField);
                     if (maps.Count == 1)
                     {
                         maps[0].ColumnIndex = columnIndex;
@@ -139,14 +139,14 @@ namespace CsvConverter.Mapper
             }
 
             // Remove any Properties that didn't match a CSV column
-            List<PropertyMap> unmapped = mapList.Where(w => w.ColumnIndex == _columnIndexDefaultValue).ToList();
+            List<ColumnToPropertyMap> unmapped = mapList.Where(w => w.ColumnIndex == _columnIndexDefaultValue).ToList();
             foreach (var item in unmapped)
                 mapList.Remove(item);
         }
 
-        private void CreateIgnoreColumnMap(List<PropertyMap> columns, int columnIndex, string columnName)
+        private void CreateIgnoreColumnMap(List<ColumnToPropertyMap> columns, int columnIndex, string columnName)
         {
-            var newItem = new PropertyMap(null, columnIndex)
+            var newItem = new ColumnToPropertyMap(null, columnIndex)
             {
                 ColumnName = columnName,
                 ReadConverter = null,
@@ -161,9 +161,9 @@ namespace CsvConverter.Mapper
         /// property of every map and returns all matches.</summary>
         /// <param name="mapList">List of maps</param>
         /// <param name="trimmedField">Trimmed header field name.</param>
-        private List<PropertyMap> SearchForColumnName(List<PropertyMap> mapList, string trimmedField)
+        private List<ColumnToPropertyMap> SearchForColumnName(List<ColumnToPropertyMap> mapList, string trimmedField)
         {
-            List<PropertyMap> result = mapList
+            List<ColumnToPropertyMap> result = mapList
                 .Where(w => w.ColumnIndex == _columnIndexDefaultValue && string.Compare(w.ColumnName, trimmedField, true) == 0)
                 .ToList();
 
@@ -186,7 +186,7 @@ namespace CsvConverter.Mapper
 
 
         /// <summary>Resets all the column index to -1 (unused)</summary>
-        private void ResetColumnIndex(List<PropertyMap> columns)
+        private void ResetColumnIndex(List<ColumnToPropertyMap> columns)
         {
             foreach (var column in columns)
             {
@@ -219,15 +219,15 @@ namespace CsvConverter.Mapper
 
 
 
-        private void CreateDefaultConverterOnAnyPropertyThatDoesNotHaveAConverter(List<PropertyMap> mapList)
+        private void CreateDefaultConverterOnAnyPropertyThatDoesNotHaveAConverter(List<ColumnToPropertyMap> mapList)
         {
-            foreach (PropertyMap oneMap in mapList)
+            foreach (ColumnToPropertyMap oneMap in mapList)
             {
                 CreateDefaultConverterForOnePropertyIfNecessary(oneMap);
             }
         }
 
-        private void CreateDefaultConverterForOnePropertyIfNecessary(PropertyMap newMap)
+        private void CreateDefaultConverterForOnePropertyIfNecessary(ColumnToPropertyMap newMap)
         {
             // User doesn't want to use this column
             if (newMap.IgnoreWhenReading && newMap.IgnoreWhenWriting)
@@ -255,7 +255,7 @@ namespace CsvConverter.Mapper
         /// and then updates any relevant info on the map</summary>
         /// <param name="oneMap">The property map to examine</param>
         /// <param name="columnIndexDefaultValue">The default column index value (csv to class and class to csv use different values)</param>
-        private void CreateAllUserSpecifiedConvertersForOneProperty(PropertyMap oneMap)
+        private void CreateAllUserSpecifiedConvertersForOneProperty(ColumnToPropertyMap oneMap)
         {
             List<CsvConverterBaseAttribute> attributeList = oneMap.PropInformation.HelpFindAllAttributes<CsvConverterBaseAttribute>();
             foreach (var oneAttribute in attributeList)
@@ -273,7 +273,7 @@ namespace CsvConverter.Mapper
             }
         }
 
-        private bool CreateOneUserSpecifiedConverterForOneProperty(PropertyMap oneMap, ICsvConverter converter, 
+        private bool CreateOneUserSpecifiedConverterForOneProperty(ColumnToPropertyMap oneMap, ICsvConverter converter, 
             CsvConverterBaseAttribute oneAttribute, bool throwExceptionIfConverterHasAlreadyBeenSpecified)
         {           
             // Possible pre or post converter.
@@ -291,7 +291,7 @@ namespace CsvConverter.Mapper
             }
         }
 
-        private void AddOnePropertyPreOrPostConverter(PropertyMap newMap, ICsvConverter converter, CsvConverterStringAttribute oneAttribute)
+        private void AddOnePropertyPreOrPostConverter(ColumnToPropertyMap newMap, ICsvConverter converter, CsvConverterStringAttribute oneAttribute)
         {
             if (converter is ICsvConverterString stringConvert)
             {
@@ -322,7 +322,7 @@ namespace CsvConverter.Mapper
             }
         }
 
-        private void UpdateColumnInformation(PropertyMap newMap, CsvConverterBaseAttribute oneAttribute)
+        private void UpdateColumnInformation(ColumnToPropertyMap newMap, CsvConverterBaseAttribute oneAttribute)
         {
             // Did the attribute specify a ColumnName?
             if (oneAttribute.IsColumnNameSpecified())
@@ -382,7 +382,7 @@ namespace CsvConverter.Mapper
         }
 
 
-        private void AddOnePropertyTypeConverter(PropertyMap newMap, ICsvConverter converter, 
+        private void AddOnePropertyTypeConverter(ColumnToPropertyMap newMap, ICsvConverter converter, 
             bool ignoreWhenReading, bool ignoreWhenWriting, bool throwExceptionIfConverterHasAlreadyBeenSpecified)
         {
             if (ignoreWhenReading == false)
@@ -430,7 +430,7 @@ namespace CsvConverter.Mapper
 
        
 
-        private void CreateAllUserSpecifiedConvertersOnTheClass(List<PropertyMap> mapList)
+        private void CreateAllUserSpecifiedConvertersOnTheClass(List<ColumnToPropertyMap> mapList)
         {
             // Find attributes on the class
             List<CsvConverterBaseAttribute> attributeList = _theClassType.HelpFindAllClassAttributes<CsvConverterBaseAttribute>();
@@ -484,7 +484,7 @@ namespace CsvConverter.Mapper
         /// properties type)</summary>
         /// <param name="newMap"></param>
         /// <returns></returns>
-        protected bool ShouldMapBeAdd(PropertyMap newMap)
+        protected bool ShouldMapBeAdd(ColumnToPropertyMap newMap)
         {
             if (newMap.IgnoreWhenWriting)
                 return false;
@@ -498,10 +498,10 @@ namespace CsvConverter.Mapper
 
         /// <summary>If there were no header columns, every class property that is not ignored should have a column index.
         /// This methods makes sure this condition exists and throws exceptions if it does not exist.</summary>
-        private void ValidateThatIndexesHaveBeenSpecifiedForEveryClassProperty(List<PropertyMap> mapList)
+        private void ValidateThatIndexesHaveBeenSpecifiedForEveryClassProperty(List<ColumnToPropertyMap> mapList)
         {
             // Remove ignored properties 
-            List<PropertyMap> unmapped = mapList.Where(w => w.IgnoreWhenReading).ToList();
+            List<ColumnToPropertyMap> unmapped = mapList.Where(w => w.IgnoreWhenReading).ToList();
             foreach (var item in unmapped)
                 mapList.Remove(item);
 

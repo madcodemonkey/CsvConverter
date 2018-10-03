@@ -5,11 +5,11 @@ using System.Reflection;
 namespace CsvConverter.Mapper
 {
     /// <summary>Used to determine how a CSV column should map on to a property of a class.</summary>
-    public class PropertyMap 
+    public class ColumnToPropertyMap 
     {
         private readonly string _defaultColumnName;
         private readonly int _defaultColumnIndex;
-        public PropertyMap(PropertyInfo propInfo, int columnIndex)
+        public ColumnToPropertyMap(PropertyInfo propInfo, int columnIndex)
         {
             PropInformation = propInfo;
             ColumnName = propInfo != null ? propInfo.Name : null;

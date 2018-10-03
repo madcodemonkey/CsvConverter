@@ -3,7 +3,7 @@
 namespace CsvConverter.Mapper
 {
     /// <summary>Describes a property map's common properties</summary>
-    public interface IPropertyMap
+    public interface IColumnToPropertyMap
     {
         /// <summary>Index of the column in the CSV file.  This is a one based index.</summary>
         int ColumnIndex { get; set; }

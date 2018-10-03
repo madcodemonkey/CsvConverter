@@ -12,7 +12,7 @@ namespace CsvConverter
     {
         private const int ColumnIndexDefaultValue = 9999;
         private IRowWriter _rowWriter;
-        private List<PropertyMap> _columnMapList;
+        private List<ColumnToPropertyMap> _columnMapList;
         private bool _headerWritten = false;
         private bool _initialized = false;
        
@@ -136,9 +136,9 @@ namespace CsvConverter
             _headerWritten = true;
         }
 
-        private List<PropertyMap> CreateMappings()
+        private List<ColumnToPropertyMap> CreateMappings()
         {
-            var mapper = new PropertyMapper<T>(Configuration, DefaultConverterFactory, ColumnIndexDefaultValue);
+            var mapper = new ColumnToPropertyMapper<T>(Configuration, DefaultConverterFactory, ColumnIndexDefaultValue);
             return mapper.CreateWriteMap();
         }
     }

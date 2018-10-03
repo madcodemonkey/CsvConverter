@@ -14,7 +14,7 @@ namespace CsvConverter
     public class CsvReaderService<T> where T : class, new()
     {
         private IRowReader _rowReader;
-        private Dictionary<int, PropertyMap> _columnMapList;
+        private Dictionary<int, ColumnToPropertyMap> _columnMapList;
         private int? _columnCount = null;
         private bool _initialized = false;
         private IDefaultTypeConverterFactory _defaultConverterFactory;
@@ -98,7 +98,7 @@ namespace CsvConverter
             {
                 int zeroBasedIndex = columnIndex - 1;
                 string fieldValue = oneRow[zeroBasedIndex];
-                PropertyMap columnMap;
+                ColumnToPropertyMap columnMap;
                 if (_columnMapList.TryGetValue(columnIndex, out columnMap))
                 {
                     if (columnMap.IgnoreWhenReading)
@@ -147,13 +147,13 @@ namespace CsvConverter
 
         /// <summary>Creates the mappings necessary for each property.</summary>
         /// <returns></returns>
-        private Dictionary<int, PropertyMap> CreateMappings()
+        private Dictionary<int, ColumnToPropertyMap> CreateMappings()
         {
             // Retrieve the header row if the file has one!
             List<string> headerColumns = Configuration.HasHeaderRow ? _rowReader.ReadRow() : new List<string>();
 
             // Map the class properties to a mapper
-            var mapper = new PropertyMapper<T>(Configuration, DefaultConverterFactory, ColumnIndexDefaultValue);
+            var mapper = new ColumnToPropertyMapper<T>(Configuration, DefaultConverterFactory, ColumnIndexDefaultValue);
             return mapper.CreateReadMap(headerColumns);
         }
 
