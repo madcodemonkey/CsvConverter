@@ -15,13 +15,13 @@ namespace CsvConverter
         }
 
         /// <summary>Number of decimal places to use when rounding</summary>
-        public int NumberOfDecimalPlaces { get; set; } = -1;  // Not specified
+        public int NumberOfDecimalPlaces { get; set; } = 2;  // Not specified
 
         /// <summary>Mode is used when AllowRounding is true.  It is used with the Math.Round function.</summary>
         public MidpointRounding Mode { get; set; } = MidpointRounding.AwayFromZero;
 
         /// <summary>Default is TRUE and if true, Mode is used with Math.Round; otherwise, Math.Floor is used and NO rounding takes place.</summary>
-        public bool AllowRounding { get; set; } = true;
+        public bool AllowRounding { get; set; } = false;
 
         /// <summary>Can this converter turn the property type specified into a CSV column string?</summary>
         /// <param name="propertyType">The class property type that you must convert into a string.</param>

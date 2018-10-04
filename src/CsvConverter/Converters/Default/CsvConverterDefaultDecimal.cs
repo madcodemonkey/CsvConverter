@@ -24,11 +24,12 @@ namespace CsvConverter
         /// <summary>Mode is used when AllowRounding is true.  It is used with the Math.Round function.</summary>
         public MidpointRounding Mode { get; set; } = MidpointRounding.AwayFromZero;
 
-        /// <summary>Default is TRUE and if true, Mode is used with Math.Round; otherwise, Math.Floor is used and NO rounding takes place.</summary>
-        public bool AllowRounding { get; set; } = true;
+        /// <summary>Default is FALSE to not lose percision.  If true, Mode is used with Math.Round; otherwise, Math.Floor
+        /// is used and NO rounding takes place.</summary>
+        public bool AllowRounding { get; set; } = false; 
 
         /// <summary>Number of decimal places to use when rounding</summary>
-        public int NumberOfDecimalPlaces { get; set; }
+        public int NumberOfDecimalPlaces { get; set; } = 2;
 
         /// <summary>The output format to use when converting a number into a string</summary>
         public string StringFormat { get; set; }

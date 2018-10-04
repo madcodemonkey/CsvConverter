@@ -74,7 +74,9 @@ namespace CsvConverter
 
             if (string.IsNullOrWhiteSpace(oneAttribute.StringFormat))
             {
-                int percession = oneAttribute.NumberOfDecimalPlaces / 2;
+                int percession = oneAttribute.NumberOfDecimalPlaces - 2;
+                if (percession < 0)
+                    percession = 0;
                 oneAttribute.StringFormat = $"P{percession}";
             }
 
