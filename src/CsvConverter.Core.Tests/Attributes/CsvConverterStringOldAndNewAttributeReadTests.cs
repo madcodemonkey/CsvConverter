@@ -7,7 +7,7 @@ using Moq;
 namespace CsvConverter.Core.Tests.Attributes
 {
     [TestClass]
-    public class CsvConverterStringOldAndNewAttributeTests
+    public class CsvConverterStringOldAndNewAttributeReadTests
     {
         [TestMethod]
         public void ReadingCsv_CanReplaceStringsOnSingleProperty_ValuesConverted()
