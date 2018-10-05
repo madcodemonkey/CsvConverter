@@ -4,7 +4,7 @@ using CsvConverter.RowTools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace CsvConverter.Core.Tests
+namespace CsvConverter.Core.Tests.Attributes
 {
     /// <summary>Notes:  There are no StringFormat tests here because StringFormat is only used when convert Class To CSV.</summary>
     [TestClass]

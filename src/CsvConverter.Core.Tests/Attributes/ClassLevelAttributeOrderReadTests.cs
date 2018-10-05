@@ -4,7 +4,7 @@ using CsvConverter.RowTools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace CsvConverter.Core.Tests
+namespace CsvConverter.Core.Tests.Attributes
 {
     [TestClass]
     public class ClassLevelAttributeOrderReadTests

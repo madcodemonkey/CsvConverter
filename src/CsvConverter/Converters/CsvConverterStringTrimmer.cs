@@ -19,25 +19,47 @@ namespace CsvConverter
             return propertyType == typeof(string);
         }
 
+        public CsvConverterTrimEnum TrimAction { get; set; } = CsvConverterTrimEnum.All;
+
         public object GetReadData(Type targetType, string value, string columnName, int columnIndex, int rowNumber)
         {
-            if (value == null)
-                return null;
-
-            var theString = value.ToString();
-
-            return theString.Trim();
+            return TrimTheString(value);
         }
 
         /// <summary>Converts a string into a trimmed string</summary>
         public string GetWriteData(Type inputType, object value, string columnName, int columnIndex, int rowNumber)
         {
+            return TrimTheString(value);
+        }
+
+        /// <summary>Initializes the converter with an attribute</summary>
+        public override void Initialize(CsvConverterBaseAttribute attribute,
+            IDefaultTypeConverterFactory defaultFactory)
+        {
+            base.Initialize(attribute, defaultFactory);
+
+            if (attribute is CsvConverterStringTrimAttribute oneAttribute)
+            {
+                TrimAction = oneAttribute.TrimAction;
+            }
+        }
+
+        private string TrimTheString(object value)
+        {
             if (value == null)
                 return null;
 
             var theString = value.ToString();
 
-            return theString.Trim();
+            switch (TrimAction)
+            {
+                case CsvConverterTrimEnum.TrimStart:
+                    return theString.TrimStart();
+                case CsvConverterTrimEnum.TrimEnd:
+                    return theString.TrimEnd();
+                default:
+                    return theString.Trim();
+            }
         }
     }
 

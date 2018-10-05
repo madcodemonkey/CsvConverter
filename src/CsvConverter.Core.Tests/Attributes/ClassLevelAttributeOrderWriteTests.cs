@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CsvConverter.Core.Tests
+namespace CsvConverter.Core.Tests.Attributes
 {
     [TestClass]
     public class ClassLevelAttributeOrderWriteTests
