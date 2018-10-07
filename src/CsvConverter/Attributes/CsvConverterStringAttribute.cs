@@ -4,7 +4,7 @@ namespace CsvConverter
 {
     /// <summary>Used for converting strings</summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = true)]
-    public class CsvConverterStringAttribute : CsvConverterBaseAttribute
+    public class CsvConverterStringAttribute : CsvConverterAttribute
     {
         /// <summary>Default constructor.  Do NOT use this unless you have overriden GetConverter!</summary>
         public CsvConverterStringAttribute() { }

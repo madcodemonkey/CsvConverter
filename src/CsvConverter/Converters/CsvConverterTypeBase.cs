@@ -9,7 +9,7 @@ namespace CsvConverter
     public abstract class CsvConverterTypeBase
     {
         /// <summary>Initializes the converter with an attribute</summary>
-        public virtual void Initialize(CsvConverterBaseAttribute attribute, IDefaultTypeConverterFactory defaultFactory)
+        public virtual void Initialize(CsvConverterAttribute attribute, IDefaultTypeConverterFactory defaultFactory)
         {
         }
 

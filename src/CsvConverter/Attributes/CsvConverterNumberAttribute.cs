@@ -4,7 +4,7 @@ namespace CsvConverter
 {
     /// <summary>Used when converting numbers (int, decimal, double, float, byte, etc.)</summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = true)]
-    public class CsvConverterNumberAttribute : CsvConverterBaseAttribute
+    public class CsvConverterNumberAttribute : CsvConverterAttribute
     {
         /// <summary>Constructor used when you want the default to use the default/built in converters</summary>
         public CsvConverterNumberAttribute() : base() { }

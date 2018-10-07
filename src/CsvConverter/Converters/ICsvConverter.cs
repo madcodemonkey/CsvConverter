@@ -7,7 +7,7 @@ namespace CsvConverter
     public interface ICsvConverter
     {
         /// <summary>Used to pass the attribute to the converter in case it needs any optional inputs.</summary>
-        void Initialize(CsvConverterBaseAttribute attribute, IDefaultTypeConverterFactory defaultFactory);
+        void Initialize(CsvConverterAttribute attribute, IDefaultTypeConverterFactory defaultFactory);
 
         /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>

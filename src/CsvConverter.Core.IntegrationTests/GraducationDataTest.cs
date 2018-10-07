@@ -22,7 +22,7 @@ namespace CsvConverter.Core.IntegrationTests
             {
                 var csv = new CsvReaderService<Graduation>(sr);
                 csv.Configuration.HasHeaderRow = true;
-                csv.Configuration.IgnoreBlankRows = true;
+                csv.Configuration.BlankRowsAreReturnedAsNull = true;
 
                 while (csv.CanRead())
                 {

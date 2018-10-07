@@ -83,7 +83,7 @@ namespace CsvConverter
             List<string> oneRow = _rowReader.ReadRow();
 
             // Check for blank row.
-            if (oneRow == null || (Configuration.IgnoreBlankRows && _rowReader.IsRowBlank))
+            if (oneRow == null || (Configuration.BlankRowsAreReturnedAsNull && _rowReader.IsRowBlank))
                 return null;
 
             if (_columnCount.HasValue == false)

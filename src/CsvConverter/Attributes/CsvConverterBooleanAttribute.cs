@@ -4,7 +4,7 @@ namespace CsvConverter
 {
     /// <summary>Used for converting booleans</summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = true)]
-    public class CsvConverterBooleanAttribute : CsvConverterBaseAttribute
+    public class CsvConverterBooleanAttribute : CsvConverterAttribute
     {
         /// <summary>Constructor used when you want the default to use the default/built in converters</summary>
         public CsvConverterBooleanAttribute() : base() { }

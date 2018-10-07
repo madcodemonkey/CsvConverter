@@ -6,7 +6,7 @@
         public int Order { get; set; }
 
         /// <summary>Initializes the converter with an attribute</summary>
-        public override void Initialize(CsvConverterBaseAttribute attribute, IDefaultTypeConverterFactory defaultFactory)
+        public override void Initialize(CsvConverterAttribute attribute, IDefaultTypeConverterFactory defaultFactory)
         {
             base.Initialize(attribute, defaultFactory);
 

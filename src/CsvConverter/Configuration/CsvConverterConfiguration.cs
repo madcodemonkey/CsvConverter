@@ -21,8 +21,8 @@ namespace CsvConverter
         /// It really should NOT change from row to row or it is truly malformed.</summary>
         public bool ThrowExceptionIfColumnCountChanges { get; set; } = true;
 
-        /// <summary>Reading. Indicates that if a blank row (all commas) is encountered, that it should be ignored.</summary>
-        public bool IgnoreBlankRows { get; set; } = true;
-
+        /// <summary>Reading.  Indicates that you would like null returned if the line is blank (all white space, null or all commas) 
+        /// rather than letting the reader try to interpret the blank as data and throw an exception.</summary>
+        public bool BlankRowsAreReturnedAsNull { get; set; } = true;
     }
 }

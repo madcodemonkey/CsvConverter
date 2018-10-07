@@ -5,7 +5,7 @@ namespace CsvConverter
 {
     /// <summary>Used for converting DateTime</summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = true)]
-    public class CsvConverterDateTimeAttribute : CsvConverterBaseAttribute
+    public class CsvConverterDateTimeAttribute : CsvConverterAttribute
     {
         /// <summary>Constructor used when you want the default to use the default/built in converters</summary>
         public CsvConverterDateTimeAttribute() : base() { }

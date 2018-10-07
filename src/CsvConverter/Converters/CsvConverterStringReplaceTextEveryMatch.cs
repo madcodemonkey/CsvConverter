@@ -62,7 +62,7 @@ namespace CsvConverter
         }
 
         /// <summary>Initializes the converter with an attribute</summary>
-        public override void Initialize(CsvConverterBaseAttribute attribute,
+        public override void Initialize(CsvConverterAttribute attribute,
             IDefaultTypeConverterFactory defaultFactory)
         {
             base.Initialize(attribute, defaultFactory);

@@ -8,7 +8,7 @@ namespace CsvConverter.Core.Tests.Attributes
 {
     /// <summary>Notes:  There are no StringFormat tests here because StringFormat is only used when convert Class To CSV.</summary>
     [TestClass]
-    public class CsvConverterNumber_DoubleReadTests
+    public class Read_HeaderTests
     {
         [TestMethod]
         public void GetRecord_CanComputeDoublePlacesOnMultipleRows_ValuesComputed()

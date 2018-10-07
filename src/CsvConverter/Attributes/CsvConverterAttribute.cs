@@ -4,15 +4,15 @@ using System.Reflection;
 
 namespace CsvConverter
 {
-    public abstract class CsvConverterBaseAttribute : Attribute
+    public class CsvConverterAttribute : Attribute
     {
         /// <summary>Default constructor.  Do NOT use this unless you have overriden GetConverter!</summary>
-        public CsvConverterBaseAttribute() { }
+        public CsvConverterAttribute() { }
 
         /// <summary>Use this if you have not override GetCoverter and want the default code to run and create a 
         /// type converters.</summary>
         /// <param name="converterType"></param>
-        public CsvConverterBaseAttribute(Type converterType)
+        public CsvConverterAttribute(Type converterType)
         {
             ConverterType = converterType;
         }
@@ -64,25 +64,25 @@ namespace CsvConverter
             if (TargetPropertyType == null)
             {
                 throw new ArgumentException($"The {theClassType.Name} class specified an attribute that inherits from " +
-                       $" {nameof(CsvConverterBaseAttribute)}, but a {nameof(TargetPropertyType)} was NOT specified.");
+                       $" {nameof(CsvConverterAttribute)}, but a {nameof(TargetPropertyType)} was NOT specified.");
             }
 
             if (IsColumIndexSpecified())
             {
                 throw new CsvConverterAttributeException($"The {theClassType.Name} class has a class level attribute " +
-                    $"that inherits {nameof(CsvConverterBaseAttribute)} that is specifying a ColumIndex.  You can only " +
+                    $"that inherits {nameof(CsvConverterAttribute)} that is specifying a ColumIndex.  You can only " +
                     $"specify ColumnIndex if the attribute is on the property!");
             }
             if (AreAltColumnNamesSpecified())
             {
                 throw new CsvConverterAttributeException($"The {theClassType.Name} class has a class level attribute " +
-                    $"that inherits {nameof(CsvConverterBaseAttribute)} that is specifying a AltColumnNames.  You can only " +
+                    $"that inherits {nameof(CsvConverterAttribute)} that is specifying a AltColumnNames.  You can only " +
                     $"specify AltColumnNames if the attribute is on the property!");
             }
             if (IsColumnNameSpecified())
             {
                 throw new CsvConverterAttributeException($"The {theClassType.Name} class has a class level attribute " +
-                    $"that inherits {nameof(CsvConverterBaseAttribute)} that is specifying a AltColumnNames.  You can only " +
+                    $"that inherits {nameof(CsvConverterAttribute)} that is specifying a AltColumnNames.  You can only " +
                     $"specify AltColumnNames if the attribute is on the property!");
             }
 
@@ -149,21 +149,21 @@ namespace CsvConverter
         protected string GetErrorMessageForCreateConverterForProperty(Type theClassType, PropertyInfo propInfo)
         {
             return $"The '{propInfo.Name}' property on the {theClassType.Name} class specified an attribute that inherits from " +
-                $"{nameof(CsvConverterBaseAttribute)} attribute, but there is a problem!  We could NOT create the converter it is specifying.  " +
+                $"{nameof(CsvConverterAttribute)} attribute, but there is a problem!  We could NOT create the converter it is specifying.  " +
                 $"Please note, that all of converters should implement the {nameof(ICsvConverter)} intefaace so the {nameof(this.ConverterType)} " +
                 $"type can be found.  The coverter specified in the attribute that inherits from " +
-                $"{nameof(CsvConverterBaseAttribute)} is not a proper converter.";
+                $"{nameof(CsvConverterAttribute)} is not a proper converter.";
         }
 
         /// <summary>When using the CreateConverterForProperty method, this will generate the long detailed error message
         /// to inform the user of a failure.</summary>
         protected string GetErrorMessageForCreateConverterForClass(Type theClassType)
         {
-            return $"The {theClassType.Name} class is using an attribute that inherits from the {nameof(CsvConverterBaseAttribute)} " +
+            return $"The {theClassType.Name} class is using an attribute that inherits from the {nameof(CsvConverterAttribute)} " +
                 $"attribute, but there is a problem!  We could NOT create the converter it is specifying.  Please note," +
                 $"that all converters must implement the {nameof(ICsvConverter)} intefaace so the {nameof(this.ConverterType)} " +
                 $"type can be found.  The converter found in the attribute that inherits from " +
-                $"{nameof(CsvConverterBaseAttribute)} is not a proper converter.";
+                $"{nameof(CsvConverterAttribute)} is not a proper converter.";
         }
 
      

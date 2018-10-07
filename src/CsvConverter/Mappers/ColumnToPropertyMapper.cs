@@ -257,7 +257,7 @@ namespace CsvConverter.Mapper
         /// <param name="columnIndexDefaultValue">The default column index value (csv to class and class to csv use different values)</param>
         private void CreateAllUserSpecifiedConvertersForOneProperty(ColumnToPropertyMap oneMap)
         {
-            List<CsvConverterBaseAttribute> attributeList = oneMap.PropInformation.HelpFindAllAttributes<CsvConverterBaseAttribute>();
+            List<CsvConverterAttribute> attributeList = oneMap.PropInformation.HelpFindAllAttributes<CsvConverterAttribute>();
             foreach (var oneAttribute in attributeList)
             {
                 ICsvConverter converter = oneAttribute.CreateConverterForProperty(_theClassType, oneMap.PropInformation, _defaultFactory);
@@ -274,7 +274,7 @@ namespace CsvConverter.Mapper
         }
 
         private bool CreateOneUserSpecifiedConverterForOneProperty(ColumnToPropertyMap oneMap, ICsvConverter converter, 
-            CsvConverterBaseAttribute oneAttribute, bool throwExceptionIfConverterHasAlreadyBeenSpecified)
+            CsvConverterAttribute oneAttribute, bool throwExceptionIfConverterHasAlreadyBeenSpecified)
         {           
             // Possible pre or post converter.
             if (oneAttribute is CsvConverterStringAttribute stringConverter &&
@@ -322,7 +322,7 @@ namespace CsvConverter.Mapper
             }
         }
 
-        private void UpdateColumnInformation(ColumnToPropertyMap newMap, CsvConverterBaseAttribute oneAttribute)
+        private void UpdateColumnInformation(ColumnToPropertyMap newMap, CsvConverterAttribute oneAttribute)
         {
             // Did the attribute specify a ColumnName?
             if (oneAttribute.IsColumnNameSpecified())
@@ -433,7 +433,7 @@ namespace CsvConverter.Mapper
         private void CreateAllUserSpecifiedConvertersOnTheClass(List<ColumnToPropertyMap> mapList)
         {
             // Find attributes on the class
-            List<CsvConverterBaseAttribute> attributeList = _theClassType.HelpFindAllClassAttributes<CsvConverterBaseAttribute>();
+            List<CsvConverterAttribute> attributeList = _theClassType.HelpFindAllClassAttributes<CsvConverterAttribute>();
 
             foreach (var oneAttribute in attributeList)
             {

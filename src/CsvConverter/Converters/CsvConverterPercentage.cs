@@ -60,7 +60,7 @@ namespace CsvConverter
             return _decimalConverter.GetWriteData(inputType, value, columnName, columnIndex, rowNumber);
         }
 
-        public override void Initialize(CsvConverterBaseAttribute attribute,
+        public override void Initialize(CsvConverterAttribute attribute,
             IDefaultTypeConverterFactory defaultFactory)
         {
             base.Initialize(attribute, defaultFactory);
