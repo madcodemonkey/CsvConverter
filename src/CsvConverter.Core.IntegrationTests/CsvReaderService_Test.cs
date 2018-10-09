@@ -6,7 +6,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CsvConverter.Core.IntegrationTests
 {
-    // TODO: Need a mismatched reader test where there are 3 columns and a few rows only have 2 columns. Currently this would throw an exception if ThrowExceptionIfColumnCountChanges in configuration was false
     [TestClass]
     public class CsvReaderService_Test
     {

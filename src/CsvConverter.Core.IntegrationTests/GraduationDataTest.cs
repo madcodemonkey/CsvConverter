@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CsvConverter.Core.IntegrationTests
 {
     [TestClass]
-    public class GraducationDataTest
+    public class GraduationDataTest
     {
         [TestMethod]
         public void CanReadAndWriteData()
