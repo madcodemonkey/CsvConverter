@@ -15,12 +15,12 @@ namespace SimpleCoreExample1
 
             string catFileName =  Path.Combine(storageDirectory, "Cats.csv");
 
-            List<Cat> originalCatList = CreateCats(1);
+            List<Cat> originalCatList = CreateCats(15);
+
             ShowCats("Generated file", originalCatList);
-
             WriteCats(originalCatList, catFileName);
-            List<Cat> readCatList = ReadCats(catFileName);
 
+            List<Cat> readCatList = ReadCats(catFileName);
             ShowCats("From file", readCatList);
 
             Console.WriteLine("Hit enter to exit");
@@ -70,14 +70,13 @@ namespace SimpleCoreExample1
                     writer.WriterRecord(cat);
                 }
             }
-
         }
 
         private static List<Cat> CreateCats(int numberOfCatsToCreate)
         {
             Random rand = new Random(DateTime.Now.Second);
             var result = new List<Cat>();
-            for(int i =0; i < numberOfCatsToCreate; i++)
+            for(int i = 1; i <= numberOfCatsToCreate; i++)
             {
                 var oneCat = new Cat()
                 {
