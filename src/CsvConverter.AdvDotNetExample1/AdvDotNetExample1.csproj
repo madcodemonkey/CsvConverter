@@ -70,15 +70,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ClassToCsv\MoneyFormatterClassToCsvTypeConverter.cs" />
-    <Compile Include="Attributes\TextLengthEnforcerConverterAttribute.cs" />
-    <Compile Include="Attributes\MoneyFormatterConverterAttribute.cs" />
-    <Compile Include="CsvToClass\TextLengthEnforcerCsvToClassPreConverter.cs" />
-    <Compile Include="CsvToClass\MoneyTypeConverter.cs" />
-    <Compile Include="Data\Car.cs" />
-    <Compile Include="Data\Person.cs" />
-    <Compile Include="CsvToClass\NumericRangeTypeConverter.cs" />
-    <Compile Include="Attributes\NumericRangeTypeConverterAttribute.cs" />
+    <Compile Include="Attributes\CsvConverterTextLengthEnforcerAttribute.cs" />
+    <Compile Include="Converters\CsvConverterStringTextLengthEnforcer.cs" />
+    <Compile Include="Converters\CsvConverterMoney.cs" />
+    <Compile Include="Model\Car.cs" />
+    <Compile Include="Model\Person.cs" />
+    <Compile Include="Converters\CsvConverterNumericRange.cs" />
+    <Compile Include="Attributes\CsvConverterNumericRangeAttribute.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -95,11 +93,13 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CsvConverter\CsvConverter.csproj">
-      <Project>{1b2033f3-0902-4f46-857a-f648a3bab24f}</Project>
+      <Project>{fb7f636b-dc53-45bc-a528-8c86c952be1b}</Project>
       <Name>CsvConverter</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="ReadMe.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -4,20 +4,20 @@ namespace AdvExample1
 {
     public class Car
     {
-        [TextLengthEnforcerConverter(MaximumLength = 8, MinimumLength = 5, CharacterToAddToShortStrings = '*')]
+        [CsvConverterTextLengthEnforcer(MaximumLength = 8, MinimumLength = 5, 
+            CharacterToAddToShortStrings = '*', IsPreConverter = true)]
         public string Model { get; set; }
 
-        [TextLengthEnforcerConverter(MaximumLength = 6, MinimumLength = 4, CharacterToAddToShortStrings = '~')]
+        [CsvConverterTextLengthEnforcer(MaximumLength = 6, MinimumLength = 4, 
+            CharacterToAddToShortStrings = '~', IsPreConverter = true)]
         public string Make { get; set; }
 
         public int Year { get; set; }
 
-        [MoneyFormatterConverter(typeof(MoneyFormatterClassToCsvTypeConverter), Format = "C2")]
-        [CsvConverterCustom(typeof(MoneyTypeConverter))]
+        [CsvConverterNumber(ConverterType = typeof(CsvConverterMoney), StringFormat = "C2")]
         public decimal PurchasePrice { get; set; }
         
-        [MoneyFormatterConverter(typeof(MoneyFormatterClassToCsvTypeConverter), Format ="C2")]
-        [CsvConverterCustom(typeof(MoneyTypeConverter))]
+        [CsvConverterNumber(ConverterType = typeof(CsvConverterMoney), StringFormat ="C2")]
         public double CurrentValue { get; set; }
 
         public override string ToString()

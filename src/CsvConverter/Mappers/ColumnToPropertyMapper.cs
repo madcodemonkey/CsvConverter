@@ -260,6 +260,10 @@ namespace CsvConverter.Mapper
             List<CsvConverterAttribute> attributeList = oneMap.PropInformation.HelpFindAllAttributes<CsvConverterAttribute>();
             foreach (var oneAttribute in attributeList)
             {
+                // In the case where the user wants to be explicit about ignoring a property, let them.
+                if (oneAttribute.IgnoreWhenReading && oneAttribute.IgnoreWhenWriting)
+                   continue;
+
                 ICsvConverter converter = oneAttribute.CreateConverterForProperty(_theClassType, oneMap.PropInformation, _defaultFactory);
 
                 bool isTypeConverter = CreateOneUserSpecifiedConverterForOneProperty(oneMap, converter, oneAttribute, true);

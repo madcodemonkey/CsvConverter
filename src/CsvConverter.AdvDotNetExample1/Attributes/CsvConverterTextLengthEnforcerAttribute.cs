@@ -2,9 +2,9 @@
 
 namespace AdvExample1
 {
-    public class TextLengthEnforcerConverterAttribute : CsvConverterCustomAttribute
+    public class CsvConverterTextLengthEnforcerAttribute : CsvConverterStringAttribute
     {
-        public TextLengthEnforcerConverterAttribute() : base(typeof(TextLengthEnforcerCsvToClassPreConverter)) { }
+        public CsvConverterTextLengthEnforcerAttribute() : base(typeof(CsvConverterStringTextLengthEnforcer)) { }
 
         public char CharacterToAddToShortStrings { get; set; } = '~';
         public int MaximumLength { get; set; } = int.MaxValue;

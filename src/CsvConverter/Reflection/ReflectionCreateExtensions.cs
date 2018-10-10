@@ -9,7 +9,7 @@ namespace CsvConverter.Reflection
         public static TInterface HelpCreateAndCastToInterface<TInterface>(this Type someType, string optionalMessage = "")
         {
             if (someType == null)
-                throw new ArgumentNullException("Please specify a type!  {optionalMessage}");
+                throw new ArgumentNullException($"Please specify a type!  {optionalMessage}");
             if (someType.IsClass == false)
                 throw new ArgumentException($"The {someType.Name} type is not a class!  {optionalMessage}");
             if (typeof(TInterface).IsAssignableFrom(someType) == false)

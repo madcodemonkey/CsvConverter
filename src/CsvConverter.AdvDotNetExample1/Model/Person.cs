@@ -7,13 +7,14 @@ namespace AdvExample1
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        [NumericRangeTypeConverter(typeof(NumericRangeTypeConverter), Minimum = 1, Maximum = 50)]
+        [CsvConverterNumericRange(typeof(CsvConverterNumericRange), Minimum = 1, Maximum = 50)]
         public int Age { get; set; }
 
         public decimal PercentageBodyFat { get; set; }
         public double AvgHeartRate { get; set; }
 
-        [CsvConverter(IgnoreWhenReading = true, IgnoreWhenWriting = true)]
+        // This is not necessary (objects are ignored unless the are decorated with a converter
+        // [CsvConverter(IgnoreWhenReading = true, IgnoreWhenWriting = true)]
         public Person Parent { get; set; }
 
         public override string ToString()
