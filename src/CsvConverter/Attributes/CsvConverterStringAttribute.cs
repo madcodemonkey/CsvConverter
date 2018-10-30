@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace CsvConverter
 {
@@ -22,5 +23,35 @@ namespace CsvConverter
 
         /// <summary>An optional, order for pre and post converters in case there are more than one decorating a property or class.</summary>
         public int Order { get; set; } = 999;
+
+        public override ICsvConverter CreateConverterForProperty(Type theClassType, PropertyInfo propInfo, 
+            IDefaultTypeConverterFactory defaultFactory)
+        {
+            bool isPreOrPostConverter = IsPreConverter || IsPostConverter;
+            if (isPreOrPostConverter && IsColumIndexSpecified())
+            {
+                ThrowDoNotUseAttributePropertyException(theClassType, propInfo, "ColumnIndex");
+            }
+
+            if (isPreOrPostConverter && AreAltColumnNamesSpecified())
+            {
+                ThrowDoNotUseAttributePropertyException(theClassType, propInfo, "AltColumnNames");
+            }
+
+            if (isPreOrPostConverter && IsColumnNameSpecified())
+            {
+                ThrowDoNotUseAttributePropertyException(theClassType, propInfo, "ColumnName");
+            }
+
+            return base.CreateConverterForProperty(theClassType, propInfo, defaultFactory);
+        }
+
+        private void ThrowDoNotUseAttributePropertyException(Type theClassType, PropertyInfo propInfo, string nameOfAttributeProperty)
+        {
+            string typeOfConverter = IsPreConverter ? "PRE" : "POST";
+            throw new CsvConverterAttributeException($"The '{propInfo.Name}' property on the {theClassType.Name} class " +
+                $"specified a {nameOfAttributeProperty} in a {typeOfConverter} converter.  You should not use a {typeOfConverter} " +
+                $"converter to specify {nameOfAttributeProperty} because it will NOT be used!");
+        }
     }
 }

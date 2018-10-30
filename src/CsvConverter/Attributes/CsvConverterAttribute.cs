@@ -4,6 +4,7 @@ using System.Reflection;
 
 namespace CsvConverter
 {
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = true)]
     public class CsvConverterAttribute : Attribute
     {
         /// <summary>Default constructor.  Do NOT use this unless you have overriden GetConverter!</summary>
@@ -73,17 +74,19 @@ namespace CsvConverter
                     $"that inherits {nameof(CsvConverterAttribute)} that is specifying a ColumIndex.  You can only " +
                     $"specify ColumnIndex if the attribute is on the property!");
             }
+
             if (AreAltColumnNamesSpecified())
             {
                 throw new CsvConverterAttributeException($"The {theClassType.Name} class has a class level attribute " +
                     $"that inherits {nameof(CsvConverterAttribute)} that is specifying a AltColumnNames.  You can only " +
                     $"specify AltColumnNames if the attribute is on the property!");
             }
+
             if (IsColumnNameSpecified())
             {
                 throw new CsvConverterAttributeException($"The {theClassType.Name} class has a class level attribute " +
-                    $"that inherits {nameof(CsvConverterAttribute)} that is specifying a AltColumnNames.  You can only " +
-                    $"specify AltColumnNames if the attribute is on the property!");
+                    $"that inherits {nameof(CsvConverterAttribute)} that is specifying a ColumnName.  You can only " +
+                    $"specify ColumnName if the attribute is on the property!");
             }
 
 
@@ -119,7 +122,7 @@ namespace CsvConverter
             string errorMessage = GetErrorMessageForCreateConverterForProperty(theClassType, propInfo);
 
             var oneTypeConverter = ConverterType.HelpCreateAndCastToInterface<ICsvConverter>(errorMessage);
-
+                                                  
             oneTypeConverter.Initialize(this, defaultFactory);
 
             return oneTypeConverter;

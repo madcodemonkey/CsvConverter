@@ -4,11 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-
-// TODO: New test - User doesn't specify a converter one is NOT create so that the default converter on the service is used.
-// TODO: New Test - user can have two attributes.  One with just ignore specified and the other with a converter.  It's a waste but it is legal.
-// TODO: New Test - if column name, column index or altcolumnnames are specified at the class level, you get a CsvConverterAttributeException
-// TODO: New Test - user specifies column name on more than one attribute and gets a CsvConverterAttributeException exception
 namespace CsvConverter.Mapper
 {
     /// <summary>Base object for mapping  CSV columns to class properties</summary>
@@ -193,32 +188,7 @@ namespace CsvConverter.Mapper
                 column.ColumnIndex = _columnIndexDefaultValue; // Reset
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                    
         private void CreateDefaultConverterOnAnyPropertyThatDoesNotHaveAConverter(List<ColumnToPropertyMap> mapList)
         {
             foreach (ColumnToPropertyMap oneMap in mapList)
