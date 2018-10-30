@@ -1,5 +1,7 @@
 ﻿using CsvConverter;
+using CsvConverter.RowTools;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -16,65 +18,27 @@ namespace AdvExample3
             InitializeComponent();
         }
 
-        #region Custom Type Converter
-        private void CustomConverterCreateCsvButton_Click(object sender, RoutedEventArgs e)
+        private void RowReaderButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var dialog = SaveFile(CustomConverterCSVFile.Text);
-                if (dialog.ShowDialog() != true)
-                    return;
-
-                Random rand = new Random(DateTime.Now.Second);
-                int numberToCreate = rand.Next(10, 100);
-
-                using (var fs = File.Create(dialog.FileName))
-                using (var sw = new StreamWriter(fs, Encoding.Default))
+                // The RowReader class can parse strings for you directly and handle
+                // quotes and other things you will encounter in a CSV file
+                using (MemoryStream ms = new MemoryStream())
+                using (StreamWriter sw = new StreamWriter(ms))
                 {
-                    var service = new CsvWriterService<Person>(sw);
-                    for (int i = 0; i < numberToCreate; i++)
+                    sw.WriteLine("This,is,\"a row with, commas\",in,     it");
+                    sw.Flush();
+                    ms.Seek(0, SeekOrigin.Begin);
+
+                    using (StreamReader sr = new StreamReader(ms))
                     {
-                        var newPerson = new Person()
+                        var reader = new RowReader(sr);
+                        while (reader.CanRead())
                         {
-                            FirstName = $"First{rand.Next(1, 5000)}",
-                            LastName = $"Last{rand.Next(1, 5000)}",
-                            Age = rand.Next(5, 80),
-                            PercentageBodyFat = rand.Next(1, 20) / 1.2m,
-                            AvgHeartRate = rand.Next(60, 80) / 1.1
-                        };
-
-                        service.WriterRecord(newPerson);
-                    }
-                }
-
-                LogMessage($"Created {numberToCreate} people in {dialog.FileName}.");
-            }
-            catch (Exception ex)
-            {
-                LogError(ex);
-            }
-        }
-
-        private void CustomConverterLoadCsvButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var dialog = LoadFile(CustomConverterCSVFile.Text);
-                if (dialog.ShowDialog() != true)
-                    return;
-
-                using (var fs = File.OpenRead(dialog.FileName))
-                using (var sr = new StreamReader(fs, Encoding.Default))
-                {                    
-                    var csv = new CsvReaderService<Person>(sr);
-                    csv.Configuration.BlankRowsAreReturnedAsNull = true;
-
-                    while (csv.CanRead())
-                    {
-                        Person record = csv.GetRecord();
-                        if (record != null)
-                           LogMessage(record.ToString());
-                    }
+                            PrintColumnList(reader.ReadRow());
+                        }
+                    }                     
                 }
             }
             catch (Exception ex)
@@ -83,50 +47,35 @@ namespace AdvExample3
             }
         }
 
-        private void CustomConverterFindCsvFile_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new Microsoft.Win32.OpenFileDialog();
-            if (dialog.ShowDialog() != true)
-                return;
-
-            CustomConverterCSVFile.Text = dialog.FileName;
-        }
-        #endregion
-
-
-        #region Custom Pre-Converter
-        private void CustomPreConverterCreateCsvButton_Click(object sender, RoutedEventArgs e)
+        private void RowWriterButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var dialog = SaveFile(CustomPreConverterCSVFile.Text);
-                if (dialog.ShowDialog() != true)
-                    return;
+                List<string> stringList = new List<string>();
+                stringList.Add("This");
+                stringList.Add("is");
+                stringList.Add("a");
+                stringList.Add("quote, comma");
+                stringList.Add("test");
 
-                Random rand = new Random(DateTime.Now.Second);
-                int numberToCreate = rand.Next(10, 100);
-
-                using (var fs = File.Create(dialog.FileName))
-                using (var sw = new StreamWriter(fs, Encoding.Default))
+                using (MemoryStream ms = new MemoryStream())
+                using (StreamWriter sw = new StreamWriter(ms))
                 {
-                    var service = new CsvWriterService<Car>(sw);
-                    for (int i = 0; i < numberToCreate; i++)
+                    var writer = new RowWriter(sw);
+                    writer.Write(stringList);
+                    sw.Flush();
+
+                    ms.Seek(0, SeekOrigin.Begin);
+                    using(StreamReader sr = new StreamReader(ms))
                     {
-                        double currentValue = rand.Next(2000, 60000) / 1.1;
-                        var newCar = new Car()
+                        while(sr.EndOfStream == false)
                         {
-                            Make = rand.Next(1, 100) > 50 ? $"M{rand.Next(1, 5000000)}" : "M",
-                            Model = rand.Next(1, 100) > 50 ? $"M{rand.Next(1, 5000000)}" : "M",
-                            Year = rand.Next(1995, 2018),
-                            PurchasePrice = (decimal) currentValue * 1.2m,
-                            CurrentValue = currentValue
-                        };
-
-                        service.WriterRecord(newCar);
+                            LogMessage(sr.ReadLine());
+                        }
                     }
-                }
 
-                LogMessage($"Created {numberToCreate} cars in {dialog.FileName}.");
+                }
+                    
             }
             catch (Exception ex)
             {
@@ -134,25 +83,36 @@ namespace AdvExample3
             }
         }
 
-        private void CustomPreConverterLoadCsvButton_Click(object sender, RoutedEventArgs e)
+
+        private void BothButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var dialog = LoadFile(CustomPreConverterCSVFile.Text);
-                if (dialog.ShowDialog() != true)
-                    return;
+                var columnList = new List<string>();
 
-                using (var fs = File.OpenRead(dialog.FileName))
-                using (var sr = new StreamReader(fs, Encoding.Default))
+                List<string> stringList = new List<string>();
+                stringList.Add("jack, says");
+                stringList.Add("he ");
+                stringList.Add("ran");
+                stringList.Add("over");
+                stringList.Add("John's");
+                stringList.Add("foot");
+
+                using (MemoryStream ms = new MemoryStream())
+                using (StreamWriter sw = new StreamWriter(ms))
                 {
-                    var csv = new CsvReaderService<Car>(sr);
-                    csv.Configuration.BlankRowsAreReturnedAsNull = true;
+                    var writer = new RowWriter(sw);
+                    writer.Write(stringList);
+                    sw.Flush();
 
-                    while (csv.CanRead())
+                    ms.Seek(0, SeekOrigin.Begin);
+                    using (StreamReader sr = new StreamReader(ms))
                     {
-                        Car record = csv.GetRecord();
-                        if (record != null)
-                           LogMessage(record.ToString());
+                        var reader = new RowReader(sr);
+                        while (reader.CanRead())
+                        {
+                            PrintColumnList(reader.ReadRow());
+                        }
                     }
                 }
             }
@@ -162,17 +122,13 @@ namespace AdvExample3
             }
         }
 
-        private void CustomPreConverterFindCsvFile_Click(object sender, RoutedEventArgs e)
+        private void PrintColumnList(List<string> columnList)
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog();
-            if (dialog.ShowDialog() != true)
-                return;
-
-            CustomPreConverterCSVFile.Text = dialog.FileName;
+            foreach (string column in columnList)
+            {
+                LogMessage($"Column data --->{column}<---");
+            }
         }
-        #endregion
-
-
 
         private Microsoft.Win32.OpenFileDialog LoadFile(string fileName)
         {
@@ -254,8 +210,10 @@ namespace AdvExample3
             }
         }
 
+
+
         #endregion
 
-
+    
     }
 }
