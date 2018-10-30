@@ -28,7 +28,8 @@ namespace CsvConverter.Core.IntegrationTests
         // You could deleete NumberOfDecimalPlaces and specify AllowRounding = false and StringFormat = "P2" here as well and the output would be the same.
         [CsvConverterNumber(ColumnName = "High School Graduation Percentile", ConverterType = typeof(CsvConverterPercentage), ColumnIndex = 6, NumberOfDecimalPlaces = 4)]
         [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch), OldValue = "N/A", NewValue = "", IsPreConverter = true)]
-        [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch), OldValue = null, NewValue = "N/A", IsPostConverter = true)]
+        [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch), OldValue = null, NewValue = "N/A", IsPostConverter = true, Order = 1)]
+        [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextEveryMatch), OldValue = " ", NewValue = "", IsPostConverter = true, Order = 2)]
         public decimal? HighSchoolGraduationPercentile { get; set; }
 
         [CsvConverterNumber(ColumnName = "High School GPA", ColumnIndex = 7, NumberOfDecimalPlaces = 2)]
