@@ -49,7 +49,7 @@ namespace CsvConverter.Mapper
                 .ToList();
         }
 
-        public Dictionary<int, ColumnToPropertyMap> CreateReadMap(List<string> headerColumns)
+        public List<ColumnToPropertyMap> CreateReadMap(List<string> headerColumns)
         {
             List<ColumnToPropertyMap> columnList = CreateWriteMap();
 
@@ -64,18 +64,12 @@ namespace CsvConverter.Mapper
                 ValidateThatIndexesHaveBeenSpecifiedForEveryClassProperty(columnList);
             }
 
-            // Map all the columns into a dictionary
+            // Sort the columns the way the user wants them sorted or by column name
             // This will also discard any unmapped properties (column index still equal to ColumnIndexDefaultValue)
-            var result = new Dictionary<int, ColumnToPropertyMap>();
-
-            foreach (ColumnToPropertyMap map in columnList)
-            {
-                if (map.ColumnIndex > 0)
-                    result.Add(map.ColumnIndex, map);
-
-            }
-
-            return result;
+            return columnList.Where(map => map.ColumnIndex > 0)
+                .OrderBy(o => o.ColumnIndex)
+                .ThenBy(o => o.ColumnName)
+                .ToList();
         }
 
 

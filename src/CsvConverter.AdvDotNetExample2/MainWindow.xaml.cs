@@ -1,6 +1,9 @@
 ﻿using CsvConverter;
+using CsvConverter.Mapper;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Documents;
@@ -16,38 +19,23 @@ namespace AdvExample2
             InitializeComponent();
         }
 
-        #region Custom Type Converter
-        private void CustomConverterCreateCsvButton_Click(object sender, RoutedEventArgs e)
+        private void CreateFileButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var dialog = SaveFile(CustomConverterCSVFile.Text);
+                var dialog = SaveFile("c:\\temp\\Person.csv");
                 if (dialog.ShowDialog() != true)
                     return;
-
-                Random rand = new Random(DateTime.Now.Second);
-                int numberToCreate = rand.Next(10, 100);
 
                 using (var fs = File.Create(dialog.FileName))
-                using (var sw = new StreamWriter(fs, Encoding.Default))
+                using (var sw = new StreamWriter(fs))
                 {
-                    var service = new CsvWriterService<Person>(sw);
-                    for (int i = 0; i < numberToCreate; i++)
-                    {
-                        var newPerson = new Person()
-                        {
-                            FirstName = $"First{rand.Next(1, 5000)}",
-                            LastName = $"Last{rand.Next(1, 5000)}",
-                            Age = rand.Next(5, 80),
-                            PercentageBodyFat = rand.Next(1, 20) / 1.2m,
-                            AvgHeartRate = rand.Next(60, 80) / 1.1
-                        };
-
-                        service.WriterRecord(newPerson);
-                    }
+                    var writer = new CsvWriterService<Person>(sw);
+                    writer.WriterRecord(new Person() { FirstName = "Tom", LastName = "Yo", Age = 90 });
+                    writer.WriterRecord(new Person() { FirstName = "Jame", LastName = "Adam", Age = 34 });
+                    writer.WriterRecord(new Person() { FirstName = "Killroy", LastName = "Back", Age = 12 });
+                    writer.WriterRecord(new Person() { FirstName = "James", LastName = "Madison", Age = 23 });
                 }
-
-                LogMessage($"Created {numberToCreate} people in {dialog.FileName}.");
             }
             catch (Exception ex)
             {
@@ -55,104 +43,65 @@ namespace AdvExample2
             }
         }
 
-        private void CustomConverterLoadCsvButton_Click(object sender, RoutedEventArgs e)
+        private void LoadFileButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var dialog = LoadFile(CustomConverterCSVFile.Text);
+                var dialog = LoadFile("c:\\temp\\Person.csv");
                 if (dialog.ShowDialog() != true)
                     return;
 
+                LogMessage("Before overriding");
                 using (var fs = File.OpenRead(dialog.FileName))
-                using (var sr = new StreamReader(fs, Encoding.Default))
-                {                    
-                    var csv = new CsvReaderService<Person>(sr);
-                    csv.Configuration.BlankRowsAreReturnedAsNull = true;
-
-                    while (csv.CanRead())
-                    {
-                        Person record = csv.GetRecord();
-                        if (record != null)
-                           LogMessage(record.ToString());
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogError(ex);
-            }
-        }
-
-        private void CustomConverterFindCsvFile_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new Microsoft.Win32.OpenFileDialog();
-            if (dialog.ShowDialog() != true)
-                return;
-
-            CustomConverterCSVFile.Text = dialog.FileName;
-        }
-        #endregion
-
-
-        #region Custom Pre-Converter
-        private void CustomPreConverterCreateCsvButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var dialog = SaveFile(CustomPreConverterCSVFile.Text);
-                if (dialog.ShowDialog() != true)
-                    return;
-
-                Random rand = new Random(DateTime.Now.Second);
-                int numberToCreate = rand.Next(10, 100);
-
-                using (var fs = File.Create(dialog.FileName))
-                using (var sw = new StreamWriter(fs, Encoding.Default))
+                using (var sr = new StreamReader(fs))
                 {
-                    var service = new CsvWriterService<Car>(sw);
-                    for (int i = 0; i < numberToCreate; i++)
-                    {
-                        double currentValue = rand.Next(2000, 60000) / 1.1;
-                        var newCar = new Car()
-                        {
-                            Make = rand.Next(1, 100) > 50 ? $"M{rand.Next(1, 5000000)}" : "M",
-                            Model = rand.Next(1, 100) > 50 ? $"M{rand.Next(1, 5000000)}" : "M",
-                            Year = rand.Next(1995, 2018),
-                            PurchasePrice = (decimal) currentValue * 1.2m,
-                            CurrentValue = currentValue
-                        };
+                    var reader = new CsvReaderService<Person>(sr);
 
-                        service.WriterRecord(newCar);
+                    while (reader.CanRead())
+                    {
+                        var person = reader.GetRecord();
+                        LogMessage(person.ToString());
                     }
                 }
 
-                LogMessage($"Created {numberToCreate} cars in {dialog.FileName}.");
-            }
-            catch (Exception ex)
-            {
-                LogError(ex);
-            }
-        }
-
-        private void CustomPreConverterLoadCsvButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var dialog = LoadFile(CustomPreConverterCSVFile.Text);
-                if (dialog.ShowDialog() != true)
-                    return;
-
+                LogMessage("After overriding");
                 using (var fs = File.OpenRead(dialog.FileName))
-                using (var sr = new StreamReader(fs, Encoding.Default))
+                using (var sr = new StreamReader(fs))
                 {
-                    var csv = new CsvReaderService<Car>(sr);
-                    csv.Configuration.BlankRowsAreReturnedAsNull = true;
+                    // Keep in mind that your replacement converter must be standalone.
+                    // You cannot rely in any default converters.
+                    var reader = new CsvReaderService<Person>(sr);
+                    reader.DefaultConverterFactory.ReplaceConverter(typeof(string), typeof(CsvConverterStringTextLengthEnforcer));
 
-                    while (csv.CanRead())
+                    // Create all the converters.
+                    reader.Init();
+
+                    // Also, you will have to find the converter after initialize to tweak converter settings since
+                    // settings are normally passed in with attributes and default converters don't use attributes.
+                    //List<ColumnToPropertyMap> columnList = reader.ColumnMapList
+                    //    .Where(w => w.PropInformation.PropertyType == typeof(string))                        
+                    //    .ToList();
+                    // OR
+                    List<ColumnToPropertyMap> columnList = reader.ColumnMapList
+                       .Where(w => w.ReadConverter.GetType() == typeof(CsvConverterStringTextLengthEnforcer))
+                       .ToList();
+
+                    foreach (var item in columnList)
                     {
-                        Car record = csv.GetRecord();
-                        if (record != null)
-                           LogMessage(record.ToString());
+                        var converter = item.ReadConverter as CsvConverterStringTextLengthEnforcer;
+                        if (converter != null)
+                        {
+                            converter.MinimumLength = 5;
+                            converter.MaximumLength = 6;
+                            converter.CharacterToAddToShortStrings = '-';
+                        }
+                    }
+
+
+                    while (reader.CanRead())
+                    {
+                        var person = reader.GetRecord();
+                        LogMessage(person.ToString());
                     }
                 }
             }
@@ -161,16 +110,6 @@ namespace AdvExample2
                 LogError(ex);
             }
         }
-
-        private void CustomPreConverterFindCsvFile_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new Microsoft.Win32.OpenFileDialog();
-            if (dialog.ShowDialog() != true)
-                return;
-
-            CustomPreConverterCSVFile.Text = dialog.FileName;
-        }
-        #endregion
 
 
 
@@ -254,8 +193,9 @@ namespace AdvExample2
             }
         }
 
+
         #endregion
 
-
+   
     }
 }

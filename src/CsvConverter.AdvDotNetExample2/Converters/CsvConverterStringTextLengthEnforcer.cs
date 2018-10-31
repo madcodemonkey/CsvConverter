@@ -5,9 +5,9 @@ namespace AdvExample2
 {
     public class CsvConverterStringTextLengthEnforcer : CsvConverterStringBase, ICsvConverterString
     {
-        private char _characterToAddToShortStrings;
-        private int _maximumLength;
-        private int _minimumLength;
+        public char CharacterToAddToShortStrings { get; set; } = '*';
+        public int MaximumLength { get; set; } = 10;
+        public int MinimumLength { get; set; } = 1;
 
         public bool CanRead(Type propertyType)
         {
@@ -36,30 +36,21 @@ namespace AdvExample2
         {
             if (value != null)
             {
-                if (value.Length < _minimumLength)
+                if (value.Length < MinimumLength)
                 {
-                    while (value.Length < _minimumLength)
-                        value += _characterToAddToShortStrings;
+                    while (value.Length < MinimumLength)
+                        value += CharacterToAddToShortStrings;
 
                 }
-                else if (value.Length > _maximumLength)
+                else if (value.Length > MaximumLength)
                 {
-                    value = value.Substring(0, _maximumLength);
+                    value = value.Substring(0, MaximumLength);
                 }
             }
 
             return value;
         }
-        public override void Initialize(CsvConverterAttribute attribute, IDefaultTypeConverterFactory defaultFactory)
-        {
-            var myAttribute = attribute as CsvConverterTextLengthEnforcerAttribute;
-            if (myAttribute == null)
-                throw new ArgumentException($"Please use the {nameof(CsvConverterTextLengthEnforcerAttribute)} attribute with this pre-converter!");
-
-            _maximumLength = myAttribute.MaximumLength;
-            _minimumLength = myAttribute.MinimumLength;
-            _characterToAddToShortStrings = myAttribute.CharacterToAddToShortStrings;
-        }
+       
 
     }
 }

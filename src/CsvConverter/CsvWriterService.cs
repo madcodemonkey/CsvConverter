@@ -8,13 +8,11 @@ namespace CsvConverter
 {
     /// <summary>Converts Class into a CSV row.  The class instances will of type T.</summary>
     /// <typeparam name="T">Class instance type</typeparam>
-    public class CsvWriterService<T> where T : class, new()
+    public class CsvWriterService<T> : CsvServiceBase where T : class, new()
     {
         private const int ColumnIndexDefaultValue = 9999;
         private IRowWriter _rowWriter;
-        private List<ColumnToPropertyMap> _columnMapList;
         private bool _headerWritten = false;
-        private bool _initialized = false;
        
         /// <summary>Constructor.  This is the standard constructor were you pass in a StreamWriter that is already connected to an open stream.</summary>
         public CsvWriterService(StreamWriter sw) : this(new RowWriter(sw)) { }
@@ -25,29 +23,10 @@ namespace CsvConverter
         {
             _rowWriter = rowWriter ?? throw new ArgumentNullException(
                 "Row writer cannot be null. Note that this constructor is mainly used for testing purposes.");
-
-            DefaultConverterFactory = new DefaultTypeConverterFactory();
         }
-
-        /// <summary>General Configuration settings</summary>
-        public CsvConverterConfiguration Configuration { get; private set; } = new CsvConverterConfiguration();
-
-        /// <summary>When generating property maps and a converter is not specified for a known type,
-        /// this factory is used to create a converter for the property.</summary>
-        public IDefaultTypeConverterFactory DefaultConverterFactory { get; set; }
-
+   
         /// <summary>Indicates the current row number.</summary>
         public int RowNumber { get { return _rowWriter != null ? _rowWriter.RowNumber : 0; } }
-
-        /// <summary>If called explicitly by the user, it will create the header mappings; otherwise, it will be called
-        /// the first time you call WriterRecord.</summary>
-        public void Init()
-        {
-            if (_columnMapList == null)
-                _columnMapList = CreateMappings();
-
-            _initialized = true;
-        }
      
         /// <summary>Writes a single row to the CSV file.</summary>
         /// <param name="record">What to write to the CSV file</param>
@@ -68,7 +47,7 @@ namespace CsvConverter
             int currentRowNumber = _rowWriter.RowNumber + 1;
 
             // Note: The mapper took out any columns that should NOT be written to the file.
-            foreach (var columnMap in _columnMapList)
+            foreach (var columnMap in ColumnMapList)
             {
                 // Ignored columns are NOT written
                  if (columnMap.IgnoreWhenWriting)
@@ -122,7 +101,7 @@ namespace CsvConverter
             {
                 List<string> row = new List<string>();
 
-                foreach (var map in _columnMapList)
+                foreach (var map in ColumnMapList)
                 {
                     if (map.IgnoreWhenWriting)
                         continue;
@@ -136,10 +115,11 @@ namespace CsvConverter
             _headerWritten = true;
         }
 
-        private List<ColumnToPropertyMap> CreateMappings()
+        protected override void CreateMappings()
         {
+            ColumnMapList.Clear();
             var mapper = new ColumnToPropertyMapper<T>(Configuration, DefaultConverterFactory, ColumnIndexDefaultValue);
-            return mapper.CreateWriteMap();
+            ColumnMapList.AddRange(mapper.CreateWriteMap());
         }
     }
 }

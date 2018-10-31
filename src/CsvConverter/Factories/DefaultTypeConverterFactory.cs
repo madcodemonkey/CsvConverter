@@ -52,6 +52,16 @@ namespace CsvConverter
             return _converters[theType];
         }
 
+        /// <summary>Replace an existing converter if it exists or adds it if it does not exist.</summary>
+        public void ReplaceConverter(Type theType, Type converterType)
+        {
+            if (ConverterExists(theType))
+                RemoveConverter(theType);
+
+            AddConverter(theType, converterType);
+        }
+
+
         /// <summary>Removes a type converter from the factory.</summary>
         public void RemoveConverter(Type theType)
         {

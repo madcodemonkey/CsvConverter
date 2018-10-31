@@ -70,13 +70,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\CsvConverterTextLengthEnforcerAttribute.cs" />
     <Compile Include="Converters\CsvConverterStringTextLengthEnforcer.cs" />
-    <Compile Include="Converters\CsvConverterMoney.cs" />
-    <Compile Include="Model\Car.cs" />
     <Compile Include="Model\Person.cs" />
-    <Compile Include="Converters\CsvConverterNumericRange.cs" />
-    <Compile Include="Attributes\CsvConverterNumericRangeAttribute.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

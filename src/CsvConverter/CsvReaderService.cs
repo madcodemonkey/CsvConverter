@@ -9,14 +9,12 @@ namespace CsvConverter
 
     /// <summary>Converts CSV rows into class instances.  The class instances will of type T.</summary>
     /// <typeparam name="T">Class instance type</typeparam>
-    public class CsvReaderService<T> where T : class, new()
+    public class CsvReaderService<T> : CsvServiceBase where T : class, new()
     {
         private IRowReader _rowReader;
-        private Dictionary<int, ColumnToPropertyMap> _columnMapList;
         private int? _columnCount = null;
-        private bool _initialized = false;
-        private IDefaultTypeConverterFactory _defaultConverterFactory;
-
+        private Dictionary<int, ColumnToPropertyMap> _columnDictionary = new Dictionary<int, ColumnToPropertyMap>();
+        
         /// <summary>Constructor.  This is the standard constructor were you pass in a StreamReader that is already connected to an
         /// open stream.</summary>
         /// <param name="sr">An instance of StreamReader that is already attached to an open file stream.</param>
@@ -29,36 +27,8 @@ namespace CsvConverter
         {
             _rowReader = rowReader ?? throw new ArgumentNullException(
                 "Row reader cannot be null. Note that this constructor is mainly used for testing purposes.");
-
-            DefaultConverterFactory = new DefaultTypeConverterFactory();
         }
-
-        /// <summary>General Configuration settings</summary>
-        public CsvConverterConfiguration Configuration { get; private set; } = new CsvConverterConfiguration();
-
-        /// <summary>When generating property maps and a converter is not specified for a known type,
-        /// this factory is used to create a converter for the property.</summary>
-        public IDefaultTypeConverterFactory DefaultConverterFactory
-        {
-            get { return _defaultConverterFactory;  }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("You cannot set the DefaultConverterFactory to null!");
-                _defaultConverterFactory = value;
-            }
-        }
-
-        /// <summary>If called explicitly by the user, it will read the header row and create mappings; otherwise, it will be called
-        /// the first time you call GetRecord.</summary>
-        public void Init()
-        {
-            if (_columnMapList == null)
-                _columnMapList = CreateMappings();
-
-            _initialized = true;
-        }
-
+   
         /// <summary>Indicates if there is more to read from the file.</summary>
         /// <returns></returns>
         public bool CanRead()
@@ -97,7 +67,7 @@ namespace CsvConverter
                 int zeroBasedIndex = columnIndex - 1;
                 string fieldValue = oneRow[zeroBasedIndex];
                 ColumnToPropertyMap columnMap;
-                if (_columnMapList.TryGetValue(columnIndex, out columnMap))
+                if (_columnDictionary.TryGetValue(columnIndex, out columnMap))
                 {
                     if (columnMap.IgnoreWhenReading)
                         continue;
@@ -138,21 +108,30 @@ namespace CsvConverter
 
             return newItem;
         }
-
-
+        
 
         const int ColumnIndexDefaultValue = -1;
 
         /// <summary>Creates the mappings necessary for each property.</summary>
         /// <returns></returns>
-        private Dictionary<int, ColumnToPropertyMap> CreateMappings()
+        protected override void CreateMappings()
         {
+            ColumnMapList.Clear();
+            _columnDictionary.Clear();
+
             // Retrieve the header row if the file has one!
             List<string> headerColumns = Configuration.HasHeaderRow ? _rowReader.ReadRow() : new List<string>();
 
             // Map the class properties to a mapper
             var mapper = new ColumnToPropertyMapper<T>(Configuration, DefaultConverterFactory, ColumnIndexDefaultValue);
-            return mapper.CreateReadMap(headerColumns);
+            ColumnMapList.AddRange(mapper.CreateReadMap(headerColumns));
+
+            // Map all the columns into a dictionary
+            foreach (ColumnToPropertyMap map in ColumnMapList)
+            {
+                if (map.ColumnIndex > 0)
+                    _columnDictionary.Add(map.ColumnIndex, map);
+            }
         }
 
     }

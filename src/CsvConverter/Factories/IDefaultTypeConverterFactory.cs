@@ -23,6 +23,10 @@ namespace CsvConverter
         /// <summary>Finds the type of the converter in the factory and returns it.</summary>
         Type FindConverterType(Type theType);
 
+        /// <summary>Replace an existing converter if it exists or adds it if it does not exist.</summary>
+        void ReplaceConverter(Type theType, Type converterType);
+
+
         /// <summary>Removes a type converter from the factory.</summary>
         void RemoveConverter(Type theType);
     }
