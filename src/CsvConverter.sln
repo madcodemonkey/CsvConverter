@@ -7,23 +7,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsvConverter", "CsvConverte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsvConverter.Core.IntegrationTests", "CsvConverter.Core.IntegrationTests\CsvConverter.Core.IntegrationTests.csproj", "{BCAC5846-05F4-4DE7-871D-3001EFCA18AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCoreExample1", "CsvConverter.SimpleCoreExample1\SimpleCoreExample1.csproj", "{6D022FAC-E925-41E4-9421-397C8E4A5A52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCoreExample1", "Examples\CsvConverter.SimpleCoreExample1\SimpleCoreExample1.csproj", "{6D022FAC-E925-41E4-9421-397C8E4A5A52}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsvConverter.Core.Tests", "CsvConverter.Core.Tests\CsvConverter.Core.Tests.csproj", "{7D3167CA-8A03-4455-89A7-5F99B33E77A5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example Apps", "Example Apps", "{33FABC1D-20AA-4F37-AE6B-33CABE5783AC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{33FABC1D-20AA-4F37-AE6B-33CABE5783AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvDotNetExample1", "CsvConverter.AdvDotNetExample1\AdvDotNetExample1.csproj", "{9440032C-AE95-4BAC-9764-D5F07711C815}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvDotNetExample1", "Examples\CsvConverter.AdvDotNetExample1\AdvDotNetExample1.csproj", "{9440032C-AE95-4BAC-9764-D5F07711C815}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvDotNetExample2", "CsvConverter.AdvDotNetExample2\AdvDotNetExample2.csproj", "{4C433F80-2987-4F0F-A27F-84615F0CF33B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvDotNetExample2", "Examples\CsvConverter.AdvDotNetExample2\AdvDotNetExample2.csproj", "{4C433F80-2987-4F0F-A27F-84615F0CF33B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvDotNetExample3", "CsvConverter.AdvDotNetExample3\AdvDotNetExample3.csproj", "{9EF7291B-3373-41F9-B657-784121D391ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvDotNetExample3", "Examples\CsvConverter.AdvDotNetExample3\AdvDotNetExample3.csproj", "{9EF7291B-3373-41F9-B657-784121D391ED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{902950D2-7DFF-4A1E-A481-9180D990ADEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDotNetExample1", "CsvConverter.SimpleDotNetExample1\SimpleDotNetExample1.csproj", "{9BF1F121-B186-458F-A8F1-C21E9CFFACE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDotNetExample1", "Examples\CsvConverter.SimpleDotNetExample1\SimpleDotNetExample1.csproj", "{9BF1F121-B186-458F-A8F1-C21E9CFFACE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDotNetExample2", "CsvConverter.SimpleDotNetExample2\SimpleDotNetExample2.csproj", "{A3327692-A117-404B-B399-807CFCB2F56B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDotNetExample2", "Examples\CsvConverter.SimpleDotNetExample2\SimpleDotNetExample2.csproj", "{A3327692-A117-404B-B399-807CFCB2F56B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
