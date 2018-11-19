@@ -6,10 +6,9 @@ using System.IO;
 
 namespace CsvConverter
 {
-
     /// <summary>Converts CSV rows into class instances.  The class instances will of type T.</summary>
     /// <typeparam name="T">Class instance type</typeparam>
-    public class CsvReaderService<T> : CsvServiceBase where T : class, new()
+    public class CsvReaderService<T> : CsvServiceBase, ICsvReaderService<T> where T : class, new()
     {
         private IRowReader _rowReader;
         private int? _columnCount = null;

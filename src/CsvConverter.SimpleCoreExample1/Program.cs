@@ -43,7 +43,7 @@ namespace SimpleCoreExample1
             using (var fs = File.OpenRead(catFileName))
             using (var sr = new StreamReader(fs))
             {
-                var reader = new CsvReaderService<Cat>(sr);
+                ICsvReaderService<Cat> reader = new CsvReaderService<Cat>(sr);
                 reader.Configuration.HasHeaderRow = true;
                 reader.Configuration.BlankRowsAreReturnedAsNull = true;
                 while (reader.CanRead())
@@ -63,7 +63,7 @@ namespace SimpleCoreExample1
             using (var sw = new StreamWriter(fs))
             {
                 fs.Seek(0, SeekOrigin.Begin);
-                var writer = new CsvWriterService<Cat>(sw);
+                ICsvWriterService<Cat> writer = new CsvWriterService<Cat>(sw);
                 writer.Configuration.HasHeaderRow = true;
                 foreach(var cat in originalCatList)
                 {

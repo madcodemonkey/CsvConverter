@@ -47,6 +47,36 @@ namespace CsvConverter
             _initialized = true;
         }
 
+        /// <summary>Retrieves a list of Column maps based on the converter being used by the property. 
+        /// Call this method AFTER calling Init() or the result will be a count of zero.</summary>
+        /// <param name="typeOfConveter">Converter type</param>
+        /// <returns>List of columns using the converter.</returns>
+        public List<ColumnToPropertyMap> FindColumnsByConverterType(Type typeOfConveter)
+        {
+            if (_initialized == false)
+                return new List<ColumnToPropertyMap>();
+
+            return ColumnMapList
+                .Where(w => w.ReadConverter.GetType() == typeOfConveter)
+                .ToList();
+        }
+
+        /// <summary>Retrieves a list of Column maps based on the class property type.
+        /// Call this method AFTER calling Init() or the result will be a count of zero.</summary>
+        /// <param name="typeOfProperty">A property type</param>
+        /// <returns>List of columns with the specified property type.</returns>
+        public List<ColumnToPropertyMap> FindColumnsByPropertyType(Type typeOfProperty)
+        {
+            if (_initialized == false)
+                return new List<ColumnToPropertyMap>();
+
+            return ColumnMapList
+                .Where(w => w.PropInformation.PropertyType == typeOfProperty)
+                .ToList();
+        }
+
         protected abstract void CreateMappings();
+
+
     }
 }

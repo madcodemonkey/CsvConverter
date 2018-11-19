@@ -8,7 +8,7 @@ namespace CsvConverter
 {
     /// <summary>Converts Class into a CSV row.  The class instances will of type T.</summary>
     /// <typeparam name="T">Class instance type</typeparam>
-    public class CsvWriterService<T> : CsvServiceBase where T : class, new()
+    public class CsvWriterService<T> : CsvServiceBase, ICsvWriterService<T> where T : class, new()
     {
         private const int ColumnIndexDefaultValue = 9999;
         private IRowWriter _rowWriter;

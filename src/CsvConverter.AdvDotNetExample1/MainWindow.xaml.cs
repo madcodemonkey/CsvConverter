@@ -31,7 +31,7 @@ namespace AdvExample1
                 using (var fs = File.Create(dialog.FileName))
                 using (var sw = new StreamWriter(fs, Encoding.Default))
                 {
-                    var service = new CsvWriterService<Person>(sw);
+                    ICsvWriterService<Person> writer = new CsvWriterService<Person>(sw);
                     for (int i = 0; i < numberToCreate; i++)
                     {
                         var newPerson = new Person()
@@ -43,7 +43,7 @@ namespace AdvExample1
                             AvgHeartRate = rand.Next(60, 80) / 1.1
                         };
 
-                        service.WriterRecord(newPerson);
+                        writer.WriterRecord(newPerson);
                     }
                 }
 
@@ -65,13 +65,13 @@ namespace AdvExample1
 
                 using (var fs = File.OpenRead(dialog.FileName))
                 using (var sr = new StreamReader(fs, Encoding.Default))
-                {                    
-                    var csv = new CsvReaderService<Person>(sr);
-                    csv.Configuration.BlankRowsAreReturnedAsNull = true;
+                {
+                    ICsvReaderService<Person> reader = new CsvReaderService<Person>(sr);
+                    reader.Configuration.BlankRowsAreReturnedAsNull = true;
 
-                    while (csv.CanRead())
+                    while (reader.CanRead())
                     {
-                        Person record = csv.GetRecord();
+                        Person record = reader.GetRecord();
                         if (record != null)
                            LogMessage(record.ToString());
                     }
@@ -109,7 +109,7 @@ namespace AdvExample1
                 using (var fs = File.Create(dialog.FileName))
                 using (var sw = new StreamWriter(fs, Encoding.Default))
                 {
-                    var service = new CsvWriterService<Car>(sw);
+                    ICsvWriterService<Car> service = new CsvWriterService<Car>(sw);
                     for (int i = 0; i < numberToCreate; i++)
                     {
                         double currentValue = rand.Next(2000, 60000) / 1.1;
@@ -145,7 +145,7 @@ namespace AdvExample1
                 using (var fs = File.OpenRead(dialog.FileName))
                 using (var sr = new StreamReader(fs, Encoding.Default))
                 {
-                    var csv = new CsvReaderService<Car>(sr);
+                    ICsvReaderService<Car> csv = new CsvReaderService<Car>(sr);
                     csv.Configuration.BlankRowsAreReturnedAsNull = true;
 
                     while (csv.CanRead())

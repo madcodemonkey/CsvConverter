@@ -30,7 +30,7 @@ namespace AdvExample2
                 using (var fs = File.Create(dialog.FileName))
                 using (var sw = new StreamWriter(fs))
                 {
-                    var writer = new CsvWriterService<Person>(sw);
+                    ICsvWriterService<Person> writer = new CsvWriterService<Person>(sw);
                     writer.WriterRecord(new Person() { FirstName = "Tom", LastName = "Yo", Age = 90 });
                     writer.WriterRecord(new Person() { FirstName = "Jame", LastName = "Adam", Age = 34 });
                     writer.WriterRecord(new Person() { FirstName = "Killroy", LastName = "Back", Age = 12 });
@@ -55,7 +55,7 @@ namespace AdvExample2
                 using (var fs = File.OpenRead(dialog.FileName))
                 using (var sr = new StreamReader(fs))
                 {
-                    var reader = new CsvReaderService<Person>(sr);
+                    ICsvReaderService<Person> reader = new CsvReaderService<Person>(sr);
 
                     while (reader.CanRead())
                     {
@@ -70,33 +70,33 @@ namespace AdvExample2
                 {
                     // Keep in mind that your replacement converter must be standalone.
                     // You cannot rely in any default converters.
-                    var reader = new CsvReaderService<Person>(sr);
-                    reader.DefaultConverterFactory.ReplaceConverter(typeof(string), typeof(CsvConverterStringTextLengthEnforcer));
+                    // Default converters created when the service class is created.
+                    ICsvReaderService<Person> reader = new CsvReaderService<Person>(sr);
 
-                    // Create all the converters.
+                    // Replace a converter
+                    reader.DefaultConverterFactory.ReplaceConverter(typeof(string), typeof(CsvConverterStringTextLengthEnforcer));
+                  
+                    // Create all the column mappings.
                     reader.Init();
 
-                    // Also, you will have to find the converter after initialize to tweak converter settings since
-                    // settings are normally passed in with attributes and default converters don't use attributes.
-                    //List<ColumnToPropertyMap> columnList = reader.ColumnMapList
-                    //    .Where(w => w.PropInformation.PropertyType == typeof(string))                        
-                    //    .ToList();
-                    // OR
-                    List<ColumnToPropertyMap> columnList = reader.ColumnMapList
-                       .Where(w => w.ReadConverter.GetType() == typeof(CsvConverterStringTextLengthEnforcer))
-                       .ToList();
+                    #region This converter has settings different that the defaults when it was constructed
+                    // Well, you will have to find the columns with the converter that need changing
 
-                    foreach (var item in columnList)
+                    // We could just find string properties since it is the default, but that is problematic.
+                    // What if a class property, which is a string, has a custom converter on it?
+                    // So, let's just find the properties that are using our new default converter.
+                    List<ColumnToPropertyMap> columnList = reader.FindColumnsByConverterType(typeof(CsvConverterStringTextLengthEnforcer));
+
+                    foreach (ColumnToPropertyMap oneColumn in columnList)
                     {
-                        var converter = item.ReadConverter as CsvConverterStringTextLengthEnforcer;
-                        if (converter != null)
+                        if (oneColumn.ReadConverter is CsvConverterStringTextLengthEnforcer converter)
                         {
                             converter.MinimumLength = 5;
                             converter.MaximumLength = 6;
                             converter.CharacterToAddToShortStrings = '-';
                         }
                     }
-
+                    #endregion 
 
                     while (reader.CanRead())
                     {
