@@ -25,7 +25,7 @@ namespace CsvConverter.Core.IntegrationTests
         [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch), OldValue = null, NewValue = "N/A", IsPostConverter = true)]
         public int? HighSchoolGradationCount { get; set; }
 
-        // You could deleete NumberOfDecimalPlaces and specify AllowRounding = false and StringFormat = "P2" here as well and the output would be the same.
+        // You could delete NumberOfDecimalPlaces and specify AllowRounding = false and StringFormat = "P2" here as well and the output would be the same.
         [CsvConverterNumber(ColumnName = "High School Graduation Percentile", ConverterType = typeof(CsvConverterPercentage), ColumnIndex = 6, NumberOfDecimalPlaces = 4)]
         [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch), OldValue = "N/A", NewValue = "", IsPreConverter = true)]
         [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch), OldValue = null, NewValue = "N/A", IsPostConverter = true, Order = 1)]

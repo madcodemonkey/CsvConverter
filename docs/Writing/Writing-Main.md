@@ -12,7 +12,3 @@ To create a CSV file, there are 7 basic steps
 ## Examples
 - [Simple Example 1](./Examples/Simple1.md) - In this simple example, the header will match the property names.
 - [Simple Example 2](./Examples/Simple2.md) - In this simple example, we will control the order and names of the CSV headers.
-
-## Advanced Topics
-- [Type Converters](./TypeConverters/TypeConverters-Main.md) - Convert C# types into strings.  
-- [Post Converters](./PostConverters/PostConverters-Main.md) - Post processes a string after it comes out of a type converter, but before it is written to the CSV file.

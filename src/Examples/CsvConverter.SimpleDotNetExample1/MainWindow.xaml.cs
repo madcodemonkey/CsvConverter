@@ -32,7 +32,7 @@ namespace SimpleDotNetExample1
                 using (var fs = File.Create(dialog.FileName))
                 using (var sw = new StreamWriter(fs, Encoding.Default))
                 {
-                    var service = new CsvWriterService<Employee>(sw);
+                    var writerService = new CsvWriterService<Employee>(sw);
                     for (int i = 0; i < numberToCreate; i++)
                     {
                         var newEmp = new Employee()
@@ -44,7 +44,7 @@ namespace SimpleDotNetExample1
                             AvgHeartRate = rand.Next(60, 80) / 1.1
                         };
 
-                        service.WriterRecord(newEmp);
+                        writerService.WriterRecord(newEmp);
                     }
                 }
 

@@ -7,8 +7,9 @@ Follow these links to learn more about a specific topic:
 - [Reading CSV files](./docs/Reading/Reading-Main.md) - read a CSV file into a class.
 - [Writing CSV files](./docs/Writing/Writing-Main.md) - write a List of T to a CSV file.
 
-## Upgrading from V1 to V2
-- [Upgrading](./docs/Upgrading/Upgrading-Main.md) 
+## Advanced topics
+- [What are converters and how do I use them?](./docs/Converters/Converters-Main.md)
+- [Upgrading from V1 to V2](./docs/Upgrading/Upgrading-Main.md) 
 
 ## NuGet
 [NuGet project can be found here.](https://www.nuget.org/packages/CsvConverter/)

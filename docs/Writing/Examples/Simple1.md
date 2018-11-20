@@ -29,7 +29,7 @@ We can write this code:
 ```c#
 using System.IO;
 using System.Text;
-using CsvConverter.ClassToCsv;
+using CsvConverter;
 
 Random rand = new Random(DateTime.Now.Second);
 int numberToCreate = rand.Next(10, 100);
@@ -37,10 +37,10 @@ int numberToCreate = rand.Next(10, 100);
 using (var fs = File.Create(dialog.FileName))
 using (var sw = new StreamWriter(fs, Encoding.Default))
 {
-	var service = new ClassToCsvService<Employee>(sw);
+	var writerService = new CsvWriterService<Employee>(sw);
 	for (int i = 0; i < numberToCreate; i++)
 	{
-		var newEmployee = new Employee()
+		var newEmp = new Employee()
 		{
 			FirstName = $"First{rand.Next(1,5000)}",
 			LastName = $"Last{rand.Next(1, 5000)}",
@@ -49,7 +49,7 @@ using (var sw = new StreamWriter(fs, Encoding.Default))
 			AvgHeartRate = rand.Next(60, 80) / 1.1
 		};
 
-		service.WriterRecord(newEmployee);
+		writerService.WriterRecord(newEmp);
 	}
 }
 ```

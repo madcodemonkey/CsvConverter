@@ -32,8 +32,8 @@ namespace SimpleDotNetExample2
                 using (var fs = File.Create(dialog.FileName))
                 using (var sw = new StreamWriter(fs, Encoding.Default))
                 {
-                    var service = new CsvWriterService<Frog>(sw);
-                    service.Configuration.HasHeaderRow = false;
+                    var writerService = new CsvWriterService<Frog>(sw);
+                    writerService.Configuration.HasHeaderRow = false;
 
                     for (int i = 0; i < numberToCreate; i++)
                     {
@@ -46,7 +46,7 @@ namespace SimpleDotNetExample2
                             AverageNumberOfSpots = rand.Next(5, 20) / 1.1m
                         };
 
-                        service.WriterRecord(newEmp);
+                        writerService.WriterRecord(newEmp);
                     }
                 }
 

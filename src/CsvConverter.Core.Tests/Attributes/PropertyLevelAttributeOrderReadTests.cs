@@ -7,7 +7,7 @@ using Moq;
 namespace CsvConverter.Core.Tests.Attributes
 {
     [TestClass]
-    public class ClassLevelAttributeOrderReadTests
+    public class PropertyLevelAttributeOrderReadTests
     {
         // 1st converter remove spaces and 2nd converter does an exact match
         [DataTestMethod]
@@ -28,12 +28,12 @@ namespace CsvConverter.Core.Tests.Attributes
                 .Returns(new List<string> { "Order", "Animal Type" })
                 .Returns(new List<string> { order, animalTypeInput });
 
-            var classUnderTest = new CsvReaderService<ClassLevelAttributeOrderReadData1>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<PropLevelAttributeOrderReadData1>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
-            ClassLevelAttributeOrderReadData1 row1 = classUnderTest.GetRecord();
-            ClassLevelAttributeOrderReadData1 row2 = classUnderTest.GetRecord();
+            PropLevelAttributeOrderReadData1 row1 = classUnderTest.GetRecord();
+            PropLevelAttributeOrderReadData1 row2 = classUnderTest.GetRecord();
 
             // Assert
             Assert.AreEqual(1, row1.Order);
@@ -65,12 +65,12 @@ namespace CsvConverter.Core.Tests.Attributes
                 .Returns(new List<string> { "Order", "Animal Type" })
                 .Returns(new List<string> { order, animalTypeInput });
 
-            var classUnderTest = new CsvReaderService<ClassLevelAttributeOrderReadData2>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<PropLevelAttributeOrderReadData2>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
-            ClassLevelAttributeOrderReadData2 row1 = classUnderTest.GetRecord();
-            ClassLevelAttributeOrderReadData2 row2 = classUnderTest.GetRecord();
+            PropLevelAttributeOrderReadData2 row1 = classUnderTest.GetRecord();
+            PropLevelAttributeOrderReadData2 row2 = classUnderTest.GetRecord();
 
             // Assert
             Assert.AreEqual(1, row1.Order);
@@ -82,30 +82,30 @@ namespace CsvConverter.Core.Tests.Attributes
     }
 
 
-    // EVERY match removes spaces so and EXACT match replaces words.  So ORDER MATTERS here so the exact match and find words.
-    [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextEveryMatch),
-        TargetPropertyType = typeof(string), OldValue = " ", NewValue = "", Order = 1, IsPreConverter = true)]
-    [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch),
-        TargetPropertyType = typeof(string), OldValue = "dog", NewValue = "cat", Order = 2, IsPreConverter = true)]
-    internal class ClassLevelAttributeOrderReadData1
+     internal class PropLevelAttributeOrderReadData1
     {
         public int Order { get; set; }
 
         [CsvConverterString(ColumnName = "Animal Type")]
+        // EVERY match removes spaces so and EXACT match replaces words.  So ORDER MATTERS here so the exact match and find words.
+        [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextEveryMatch),
+           OldValue = " ", NewValue = "", Order = 1, IsPreConverter = true)]
+        [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch),
+           OldValue = "dog", NewValue = "cat", Order = 2, IsPreConverter = true)]
         public string AnimalType { get; set; }
     }
 
 
     // Order reversed so that things do NOT work the same way
-    [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextEveryMatch),
-        TargetPropertyType = typeof(string), OldValue = " ", NewValue = "", Order = 2, IsPreConverter = true)]
-    [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch),
-        TargetPropertyType = typeof(string), OldValue = "dog", NewValue = "cat", Order = 1, IsPreConverter = true)]
-    internal class ClassLevelAttributeOrderReadData2
+    internal class PropLevelAttributeOrderReadData2
     {
         public int Order { get; set; }
 
         [CsvConverterString(ColumnName = "Animal Type")]
+        [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextEveryMatch),
+           OldValue = " ", NewValue = "", Order = 2, IsPreConverter = true)]
+        [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch),
+           OldValue = "dog", NewValue = "cat", Order = 1, IsPreConverter = true)]
         public string AnimalType { get; set; }
     }
 }

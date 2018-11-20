@@ -46,21 +46,22 @@ int numberToCreate = rand.Next(10, 100);
 using (var fs = File.Create(dialog.FileName))
 using (var sw = new StreamWriter(fs, Encoding.Default))
 {
-    var service = new ClassToCsvService<Frog>(sw);    
+	var writerService = new CsvWriterService<Frog>(sw);
+	writerService.Configuration.HasHeaderRow = false;
 
-    for (int i = 0; i < numberToCreate; i++)
-    {
-        var newEmp = new Frog()
-        {
-            FirstName = $"First{rand.Next(1, 5000)}",
-            LastName = $"Last{rand.Next(1, 5000)}",
-            Age = rand.Next(5, 80),
-            Color = PickRandomColor(rand.Next(1, 5)),
-            AverageNumberOfSpots = rand.Next(5, 20) / 1.1m
-        };
+	for (int i = 0; i < numberToCreate; i++)
+	{
+		var newEmp = new Frog()
+		{
+			FirstName = $"First{rand.Next(1, 5000)}",
+			LastName = $"Last{rand.Next(1, 5000)}",
+			Age = rand.Next(5, 80),
+			Color = PickRandomColor(rand.Next(1, 5)),
+			AverageNumberOfSpots = rand.Next(5, 20) / 1.1m
+		};
 
-        service.WriterRecord(newEmp);
-    }
+		writerService.WriterRecord(newEmp);
+	}
 }
 ```
 
@@ -81,5 +82,4 @@ First4140,Last3531,White,6.3636363636363636363636363636,62
 Notes
 - The columns are sorted by Column Index (the normal sort order is alphabetical if not specified with ONE BASED ColumnIndex number).
 - If you had columns without the ColumnIndex, they would be sorted alphabetical because the sort order is ColumnIndex and then ColumnName.
-- This example code can be found in [Github](https://github.com/madcodemonkey/CsvConverter/tree/master/src/CsvConverter.SimpleExample1), but I removed the row with "service.Configuration.HasHeaderRow = false;" so that the header row would be produced.
-
+- This example code can be found in [Github](https://github.com/madcodemonkey/CsvConverter/tree/master/src/CsvConverter.SimpleExample1)

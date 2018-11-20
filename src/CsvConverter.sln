@@ -12,6 +12,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsvConverter.Core.Tests", "CsvConverter.Core.Tests\CsvConverter.Core.Tests.csproj", "{7D3167CA-8A03-4455-89A7-5F99B33E77A5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{33FABC1D-20AA-4F37-AE6B-33CABE5783AC}"
+	ProjectSection(SolutionItems) = preProject
+		Examples\Examples Directory.md = Examples\Examples Directory.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvDotNetExample1", "Examples\CsvConverter.AdvDotNetExample1\AdvDotNetExample1.csproj", "{9440032C-AE95-4BAC-9764-D5F07711C815}"
 EndProject
@@ -24,6 +27,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDotNetExample1", "Examples\CsvConverter.SimpleDotNetExample1\SimpleDotNetExample1.csproj", "{9BF1F121-B186-458F-A8F1-C21E9CFFACE6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDotNetExample2", "Examples\CsvConverter.SimpleDotNetExample2\SimpleDotNetExample2.csproj", "{A3327692-A117-404B-B399-807CFCB2F56B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCoreExample2", "Examples\CsvConverter.SimpleCoreExample2\SimpleCoreExample2.csproj", "{7A778F22-119B-4181-B908-E20A4CA80085}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +105,14 @@ Global
 		{A3327692-A117-404B-B399-807CFCB2F56B}.Release|Any CPU.ActiveCfg = Release|x86
 		{A3327692-A117-404B-B399-807CFCB2F56B}.Release|x86.ActiveCfg = Release|x86
 		{A3327692-A117-404B-B399-807CFCB2F56B}.Release|x86.Build.0 = Release|x86
+		{7A778F22-119B-4181-B908-E20A4CA80085}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A778F22-119B-4181-B908-E20A4CA80085}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A778F22-119B-4181-B908-E20A4CA80085}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7A778F22-119B-4181-B908-E20A4CA80085}.Debug|x86.Build.0 = Debug|Any CPU
+		{7A778F22-119B-4181-B908-E20A4CA80085}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A778F22-119B-4181-B908-E20A4CA80085}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A778F22-119B-4181-B908-E20A4CA80085}.Release|x86.ActiveCfg = Release|Any CPU
+		{7A778F22-119B-4181-B908-E20A4CA80085}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +126,7 @@ Global
 		{9EF7291B-3373-41F9-B657-784121D391ED} = {33FABC1D-20AA-4F37-AE6B-33CABE5783AC}
 		{9BF1F121-B186-458F-A8F1-C21E9CFFACE6} = {33FABC1D-20AA-4F37-AE6B-33CABE5783AC}
 		{A3327692-A117-404B-B399-807CFCB2F56B} = {33FABC1D-20AA-4F37-AE6B-33CABE5783AC}
+		{7A778F22-119B-4181-B908-E20A4CA80085} = {33FABC1D-20AA-4F37-AE6B-33CABE5783AC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EBED656A-5AC0-4B1F-9E0C-2E9BC3BF9E96}
