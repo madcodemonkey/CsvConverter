@@ -1,4 +1,4 @@
-# CsvConverterStringReplacesNullOrWhiteSpaceWithNewValue
+# CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue
 This converter replaces any null or white spaced string, with a new value.
 
 ## Which attribute do I use?
@@ -11,14 +11,14 @@ public class AnimalData
     public int Order { get; set; }
 
     [CsvConverterString(ColumnName = "Animal Type")]
-    [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplacesNullOrWhiteSpaceWithNewValue),
+    [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue),
         NewValue = "Unknown", Order = 1, IsPreConverter = true)]
     public string AnimalType { get; set; }
 }
 
 OR
 
-[CsvConverterStringOldAndNew(typeof(CsvConverterStringReplacesNullOrWhiteSpaceWithNewValue),
+[CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue),
     TargetPropertyType = typeof(string), NewValue = "Unknown", Order = 1, IsPreConverter = true)]
 public class AnimalData
 {

@@ -13,4 +13,4 @@
         - CsvConverterStringReplaceTextEveryMatch
         - CsvConverterStringReplaceTextExactMatch
     - TrimCsvToClassPreConverter is replaced with CsvConverterStringTrimmer.
-    - StringIsNullOrWhiteSpaceSetToNullCsvToClassPreConverter is replaced with CsvConverterStringReplacesNullOrWhiteSpaceWithNewValue
+    - StringIsNullOrWhiteSpaceSetToNullCsvToClassPreConverter is replaced with CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue

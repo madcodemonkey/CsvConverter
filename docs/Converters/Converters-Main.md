@@ -6,7 +6,7 @@ Converters are used to convert a string to a type (e.g., int, decimal, etc.) or 
 - [CsvConverterStringReplaceTextEveryMatch](./Built-In/Converters-CsvConverterStringReplaceTextEveryMatch.md)
 - [CsvConverterStringReplaceTextExactMatch](./Built-In/Converters-CsvConverterStringReplaceTextExactMatch.md)
 - [CsvConverterStringTrimmer](./Built-In/Converters-CsvConverterStringTrimmer.md)
-- [CsvConverterStringReplacesNullOrWhiteSpaceWithNewValue](./Built-In/Converters-CsvConverterStringReplacesNullOrWhiteSpaceWithNewValue.md)
+- [CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue](./Built-In/Converters-CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue.md)
 
 ## FAQ
 - [How do converters work when reading CSV files?](./Converters-reading.md)

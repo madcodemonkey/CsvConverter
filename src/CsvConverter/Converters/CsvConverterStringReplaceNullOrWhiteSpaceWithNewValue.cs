@@ -3,7 +3,7 @@
 namespace CsvConverter
 {
     /// <summary>Replaces any null or white spaced string, with text in the NewValue property.</summary>
-    public class CsvConverterStringReplacesNullOrWhiteSpaceWithNewValue : CsvConverterStringBase, ICsvConverterString
+    public class CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue : CsvConverterStringBase, ICsvConverterString
     {
         private string _newValue;
     

@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CsvConverter.Core.Tests.Converters
 {
     [TestClass]
-    public class CsvConverterStringReplacesNullOrWhiteSpaceWithNewValueTests
+    public class CsvConverterStringReplaceNullOrWhiteSpaceWithNewValueTests
     {
         [DataTestMethod]
         [DataRow("cache", "c", "cache")]
@@ -22,9 +22,9 @@ namespace CsvConverter.Core.Tests.Converters
         public void GetWriteData_CanReplaceText_DataReplaced(string csvField, string newValue, string expectedResult)
         {
             // Arrange 
-            var attribute = new CsvConverterStringOldAndNewAttribute(typeof(CsvConverterStringReplacesNullOrWhiteSpaceWithNewValue)) { NewValue = newValue };
+            var attribute = new CsvConverterStringOldAndNewAttribute(typeof(CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue)) { NewValue = newValue };
 
-            var classUnderTest = new CsvConverterStringReplacesNullOrWhiteSpaceWithNewValue();
+            var classUnderTest = new CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue();
             classUnderTest.Initialize(attribute, new DefaultTypeConverterFactory());
 
             // Act
@@ -48,9 +48,9 @@ namespace CsvConverter.Core.Tests.Converters
         public void GetReadData_CanReplaceText_DataReplaced(string csvField, string newValue, string expectedResult)
         {
             // Arrange 
-            var attribute = new CsvConverterStringOldAndNewAttribute(typeof(CsvConverterStringReplacesNullOrWhiteSpaceWithNewValue)) { NewValue = newValue };
+            var attribute = new CsvConverterStringOldAndNewAttribute(typeof(CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue)) { NewValue = newValue };
 
-            var classUnderTest = new CsvConverterStringReplacesNullOrWhiteSpaceWithNewValue();
+            var classUnderTest = new CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue();
             classUnderTest.Initialize(attribute, new DefaultTypeConverterFactory());
 
             // Act
@@ -65,8 +65,8 @@ namespace CsvConverter.Core.Tests.Converters
         public void Initialize_PassingInTheWrongTypeOfAttributeToThePostConverter_ResultsInException()
         {
             // Arrange 
-            var attribute = new CsvConverterBooleanAttribute(typeof(CsvConverterStringReplacesNullOrWhiteSpaceWithNewValue));
-            var classUnderTest = new CsvConverterStringReplacesNullOrWhiteSpaceWithNewValue();
+            var attribute = new CsvConverterBooleanAttribute(typeof(CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue));
+            var classUnderTest = new CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue();
             classUnderTest.Initialize(attribute, new DefaultTypeConverterFactory());
 
             // Assert
