@@ -18,8 +18,21 @@ namespace CsvConverter
             ConverterType = converterType;
         }
 
+        /// <summary>Indicates that the converter is used PRIOR to type conversion.  In other words,
+        /// you want to perform one or more pre-processes on the incoming string from a CSV file
+        /// prior the the type converter getting a hold of it and converting it to the class
+        /// property type.</summary>
         public bool IsPreConverter { get; set; } = false;
+
+        /// <summary>Indicates that the converter is used AFTER type conversion.  In other words,
+        /// the class property type should be converted to a string and then the post-processor
+        /// should be called to perform additional operations on the string prior to be written
+        /// out to the CSV file.</summary>
         public bool IsPostConverter { get; set; } = false;
+
+        /// <summary>Indicates if the string operation is case sensitve.  The default is TRUE.
+        /// Keep in mind that not all converters will use this setting.  For example, the
+        /// CsvConverterStringTrimmer converter does NOT use it.</summary>
         public bool IsCaseSensitive { get; set; } = true;
 
         /// <summary>An optional, order for pre and post converters in case there are more than one decorating a property or class.</summary>

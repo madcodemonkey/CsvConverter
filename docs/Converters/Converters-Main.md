@@ -15,5 +15,5 @@ Converters are used to convert a string to a type (e.g., int, decimal, etc.) or 
 - [CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue](./Built-In/Converters-CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue.md)
 
 ## How do I create a custom converter?
-- [How do you create a custom converter?](./Converters-custom.md)
-- [How do you create a string converter?](./Converters-string.md)
+- [How do you create a custom converter?](./Custom/Converters-custom.md)
+- [How do you create a string converter?](./Custom/Converters-string.md)

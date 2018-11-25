@@ -11,14 +11,33 @@ A post-processor is JUST a string converter.  Any converter that inherits from C
 
 ## Example 1
 ```c#
-
+public class Animal
+{
+	[CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextEveryMatch),
+      OldValue = " ", NewValue = "", Order = 1, IsPostConverter = true)]
+	[CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch),
+	   OldValue = "dog", NewValue = "cat", Order = 2, IsPostConverter = true)]
+	public string AnimalType { get; set; }
+}
 ```
 
 Notes
+- Prior to writing data to the file, we will first remove every space. Afterwards, we will replace exact matches of the word "dog" with the word "cat"
+- 
 
 ## Example 2
 ```c#
+[CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextEveryMatch),
+	TargetPropertyType = typeof(string), OldValue = " ", NewValue = "", Order = 1, IsPostConverter = true)]
+[CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch),
+	TargetPropertyType = typeof(string), OldValue = "dog", NewValue = "cat", Order = 2, IsPostConverter = true)]
+internal class Animal
+{
+	public string AnimalType { get; set; }
 
+    public string AnotherString { get; set; }
+}
 ```
 
 Notes
+- Exampel 2, will effectively do the same thing as Example 1; however, it will target both AnimalType and AnotherString.
