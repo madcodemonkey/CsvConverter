@@ -7,6 +7,7 @@ namespace CsvConverter
     {
         private string _newValue;
         private string _oldValue;
+        private bool _isCaseSensitive = true;
 
         /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>
@@ -46,11 +47,18 @@ namespace CsvConverter
         /// <returns></returns>
         private string Convert(string value)
         {
-            if (value == _oldValue)
-                return _newValue;
+            if (_isCaseSensitive || value == null)
+            {
+                if (value == _oldValue)
+                    return _newValue;
+            }
+            else
+            {
+                if (string.Compare(value, _oldValue, StringComparison.InvariantCultureIgnoreCase) == 0)
+                    return _newValue;
+            }
 
             return value;
-
         }
 
         /// <summary>Initializes the converter with an attribute</summary>
@@ -66,6 +74,7 @@ namespace CsvConverter
 
             _newValue = oneAttribute.NewValue;
             _oldValue = oneAttribute.OldValue;
+            _isCaseSensitive = oneAttribute.IsCaseSensitive;
         }
     }
 

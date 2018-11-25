@@ -9,18 +9,25 @@ namespace CsvConverter.Core.Tests.Converters
     public class CsvConverterStringReplaceTextExactMatchTests
     {
         [DataTestMethod]
-        [DataRow("cache", "c", "b", "cache")]  // not a whole word
-        [DataRow("cat", "cat", "bat", "bat")]
-        [DataRow("", "c", "b", "")]  // no match
-        [DataRow(" ", "c", "b", " ")]  // no match
-        [DataRow("0", "0", "", "")] // remove 
-        [DataRow("dog", "dog", "", "")] // remove 
-        [DataRow("dog ", "dog", "", "dog ")] // no match due to trailing space
-        [DataRow("0", "0 ", "", "0")]
-        public void GetWriteData_CanReplaceText_DataReplaced(string csvField, string oldValue, string newValue, string expectedResult)
+        [DataRow("cache", "c", "b", true, "cache")]  // not a whole word
+        [DataRow("cat", "cat", "bat", true, "bat")]
+        [DataRow(null, null, "bat", true, "bat")]
+        [DataRow(null, null, "bat", false, "bat")]
+        [DataRow("Cat", "cat", "bat", true, "Cat")] // Case does not match
+        [DataRow("", "c", "b", true, "")]  // no match
+        [DataRow(" ", "c", "b", true, " ")]  // no match
+        [DataRow("0", "0", "", true, "")] // remove 
+        [DataRow("dog", "dog", "", true, "")] // remove 
+        [DataRow("dog ", "dog", "", true, "dog ")] // no match due to trailing space
+        [DataRow("0", "0 ", "", true, "0")]
+        [DataRow("Cat", "cat", "bat", false, "bat")] // IsCaseSensitive now false so match!
+        public void GetWriteData_CanReplaceText_DataReplaced(string csvField, string oldValue,
+            string newValue, bool isCaseSensitive, string expectedResult)
         {
             // Arrange 
-            var attribute = new CsvConverterStringOldAndNewAttribute(typeof(CsvConverterStringReplaceTextExactMatch)) { OldValue = oldValue, NewValue = newValue };
+            var attribute = new CsvConverterStringOldAndNewAttribute(
+                typeof(CsvConverterStringReplaceTextExactMatch))
+            { OldValue = oldValue, NewValue = newValue, IsCaseSensitive = isCaseSensitive };
 
             var classUnderTest = new CsvConverterStringReplaceTextExactMatch();
             classUnderTest.Initialize(attribute, new DefaultTypeConverterFactory());
@@ -33,18 +40,25 @@ namespace CsvConverter.Core.Tests.Converters
         }
 
         [DataTestMethod]
-        [DataRow("cache", "c", "b", "cache")]  // not a whole word
-        [DataRow("cat", "cat", "bat", "bat")]
-        [DataRow("", "c", "b", "")]  // no match
-        [DataRow(" ", "c", "b", " ")]  // no match
-        [DataRow("0", "0", "", "")] // remove 
-        [DataRow("dog", "dog", "", "")] // remove 
-        [DataRow("dog ", "dog", "", "dog ")] // no match due to trailing space
-        [DataRow("0", "0 ", "", "0")]
-        public void GetReadData_CanReplaceText_DataReplaced(string csvField, string oldValue, string newValue, string expectedResult)
+        [DataRow("cache", "c", "b", true, "cache")]  // not a whole word
+        [DataRow("cat", "cat", "bat", true, "bat")]
+        [DataRow(null, null, "bat", true, "bat")]
+        [DataRow(null, null, "bat", false, "bat")]
+        [DataRow("Cat", "cat", "bat", true, "Cat")] // Case does not match
+        [DataRow("", "c", "b", true, "")]  // no match
+        [DataRow(" ", "c", "b", true, " ")]  // no match
+        [DataRow("0", "0", "", true, "")] // remove 
+        [DataRow("dog", "dog", "", true, "")] // remove 
+        [DataRow("dog ", "dog", "", true, "dog ")] // no match due to trailing space
+        [DataRow("0", "0 ", "", true, "0")]
+        [DataRow("Cat", "cat", "bat", false, "bat")] // IsCaseSensitive now false so match!
+        public void GetReadData_CanReplaceText_DataReplaced(string csvField, string oldValue,
+            string newValue, bool isCaseSensitive, string expectedResult)
         {
             // Arrange 
-            var attribute = new CsvConverterStringOldAndNewAttribute(typeof(CsvConverterStringReplaceTextExactMatch)) { OldValue = oldValue, NewValue = newValue };
+            var attribute = new CsvConverterStringOldAndNewAttribute(
+                typeof(CsvConverterStringReplaceTextExactMatch))
+            { OldValue = oldValue, NewValue = newValue, IsCaseSensitive = isCaseSensitive };
 
             var classUnderTest = new CsvConverterStringReplaceTextExactMatch();
             classUnderTest.Initialize(attribute, new DefaultTypeConverterFactory());

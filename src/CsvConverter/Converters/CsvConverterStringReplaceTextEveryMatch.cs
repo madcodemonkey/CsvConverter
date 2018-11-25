@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace CsvConverter
 {
@@ -7,6 +8,7 @@ namespace CsvConverter
         private string _newValue;
         private string _oldValue;
         private bool _oldValueCannotBeProcessByStringReplace = true; // While uninitialized this needs to be true or the string Replace method will throw an exception.
+        private RegexOptions _regexOptions = RegexOptions.None;
 
         /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>
@@ -58,7 +60,7 @@ namespace CsvConverter
             if (value == null)
                 return value;
 
-            return value.Replace(_oldValue, _newValue);
+            return Regex.Replace(value, _oldValue, _newValue, _regexOptions);
         }
 
         /// <summary>Initializes the converter with an attribute</summary>
@@ -75,7 +77,7 @@ namespace CsvConverter
             _newValue = oneAttribute.NewValue;
             _oldValue = oneAttribute.OldValue;
             _oldValueCannotBeProcessByStringReplace = _oldValue == null || _oldValue.Length == 0;
-
+            _regexOptions = oneAttribute.IsCaseSensitive ? RegexOptions.None : RegexOptions.IgnoreCase;
         }
     }
 

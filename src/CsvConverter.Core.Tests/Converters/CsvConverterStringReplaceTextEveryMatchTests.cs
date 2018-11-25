@@ -9,33 +9,37 @@ namespace CsvConverter.Core.Tests.Converters
     public class CsvConverterStringReplaceTextEveryMatchTests
     {
         [DataTestMethod]
-        [DataRow("Hey, diddle, diddle,", "c", "b", "Hey, diddle, diddle,")] // no changes
-        [DataRow("The cat and the fiddle,", "T", "G", "Ghe cat and the fiddle,")]  // target captial letter
-        [DataRow("The cow jumped over the moon;", " ", "", "Thecowjumpedoverthemoon;")] // Remove spaces
-        [DataRow("The little dog laughed", "tt", "ss", "The lissle dog laughed")] // captial T untouched
-        [DataRow("To see such sport,", "e", "ss", "To sssss such sport,")]
-        [DataRow("And the dish ran away with the spoon.", "A", "a", "and the dish ran away with the spoon.")]
-        [DataRow("cat", "c", "b", "bat")]
-        [DataRow("", "c", "b", "")]
-        [DataRow(" ", "c", "b", " ")]
-        [DataRow("0", "0", "", "")]
-        [DataRow("0", "0 ", "", "0")]
-        [DataRow(null, null, "hello", "hello")]
-        [DataRow("", "", "hello2", "hello2")]
-        [DataRow("Michael's", "'", "", "Michaels")]
-        [DataRow("Michael\"s", "\"", "", "Michaels")]
-        [DataRow(null, "a", "", null)]
-        [DataRow("", "a", "", "")]
-        [DataRow("Michael", "ae", "", "Michl")]
-        [DataRow("Michael", "", "", "Michael")]
-        [DataRow("Michael", null, "", "Michael")]
-        [DataRow("Michael's", "'", "-", "Michael-s")]
-        [DataRow("Michael", "chael", "ke", "Mike")]
+        [DataRow("Hey, diddle, diddle,", "c", "b", true, "Hey, diddle, diddle,")] // no changes
+        [DataRow("The cat and the fiddle,", "T", "G", true, "Ghe cat and the fiddle,")]  // target captial letter
+        [DataRow("The cow jumped over the moon;", " ", "", true, "Thecowjumpedoverthemoon;")] // Remove spaces
+        [DataRow("The little dog laughed", "tt", "ss", true, "The lissle dog laughed")] // captial T untouched
+        [DataRow("To see such sport,", "e", "ss", true, "To sssss such sport,")]
+        [DataRow("And the dish ran away with the spoon.", "A", "a", true, "and the dish ran away with the spoon.")]
+        [DataRow("cat", "c", "b", true, "bat")]
+        [DataRow("", "c", "b", true, "")]
+        [DataRow(" ", "c", "b", true, " ")]
+        [DataRow("0", "0", "", true, "")]
+        [DataRow("0", "0 ", "", true, "0")]
+        [DataRow(null, null, "hello", true, "hello")]
+        [DataRow("", "", "hello2", true, "hello2")]
+        [DataRow("Michael's", "'", "", true, "Michaels")]
+        [DataRow("Michael\"s", "\"", "", true, "Michaels")]
+        [DataRow(null, "a", "", true, null)]
+        [DataRow("", "a", "", true, "")]
+        [DataRow("Michael", "ae", "", true, "Michl")]
+        [DataRow("Michael", "", "", true, "Michael")]
+        [DataRow("Michael", null, "", true, "Michael")]
+        [DataRow("Michael's", "'", "-", true, "Michael-s")]
+        [DataRow("Michael", "chael", "ke", true, "Mike")]
+        [DataRow("And the dog and the cat", "and", "or", false, "or the dog or the cat")]
+        [DataRow("schaAl", "a", "o", false, "school")]
         public void GetWriteData_CanReplaceText_DataReplaced(string csvField, string oldValue,
-            string newValue, string expectedResult)
+            string newValue, bool isCaseSensitive, string expectedResult)
         {
             // Arrange 
-            var attribute = new CsvConverterStringOldAndNewAttribute(typeof(CsvConverterStringReplaceTextEveryMatch)) { OldValue = oldValue, NewValue = newValue };
+            var attribute = new CsvConverterStringOldAndNewAttribute(
+                typeof(CsvConverterStringReplaceTextEveryMatch))
+                { OldValue = oldValue, NewValue = newValue, IsCaseSensitive = isCaseSensitive };
 
             var classUnderTest = new CsvConverterStringReplaceTextEveryMatch();
             classUnderTest.Initialize(attribute, new DefaultTypeConverterFactory());
@@ -48,33 +52,37 @@ namespace CsvConverter.Core.Tests.Converters
         }
 
         [DataTestMethod]
-        [DataRow("Hey, diddle, diddle,", "c", "b", "Hey, diddle, diddle,")] // no changes
-        [DataRow("The cat and the fiddle,", "T", "G", "Ghe cat and the fiddle,")]  // target captial letter
-        [DataRow("The cow jumped over the moon;", " ", "", "Thecowjumpedoverthemoon;")] // Remove spaces
-        [DataRow("The little dog laughed", "tt", "ss", "The lissle dog laughed")] // captial T untouched
-        [DataRow("To see such sport,", "e", "ss", "To sssss such sport,")]
-        [DataRow("And the dish ran away with the spoon.", "A", "a", "and the dish ran away with the spoon.")]
-        [DataRow("cat", "c", "b", "bat")]
-        [DataRow("", "c", "b", "")]
-        [DataRow(" ", "c", "b", " ")]
-        [DataRow("0", "0", "", "")]
-        [DataRow("0", "0 ", "", "0")]
-        [DataRow(null, null, "hello", "hello")]
-        [DataRow("", "", "hello2", "hello2")]
-        [DataRow("Michael's", "'", "", "Michaels")]
-        [DataRow("Michael\"s", "\"", "", "Michaels")]
-        [DataRow(null, "a", "", null)]
-        [DataRow("", "a", "", "")]
-        [DataRow("Michael", "ae", "", "Michl")]
-        [DataRow("Michael", "", "", "Michael")]
-        [DataRow("Michael", null, "", "Michael")]
-        [DataRow("Michael's", "'", "-", "Michael-s")]
-        [DataRow("Michael", "chael", "ke", "Mike")]
+        [DataRow("Hey, diddle, diddle,", "c", "b", true, "Hey, diddle, diddle,")] // no changes
+        [DataRow("The cat and the fiddle,", "T", "G", true, "Ghe cat and the fiddle,")]  // target captial letter
+        [DataRow("The cow jumped over the moon;", " ", "", true, "Thecowjumpedoverthemoon;")] // Remove spaces
+        [DataRow("The little dog laughed", "tt", "ss", true, "The lissle dog laughed")] // captial T untouched
+        [DataRow("To see such sport,", "e", "ss", true, "To sssss such sport,")]
+        [DataRow("And the dish ran away with the spoon.", "A", "a", true, "and the dish ran away with the spoon.")]
+        [DataRow("cat", "c", "b", true, "bat")]
+        [DataRow("", "c", "b", true, "")]
+        [DataRow(" ", "c", "b", true, " ")]
+        [DataRow("0", "0", "", true, "")]
+        [DataRow("0", "0 ", "", true, "0")]
+        [DataRow(null, null, "hello", true, "hello")]
+        [DataRow("", "", "hello2", true, "hello2")]
+        [DataRow("Michael's", "'", "", true, "Michaels")]
+        [DataRow("Michael\"s", "\"", "", true, "Michaels")]
+        [DataRow(null, "a", "", true, null)]
+        [DataRow("", "a", "", true, "")]
+        [DataRow("Michael", "ae", "", true, "Michl")]
+        [DataRow("Michael", "", "", true, "Michael")]
+        [DataRow("Michael", null, "", true, "Michael")]
+        [DataRow("Michael's", "'", "-", true, "Michael-s")]
+        [DataRow("Michael", "chael", "ke", true, "Mike")]
+        [DataRow("And the dog and the cat", "and", "or", false, "or the dog or the cat")]
+        [DataRow("schaAl", "a", "o", false, "school")]
         public void GetReadData_CanReplaceText_DataReplaced(string csvField, string oldValue,
-       string newValue, string expectedResult)
+       string newValue, bool isCaseSensitive, string expectedResult)
         {
             // Arrange 
-            var attribute = new CsvConverterStringOldAndNewAttribute(typeof(CsvConverterStringReplaceTextEveryMatch)) { OldValue = oldValue, NewValue = newValue };
+            var attribute = new CsvConverterStringOldAndNewAttribute(
+                typeof(CsvConverterStringReplaceTextEveryMatch))
+            { OldValue = oldValue, NewValue = newValue, IsCaseSensitive = isCaseSensitive };
 
             var classUnderTest = new CsvConverterStringReplaceTextEveryMatch();
             classUnderTest.Initialize(attribute, new DefaultTypeConverterFactory());

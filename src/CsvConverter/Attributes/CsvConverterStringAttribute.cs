@@ -20,6 +20,7 @@ namespace CsvConverter
 
         public bool IsPreConverter { get; set; } = false;
         public bool IsPostConverter { get; set; } = false;
+        public bool IsCaseSensitive { get; set; } = true;
 
         /// <summary>An optional, order for pre and post converters in case there are more than one decorating a property or class.</summary>
         public int Order { get; set; } = 999;
