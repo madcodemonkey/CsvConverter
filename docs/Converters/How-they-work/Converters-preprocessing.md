@@ -1,6 +1,6 @@
 # How do you use a string converter as a pre-processor?
 
-A pre-processor is JUST a string converter.  Any converter that inherits from CsvConverterStringBase is considered a string converter and can be used as a per-processor, type converter or post-processor.
+A pre-processor is JUST a string converter.  Any converter that inherits from CsvConverterStringBase is considered a string converter and can be used as a pre-processor, type converter or post-processor.
 
 ## Rules for pre-processors
 - They are just string type converters that inherit from CsvConverterStringBase (Note: CsvConverterStringBase inherits from CsvConverterTypeBase).
@@ -44,7 +44,7 @@ Notes
 [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextEveryMatch),
 	TargetPropertyType = typeof(string), OldValue = " ", NewValue = "", Order = 1, IsPreConverter = true)]
 [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch),
-	TargetPropertyType = typeof(string), OldValue = "dog", NewValue = "cat", Order = 2, IsPreConverter = true)]
+	TargetPropertyType = typeof(string), OldValue = "dog", NewValue = "cat", Order = 2, IsCaseSensitive = false, IsPreConverter = true)]
 public class Animal
 {
 	public int Order { get; set; }
@@ -55,6 +55,6 @@ public class Animal
 ```
 
 Notes
-- In this example there are two pre-processors executing against the AnimalType property.  The first removes all spaces and the sceond converters the world "dog" to "cat" if the entire word matches.  
+- In this example there are two pre-processors executing against the AnimalType property.  The first removes all spaces and the second converters the world "dog" to "cat" if the entire word matches.  
 -  Notice that the TargetPropertyType must be specified.  The reason is that any type converter can be placed on the class so you must tell CsvConveter what you are targetting.
 - The order that these to pre-processors execute really matters.  That why removing the spaces is done first (Order = 1) and then the match is done second.
