@@ -13,6 +13,7 @@ When reading a CSV file, the following sequence of events are followed:
 ## Reading Rules
 - pre-convertering
     - They are just string type converters that inherit from CsvConverterStringBase (Note: CsvConverterStringBase inherits from CsvConverterTypeBase).
+    - They must with the CsvConverterStringAttribute attribute OR an attribute that herits from CsvConverterStringAttribute (e.g., CsvConverterStringTrimAttribute).  The reason or this requirement is that the CsvConverterStringAttribute has a IsPreConverter property that must be set to TRUE to indicate that you want a pre-processor.
     - When reading, you may have as many as you wish.
     - They will be executed in the order specified by the Order property on the attribute.
     - They are executed BEFORE type conversion takes place so that they are dealing with strings coming directly from the CSV file OR from the pre-converter that cam before it.
