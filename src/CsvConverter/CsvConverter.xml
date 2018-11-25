@@ -1,0 +1,1129 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CsvConverter</name>
+    </assembly>
+    <members>
+        <member name="M:CsvConverter.CsvConverterAttribute.#ctor">
+            <summary>Default constructor.  Do NOT use this unless you have overriden GetConverter!</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterAttribute.#ctor(System.Type)">
+            <summary>Use this if you have not override GetCoverter and want the default code to run and create a 
+            type converters.</summary>
+            <param name="converterType"></param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterAttribute.ColumnIndex">
+            <summary>READING CSV FILES: It is used ONLY when there is NOT a header row.  If the CSV file has a header row this is ignored.  
+            If there is NOT a header row, this is mandatory and represents the column index (ONE based) position of the column in the CSV file.
+            WRITING CSV FILES: It is used to determine the column order of the CSV files.  If not specified, we will order by ColumnName.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterAttribute.ColumnName">
+            <summary>READING CSV FILES:  Used ONLY when there IS a header row.  Use this if the CSV column name does NOT match the property name 
+            (case doesn't matter when matching).  Only one column can be mapped to a property!  This is the primary column name and will
+            be used BEFORE AltColumnNames!
+            WRITING CSV FILES: If specified, this will be the header column name.  If not specified, the property name will be used.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterAttribute.AltColumnNames">
+            <summary>READING CSV FILES: Used ONLY when there IS a header row and ColumnName was not used.  Use commas to specify more than one column name.  
+            Only one column can be mapped to a property!
+            WRITING CSV FILES:  Not used!</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterAttribute.IgnoreWhenReading">
+            <summary>READING CSV FILES:  Ignore this property regardless if it is used in the CSV or if it has nothing to do with the CSV file.
+            WRITING CSV FILES:  Not used!</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterAttribute.IgnoreWhenWriting">
+            <summary>WRITING CSV FILES: Prevents data from being written to the CSV file. If ColumnIndex == -1 AND this is set to true, it is used to 
+            prevent column from being created in the CSV file.
+            READING CSV FILES:  Not used.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterAttribute.ConverterType">
+            <summary>The class that will convert data.</summary>       
+        </member>
+        <member name="P:CsvConverter.CsvConverterAttribute.TargetPropertyType">
+            <summary>When this attribute is used to decorate a class, you can target a particular target type. 
+            It is NOT used when decorating a property! Also, when used on the class level it will NOT override
+            converters on the actual property.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterAttribute.CreateConverterForClass(System.Type,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Creates a converter for a property on a class based on the type specified by ConverterType OR you can 
+            dynamically create a converter based on the property information passed into the method.</summary>
+            <param name="theClassType">The class were the property resides so that it can be named to help the user
+            find the particular property in question if they have more than class decorated with converter attributes.</param>
+            <param name="defaultFactory">The default type converter factory.</param>
+            <returns>A converter</returns>
+        </member>
+        <member name="M:CsvConverter.CsvConverterAttribute.CreateConverterForProperty(System.Type,System.Reflection.PropertyInfo,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Creates a converter for a property on a class based on the type specified by ConverterType OR ou can 
+            dynamically create a converter based on the property information passed into the method.</summary>
+            <param name="theClassType">The class were the property resides so that it can be named to help the user
+            find the particular property in question if they have more than class decorated with converter attributes.</param>
+            <param name="propInfo">Property information about the property that this attribute was on.</param>
+            <param name="currentConversionDirection">Indicates what is being requested</param>
+            <param name="defaultFactory">The default type converter factory.</param>
+            <returns>A converter or null if one is not specified.</returns>
+        </member>
+        <member name="M:CsvConverter.CsvConverterAttribute.IsColumIndexSpecified">
+            <summary>Indicates if a column index was specified.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterAttribute.IsColumnNameSpecified">
+            <summary>Indicates if a column name was specified.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterAttribute.AreAltColumnNamesSpecified">
+            <summary>Indicates if alternate columns names were specified.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterAttribute.GetErrorMessageForCreateConverterForProperty(System.Type,System.Reflection.PropertyInfo)">
+            <summary>When using the CreateConverterForProperty method, this will generate the long detailed error message
+            to inform the user of a failure.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterAttribute.GetErrorMessageForCreateConverterForClass(System.Type)">
+            <summary>When using the CreateConverterForProperty method, this will generate the long detailed error message
+            to inform the user of a failure.</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterBooleanAttribute">
+            <summary>Used for converting booleans</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterBooleanAttribute.#ctor">
+            <summary>Constructor used when you want the default to use the default/built in converters</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterBooleanAttribute.#ctor(System.Type)">
+            <summary>Constructor to use when you want to provide your own converter.</summary>
+            <param name="converterType">A cstom converter</param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterBooleanAttribute.TrueValue">
+            <summary>Indicates the text that represents a true value in the CSV file (it is case insensitive for inputs and written as is for outputs)</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterBooleanAttribute.FalseValue">
+            <summary>Indicates the text that represents a false value in the CSV file (it is case insensitive for inputs and written as is for outputs)</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterDateTimeAttribute">
+            <summary>Used for converting DateTime</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDateTimeAttribute.#ctor">
+            <summary>Constructor used when you want the default to use the default/built in converters</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDateTimeAttribute.#ctor(System.Type)">
+            <summary>Constructor to use when you want to provide your own converter.</summary>
+            <param name="converterType">A cstom converter</param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDateTimeAttribute.DateStyle">
+            <summary>The style to use with the DateTime ParseExact method when converting strings to dates.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDateTimeAttribute.StringFormat">
+            <summary>The output format to use when converting a DateTime into a string OR 
+            The format to use with the DateTime ParseExact method when converting strings to dates.</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterNumberAttribute">
+            <summary>Used when converting numbers (int, decimal, double, float, byte, etc.)</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterNumberAttribute.#ctor">
+            <summary>Constructor used when you want the default to use the default/built in converters</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterNumberAttribute.#ctor(System.Type)">
+            <summary>Constructor to use when you want to provide your own converter.</summary>
+            <param name="converterType">A cstom converter</param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterNumberAttribute.StringFormat">
+            <summary>The output format to use when converting a number into a string</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterNumberAttribute.Mode">
+            <summary>Mode is used when AllowRounding is true.  It is used with the Math.Round function.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterNumberAttribute.AllowRounding">
+            <summary>Default is TRUE and if true, Mode is used with Math.Round; otherwise, Math.Floor is used and NO rounding takes place.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterNumberAttribute.NumberOfDecimalPlaces">
+            <summary>Number of decimal places to use when rounding</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterStringAttribute">
+            <summary>Used for converting strings</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringAttribute.#ctor">
+            <summary>Default constructor.  Do NOT use this unless you have overriden GetConverter!</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringAttribute.#ctor(System.Type)">
+            <summary>Use this if you have not override GetCoverter and want the default code to run and create a 
+            type converters.</summary>
+            <param name="converterType"></param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterStringAttribute.IsPreConverter">
+            <summary>Indicates that the converter is used PRIOR to type conversion.  In other words,
+            you want to perform one or more pre-processes on the incoming string from a CSV file
+            prior the the type converter getting a hold of it and converting it to the class
+            property type.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterStringAttribute.IsPostConverter">
+            <summary>Indicates that the converter is used AFTER type conversion.  In other words,
+            the class property type should be converted to a string and then the post-processor
+            should be called to perform additional operations on the string prior to be written
+            out to the CSV file.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterStringAttribute.IsCaseSensitive">
+            <summary>Indicates if the string operation is case sensitve.  The default is TRUE.
+            Keep in mind that not all converters will use this setting.  For example, the
+            CsvConverterStringTrimmer converter does NOT use it.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterStringAttribute.Order">
+            <summary>An optional, order for pre and post converters in case there are more than one decorating a property or class.</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterStringOldAndNewAttribute">
+            <summary>Use this attribute when the converter needs and old and new value for a property.
+            This primarily used for a direct substitution.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringOldAndNewAttribute.#ctor(System.Type)">
+            <summary>Constructor</summary>
+            <param name="converterType"></param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterStringOldAndNewAttribute.OldValue">
+            <summary>Old value</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterStringOldAndNewAttribute.NewValue">
+            <summary>New Value</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterStringTrimAttribute">
+            <summary>Use this attribute when the converter needs and old and new value for a property.
+            This primarily used for a direct substitution.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringTrimAttribute.#ctor(System.Type)">
+            <summary>Constructor</summary>
+            <param name="converterType"></param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterStringTrimAttribute.TrimAction">
+            <summary>Explains how you would like the string to be trimmed.</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterConfiguration">
+            <summary>Main configuration class.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterConfiguration.HasHeaderRow">
+            <summary>Reading or Writing.  Indicates if a CSV file has a header row.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterConfiguration.IgnoreExtraCsvColumns">
+            <summary>Reading. While mapping CSV columns to class properties, this indicates if an error should be thrown if a CSV column cannot 
+            be matched to a class property.  By default this is false assuming that if the user was interested in the CSV column they 
+            would create a property for it. However, the reverse is NOT true in that if an existing class property that is NOT marked 
+            with ignore cannot be matched to a CSV column you will always get an error.  The class property should be marked with the 
+            CsvConverterAttribute and set IgnoreWhenReading to true if it truly should be ignored.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterConfiguration.ThrowExceptionIfColumnCountChanges">
+            <summary>Reading.Indicates if the column count changes from row to row we should throw an exception.  The column count should be consistent throughout the entire file.
+            It really should NOT change from row to row or it is truly malformed.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterConfiguration.BlankRowsAreReturnedAsNull">
+            <summary>Reading.  Indicates that you would like null returned if the line is blank (all white space, null or all commas) 
+            rather than letting the reader try to interpret the blank as data and throw an exception.</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterPercentage">
+            <summary>Turns a string that is a percentage into a decimal value or throws an exception if the conversion fails.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterPercentage.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterPercentage.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterPercentage.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>Converts a percentage string into a decimal or decimal? value.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterPercentage.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Converts a decimal into a percentage string</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterStringBase">
+            <summary>Base class for all string converters.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringBase.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue">
+            <summary>Replaces any null or white spaced string, with text in the NewValue property.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string into a another string if there is an exact match; otherwise, the
+            original string is left untouched.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string into a another string if there is an exact match; otherwise, the
+            original string is left untouched.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue.Convert(System.String)">
+            <summary>If a string is null or white space, the value is replaced with whatever is in _newValue.</summary>
+            <param name="value">The value to examine and potentially replace.</param>
+            <param name="columnName">Name of the column being read.</param>
+            <param name="columnIndex">Index of the column being read</param>
+            <param name="rowNumber">Row number being read.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceTextEveryMatch.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceTextEveryMatch.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceTextEveryMatch.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string into a another string if there is an exact match; otherwise, the
+            original string is left untouched.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceTextEveryMatch.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string into a another string if there is an exact match; otherwise, the
+            original string is left untouched.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceTextEveryMatch.Convert(System.String)">
+            <summary>Performs operations on a CSV value BEFORE the type converter is called.
+            In this case, text is replaced beforehand.</summary>
+            <param name="value">Value straight from the CSV file before the TYPE converter touches it.</param>
+            <param name="columnName">Name of the column being read.</param>
+            <param name="columnIndex">Index of the column being read</param>
+            <param name="rowNumber">Row number being read.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceTextEveryMatch.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterStringReplaceTextExactMatch">
+            <summary>Replaces the text specified in the OldValue attribute with text in the NewValue attribute.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceTextExactMatch.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceTextExactMatch.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceTextExactMatch.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string into a another string if there is an exact match; otherwise, the
+            original string is left untouched.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceTextExactMatch.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string into a another string if there is an exact match; otherwise, the
+            original string is left untouched.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceTextExactMatch.Convert(System.String)">
+            <summary>Performs operations on a CSV value BEFORE the type converter is called.
+            In this case, text is replaced beforehand.</summary>
+            <param name="value">Value straight from the CSV file before the TYPE converter touches it.</param>
+            <param name="columnName">Name of the column being read.</param>
+            <param name="columnIndex">Index of the column being read</param>
+            <param name="rowNumber">Row number being read.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringReplaceTextExactMatch.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterStringTrimmer">
+            <summary>Trims all fields of white space left and right of the text.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringTrimmer.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringTrimmer.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringTrimmer.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string into a trimmed string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterStringTrimmer.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterTypeBase">
+            <summary>Base class for all converters.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterTypeBase.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterTypeBase.ConvertSpecialStrings(System.String)">
+            <summary>This is shared code for the Float, Decimal and Double Type converters to look for possible special characters and return a value that 
+            each can convert as a string.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterTypeBase.ThrowConvertErrorWhileReading(System.Type,System.Type,System.String,System.String,System.Int32,System.Int32,System.String)">
+            <summary>Gives a detailed error message if there is a type conversion issue.</summary>
+            <param name="theTypeOfTheConverter">The class that inherited from this class</param>
+            <param name="outputType">Type type being converted</param>
+            <param name="stringValue">The string input value</param>
+            <param name="columnName">The column name</param>
+            <param name="columnIndex">The column's index in the file</param>
+            <param name="rowNumber">The row number in the file.</param>
+            <param name="optionalMessage">An optional message.</param>
+        </member>
+        <member name="T:CsvConverter.CsvConverterDefaultBoolean">
+            <summary>A converter designed to convert boolean properties to string values.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultBoolean.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultBoolean.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultBoolean.TrueValue">
+            <summary>Indicates the text that represents a true value in the CSV file (it is case insensitive for inputs and written as is for outputs)</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultBoolean.FalseValue">
+            <summary>Indicates the text that represents a false value in the CSV file (it is case insensitive for inputs and written as is for outputs)</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultBoolean.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string to a boolean</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultBoolean.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Converts a boolean to a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultBoolean.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterDefaultByte">
+            <summary>A converter designed to convert byte properties to string values.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultByte.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultByte.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultByte.StringFormat">
+            <summary>The output format to use when converting a number into a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultByte.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Converts a byte to a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultByte.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string to a byte</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultByte.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterDefaultDateTime">
+            <summary>A converter designed to convert DateTime properties to string values.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDateTime.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDateTime.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultDateTime.DateFormat">
+            <summary>The format to use with the DateTime ParseExact method.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultDateTime.DateFormatProvider">
+            <summary>The Date Format Provider used with the DateTie ParseExcat method</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultDateTime.DateStyle">
+            <summary>The style to use with the DateTime ParseExact method.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDateTime.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Converts a DateTime to a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDateTime.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string to a DateTime</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDateTime.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterDefaultDecimal">
+            <summary>A converter designed to convert decimal properties to string values.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDecimal.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDecimal.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultDecimal.Mode">
+            <summary>Mode is used when AllowRounding is true.  It is used with the Math.Round function.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultDecimal.AllowRounding">
+            <summary>Default is FALSE to not lose percision.  If true, Mode is used with Math.Round; otherwise, Math.Floor
+            is used and NO rounding takes place.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultDecimal.NumberOfDecimalPlaces">
+            <summary>Number of decimal places to use when rounding</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultDecimal.StringFormat">
+            <summary>The output format to use when converting a number into a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDecimal.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Converts a decimal to a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDecimal.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string to a decimal</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDecimal.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterDefaultDouble">
+            <summary>A converter designed to convert double properties to string values.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDouble.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDouble.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultDouble.Mode">
+            <summary>Mode is used when AllowRounding is true.  It is used with the Math.Round function.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultDouble.AllowRounding">
+            <summary>Default is TRUE and if true, Mode is used with Math.Round; otherwise, Math.Floor is used and NO rounding takes place.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultDouble.NumberOfDecimalPlaces">
+            <summary>Number of decimal places to use when rounding</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultDouble.StringFormat">
+            <summary>The output format to use when converting a number into a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDouble.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Converts a double to a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDouble.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string to a double</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultDouble.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterDefaultFloat">
+            <summary>A converter designed to convert float properties to string values.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultFloat.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultFloat.NumberOfDecimalPlaces">
+            <summary>Number of decimal places to use when rounding</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultFloat.Mode">
+            <summary>Mode is used when AllowRounding is true.  It is used with the Math.Round function.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultFloat.AllowRounding">
+            <summary>Default is TRUE and if true, Mode is used with Math.Round; otherwise, Math.Floor is used and NO rounding takes place.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultFloat.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultFloat.StringFormat">
+            <summary>The output format to use when converting a number into a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultFloat.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Converts a float to a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultFloat.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string to a float</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultFloat.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterDefaultInt">
+            <summary>A converter for turning strings into integer values.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultInt.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultInt.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultInt.StringFormat">
+            <summary>The output format to use when converting a number into a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultInt.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Converts a byte to a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultInt.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string to a byte</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultInt.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterDefaultLong">
+            <summary>A converter designed to convert long properties to string values.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultLong.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultLong.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultLong.StringFormat">
+            <summary>The output format to use when converting a number into a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultLong.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Converts a long to a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultLong.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string to a long</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultLong.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterDefaultShort">
+            <summary>A converter designed to convert short properties to string values.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultShort.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultShort.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="P:CsvConverter.CsvConverterDefaultShort.StringFormat">
+            <summary>The output format to use when converting a number into a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultShort.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Converts a short to a string</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultShort.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>Converts a string to a short</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultShort.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Initializes the converter with an attribute</summary>
+        </member>
+        <member name="T:CsvConverter.CsvConverterDefaultString">
+            <summary>A converter for strings.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultString.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultString.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultString.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>Returns value</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterDefaultString.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>Returns value</summary>
+        </member>
+        <member name="T:CsvConverter.ICsvConverter">
+            <summary>Main interface for all converters</summary>
+        </member>
+        <member name="M:CsvConverter.ICsvConverter.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
+            <summary>Used to pass the attribute to the converter in case it needs any optional inputs.</summary>
+        </member>
+        <member name="M:CsvConverter.ICsvConverter.CanRead(System.Type)">
+            <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+            <param name="propertyType">The type that should be returned from the GetReadData method.</param>
+        </member>
+        <member name="M:CsvConverter.ICsvConverter.CanWrite(System.Type)">
+            <summary>Can this converter turn the property type specified into a CSV column string?</summary>
+            <param name="propertyType">The class property type that you must convert into a string.</param>
+        </member>
+        <member name="M:CsvConverter.ICsvConverter.GetWriteData(System.Type,System.Object,System.String,System.Int32,System.Int32)">
+            <summary>You are passed the class property information and you must output a string or null that will be written into a CSV file column</summary>
+            <param name="inputType">The type of the property that is your input.  In most cases it should be a primitive type (int, decimal, etc.).</param>
+            <param name="value">The object from a class property.  This should be a primitive in most cases.  It's what you get when you call PropertyInfo GetValue method.</param>
+            <param name="columnName">Name of the column</param>
+            <param name="columnIndex">Index of the column</param>
+            <param name="rowNumber">Row number of the column</param>
+            <returns>A string to write out to the CSV column</returns>
+        </member>
+        <member name="M:CsvConverter.ICsvConverter.GetReadData(System.Type,System.String,System.String,System.Int32,System.Int32)">
+            <summary>You are passed the string value and you must convert it to the property type and assign it to the 
+            class property OR you can use the default converter after doing some manipulation.</summary>
+            <param name="inputType">The type of the class property the object will be assigned.</param>
+            <param name="value">The CSV column/field data that we are attempting to convert.</param>
+            <param name="columnName">Name of the column</param>
+            <param name="columnIndex">Index of the column</param>
+            <param name="rowNumber">Row number of the column</param>
+            <returns>An object to assign to a class property</returns>
+        </member>
+        <member name="T:CsvConverter.ICsvConverterString">
+            <summary>Nain interface for STRING converters.</summary>
+        </member>
+        <member name="T:CsvConverter.CsvReaderService`1">
+            <summary>Converts CSV rows into class instances.  The class instances will of type T.</summary>
+            <typeparam name="T">Class instance type</typeparam>
+        </member>
+        <member name="M:CsvConverter.CsvReaderService`1.#ctor(System.IO.StreamReader)">
+            <summary>Constructor.  This is the standard constructor were you pass in a StreamReader that is already connected to an
+            open stream.</summary>
+            <param name="sr">An instance of StreamReader that is already attached to an open file stream.</param>
+        </member>
+        <member name="M:CsvConverter.CsvReaderService`1.#ctor(CsvConverter.RowTools.IRowReader)">
+            <summary>A constructor for dependency injection that is used primarly for TESTING!; however, a user could override how 
+            a row is read by implementing the interface.</summary>
+            <param name="rowReader"></param>
+        </member>
+        <member name="M:CsvConverter.CsvReaderService`1.CanRead">
+            <summary>Indicates if there is more to read from the file.</summary>
+            <returns></returns>
+        </member>
+        <member name="P:CsvConverter.CsvReaderService`1.RowNumber">
+            <summary>Indicates the current row number.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvReaderService`1.GetRecord">
+            <summary>Reads a row, creates an instance of a class of type T and populates the class with data from the row.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvReaderService`1.CreateMappings">
+            <summary>Creates the mappings necessary for each property.</summary>
+            <returns></returns>
+        </member>
+        <member name="P:CsvConverter.CsvServiceBase.ColumnMapList">
+            <summary>Information about each column. It is not initialized till Init method is called 
+            and that is done automatically upon using a read or write method.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvServiceBase.Configuration">
+            <summary>General Configuration settings</summary>
+        </member>
+        <member name="P:CsvConverter.CsvServiceBase.DefaultConverterFactory">
+            <summary>When generating property maps and a converter is not specified for a known type,
+            this factory is used to create a converter for the property.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvServiceBase.Init">
+            <summary>If called explicitly by the user, it will read the header row and create mappings; otherwise, it will be called
+            the first time you call a read or write method.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvServiceBase.FindColumnsByConverterType(System.Type)">
+            <summary>Retrieves a list of Column maps based on the converter being used by the property. 
+            Call this method AFTER calling Init() or the result will be a count of zero.</summary>
+            <param name="typeOfConveter">Converter type</param>
+            <returns>List of columns using the converter.</returns>
+        </member>
+        <member name="M:CsvConverter.CsvServiceBase.FindColumnsByPropertyType(System.Type)">
+            <summary>Retrieves a list of Column maps based on the class property type.
+            Call this method AFTER calling Init() or the result will be a count of zero.</summary>
+            <param name="typeOfProperty">A property type</param>
+            <returns>List of columns with the specified property type.</returns>
+        </member>
+        <member name="T:CsvConverter.CsvWriterService`1">
+            <summary>Converts Class into a CSV row.  The class instances will of type T.</summary>
+            <typeparam name="T">Class instance type</typeparam>
+        </member>
+        <member name="M:CsvConverter.CsvWriterService`1.#ctor(System.IO.StreamWriter)">
+            <summary>Constructor.  This is the standard constructor were you pass in a StreamWriter that is already connected to an open stream.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvWriterService`1.#ctor(CsvConverter.RowTools.IRowWriter)">
+            <summary>Constructor for dependency injection that is used primarly for TESTING; however, a user could override how 
+            a row is written by implementing the interface.</summary>
+        </member>
+        <member name="P:CsvConverter.CsvWriterService`1.RowNumber">
+            <summary>Indicates the current row number.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvWriterService`1.WriteRecord(`0)">
+            <summary>Writes a single row to the CSV file.</summary>
+            <param name="record">What to write to the CSV file</param>
+        </member>
+        <member name="T:CsvConverter.CsvConverterAttributeException">
+            <summary>A CSV Converter attribute exception</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterAttributeException.#ctor(System.String)">
+            <summary>Constructor.</summary>
+            <param name="message">Error message</param>
+        </member>
+        <member name="T:CsvConverter.CsvConverterException">
+            <summary>A generic exeception class for the CSV Converter project.</summary>
+        </member>
+        <member name="M:CsvConverter.CsvConverterException.#ctor(System.String)">
+            <summary>Constructor</summary>
+            <param name="message">Error message</param>
+        </member>
+        <member name="M:CsvConverter.CsvConverterException.#ctor(System.String,System.Exception)">
+            <summary>Constructor</summary>
+            <param name="message">Error message</param>
+            <param name="innerException">Inner exception</param>
+        </member>
+        <member name="T:CsvConverter.DefaultTypeConverterFactory">
+            <summary>Creates type converters</summary>
+        </member>
+        <member name="M:CsvConverter.DefaultTypeConverterFactory.#ctor">
+            <summary>constructor</summary>
+        </member>
+        <member name="M:CsvConverter.DefaultTypeConverterFactory.CreateConverter(System.Type)">
+            <summary>Creates the appropriate converter for the class property type</summary>
+            <param name="theClassPropertyType">The property's type.  This is the class property.</param>
+            <returns>A type converter</returns>
+        </member>
+        <member name="M:CsvConverter.DefaultTypeConverterFactory.AddConverter(System.Type,System.Type)">
+            <summary>Adds a converter to the factory.</summary>
+        </member>
+        <member name="M:CsvConverter.DefaultTypeConverterFactory.FindConverter``1(System.Type)">
+            <summary>Finds a converter in the factory.</summary>
+        </member>
+        <member name="M:CsvConverter.DefaultTypeConverterFactory.FindConverterType(System.Type)">
+            <summary>Finds the type of the converter in the factory and returns it.</summary>
+        </member>
+        <member name="M:CsvConverter.DefaultTypeConverterFactory.ReplaceConverter(System.Type,System.Type)">
+            <summary>Replace an existing converter if it exists or adds it if it does not exist.</summary>
+        </member>
+        <member name="M:CsvConverter.DefaultTypeConverterFactory.RemoveConverter(System.Type)">
+            <summary>Removes a type converter from the factory.</summary>
+        </member>
+        <member name="M:CsvConverter.DefaultTypeConverterFactory.ConverterExists(System.Type)">
+            <summary>Indicates if a type converter exists in the factory.</summary>
+        </member>
+        <member name="T:CsvConverter.IDefaultTypeConverterFactory">
+            <summary>Creates type converters</summary>
+        </member>
+        <member name="M:CsvConverter.IDefaultTypeConverterFactory.AddConverter(System.Type,System.Type)">
+            <summary>Adds a converter to the factory.</summary>
+        </member>
+        <member name="M:CsvConverter.IDefaultTypeConverterFactory.ConverterExists(System.Type)">
+            <summary>Indicates if a type converter exists in the factory.</summary>
+        </member>
+        <member name="M:CsvConverter.IDefaultTypeConverterFactory.CreateConverter(System.Type)">
+            <summary>Creates the appropriate converter for the class property type</summary>
+            <param name="theClassPropertyType">The property's type.  This is the class property.</param>
+            <returns>A type converter</returns>
+        </member>
+        <member name="M:CsvConverter.IDefaultTypeConverterFactory.FindConverter``1(System.Type)">
+            <summary>Finds a converter in the factory and cast it to the type.</summary>
+        </member>
+        <member name="M:CsvConverter.IDefaultTypeConverterFactory.FindConverterType(System.Type)">
+            <summary>Finds the type of the converter in the factory and returns it.</summary>
+        </member>
+        <member name="M:CsvConverter.IDefaultTypeConverterFactory.ReplaceConverter(System.Type,System.Type)">
+            <summary>Replace an existing converter if it exists or adds it if it does not exist.</summary>
+        </member>
+        <member name="M:CsvConverter.IDefaultTypeConverterFactory.RemoveConverter(System.Type)">
+            <summary>Removes a type converter from the factory.</summary>
+        </member>
+        <member name="P:CsvConverter.ICsvReaderService`1.RowNumber">
+            <summary>Indicates the current row number.</summary>
+        </member>
+        <member name="M:CsvConverter.ICsvReaderService`1.CanRead">
+            <summary>Indicates if there is more to read from the file.</summary>
+        </member>
+        <member name="M:CsvConverter.ICsvReaderService`1.GetRecord">
+            <summary>Reads a row, creates an instance of a class of type T and populates the class with data from the row.</summary>
+        </member>
+        <member name="P:CsvConverter.ICsvReaderService`1.ColumnMapList">
+            <summary>Information about each column. It is not initialized till Init method is called 
+            and that is done automatically upon using a read or write method.</summary>
+        </member>
+        <member name="P:CsvConverter.ICsvReaderService`1.Configuration">
+            <summary>General Configuration settings</summary>
+        </member>
+        <member name="P:CsvConverter.ICsvReaderService`1.DefaultConverterFactory">
+            <summary>When generating property maps and a converter is not specified for a known type,
+            this factory is used to create a converter for the property.</summary>
+        </member>
+        <member name="M:CsvConverter.ICsvReaderService`1.FindColumnsByConverterType(System.Type)">
+            <summary>Retrieves a list of Column maps based on the converter being used by the property. 
+            Call this method AFTER calling Init() or the result will be a count of zero.</summary>
+            <param name="typeOfConveter">Converter type</param>
+            <returns>List of columns using the converter.</returns>
+        </member>
+        <member name="M:CsvConverter.ICsvReaderService`1.FindColumnsByPropertyType(System.Type)">
+            <summary>Retrieves a list of Column maps based on the class property type.
+            Call this method AFTER calling Init() or the result will be a count of zero.</summary>
+            <param name="typeOfProperty">A property type</param>
+            <returns>List of columns with the specified property type.</returns>
+        </member>
+        <member name="M:CsvConverter.ICsvReaderService`1.Init">
+            <summary>If called explicitly by the user, it will read the header row and create mappings; otherwise, it will be called
+            the first time you call a read or write method.</summary>
+        </member>
+        <member name="P:CsvConverter.ICsvWriterService`1.RowNumber">
+            <summary>Indicates the current row number.</summary>
+        </member>
+        <member name="M:CsvConverter.ICsvWriterService`1.WriteRecord(`0)">
+            <summary>Writes a single row to the CSV file.</summary>
+            <param name="record">What to write to the CSV file</param>
+        </member>
+        <member name="P:CsvConverter.ICsvWriterService`1.ColumnMapList">
+            <summary>Information about each column. It is not initialized till Init method is called 
+            and that is done automatically upon using a read or write method.</summary>
+        </member>
+        <member name="P:CsvConverter.ICsvWriterService`1.Configuration">
+            <summary>General Configuration settings</summary>
+        </member>
+        <member name="P:CsvConverter.ICsvWriterService`1.DefaultConverterFactory">
+            <summary>When generating property maps and a converter is not specified for a known type,
+            this factory is used to create a converter for the property.</summary>
+        </member>
+        <member name="M:CsvConverter.ICsvWriterService`1.FindColumnsByConverterType(System.Type)">
+            <summary>Retrieves a list of Column maps based on the converter being used by the property. 
+            Call this method AFTER calling Init() or the result will be a count of zero.</summary>
+            <param name="typeOfConveter">Converter type</param>
+            <returns>List of columns using the converter.</returns>
+        </member>
+        <member name="M:CsvConverter.ICsvWriterService`1.FindColumnsByPropertyType(System.Type)">
+            <summary>Retrieves a list of Column maps based on the class property type.
+            Call this method AFTER calling Init() or the result will be a count of zero.</summary>
+            <param name="typeOfProperty">A property type</param>
+            <returns>List of columns with the specified property type.</returns>
+        </member>
+        <member name="M:CsvConverter.ICsvWriterService`1.Init">
+            <summary>If called explicitly by the user, it will read the header row and create mappings; otherwise, it will be called
+            the first time you call a read or write method.</summary>
+        </member>
+        <member name="T:CsvConverter.Mapper.ColumnToPropertyMap">
+            <summary>Used to determine how a CSV column should map on to a property of a class.</summary>
+        </member>
+        <member name="P:CsvConverter.Mapper.ColumnToPropertyMap.ColumnIndex">
+            <summary>Index of the column in the CSV file.</summary>
+        </member>
+        <member name="P:CsvConverter.Mapper.ColumnToPropertyMap.ColumnName">
+            <summary>Name of the column in the CSV file.</summary>
+        </member>
+        <member name="P:CsvConverter.Mapper.ColumnToPropertyMap.PropInformation">
+            <summary>Class property information.  This is where the CSV data will go.</summary>
+        </member>
+        <member name="P:CsvConverter.Mapper.ColumnToPropertyMap.IgnoreWhenWriting">
+            <summary>Indicates that the property should NOT be written into the CSV file.</summary>
+        </member>
+        <member name="P:CsvConverter.Mapper.ColumnToPropertyMap.PostConverters">
+            <summary>When writing CSV files, these are optional postprocesors in case you need to 
+            manipulate the string that will eventually be written to the csv file.  These are called
+            after the converters have done their work.</summary>
+        </member>
+        <member name="P:CsvConverter.Mapper.ColumnToPropertyMap.WriteConverter">
+            <summary>When writing classes to CSV files, this is an optional converter in case you do NOT want the property 
+            coverted to a string using the default property type converters</summary>
+        </member>
+        <member name="P:CsvConverter.Mapper.ColumnToPropertyMap.AltColumnNames">
+            <summary>Although you can specify multiple alternate column names ultimately 
+            only one column can be mapped to a property!</summary>
+        </member>
+        <member name="P:CsvConverter.Mapper.ColumnToPropertyMap.IgnoreWhenReading">
+            <summary>Indicates that the CSV column should be ignored and its value not not assigned to a class property.</summary>
+        </member>
+        <member name="P:CsvConverter.Mapper.ColumnToPropertyMap.PreConverters">
+            <summary>When reading CSV files, these are optional preprocesors in case you need to manipulate the string that will eventually be used.</summary>
+        </member>
+        <member name="P:CsvConverter.Mapper.ColumnToPropertyMap.ReadConverter">
+            <summary>When reading CSV files, this is an optional converter in case you do NOT want the CSV field coverted to
+            the same type as the class property or you just want more control over the conversion process.</summary>
+        </member>
+        <member name="T:CsvConverter.Mapper.ColumnToPropertyMapper`1">
+            <summary>Base object for mapping  CSV columns to class properties</summary>
+            <typeparam name="T">Class instance type</typeparam>
+        </member>
+        <member name="M:CsvConverter.Mapper.ColumnToPropertyMapper`1.#ctor(CsvConverter.CsvConverterConfiguration,CsvConverter.IDefaultTypeConverterFactory,System.Int32)">
+            <summary>Constructor.</summary>
+            <param name="defaultFactory">The default type converter factory, which is passed into any 
+            attributes found during the mapping process so that they can create a default converter if necessary.</param>
+        </member>
+        <member name="M:CsvConverter.Mapper.ColumnToPropertyMapper`1.CreateWriteMap">
+            <summary>Maps all the properties on the T type class and then order then by column index.</summary>
+            <param name="configuration">Configuration items</param>
+            <param name="columnIndexDefaultValue">The default value to give a column.  It's only relevant if the 
+            column is never found.  So, in most cases it is 9999.</param>
+            <returns>List of property maps sorted by column index</returns>
+        </member>
+        <member name="M:CsvConverter.Mapper.ColumnToPropertyMapper`1.MapClassPropertiesToCsvHeaderColumnNames(System.Collections.Generic.List{CsvConverter.Mapper.ColumnToPropertyMap},System.Collections.Generic.List{System.String})">
+            <summary>Maps class properties to CSV columns.</summary>
+            <param name="mapList">The map list</param>
+            <param name="orderedHeaderColumns">A list of header fields from the CSV file in the order the appear in the CSV.  The position of the
+            header column will be used to determine the column index.</param>
+            <param name="configuration">Configuration information.</param>
+        </member>
+        <member name="M:CsvConverter.Mapper.ColumnToPropertyMapper`1.SearchForColumnName(System.Collections.Generic.List{CsvConverter.Mapper.ColumnToPropertyMap},System.String)">
+            <summary>Finds all the maps where the ColumnName matches and returns all matches. If nothing is found, it then searches the AltColumnNames
+            property of every map and returns all matches.</summary>
+            <param name="mapList">List of maps</param>
+            <param name="trimmedField">Trimmed header field name.</param>
+        </member>
+        <member name="M:CsvConverter.Mapper.ColumnToPropertyMapper`1.ResetColumnIndex(System.Collections.Generic.List{CsvConverter.Mapper.ColumnToPropertyMap})">
+            <summary>Resets all the column index to -1 (unused)</summary>
+        </member>
+        <member name="F:CsvConverter.Mapper.ColumnToPropertyMapper`1._theClassType">
+            <summary>Shorthand way of getting to the class type.</summary>
+        </member>
+        <member name="F:CsvConverter.Mapper.ColumnToPropertyMapper`1._defaultFactory">
+            <summary>Default type converter factory.</summary>
+        </member>
+        <member name="M:CsvConverter.Mapper.ColumnToPropertyMapper`1.CreateAllUserSpecifiedConvertersForOneProperty(CsvConverter.Mapper.ColumnToPropertyMap)">
+            <summary>Looks for CsvConverterAttribute on the property using PropertyInfo
+            and then updates any relevant info on the map</summary>
+            <param name="oneMap">The property map to examine</param>
+            <param name="columnIndexDefaultValue">The default column index value (csv to class and class to csv use different values)</param>
+        </member>
+        <member name="M:CsvConverter.Mapper.ColumnToPropertyMapper`1.ExtractColumnNames(System.String)">
+            <summary>Extracts column names for the AltColumnNames property on the CsvConverterAttribute</summary>
+            <param name="columnNames">Comma delimited column names</param>
+            <returns></returns>
+        </member>
+        <member name="M:CsvConverter.Mapper.ColumnToPropertyMapper`1.IsTypeAllowed(System.Type)">
+            <summary>Indicates if the type is allowed.  This is usually only used
+            when there isn't a type converter for the property.</summary>
+        </member>
+        <member name="M:CsvConverter.Mapper.ColumnToPropertyMapper`1.ShouldMapBeAdd(CsvConverter.Mapper.ColumnToPropertyMap)">
+            <summary>Indicates if a map should be added to the map list.  This is usually used to weed 
+            out array or class properties (unless the user has specified a converter than can handle the
+            properties type)</summary>
+            <param name="newMap"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CsvConverter.Mapper.ColumnToPropertyMapper`1.ValidateThatIndexesHaveBeenSpecifiedForEveryClassProperty(System.Collections.Generic.List{CsvConverter.Mapper.ColumnToPropertyMap})">
+            <summary>If there were no header columns, every class property that is not ignored should have a column index.
+            This methods makes sure this condition exists and throws exceptions if it does not exist.</summary>
+        </member>
+        <member name="T:CsvConverter.Mapper.IColumnToPropertyMap">
+            <summary>Describes a property map's common properties</summary>
+        </member>
+        <member name="P:CsvConverter.Mapper.IColumnToPropertyMap.ColumnIndex">
+            <summary>Index of the column in the CSV file.  This is a one based index.</summary>
+        </member>
+        <member name="P:CsvConverter.Mapper.IColumnToPropertyMap.ColumnName">
+            <summary>Name of the column (assuming that the CSV file has a header column)</summary>
+        </member>
+        <member name="P:CsvConverter.Mapper.IColumnToPropertyMap.PropInformation">
+            <summary>Reflection information about the class property</summary>
+        </member>
+        <member name="T:CsvConverter.Reflection.ReflectionAttributeExtensions">
+            <summary>A place to hold non-creation reflection extensions.</summary>
+        </member>
+        <member name="M:CsvConverter.Reflection.ReflectionAttributeExtensions.HelpFindAllClassAttributes``1(System.Type,System.Boolean)">
+            <summary>Finds all the attributes of the specified type (T) on the class.</summary> 
+            <typeparam name="T">The type to find</typeparam>
+            <param name="theType">The type to search</param>
+            <param name="inherit">Indicates if you want to search the base class of theType for attributes.</param>
+        </member>
+        <member name="M:CsvConverter.Reflection.ReflectionAttributeExtensions.HelpFindAttribute``1(System.Reflection.PropertyInfo,System.Boolean)">
+            <summary>Finds the first attribute of the specified type (T).</summary>
+            <typeparam name="T">The type to find</typeparam>
+            <param name="info">The Property Information which will be searched.</param>
+            <param name="inherit">Indicates if you want to search the base class of theType for attributes.</param>
+        </member>
+        <member name="M:CsvConverter.Reflection.ReflectionAttributeExtensions.HelpFindAllAttributes``1(System.Reflection.PropertyInfo,System.Boolean)">
+            <summary>Finds all the attributes of the specified type (T).</summary>
+            <typeparam name="T">The type to find</typeparam>
+            <param name="info">The Property Information which will be searched.</param>
+            <param name="inherit">Indicates if you want to search the base class of theType for attributes.</param>
+        </member>
+        <member name="T:CsvConverter.Reflection.ReflectionCreateExtensions">
+            <summary>A place to hold reflection creation extensions.</summary>
+        </member>
+        <member name="M:CsvConverter.Reflection.ReflectionCreateExtensions.HelpCreateAndCastToInterface``1(System.Type,System.String)">
+            <summary>Creates a class (someType) and cast it to an interface (TInterface).</summary>
+        </member>
+        <member name="M:CsvConverter.Reflection.ReflectionCreateExtensions.HelpIsNullable(System.Type)">
+            <summary>Checks to see if the type is a nullable (e.g., int?)</summary>
+            <param name="someType">Type to check</param>
+        </member>
+        <member name="M:CsvConverter.Reflection.ReflectionCreateExtensions.HelpTypeToString(System.Type)">
+            <summary>Somes a type in a friendly string.  Normally, you can use just the name property on 
+            the Type class, but with nullables you have to look at the underlying type as well.</summary>
+            <param name="someType">Type to show as a string</param>
+        </member>
+        <member name="T:CsvConverter.Reflection.ReflectionHelper">
+            <summary>A class to help with Reflection tasks</summary>
+        </member>
+        <member name="M:CsvConverter.Reflection.ReflectionHelper.FindPropertyInfoByName``1(System.String)">
+            <summary>Finds a property by name.</summary>
+            <typeparam name="T">Type that has the property</typeparam>
+            <param name="propertyName">Name of the property on the type.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CsvConverter.Reflection.ReflectionHelper.CreateGenericType(System.Type,System.Type)">
+            <summary>Creates a generic type</summary>
+            <param name="typeWithGeneric">So, this is the class with the generic type MyClass of T</param>
+            <param name="typeOfT">This is the T in MyClass of T</param>
+            <returns>An instance of the generic type.</returns>
+        </member>
+        <member name="T:CsvConverter.RowTools.IRowReader">
+            <summary>Used for reading rows from a stream.</summary>
+        </member>
+        <member name="P:CsvConverter.RowTools.IRowReader.IsRowBlank">
+            <summary>Indicates if the row that was read is blank (meaning that it was NOTHING but commas with NO spaces)</summary>
+        </member>
+        <member name="P:CsvConverter.RowTools.IRowReader.LastColumnCount">
+            <summary>Indicates the number of columns that were read the last time we read a row.  It always starts a zero when first initialized,
+            but the first row read should give you a number greater than zero.  If the number changes from row to row, it is an indication that 
+            the columns are incorrectly formatted (e.g., text with commans is NOT surrounded by quotes and causing the column count to increase)</summary>
+        </member>
+        <member name="P:CsvConverter.RowTools.IRowReader.RowNumber">
+            <summary>The current row being read.</summary>
+        </member>
+        <member name="M:CsvConverter.RowTools.IRowReader.CanRead">
+            <summary>Indicates if the stream can be read.  In other words, is there more data in the file.</summary>
+        </member>
+        <member name="M:CsvConverter.RowTools.IRowReader.ReadRow">
+            <summary>Reads one row and returns each column in a List of string</summary>
+        </member>
+        <member name="T:CsvConverter.RowTools.IRowWriter">
+            <summary>Used for writing rows to a stream.</summary>
+        </member>
+        <member name="P:CsvConverter.RowTools.IRowWriter.RowNumber">
+            <summary>Last row number number written (starts at zero indicating nothing written yet).</summary>
+        </member>
+        <member name="M:CsvConverter.RowTools.IRowWriter.Write(System.Collections.Generic.List{System.String})">
+            <summary>Writes a list of columns to a file.  It will surround any column data with the proper escape character if necessary.</summary>
+        </member>
+        <member name="M:CsvConverter.RowTools.IRowWriter.Write(System.String)">
+            <summary>Writes a row directly to the file without escaping any data that the columns may contain.</summary>
+        </member>
+        <member name="T:CsvConverter.RowTools.RowBase">
+            <summary>Abstract base class that describes a row in a CSV file.</summary>
+        </member>
+        <member name="F:CsvConverter.RowTools.RowBase.EscapeChar">
+            <summary>The Escape character needed if the SplitChar is found in the actual value in a column.  So, this is a comma sperated file
+            and the data conctains a comma, we should escape the data with a double quote (someData, "someData,WithComman", other data)</summary>
+        </member>
+        <member name="F:CsvConverter.RowTools.RowBase.SplitChar">
+            <summary>The character that delimits the data.</summary>
+        </member>
+        <member name="F:CsvConverter.RowTools.RowBase._sb">
+            <summary>A string builder that can be used for row data.</summary>
+        </member>
+        <member name="P:CsvConverter.RowTools.RowBase.RowNumber">
+            <summary>The row number in the file.</summary>
+        </member>
+        <member name="T:CsvConverter.RowTools.RowReader">
+            <summary>A class for reading rows.</summary>
+        </member>
+        <member name="M:CsvConverter.RowTools.RowReader.#ctor(System.IO.StreamReader)">
+            <summary>Constructor</summary>
+            <param name="sr">An instance of a StreamReader class.</param>
+        </member>
+        <member name="P:CsvConverter.RowTools.RowReader.IsRowBlank">
+            <summary>Indicates if a row is blank (contains no data)</summary>
+        </member>
+        <member name="P:CsvConverter.RowTools.RowReader.LastColumnCount">
+            <summary>The column count of the previous row.  Column count should remain the same across all rows.</summary>
+        </member>
+        <member name="M:CsvConverter.RowTools.RowReader.CanRead">
+            <summary>Indicates if we can read more data.</summary>
+            <returns></returns>
+        </member>
+        <member name="M:CsvConverter.RowTools.RowReader.ReadRow">
+            <summary>Read one row from a stream.</summary>
+            <returns>List of strings</returns>
+            <remarks>This code is based on code by Alex Begun with modifications from me to adhere to RFC 4180.
+            https://stackoverflow.com/a/41250748/97803</remarks>
+        </member>
+        <member name="T:CsvConverter.RowTools.RowWriter">
+            <summary>A class for writing rows to a file</summary>
+        </member>
+        <member name="M:CsvConverter.RowTools.RowWriter.#ctor(System.IO.StreamWriter)">
+            <summary>Constructor</summary>
+            <param name="sw">An instance of the StreamWriter class.</param>
+        </member>
+        <member name="M:CsvConverter.RowTools.RowWriter.Write(System.String)">
+            <summary>Used to write out a line of data (Assumes that the split character is already in the line of text</summary>
+            <param name="line"></param>
+        </member>
+        <member name="M:CsvConverter.RowTools.RowWriter.Write(System.Collections.Generic.List{System.String})">
+            <summary>Writes all the data in teh fieldList to a row in the file.</summary>
+            <param name="fieldList">Data to write to the file.</param>
+        </member>
+    </members>
+</doc>
