@@ -23,7 +23,7 @@ namespace CsvConverter.Core.Tests.Attributes
             var data = new CsvConverterNumberIntWriteData1() { Num1 = inputData1, Num2 = inputData2, Num3 = inputData3, Num4 = inputData4 };
 
             // Act
-            classUnderTest.WriterRecord(data);
+            classUnderTest.WriteRecord(data);
 
             // Assert
             Assert.AreEqual(2, rowWriterMock.Rows.Count);
@@ -58,7 +58,7 @@ namespace CsvConverter.Core.Tests.Attributes
             var data = new CsvConverterNumberIntWriteData2() { Num1 = inputData1, Num2 = inputData2, Num3 = inputData3, Num4 = inputData4 };
 
             // Act
-            classUnderTest.WriterRecord(data);
+            classUnderTest.WriteRecord(data);
 
             // Assert
             Assert.AreEqual(2, rowWriterMock.Rows.Count);
@@ -97,7 +97,7 @@ namespace CsvConverter.Core.Tests.Attributes
             };
 
             // Act
-            classUnderTest.WriterRecord(data);
+            classUnderTest.WriteRecord(data);
 
             // Assert
             Assert.AreEqual(2, rowWriterMock.Rows.Count);

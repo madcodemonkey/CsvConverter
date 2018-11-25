@@ -42,7 +42,7 @@ namespace CsvConverter.Core.IntegrationTests
                 service.Configuration.HasHeaderRow = true;
                 foreach(var student in studentList)
                 {
-                    service.WriterRecord(student);
+                    service.WriteRecord(student);
                 }         
             }
 

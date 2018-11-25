@@ -67,7 +67,7 @@ namespace SimpleCoreExample1
                 writer.Configuration.HasHeaderRow = true;
                 foreach(var cat in originalCatList)
                 {
-                    writer.WriterRecord(cat);
+                    writer.WriteRecord(cat);
                 }
             }
         }

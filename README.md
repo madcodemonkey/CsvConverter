@@ -9,7 +9,6 @@ Follow these links to learn more about a specific topic:
 
 ## Advanced topics
 - [What are converters and how do I use them?](./docs/Converters/Converters-Main.md)
-- [Upgrading from V1 to V2](./docs/Upgrading/Upgrading-Main.md) 
 
 ## NuGet
 [NuGet project can be found here.](https://www.nuget.org/packages/CsvConverter/)
@@ -17,3 +16,4 @@ Follow these links to learn more about a specific topic:
 ## Older Versions
 - V1 (older version)
     - [version 1 documentation](https://github.com/madcodemonkey/CsvConverter/tree/Version-1)
+    - [Upgrading from V1 to V2](./docs/Upgrading/Upgrading-Main.md) 

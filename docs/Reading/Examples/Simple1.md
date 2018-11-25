@@ -1,6 +1,6 @@
 # Reading CSV files:  Simple Example 1
 
-In this simple example, the CSV file has a header row and the column names match the class properties perfectly.
+In this simple example, the CSV file has a header row and the column names match the class property names perfectly.
 
 ## Simple Example
 Given this CSV file named c:\temp\Employee.csv

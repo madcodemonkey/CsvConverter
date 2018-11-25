@@ -12,11 +12,12 @@ When reading a CSV file, the following sequence of events are followed:
 
 ## Reading Rules
 - pre-convertering
-    - They are just string type converters that inherit from CsvConverterStringBase.
+    - They are just string type converters that inherit from CsvConverterStringBase (Note: CsvConverterStringBase inherits from CsvConverterTypeBase).
     - When reading, you may have as many as you wish.
     - They will be executed in the order specified by the Order property on the attribute.
-    - The are executed BEFORE type conversion takes place so that they are dealing with string coming directly from the CSV file.
+    - They are executed BEFORE type conversion takes place so that they are dealing with strings coming directly from the CSV file OR from the pre-converter that cam before it.
 - Type convertering 
-    - The converter used must inherit directly from CsvConverterTypeBase or a class that inherits from CsvConverterTypeBase (like CsvConverterStringBase).
+    - All converters must inherit from CsvConverterTypeBase or a class that inherits from CsvConverterTypeBase (e.g., CsvConverterStringBase).
     - There can only be one converter for converting the type.  
-    - It's the one where IsPreConverter and IsPostConverter are both false.
+    - The type converter is the one where IsPreConverter and IsPostConverter are both false.
+    - Specifying more than one type converter results in an exception.

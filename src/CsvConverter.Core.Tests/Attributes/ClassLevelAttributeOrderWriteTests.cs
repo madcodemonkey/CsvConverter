@@ -24,7 +24,7 @@ namespace CsvConverter.Core.Tests.Attributes
             var data = new ClassLevelAttributeOrderWriteData1() { AnimalType = animialTypeInput };
 
             // Act
-            classUnderTest.WriterRecord(data);
+            classUnderTest.WriteRecord(data);
 
             // Assert
             Assert.AreEqual(2, rowWriterMock.Rows.Count); // header row and then 1 data row (count of 2)
@@ -52,7 +52,7 @@ namespace CsvConverter.Core.Tests.Attributes
             var data = new ClassLevelAttributeOrderWriteData2() { AnimalType = animialTypeInput };
 
             // Act
-            classUnderTest.WriterRecord(data);
+            classUnderTest.WriteRecord(data);
 
             // Assert
             Assert.AreEqual(2, rowWriterMock.Rows.Count); // header row and then 1 data row (count of 2)

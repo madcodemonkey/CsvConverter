@@ -43,7 +43,7 @@ namespace AdvExample1
                             AvgHeartRate = rand.Next(60, 80) / 1.1
                         };
 
-                        writer.WriterRecord(newPerson);
+                        writer.WriteRecord(newPerson);
                     }
                 }
 
@@ -122,7 +122,7 @@ namespace AdvExample1
                             CurrentValue = currentValue
                         };
 
-                        service.WriterRecord(newCar);
+                        service.WriteRecord(newCar);
                     }
                 }
 

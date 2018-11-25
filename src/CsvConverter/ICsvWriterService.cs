@@ -11,7 +11,7 @@ namespace CsvConverter
 
         /// <summary>Writes a single row to the CSV file.</summary>
         /// <param name="record">What to write to the CSV file</param>
-        void WriterRecord(T record);
+        void WriteRecord(T record);
 
         /// <summary>Information about each column. It is not initialized till Init method is called 
         /// and that is done automatically upon using a read or write method.</summary>

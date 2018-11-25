@@ -31,10 +31,10 @@ namespace AdvExample2
                 using (var sw = new StreamWriter(fs))
                 {
                     ICsvWriterService<Person> writer = new CsvWriterService<Person>(sw);
-                    writer.WriterRecord(new Person() { FirstName = "Tom", LastName = "Yo", Age = 90 });
-                    writer.WriterRecord(new Person() { FirstName = "Jame", LastName = "Adam", Age = 34 });
-                    writer.WriterRecord(new Person() { FirstName = "Killroy", LastName = "Back", Age = 12 });
-                    writer.WriterRecord(new Person() { FirstName = "James", LastName = "Madison", Age = 23 });
+                    writer.WriteRecord(new Person() { FirstName = "Tom", LastName = "Yo", Age = 90 });
+                    writer.WriteRecord(new Person() { FirstName = "Jame", LastName = "Adam", Age = 34 });
+                    writer.WriteRecord(new Person() { FirstName = "Killroy", LastName = "Back", Age = 12 });
+                    writer.WriteRecord(new Person() { FirstName = "James", LastName = "Madison", Age = 23 });
                 }
             }
             catch (Exception ex)

@@ -67,7 +67,7 @@ namespace SimpleCoreExample2
                 writer.Configuration.HasHeaderRow = true;
                 foreach(var squirrel in originalSquirrelList)
                 {
-                    writer.WriterRecord(squirrel);
+                    writer.WriteRecord(squirrel);
                 }
             }
         }

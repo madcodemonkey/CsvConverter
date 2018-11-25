@@ -24,7 +24,7 @@ namespace CsvConverter.Core.Tests.HeaderTests
             var data = new WriteNoHeaderTestsData1() { Order = order, Age = age, Name = name };
 
             // Act
-            classUnderTest.WriterRecord(data);
+            classUnderTest.WriteRecord(data);
 
             // Assert
             Assert.AreEqual(1, rowWriterMock.Rows.Count, "There should only be one row written!");

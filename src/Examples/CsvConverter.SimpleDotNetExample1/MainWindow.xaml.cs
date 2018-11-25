@@ -44,7 +44,7 @@ namespace SimpleDotNetExample1
                             AvgHeartRate = rand.Next(60, 80) / 1.1
                         };
 
-                        writerService.WriterRecord(newEmp);
+                        writerService.WriteRecord(newEmp);
                     }
                 }
 

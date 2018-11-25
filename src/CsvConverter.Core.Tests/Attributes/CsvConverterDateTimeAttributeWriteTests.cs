@@ -27,7 +27,7 @@ namespace CsvConverter.Core.Tests.Attributes
             };
 
             // Act
-            classUnderTest.WriterRecord(data);
+            classUnderTest.WriteRecord(data);
 
             // Assert
             Assert.AreEqual(expectedStringRow1, rowWriterMock.LastRow[0], "Order column problem for Date1");
@@ -58,7 +58,7 @@ namespace CsvConverter.Core.Tests.Attributes
             };
 
             // Act
-            classUnderTest.WriterRecord(data);
+            classUnderTest.WriteRecord(data);
 
             // Assert
             Assert.AreEqual(expectedStringRow1, rowWriterMock.LastRow[0], "Order column problem for Date1");
@@ -89,7 +89,7 @@ namespace CsvConverter.Core.Tests.Attributes
             };
 
             // Act
-            classUnderTest.WriterRecord(data);
+            classUnderTest.WriteRecord(data);
 
             // Assert
             Assert.AreEqual(expectedStringRow1, rowWriterMock.LastRow[0], "Order column problem for Date1");

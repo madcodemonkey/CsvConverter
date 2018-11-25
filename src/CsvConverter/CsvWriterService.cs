@@ -30,7 +30,7 @@ namespace CsvConverter
      
         /// <summary>Writes a single row to the CSV file.</summary>
         /// <param name="record">What to write to the CSV file</param>
-        public void WriterRecord(T record)
+        public void WriteRecord(T record)
         {
             if (_initialized == false)
                 Init();

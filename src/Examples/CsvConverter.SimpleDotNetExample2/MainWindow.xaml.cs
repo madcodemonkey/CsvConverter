@@ -46,7 +46,7 @@ namespace SimpleDotNetExample2
                             AverageNumberOfSpots = rand.Next(5, 20) / 1.1m
                         };
 
-                        writerService.WriterRecord(newEmp);
+                        writerService.WriteRecord(newEmp);
                     }
                 }
 

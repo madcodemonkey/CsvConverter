@@ -1,6 +1,6 @@
  # Writing CSV files: Simple Example 2
 
-In this simple example, we will control the order and names of the CSV headers.
+In this simple example, we will control the order of the CSV columns.
 
 ## Simple Example
 Given this class
@@ -38,7 +38,7 @@ We can write this code:
 ```c#
 using System.IO;
 using System.Text;
-using CsvConverter.ClassToCsv;
+using CsvConverter;
 
 Random rand = new Random(DateTime.Now.Second);
 int numberToCreate = rand.Next(10, 100);
@@ -47,7 +47,7 @@ using (var fs = File.Create(dialog.FileName))
 using (var sw = new StreamWriter(fs, Encoding.Default))
 {
 	var writerService = new CsvWriterService<Frog>(sw);
-	writerService.Configuration.HasHeaderRow = false;
+	writerService.Configuration.HasHeaderRow = true;
 
 	for (int i = 0; i < numberToCreate; i++)
 	{
@@ -60,7 +60,7 @@ using (var sw = new StreamWriter(fs, Encoding.Default))
 			AverageNumberOfSpots = rand.Next(5, 20) / 1.1m
 		};
 
-		writerService.WriterRecord(newEmp);
+		writerService.WriteRecord(newEmp);
 	}
 }
 ```
@@ -80,6 +80,4 @@ First4140,Last3531,White,6.3636363636363636363636363636,62
 ```
 
 Notes
-- The columns are sorted by Column Index (the normal sort order is alphabetical if not specified with ONE BASED ColumnIndex number).
-- If you had columns without the ColumnIndex, they would be sorted alphabetical because the sort order is ColumnIndex and then ColumnName.
-- This example code can be found in [Github](https://github.com/madcodemonkey/CsvConverter/tree/master/src/CsvConverter.SimpleExample1)
+- The columns are sorted by Column Index (the normal sort order is alphabetical if column index is not specified with ONE BASED ColumnIndex number).

@@ -24,7 +24,7 @@ namespace CsvConverter.Core.Tests.Attributes
             var data = new CsvConverterBooleanWriteData1() { Bool1 = bool1Input, Bool2 = bool2Input, Bool3 = bool3Input, Bool4 = bool4Input, Bool5 = bool5Input };
 
             // Act
-            classUnderTest.WriterRecord(data);
+            classUnderTest.WriteRecord(data);
 
             // Assert
             Assert.AreEqual(2, rowWriterMock.Rows.Count);
@@ -56,7 +56,7 @@ namespace CsvConverter.Core.Tests.Attributes
             var data = new CsvConverterBooleanWriteData2() { Bool1 = bool1Input, Bool2 = bool2Input, Bool3 = bool3Input, Bool4 = bool4Input, Bool5 = bool5Input };
 
             // Act
-            classUnderTest.WriterRecord(data);
+            classUnderTest.WriteRecord(data);
 
             // Assert
             Assert.AreEqual(2, rowWriterMock.Rows.Count);
@@ -89,7 +89,7 @@ namespace CsvConverter.Core.Tests.Attributes
             var data = new CsvConverterBooleanWriteData3() { Bool1 = bool1Input, Bool2 = bool2Input, Bool3 = bool3Input, Bool4 = bool4Input, Bool5 = bool5Input };
 
             // Act
-            classUnderTest.WriterRecord(data);
+            classUnderTest.WriteRecord(data);
 
             // Assert
             Assert.AreEqual(2, rowWriterMock.Rows.Count);

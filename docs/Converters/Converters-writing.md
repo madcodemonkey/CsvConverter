@@ -2,7 +2,7 @@
 
 ## Writing order
 When writing a CSV file, the following sequence of events are followed:
-1. Write a class instance (normally using the CsvWriterService class WriterRecord method) 
+1. Write a class instance (normally using the CsvWriterService class WriteRecord method) 
 1. Iterate of the class instance propeties
 1. For each property, call the converter that would convert the type into a string.
     - This could be a custom type converter created by you.

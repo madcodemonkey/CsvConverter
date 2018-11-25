@@ -16,7 +16,7 @@ namespace CsvConverter.Core.Tests.HeaderTests
             var data = new WriteHeaderTestData1() { Order = 1, Age = 23, Name = "James" };
 
             // Act
-            classUnderTest.WriterRecord(data);
+            classUnderTest.WriteRecord(data);
 
             // Assert
             Assert.AreEqual(2, rowWriterMock.Rows.Count);
