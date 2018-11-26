@@ -51,7 +51,7 @@ using (var sw = new StreamWriter(fs, Encoding.Default))
 
 	for (int i = 0; i < numberToCreate; i++)
 	{
-		var newEmp = new Frog()
+		var newFrog = new Frog()
 		{
 			FirstName = $"First{rand.Next(1, 5000)}",
 			LastName = $"Last{rand.Next(1, 5000)}",
@@ -60,7 +60,7 @@ using (var sw = new StreamWriter(fs, Encoding.Default))
 			AverageNumberOfSpots = rand.Next(5, 20) / 1.1m
 		};
 
-		writerService.WriteRecord(newEmp);
+		writerService.WriteRecord(newFrog);
 	}
 }
 ```

@@ -95,11 +95,11 @@ namespace CsvConverter
 }
 ```
 Notes
-- CanRead:  Here is where you indicate if you can convert a string into the specified type.  This is mainly used when reading CSV files.
-- CanWrite:  Here is where you indicate if you can convert type into a string.  This is mainly used when wtiting CSV files.
+- CanRead:  Here is where you indicate if you can convert a string into the specified type.  This is used when reading CSV files.
+- CanWrite:  Here is where you indicate if you can convert type into a string.  This is used when wtiting CSV files.
 - GetReadData:  Given a string, convert it to the specified type.  Note how the method is just removing a % sign and then using a default decimal converter to convert the string to a decimal type.  Once convertered, the number is divided by 100.
 - GetWriteData:  Given a type (decimal in this case), convert it to a string with a % sign.
-- Initialize: Here is where you double check that your converter is being used with the proper attribute and throw an exception if necessary.  Also note that I'm manipulating the attribute and adding formatting to it if the user did specify any.  Finally, I create a decimal converter using the Default Factory and Initialize it with my manipulated attribute.
+- Initialize: Here is where you double check that your converter is being used with the proper attribute and throw an exception if necessary.  Also note that I'm manipulating the attribute and adding formatting to it if the user did not specify any.  Finally, I create a decimal converter using the Default Factory and Initialize it with my manipulated attribute.
 
 
 ## Usage

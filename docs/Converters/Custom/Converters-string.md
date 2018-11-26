@@ -2,7 +2,7 @@
 
 String converters are just like custom converters except you use a different base class.
 
-1. Inherit from the CsvConverterStringBase class (note that it inherits from the CsvConverterTypeBase class, which is required for all converters)
+1. Inherit from the CsvConverterStringBase class (note that CsvConverterStringBase inherits from the CsvConverterTypeBase class, which is required for all converters)
 1. Implement the ICsvConverter interface
 1. Override the Initialize method if you need to pull data off the attribute that specified your converter.
 
@@ -76,8 +76,8 @@ namespace CsvConverter
 }
 ```
 Notes
-- CanRead:  Here is where you indicate if you can convert a string into the specified type.  This is mainly used when reading CSV files.
-- CanWrite:  Here is where you indicate if you can convert type into a string.  This is mainly used when wtiting CSV files.
+- CanRead:  Here is where you indicate if you can convert a string into the specified type.  This is used when reading CSV files.
+- CanWrite:  Here is where you indicate if you can convert type into a string.  This is used when wtiting CSV files.
 - GetReadData:  Given a string, convert it to the specified type.   
 - GetWriteData:  Given a string, trim it according to what the user specified in the attribute (see Initialize method)
 - Initialize: Here is where you double check that your converter is being used with the proper attribute.  In this converter, the CsvConverterStringTrimAttribute attribute was NOT necessary; however, if it was specified, use it to determine the trim action.
