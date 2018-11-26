@@ -3,7 +3,7 @@
 To read a CSV file into a class, there are 8 basic steps
 1. Add the CsvConverter NuGet package to your project
 2. Create a class
-3. Optional: Attribute the class with the [CsvConverter] attribute if the column name is different from the class property name.
+3. Optional: Attribute the class with the [CsvConverter] attribute if a column name is different from a class property name.
 4. Instantiate the CsvReaderService class
 5. Optional: Set configuration settings on the CsvReaderService instance (see Configuration property)
 6. Add CsvConverter namespace to your using statements.
