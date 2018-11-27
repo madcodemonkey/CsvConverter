@@ -1,4 +1,4 @@
-# CsvConverter
+# CsvConverter (Version 2)
 
 A simple .NET library for writing and reading CSV files using a List of T as the input or received output of the operation.
 
