@@ -74,5 +74,4 @@ using (var sr = new StreamReader(fs, Encoding.Default))
 
 Notes
 - The CsvToClassService service must be TOLD that the file has no header file (csv.Configuration.HasHeaderRow = false;)
-- This example code can be found in [Github](https://github.com/madcodemonkey/CsvConverter/tree/master/src/CsvConverter.SimpleExample2)
-
+- This example code can be found in [Github](../../../src/CsvConverter.SimpleExample2)

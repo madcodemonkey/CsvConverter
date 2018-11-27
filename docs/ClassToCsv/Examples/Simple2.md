@@ -81,5 +81,4 @@ First4140,Last3531,White,6.3636363636363636363636363636,62
 Notes
 - The columns are sorted by Column Index (the normal sort order is alphabetical if not specified with ONE BASED ColumnIndex number).
 - If you had columns without the ColumnIndex, they would be sorted alphabetical because the sort order is ColumnIndex and then ColumnName.
-- This example code can be found in [Github](https://github.com/madcodemonkey/CsvConverter/tree/master/src/CsvConverter.SimpleExample1), but I removed the row with "service.Configuration.HasHeaderRow = false;" so that the header row would be produced.
-
+- This example code can be found in [Github](../../../src/CsvConverter.SimpleExample1), but I removed the row with "service.Configuration.HasHeaderRow = false;" so that the header row would be produced.
