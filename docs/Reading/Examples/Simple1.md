@@ -61,5 +61,5 @@ using (var sr = new StreamReader(fs, Encoding.Default))
 
 
 Notes
-- This example code can be found in [Github](https://github.com/madcodemonkey/CsvConverter/tree/master/src/Examples/CsvConverter.SimpleDotNetExample1)
+- This example code can be found in [Github](../../../src/Examples/CsvConverter.SimpleDotNetExample1)
 
