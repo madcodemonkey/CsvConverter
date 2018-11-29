@@ -315,10 +315,6 @@
             <summary>Performs operations on a CSV value BEFORE the type converter is called.
             In this case, text is replaced beforehand.</summary>
             <param name="value">Value straight from the CSV file before the TYPE converter touches it.</param>
-            <param name="columnName">Name of the column being read.</param>
-            <param name="columnIndex">Index of the column being read</param>
-            <param name="rowNumber">Row number being read.</param>
-            <returns></returns>
         </member>
         <member name="M:CsvConverter.CsvConverterStringReplaceTextExactMatch.Initialize(CsvConverter.CsvConverterAttribute,CsvConverter.IDefaultTypeConverterFactory)">
             <summary>Initializes the converter with an attribute</summary>
@@ -877,6 +873,11 @@
         <member name="T:CsvConverter.Mapper.ColumnToPropertyMap">
             <summary>Used to determine how a CSV column should map on to a property of a class.</summary>
         </member>
+        <member name="M:CsvConverter.Mapper.ColumnToPropertyMap.#ctor(System.Reflection.PropertyInfo,System.Int32)">
+            <summary>Constructor</summary>
+            <param name="propInfo">PropertyInfo for the class property that the column will map to.</param>
+            <param name="columnIndex">The index of the column in the CSV file</param>
+        </member>
         <member name="P:CsvConverter.Mapper.ColumnToPropertyMap.ColumnIndex">
             <summary>Index of the column in the CSV file.</summary>
         </member>
@@ -912,6 +913,12 @@
             <summary>When reading CSV files, this is an optional converter in case you do NOT want the CSV field coverted to
             the same type as the class property or you just want more control over the conversion process.</summary>
         </member>
+        <member name="M:CsvConverter.Mapper.ColumnToPropertyMap.IsDefaultColumnName">
+            <summary>Indicates if the column name has changed from the default name it was given originally.</summary>
+        </member>
+        <member name="M:CsvConverter.Mapper.ColumnToPropertyMap.IsDefaultColumnIndex">
+            <summary>Indicates if the column index has changed from the default index it was given originally.</summary>
+        </member>
         <member name="T:CsvConverter.Mapper.ColumnToPropertyMapper`1">
             <summary>Base object for mapping  CSV columns to class properties</summary>
             <typeparam name="T">Class instance type</typeparam>
@@ -923,9 +930,6 @@
         </member>
         <member name="M:CsvConverter.Mapper.ColumnToPropertyMapper`1.CreateWriteMap">
             <summary>Maps all the properties on the T type class and then order then by column index.</summary>
-            <param name="configuration">Configuration items</param>
-            <param name="columnIndexDefaultValue">The default value to give a column.  It's only relevant if the 
-            column is never found.  So, in most cases it is 9999.</param>
             <returns>List of property maps sorted by column index</returns>
         </member>
         <member name="M:CsvConverter.Mapper.ColumnToPropertyMapper`1.MapClassPropertiesToCsvHeaderColumnNames(System.Collections.Generic.List{CsvConverter.Mapper.ColumnToPropertyMap},System.Collections.Generic.List{System.String})">
@@ -933,7 +937,6 @@
             <param name="mapList">The map list</param>
             <param name="orderedHeaderColumns">A list of header fields from the CSV file in the order the appear in the CSV.  The position of the
             header column will be used to determine the column index.</param>
-            <param name="configuration">Configuration information.</param>
         </member>
         <member name="M:CsvConverter.Mapper.ColumnToPropertyMapper`1.SearchForColumnName(System.Collections.Generic.List{CsvConverter.Mapper.ColumnToPropertyMap},System.String)">
             <summary>Finds all the maps where the ColumnName matches and returns all matches. If nothing is found, it then searches the AltColumnNames

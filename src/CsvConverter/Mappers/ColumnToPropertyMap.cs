@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace CsvConverter.Mapper
@@ -9,10 +9,14 @@ namespace CsvConverter.Mapper
     {
         private readonly string _defaultColumnName;
         private readonly int _defaultColumnIndex;
+
+        /// <summary>Constructor</summary>
+        /// <param name="propInfo">PropertyInfo for the class property that the column will map to.</param>
+        /// <param name="columnIndex">The index of the column in the CSV file</param>
         public ColumnToPropertyMap(PropertyInfo propInfo, int columnIndex)
         {
             PropInformation = propInfo;
-            ColumnName = propInfo != null ? propInfo.Name : null;
+            ColumnName = propInfo?.Name;
             _defaultColumnName = ColumnName;
             ColumnIndex = columnIndex;
             _defaultColumnIndex = columnIndex;
@@ -58,11 +62,13 @@ namespace CsvConverter.Mapper
         public ICsvConverter ReadConverter { get; set; }
         #endregion 
 
+        /// <summary>Indicates if the column name has changed from the default name it was given originally.</summary>
         public bool IsDefaultColumnName()
         {
-            return string.Compare(ColumnName, _defaultColumnName, true, CultureInfo.InvariantCulture) == 0;
+            return string.Compare(ColumnName, _defaultColumnName, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
+        /// <summary>Indicates if the column index has changed from the default index it was given originally.</summary>
         public bool IsDefaultColumnIndex()
         {
             return _defaultColumnIndex == ColumnIndex;

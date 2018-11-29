@@ -43,10 +43,10 @@ namespace CsvConverter
                 return booleanValue;
             }
 
-            if (string.Compare(value, TrueValue, true, CultureInfo.InstalledUICulture) == 0)
+            if (string.Compare(value, TrueValue, StringComparison.OrdinalIgnoreCase) == 0)
                 return true;
 
-            if (string.Compare(value, FalseValue, true, CultureInfo.InstalledUICulture) == 0)
+            if (string.Compare(value, FalseValue, StringComparison.OrdinalIgnoreCase) == 0)
                 return false;
 
 
@@ -92,8 +92,7 @@ namespace CsvConverter
             base.Initialize(attribute, defaultFactory);
             if (attribute != null)
             {
-                var settings = attribute as CsvConverterBooleanAttribute;
-                if (settings != null)
+                if (attribute is CsvConverterBooleanAttribute settings)
                 {
                     TrueValue = settings.TrueValue;
                     FalseValue = settings.FalseValue;

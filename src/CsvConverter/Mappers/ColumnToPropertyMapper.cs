@@ -22,15 +22,12 @@ namespace CsvConverter.Mapper
         }
 
         /// <summary>Maps all the properties on the T type class and then order then by column index.</summary>
-        /// <param name="configuration">Configuration items</param>
-        /// <param name="columnIndexDefaultValue">The default value to give a column.  It's only relevant if the 
-        /// column is never found.  So, in most cases it is 9999.</param>
         /// <returns>List of property maps sorted by column index</returns>
         public List<ColumnToPropertyMap> CreateWriteMap()
         {
             var mapList = new List<ColumnToPropertyMap>();
 
-            foreach (PropertyInfo info in _theClassType.GetProperties())
+            foreach (PropertyInfo info in _theClassType.GetTypeInfo().GetProperties())
             {
                 var oneMap = new ColumnToPropertyMap(info, _columnIndexDefaultValue);
 
@@ -77,7 +74,6 @@ namespace CsvConverter.Mapper
         /// <param name="mapList">The map list</param>
         /// <param name="orderedHeaderColumns">A list of header fields from the CSV file in the order the appear in the CSV.  The position of the
         /// header column will be used to determine the column index.</param>
-        /// <param name="configuration">Configuration information.</param>
         private void MapClassPropertiesToCsvHeaderColumnNames(List<ColumnToPropertyMap> mapList, List<string> orderedHeaderColumns)
         {
 
