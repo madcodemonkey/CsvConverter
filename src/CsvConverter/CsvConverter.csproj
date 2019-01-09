@@ -131,9 +131,5 @@
     <Compile Include="Common\RowTools\RowReader.cs" />
     <Compile Include="CsvToClass\CsvToClassService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="ClassToCsv\Attributes\ReadMe.txt" />
-    <Content Include="CsvToClass\Attributes\ReadMe.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
