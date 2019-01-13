@@ -15,6 +15,6 @@
     <tags>CSV converter</tags>
   </metadata>
   <files>
-    <file src="..\..\LICENSE" target="License\License" />
+    <file src="..\..\LICENSE" target="License\LICENSE" />
   </files>
 </package>
