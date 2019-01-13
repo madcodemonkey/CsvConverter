@@ -10,11 +10,14 @@ namespace CsvConverter.ClassToCsv
         {
             RegisterBuiltInConverters();
         }
-         
+
         /// <summary>Converts a property into a string with an optional string format.</summary>
         /// <param name="theType">The type to convert.  Currently it only handles primitives.</param>
         /// <param name="value">The value in the property represented as an object.  This is what you get when you call PropertyInfo object GetValue method.</param>
         /// <param name="stringFormat">Any special formatting</param>
+        /// <param name="columnName">Name of the CSV column</param>
+        /// <param name="columnIndex">Index of the CSV column</param>
+        /// <param name="rowNumber">Row number</param>
         /// <returns></returns>
         public string Convert(Type theType, object value, string stringFormat, string columnName, int columnIndex, int rowNumber)
         {

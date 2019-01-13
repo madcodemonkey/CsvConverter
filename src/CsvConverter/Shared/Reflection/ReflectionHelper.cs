@@ -19,8 +19,8 @@ namespace CsvConverter.Shared
         }    
 
         /// <summary>Creates a generic type</summary>
-        /// <param name="typeWithGeneric">So, this is the class with the generic type MyClass<T></param>
-        /// <param name="typeOfT">This is the T in MyClass<T></param>
+        /// <param name="typeWithGeneric">So, this is the class with the generic type MyClass of T</param>
+        /// <param name="typeOfT">This is the T in MyClass of T</param>
         /// <returns>An instance of the generic type.</returns>
         public static object CreateGenericType(Type typeWithGeneric, Type typeOfT)
         {
