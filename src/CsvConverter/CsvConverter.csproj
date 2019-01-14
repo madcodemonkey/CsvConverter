@@ -18,6 +18,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>C:\Yates-Git\CsvConverter\src\CsvConverter\CsvConverter.xml</DocumentationFile>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Yates-Git\CsvConverter\src\CsvConverter\CsvConverter.xml</DocumentationFile>
+  </PropertyGroup>
   
   <ItemGroup> 
      <None Include="readme.txt" Pack="true" PackagePath="." />  

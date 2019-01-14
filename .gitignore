@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Files that are generated during compilation
+CsvConverter.xml
+
 # User-specific files
 *.suo
 *.user

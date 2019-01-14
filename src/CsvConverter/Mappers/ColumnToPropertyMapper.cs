@@ -11,8 +11,10 @@ namespace CsvConverter.Mapper
     public class ColumnToPropertyMapper<T>
     {
         /// <summary>Constructor.</summary>
+        /// <param name="configuration">Configuration information</param>
         /// <param name="defaultFactory">The default type converter factory, which is passed into any 
         /// attributes found during the mapping process so that they can create a default converter if necessary.</param>
+        /// <param name="columnIndexDefaultValue">Default value for a column index</param>
         public ColumnToPropertyMapper(CsvConverterConfiguration configuration, IDefaultTypeConverterFactory defaultFactory,
             int columnIndexDefaultValue)
         {
@@ -46,6 +48,9 @@ namespace CsvConverter.Mapper
                 .ToList();
         }
 
+        /// <summary>Creates a column mapping with reading a file.</summary>
+        /// <param name="headerColumns">Header column names</param>
+        /// <returns></returns>
         public List<ColumnToPropertyMap> CreateReadMap(List<string> headerColumns)
         {
             List<ColumnToPropertyMap> columnList = CreateWriteMap();
@@ -214,7 +219,6 @@ namespace CsvConverter.Mapper
         /// <summary>Looks for CsvConverterAttribute on the property using PropertyInfo
         /// and then updates any relevant info on the map</summary>
         /// <param name="oneMap">The property map to examine</param>
-        /// <param name="columnIndexDefaultValue">The default column index value (csv to class and class to csv use different values)</param>
         private void CreateAllUserSpecifiedConvertersForOneProperty(ColumnToPropertyMap oneMap)
         {
             List<CsvConverterAttribute> attributeList = oneMap.PropInformation.HelpFindAllAttributes<CsvConverterAttribute>();

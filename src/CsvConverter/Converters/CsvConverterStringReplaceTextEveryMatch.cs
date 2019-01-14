@@ -42,9 +42,6 @@ namespace CsvConverter
         /// <summary>Performs operations on a CSV value BEFORE the type converter is called.
         /// In this case, text is replaced beforehand.</summary>
         /// <param name="value">Value straight from the CSV file before the TYPE converter touches it.</param>
-        /// <param name="columnName">Name of the column being read.</param>
-        /// <param name="columnIndex">Index of the column being read</param>
-        /// <param name="rowNumber">Row number being read.</param>
         /// <returns></returns>
         private string Convert(string value)
         {

@@ -109,7 +109,6 @@ namespace CsvConverter
         /// <param name="theClassType">The class were the property resides so that it can be named to help the user
         /// find the particular property in question if they have more than class decorated with converter attributes.</param>
         /// <param name="propInfo">Property information about the property that this attribute was on.</param>
-        /// <param name="currentConversionDirection">Indicates what is being requested</param>
         /// <param name="defaultFactory">The default type converter factory.</param>
         /// <returns>A converter or null if one is not specified.</returns>
         public virtual ICsvConverter CreateConverterForProperty(Type theClassType, PropertyInfo propInfo, 

@@ -38,9 +38,6 @@ namespace CsvConverter
 
         /// <summary>If a string is null or white space, the value is replaced with whatever is in _newValue.</summary>
         /// <param name="value">The value to examine and potentially replace.</param>
-        /// <param name="columnName">Name of the column being read.</param>
-        /// <param name="columnIndex">Index of the column being read</param>
-        /// <param name="rowNumber">Row number being read.</param>
         private string Convert(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
