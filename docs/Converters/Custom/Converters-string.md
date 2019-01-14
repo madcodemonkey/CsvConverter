@@ -3,7 +3,7 @@
 String converters are just like custom converters except you use a different base class.
 
 1. Inherit from the CsvConverterStringBase class (note that CsvConverterStringBase inherits from the CsvConverterTypeBase class, which is required for all converters)
-1. Implement the ICsvConverter interface
+1. Implement the ICsvConverterString interface
 1. Override the Initialize method if you need to pull data off the attribute that specified your converter.
 
 ## Code
