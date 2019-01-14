@@ -5,8 +5,8 @@
     <Version>2.0.0</Version>
     <Authors>David Yates</Authors>
     <Company>N/A</Company>
-    <Description>A simple .NET library for writing and reading CSV files using a List of T as the input or received output of the operation.</Description>
-    <Copyright>2018</Copyright>
+    <Description>A simple .NET Standard 2.0 library for writing and reading CSV files using a List of T as the input or received output of the operation.</Description>
+    <Copyright>2019</Copyright>
     <PackageLicenseUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/madcodemonkey/CsvConverter/CsvConverter.ico</PackageProjectUrl>
     <PackageIconUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/</PackageIconUrl>
