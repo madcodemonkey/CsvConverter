@@ -1,17 +1,50 @@
 # Upgrading from V1 to V2
 
-- The reader and writer service are now both in the CsvConverter namespace
-    - Delete all references to the CsvConverter.CsvToClass namespace 
-    - Delete all references to the CsvConverter.ClassToCsv namespace 
-- Reader and writer services have been renamed.
-    - Replace ClassToCsvService with CsvWriterService
-    - Replace CsvToClassService with CsvReaderService
-- The writer services writing method was renamed from WriterRecord to WriteRecord so that it is truly the opposite of GetRecord, which is used when reading. Sadly this typo has been in the code for a while.
-- Configuration settings
+- Reader and writer services changes
+	- Services have been renamed
+		- Replace ClassToCsvService with CsvWriterService
+		- Replace CsvToClassService with CsvReaderService
+	- Services are now both in the CsvConverter namespace
+		- Delete all references to the CsvConverter.CsvToClass namespace 
+		- Delete all references to the CsvConverter.ClassToCsv namespace 
+	- The writer services writing method was renamed from WriterRecord to WriteRecord so that it is truly the opposite of GetRecord, which is used when reading. Sadly this typo has been in the code for a while.
+- Configuration settings changes
     - Configuration.IgnoreBlankRows property on the reader or writer service was renamed to BlankRowsAreReturnedAsNull because that's what it was really doing in V1.
-- Built in pre-converters.  Any string converter can now be used as a pre-converter, so here are replacements for the old pre-converters:
-    - TextReplacerCsvToClassPreConverter can be replaced with either of these:
-        - CsvConverterStringReplaceTextEveryMatch
-        - CsvConverterStringReplaceTextExactMatch
-    - TrimCsvToClassPreConverter is replaced with CsvConverterStringTrimmer.
-    - StringIsNullOrWhiteSpaceSetToNullCsvToClassPreConverter is replaced with CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue
+- pre-converters changes
+	- See "How do I create a custom converter?" instructions: 
+	  https://github.com/madcodemonkey/CsvConverter/blob/master/docs/Converters/Converters-Main.md
+		- Don't forget to set IsPreConverter = true in the attribute; otherwise, it will become the converter instead.
+	- Any string converter can now be used as a pre-converter
+	- Replacements for the old pre-converters:
+		- TextReplacerCsvToClassPreConverter can be replaced with either of these:
+			- CsvConverterStringReplaceTextEveryMatch
+			- CsvConverterStringReplaceTextExactMatch
+		- TrimCsvToClassPreConverter is replaced with CsvConverterStringTrimmer.
+		- StringIsNullOrWhiteSpaceSetToNullCsvToClassPreConverter is replaced with CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue
+	- ICsvToClassPreConverter deleted.  Converters should inherit from one of the following
+		- CsvConverterTypeBase
+		- CsvConverterStringBase
+- Converter changes
+    - ICsvToClassTypeConverter and IClassToCsvTypeConverter interfaces deleted.  Use one of the base classes for your converters
+		- CsvConverter for non-string converters
+		- CsvConverterString for string converters
+	- CsvConverterCustom replaced by either 
+		- CsvConverter for non-string converters
+		- CsvConverterString for string converters
+	- CsvConverterTypeEnum deleted.  Delete the property from your customer converters
+	- DecimalToIntCsvToClassConverter replaced by CsvConverterDecimalToInt
+	- PercentCsvToClassConverter replaced by CsvConverterPercentage
+	- CommaDelimitedIntArrayCsvToClassConverter replaced by CsvConverterCommaDelimitedIntArray
+- Attribute changes
+	- CsvConverterMathRoundingAttribute replaced by CsvConverterNumberAttribute
+	- CsvConverterOldAndNewValueAttribute replaced by CsvConverterStringOldAndNewAttribute
+	- CsvConverterCustomAttribute replaced by one of the following based on what it does
+		- CsvConverterAttribute  - the converter does not deal with boolean, dates, numbers or strings.
+		- CsvConverterBooleanAttribute - the converter deals with booleans
+		- CsvConverterDateTimeAttribute - the converter deals with dates
+		- CsvConverterNumberAttribute - the converter deals with numbers (int, decimal, double, etc.)
+		- CsvConverterStringAttribute - the converter deals with strings
+		- CsvConverterStringOldAndNewAttribute - the converter deals with converter a string from and old to a new value
+		- CsvConverterStringTrimAttribute - the converter deals with trimming strings
+- Helper classes
+	- ReflectionHelper moved from CsvConverter.Shared to CsvConverter.Reflection namespace

@@ -24,7 +24,7 @@ namespace CsvConverter
         public string StringFormat { get; set; }
 
 
-        /// <summary>Converts a byte to a string</summary>
+        /// <summary>Converts an int to a string</summary>
         public string GetWriteData(Type inputType, object value, string columnName, int columnIndex, int rowNumber)
         {
             int data;
@@ -43,7 +43,7 @@ namespace CsvConverter
             return string.IsNullOrWhiteSpace(StringFormat) ? data.ToString() : data.ToString(StringFormat);
         }
 
-        /// <summary>Converts a string to a byte</summary>
+        /// <summary>Converts a string to an int</summary>
         public object GetReadData(Type inputType, string value, string columnName, int columnIndex, int rowNumber)
         {
             if (string.IsNullOrWhiteSpace(value))
