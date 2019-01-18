@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>CsvConverter</id>
+    <version>$version$</version>
+    <authors>David Yates</authors>
+    <owners>David Yates</owners>
+	<license type="file">License\LICENSE</license>
+    <projectUrl>https://github.com/madcodemonkey/CsvConverter</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Stuff</description>
+    <releaseNotes>Fixed intellisense issue.  Compile release version.  Updated license metadata tag before licenseUrl is deprecated.</releaseNotes>
+    <copyright>2019</copyright>
+    <tags>CSV converter</tags>
+  </metadata>
+  <files>
+    <file src="..\..\LICENSE" target="License\LICENSE" />
+  </files>
+</package>

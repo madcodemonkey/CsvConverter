@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+	<NuspecFile>$(MSBuildThisFileDirectory)$(MSBuildProjectName).nuspec</NuspecFile>
     <Version>2.0.0</Version>
     <Authors>David Yates</Authors>
     <Company>N/A</Company>
     <Description>A simple .NET Standard 2.0 library for writing and reading CSV files using a List of T as the input or received output of the operation.</Description>
     <Copyright>2019</Copyright>
-    <PackageLicenseUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/madcodemonkey/CsvConverter/CsvConverter.ico</PackageProjectUrl>
     <PackageIconUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/</PackageIconUrl>
     <RepositoryUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/</RepositoryUrl>
@@ -26,5 +27,15 @@
   <ItemGroup> 
      <None Include="readme.txt" Pack="true" PackagePath="." />  
   </ItemGroup>
+  
+  <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
+    <PropertyGroup>
+      <NuspecProperties>$(NuspecProperties);id=$(AssemblyName)</NuspecProperties>
+      <NuspecProperties>$(NuspecProperties);config=$(Configuration)</NuspecProperties>
+      <NuspecProperties>$(NuspecProperties);version=$(PackageVersion)</NuspecProperties>
+      <NuspecProperties>$(NuspecProperties);description=$(Description)</NuspecProperties>
+      <NuspecProperties>$(NuspecProperties);authors=$(Authors)</NuspecProperties>
+    </PropertyGroup>
+  </Target>  
   
 </Project>
