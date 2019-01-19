@@ -15,5 +15,6 @@
   </metadata>
   <files>
     <file src="..\..\LICENSE" target="License\LICENSE" />
+    <file src="readme.txt" target="readme.txt" />
   </files>
 </package>
