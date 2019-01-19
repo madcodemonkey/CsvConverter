@@ -11,7 +11,7 @@ Follow these links to learn more about a specific topic:
 - [What are converters and how do I use them?](./docs/Converters/Converters-Main.md)
 
 ## Code Notes
-- If you download the code, you must install [.NET Core Version 2](https://www.microsoft.com/net/download/thank-you/dotnet-sdk-2.1.500-windows-x64-installer) to compile it or you will get lots of errors. 
+- If you download the code so that you can compile it yourself, you must install [.NET Core Version 2](https://www.microsoft.com/net/download/thank-you/dotnet-sdk-2.1.500-windows-x64-installer) to compile it or you will get lots of errors. 
 
 ## NuGet
 [NuGet project can be found here.](https://www.nuget.org/packages/CsvConverter/)
