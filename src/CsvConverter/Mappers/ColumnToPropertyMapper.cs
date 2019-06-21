@@ -225,8 +225,13 @@ namespace CsvConverter.Mapper
             foreach (var oneAttribute in attributeList)
             {
                 // In the case where the user wants to be explicit about ignoring a property, let them.
+                // So, we will NOT have a converter for reading or writing according to this attribute.
                 if (oneAttribute.IgnoreWhenReading && oneAttribute.IgnoreWhenWriting)
-                   continue;
+                {
+                    oneMap.IgnoreWhenReading = true;
+                    oneMap.IgnoreWhenWriting = true;
+                    continue;
+                }
 
                 ICsvConverter converter = oneAttribute.CreateConverterForProperty(_theClassType, oneMap.PropInformation, _defaultFactory);
 
@@ -253,8 +258,7 @@ namespace CsvConverter.Mapper
             }
             else
             {
-                AddOnePropertyTypeConverter(oneMap, converter, oneAttribute.IgnoreWhenReading, 
-                    oneAttribute.IgnoreWhenWriting, throwExceptionIfConverterHasAlreadyBeenSpecified);
+                AddOnePropertyTypeConverter(oneMap, converter, oneAttribute, throwExceptionIfConverterHasAlreadyBeenSpecified);
                 return true;
             }
         }
@@ -350,15 +354,21 @@ namespace CsvConverter.Mapper
         }
 
 
-        private void AddOnePropertyTypeConverter(ColumnToPropertyMap newMap, ICsvConverter converter, 
-            bool ignoreWhenReading, bool ignoreWhenWriting, bool throwExceptionIfConverterHasAlreadyBeenSpecified)
+        private void AddOnePropertyTypeConverter(ColumnToPropertyMap newMap, ICsvConverter converter,
+            CsvConverterAttribute oneAttribute, bool throwExceptionIfConverterHasAlreadyBeenSpecified)
         {
-            if (ignoreWhenReading == false)
+            // Should we use this converter for both Reading and Writing?
+            // If IgnoreWhenReading and IgnoreWhenWriting are both false, this converter is used for BOTH!
+            
+            if (oneAttribute.IgnoreWhenReading == false)
             {
                 newMap.IgnoreWhenReading = false;
 
+                // Look for case when two converters are assigned for reading
                 if (newMap.ReadConverter == null)
+                {
                     newMap.ReadConverter = converter;
+                }
                 else if (throwExceptionIfConverterHasAlreadyBeenSpecified)
                 {
                     throw new CsvConverterAttributeException($"The {newMap.PropInformation.Name} property on " +
@@ -369,7 +379,8 @@ namespace CsvConverter.Mapper
                 }
             }
 
-            if (ignoreWhenWriting == false)
+            // Look for case when two converters are assigned for writing
+            if (oneAttribute.IgnoreWhenWriting == false)
             {
                 newMap.IgnoreWhenWriting = false;
 
@@ -389,10 +400,10 @@ namespace CsvConverter.Mapper
             // If the user has specified an attribute for reading and writing, we don't want to 
             // flip the ignore property of the other converter accidently so we check for the 
             // presence of the converter as well.
-            if (ignoreWhenReading && newMap.ReadConverter == null)
+            if (oneAttribute.IgnoreWhenReading && newMap.ReadConverter == null)
                 newMap.IgnoreWhenReading = true;
 
-            if (ignoreWhenWriting && newMap.WriteConverter == null)
+            if (oneAttribute.IgnoreWhenWriting && newMap.WriteConverter == null)
                 newMap.IgnoreWhenWriting = true;
         }
 
