@@ -2,7 +2,7 @@
 
 In this simple example, the CSV file does NOT have a header row.
 
-**The main difference between this an other examples is that the service is TOLD that there is no header row via the Configuration property**
+**The main difference between this and the other examples is that the service is TOLD that there is no header row via the Configuration property**
 
 ## Simple Example
 Given this CSV file named c:\temp\Employee.csv
