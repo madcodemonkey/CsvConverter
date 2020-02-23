@@ -10,8 +10,8 @@
     <projectUrl>https://github.com/madcodemonkey/CsvConverter</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Fixed intellisense issue.  Compile release version.  Updated license metadata tag before licenseUrl is deprecated.</releaseNotes>
-    <copyright>2019</copyright>
+    <releaseNotes>Fixed a quote problem where an extra line with null or empty text was part of the quoted text.</releaseNotes>
+    <copyright>2020</copyright>
     <tags>CSV converter</tags>
   </metadata>
   <files>

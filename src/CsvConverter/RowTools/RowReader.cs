@@ -57,6 +57,9 @@ namespace CsvConverter.RowTools
                             inEscape = true;
                         else
                         {
+                            // Trying to escape an escape character?  
+                            // Quotes are usually the escape character and they are escaped
+                            // by putting two next to each other.
                             if (!priorEscape)
                             {
                                 if (i + 1 < oneLine.Length && oneLine[i + 1] == EscapeChar)
@@ -72,7 +75,7 @@ namespace CsvConverter.RowTools
                         }
                         break;
                     case SplitChar:
-                        if (inEscape) //if in escape
+                        if (inEscape) 
                             _sb.Append(c);
                         else
                         {
@@ -90,10 +93,19 @@ namespace CsvConverter.RowTools
                     // According to RFC 4180 (formatting CSV files)- https://www.ietf.org/rfc/rfc4180.txt
                     // You should be able to read over multiple rows if a carrage return is encounted within 
                     // quotes.
-                    _sb.Append("\r\n");
-                    oneLine = ReadOneLine();
-                    if (oneLine == null)
-                        break;  // should only hit this in testing!
+
+                    // We've had a special case where the quoted data contains a couple of carriage returns
+                    // thus resulting in lines with null or empty strings in them.  Keep trying to get to a
+                    // line with data in it.  Even a space is ok.  We need to get to that next escape character.
+                    do
+                    {
+                        _sb.Append("\r\n");
+                        if (CanRead() == false)
+                            break;
+                        oneLine = ReadOneLine();
+                    }
+                    while (string.IsNullOrEmpty(oneLine)); // Space is OK!
+                   
                     i = -1; // For loop above will increment it to zero
                 }
             }
@@ -110,6 +122,7 @@ namespace CsvConverter.RowTools
             string oneLine = _streamReader.ReadLine();
             if (oneLine != null)
                 _lengthBeforeExit = oneLine.Length - 1;
+            else _lengthBeforeExit = 0;
             RowNumber++;
             return oneLine;
         }

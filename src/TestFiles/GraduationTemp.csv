@@ -3,7 +3,9 @@ John,Brown,"June 15, 1992 4:30 PM",8/12/2010,578,14.50%,3.78,True,Barbara,Brown,
 Sally,Grogger,"April 2, 1991 2:00 PM",8/12/2010,578,13.20%,3.99,True,Tamara,Grogger,1970/3/2,Sally studied hard and was a very involved student.
 James,Killroy,"January 4, 1989 11:23 AM",8/5/2008,"1,456",54.00%,2.06,False,Wendy,Killroy,1968/9/3,
 Holly,Gamebridge,"February 3, 1991 9:23 AM",8/7/2011,567,35.24%,3.12,False,Patricia,Gamebridge,1970/6/8,"Holly was class president and said, ""Give me good grades or give me death."""
-Brian,Adams,"December 3, 1998 4:54 PM",8/13/2018,"2,125",15.70%,3.45,False,Lilly,Adams,1977/3/2,"Brian didn't apply himself, but if he had he could have graduated with honors."
+Brian,Adams,"December 3, 1998 4:54 PM",8/13/2018,"2,125",15.70%,3.45,False,Lilly,Adams,1977/3/2,"Brian didn't apply himself, but if he 
+
+had he could have graduated with honors."
 Carman,San Diego,"November 2, 1967 3:44 AM",9/1/1985,"2,347",45.34%,2.95,False,Ava,San Diego,1947/4/3,
 Robert,Dean,"October 5, 1987 3:12 PM",N/A,N/A,N/A,N/A,False,Jill,Dean,1963/2/1,Robert dropped out of high school.
 Daniel,McGregor,"July 4, 1987 2:12 AM",8/2/2006,"2,234",25.23%,2.87,False,Jackline,Kellog,1966/4/2,Daniel's mom remarried

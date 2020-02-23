@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace SimpleCoreExample1
 {
@@ -9,84 +10,55 @@ namespace SimpleCoreExample1
     {
         static void Main(string[] args)
         {
-            string storageDirectory = "c:\\temp";
-            if (Directory.Exists(storageDirectory) == false)
-                Directory.CreateDirectory(storageDirectory);
+            string readFile = @"C:\Temp\Book2.csv";
+            var items = ReadItems(readFile);
 
-            string catFileName =  Path.Combine(storageDirectory, "Cats.csv");
+            string writeFile = @"C:\Temp\Book2a.csv";
+            WriteItems(items, writeFile);
 
-            List<Cat> originalCatList = CreateCats(15);
-
-            ShowCats("Generated file", originalCatList);
-            WriteCats(originalCatList, catFileName);
-
-            List<Cat> readCatList = ReadCats(catFileName);
-            ShowCats("From file", readCatList);
-
-            Console.WriteLine("Hit enter to exit");
+            Console.WriteLine("done");
             Console.ReadLine();
         }
 
-        private static void ShowCats(string title, List<Cat> catList)
+        private static void WriteItems(List<TestData> items, string fileName)
         {
-            Console.WriteLine(title);
-            foreach(var cat in catList)
+
+            using (var fs = File.Create(fileName))
+            using (var sw = new StreamWriter(fs, Encoding.Default))
             {
-                Console.WriteLine(cat.ToString());
+                var writerService = new CsvWriterService<TestData>(sw);
+                foreach(var item in items)
+                {
+                     
+
+                    writerService.WriteRecord(item);
+                }
             }
         }
 
-        private static List<Cat> ReadCats(string catFileName)
+        private static List<TestData> ReadItems(string fileName)
         {
-            var result = new List<Cat>();
+            var items = new List<TestData>();
 
-            using (var fs = File.OpenRead(catFileName))
+
+            using (var fs = File.OpenRead(fileName))
             using (var sr = new StreamReader(fs))
             {
-                ICsvReaderService<Cat> reader = new CsvReaderService<Cat>(sr);
+                ICsvReaderService<TestData> reader = new CsvReaderService<TestData>(sr);
                 reader.Configuration.HasHeaderRow = true;
                 reader.Configuration.BlankRowsAreReturnedAsNull = true;
                 while (reader.CanRead())
                 {
-                    Cat item = reader.GetRecord();
+                    TestData item = reader.GetRecord();
                     if (item != null)
-                       result.Add(item);
+                    {
+                        items.Add(item);
+                        Console.WriteLine(item.FieldDescription);
+                    }
                 }
             }
 
-            return result;
-        }
-
-        private static void WriteCats(List<Cat> originalCatList, string catFileName)
-        {
-            using (var fs = File.Create(catFileName))
-            using (var sw = new StreamWriter(fs))
-            {
-                fs.Seek(0, SeekOrigin.Begin);
-                ICsvWriterService<Cat> writer = new CsvWriterService<Cat>(sw);
-                writer.Configuration.HasHeaderRow = true;
-                foreach(var cat in originalCatList)
-                {
-                    writer.WriteRecord(cat);
-                }
-            }
-        }
-
-        private static List<Cat> CreateCats(int numberOfCatsToCreate)
-        {
-            Random rand = new Random(DateTime.Now.Second);
-            var result = new List<Cat>();
-            for(int i = 1; i <= numberOfCatsToCreate; i++)
-            {
-                var oneCat = new Cat()
-                {
-                    Name = $"Cat Number {i}",
-                    Age = rand.Next(1, 15),
-                    CatType = (CatTypesEnum)rand.Next(1, 10)
-                };
-                result.Add(oneCat);
-            }
-            return result;
+            return items;
         }
     }
 }
