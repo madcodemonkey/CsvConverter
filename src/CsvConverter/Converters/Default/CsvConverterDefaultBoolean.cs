@@ -1,13 +1,12 @@
 ﻿using CsvConverter.Reflection;
 using System;
-using System.Globalization;
 
 namespace CsvConverter
 {
     /// <summary>A converter designed to convert boolean properties to string values.</summary>
     public class CsvConverterDefaultBoolean : CsvConverterTypeBase, ICsvConverter
     {
-        /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+        /// <summary>Can this converter turn a CSV column string into the property type specified?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>
         public bool CanRead(Type propertyType)
         {

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<NuspecFile>$(MSBuildThisFileDirectory)$(MSBuildProjectName).nuspec</NuspecFile>
-    <Version>2.0.0.2</Version>
+    <Version>2.0.0.3</Version>
     <Authors>David Yates</Authors>
     <Company>David Yates</Company>
     <Description>A simple .NET Standard 2.0 library for writing and reading CSV files using a List of T as the input or received output of the operation.</Description>
@@ -14,21 +14,17 @@
     <RepositoryUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/</RepositoryUrl>
     <PackageTags>CSV converter</PackageTags>
     <PackageReleaseNotes>This is a major new release and a rewrite of many of the features from version 1.  Hopefully, you find that it is a simplified model compared to V1.  This is also the first relase of the .NET Standard version, which can be used with .NET Core or the .NET Framework.</PackageReleaseNotes>
-    <AssemblyVersion>2.0.0.2</AssemblyVersion>
-    <FileVersion>2.0.0.1</FileVersion>
+    <AssemblyVersion>2.0.0.3</AssemblyVersion>
+    <FileVersion>2.0.0.3</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Yates-Git\CsvConverter\src\CsvConverter\CsvConverter.xml</DocumentationFile>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\Yates-Git\CsvConverter\src\CsvConverter\CsvConverter.xml</DocumentationFile>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-  
-  <ItemGroup> 
-     <None Include="readme.txt" Pack="true" PackagePath="." />  
-  </ItemGroup>
   
   <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
     <PropertyGroup>

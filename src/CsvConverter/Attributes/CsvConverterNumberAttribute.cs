@@ -10,7 +10,7 @@ namespace CsvConverter
         public CsvConverterNumberAttribute() : base() { }
 
         /// <summary>Constructor to use when you want to provide your own converter.</summary>
-        /// <param name="converterType">A cstom converter</param>
+        /// <param name="converterType">A custom converter</param>
         public CsvConverterNumberAttribute(Type converterType) : base(converterType) { }
 
         /// <summary>The output format to use when converting a number into a string</summary>
@@ -25,6 +25,4 @@ namespace CsvConverter
         /// <summary>Number of decimal places to use when rounding</summary>
         public int NumberOfDecimalPlaces { get; set; }
     }
-
-
 }

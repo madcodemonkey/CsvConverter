@@ -3,6 +3,8 @@ using System.Text.RegularExpressions;
 
 namespace CsvConverter
 {
+    /// <summary>This converter replaces the text specified in the OldValue attribute with text in the NewValue attribute everywhere it can be found in the string.
+    /// <see href="https://github.com/madcodemonkey/CsvConverter/wiki/Advanced-Converters-CsvConverterStringReplaceTextEveryMatch">Documentation here.</see></summary>
     public class CsvConverterStringReplaceTextEveryMatch : CsvConverterStringBase, ICsvConverterString
     {
         private string _newValue;
@@ -10,7 +12,7 @@ namespace CsvConverter
         private bool _oldValueCannotBeProcessByStringReplace = true; // While uninitialized this needs to be true or the string Replace method will throw an exception.
         private RegexOptions _regexOptions = RegexOptions.None;
 
-        /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+        /// <summary>Can this converter turn a CSV column string into the property type specified?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>
         public bool CanRead(Type propertyType)
         {
@@ -23,8 +25,7 @@ namespace CsvConverter
         {
             return propertyType == typeof(string);
         }
-
-
+        
         /// <summary>Converts a string into a another string if there is an exact match; otherwise, the
         /// original string is left untouched.</summary>
         public object GetReadData(Type inputType, string value, string columnName, int columnIndex, int rowNumber)

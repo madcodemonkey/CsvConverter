@@ -5,7 +5,7 @@ namespace CsvConverter
     /// <summary>A converter for strings.</summary>
     public class CsvConverterDefaultString : CsvConverterTypeBase, ICsvConverter
     {
-        /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+        /// <summary>Can this converter turn a CSV column string into the property type specified?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>
         public bool CanRead(Type propertyType)
         {

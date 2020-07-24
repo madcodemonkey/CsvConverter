@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace CsvConverter
 {
+    /// <summary>Converts CSV rows into class instances.  The class instances will of type T.
+    ///<see href="https://github.com/madcodemonkey/CsvConverter/wiki/Reading">Documentation here</see> </summary>
+    /// <typeparam name="T">Class instance type</typeparam>
     public interface ICsvReaderService<T> where T : class, new()
     {
         /// <summary>Indicates the current row number.</summary>
@@ -28,9 +31,9 @@ namespace CsvConverter
 
         /// <summary>Retrieves a list of Column maps based on the converter being used by the property. 
         /// Call this method AFTER calling Init() or the result will be a count of zero.</summary>
-        /// <param name="typeOfConveter">Converter type</param>
+        /// <param name="typeOfConverter">Converter type</param>
         /// <returns>List of columns using the converter.</returns>
-        List<ColumnToPropertyMap> FindColumnsByConverterType(Type typeOfConveter);
+        List<ColumnToPropertyMap> FindColumnsByConverterType(Type typeOfConverter);
 
         /// <summary>Retrieves a list of Column maps based on the class property type.
         /// Call this method AFTER calling Init() or the result will be a count of zero.</summary>

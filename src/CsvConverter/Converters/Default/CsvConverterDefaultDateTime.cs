@@ -7,7 +7,7 @@ namespace CsvConverter
     /// <summary>A converter designed to convert DateTime properties to string values.</summary>
     public class CsvConverterDefaultDateTime : CsvConverterTypeBase, ICsvConverter
     {
-        /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+        /// <summary>Can this converter turn a CSV column string into the property type specified?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>
         public bool CanRead(Type propertyType)
         {
@@ -24,7 +24,7 @@ namespace CsvConverter
         /// <summary>The format to use with the DateTime ParseExact method.</summary>
         public string DateFormat { get; set; }
 
-        /// <summary>The Date Format Provider used with the DateTie ParseExcat method</summary>
+        /// <summary>The Date Format Provider used with the DateTie ParseExact method</summary>
         public IFormatProvider DateFormatProvider { get; set; } = CultureInfo.InvariantCulture;
 
         /// <summary>The style to use with the DateTime ParseExact method.</summary>

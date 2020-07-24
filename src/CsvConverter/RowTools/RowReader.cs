@@ -91,7 +91,7 @@ namespace CsvConverter.RowTools
                 if (inEscape && i == _lengthBeforeExit)
                 {
                     // According to RFC 4180 (formatting CSV files)- https://www.ietf.org/rfc/rfc4180.txt
-                    // You should be able to read over multiple rows if a carrage return is encounted within 
+                    // You should be able to read over multiple rows if a carriage return is encountered within 
                     // quotes.
 
                     // We've had a special case where the quoted data contains a couple of carriage returns

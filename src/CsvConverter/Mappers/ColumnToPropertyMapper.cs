@@ -330,7 +330,7 @@ namespace CsvConverter.Mapper
             }
 
             // Did the attribute specify ColumnIndex?
-            if (oneAttribute.IsColumIndexSpecified())
+            if (oneAttribute.IsColumnIndexSpecified())
             {
                 // Has the ColumnIndex specified on another attribute?
                 if (newMap.IsDefaultColumnIndex())

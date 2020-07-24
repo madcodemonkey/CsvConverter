@@ -2,10 +2,11 @@
 
 namespace CsvConverter
 {
-    /// <summary>Trims all fields of white space left and right of the text.</summary>
+    /// <summary>This converter trims a string with string's TrimStart, TrimEnd or Trim methods. The default method used is Trim.
+    /// <see href="https://github.com/madcodemonkey/CsvConverter/wiki/Advanced-Converters-CsvConverterStringTrimmer">Documentation here.</see></summary>
     public class CsvConverterStringTrimmer : CsvConverterStringBase, ICsvConverterString
     {
-        /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+        /// <summary>Can this converter turn a CSV column string into the property type specified?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>
         public bool CanRead(Type propertyType)
         {

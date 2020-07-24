@@ -6,7 +6,8 @@ using System.IO;
 
 namespace CsvConverter
 {
-    /// <summary>Converts CSV rows into class instances.  The class instances will of type T.</summary>
+    /// <summary>Converts CSV rows into class instances.  The class instances will of type T.
+    ///<see href="https://github.com/madcodemonkey/CsvConverter/wiki/Reading">Documentation here</see> </summary>
     /// <typeparam name="T">Class instance type</typeparam>
     public class CsvReaderService<T> : CsvServiceBase, ICsvReaderService<T> where T : class, new()
     {
@@ -19,7 +20,7 @@ namespace CsvConverter
         /// <param name="sr">An instance of StreamReader that is already attached to an open file stream.</param>
         public CsvReaderService(StreamReader sr) : this(new RowReader(sr)) { }
 
-        /// <summary>A constructor for dependency injection that is used primarly for TESTING!; however, a user could override how 
+        /// <summary>A constructor for dependency injection that is used primarily for TESTING!; however, a user could override how 
         /// a row is read by implementing the interface.</summary>
         /// <param name="rowReader"></param>
         public CsvReaderService(IRowReader rowReader)

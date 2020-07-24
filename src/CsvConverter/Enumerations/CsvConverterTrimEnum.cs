@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CsvConverter
+﻿namespace CsvConverter
 {
     public enum CsvConverterTrimEnum
     {

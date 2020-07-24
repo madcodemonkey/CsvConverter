@@ -7,7 +7,7 @@ namespace CsvConverter
     /// <summary>Turns a comma delimited array of integers into an int array or throws an exception if they cannot be parsed.</summary>
     public class CsvConverterCommaDelimitedIntArray : CsvConverterTypeBase, ICsvConverter
     {
-        /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+        /// <summary>Can this converter turn a CSV column string into the property type specified?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>
         public bool CanRead(Type propertyType)
         {

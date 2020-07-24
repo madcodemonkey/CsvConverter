@@ -10,7 +10,7 @@ namespace CsvConverter
         public CsvConverterBooleanAttribute() : base() { }
 
         /// <summary>Constructor to use when you want to provide your own converter.</summary>
-        /// <param name="converterType">A cstom converter</param>
+        /// <param name="converterType">A custom converter</param>
         public CsvConverterBooleanAttribute(Type converterType) : base(converterType) { }
 
         /// <summary>Indicates the text that represents a true value in the CSV file (it is case insensitive for inputs and written as is for outputs)</summary>

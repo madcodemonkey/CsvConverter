@@ -9,7 +9,7 @@ namespace CsvConverter
         /// <summary>Used to pass the attribute to the converter in case it needs any optional inputs.</summary>
         void Initialize(CsvConverterAttribute attribute, IDefaultTypeConverterFactory defaultFactory);
 
-        /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+        /// <summary>Can this converter turn a CSV column string into the property type specified?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>
         bool CanRead(Type propertyType);
 

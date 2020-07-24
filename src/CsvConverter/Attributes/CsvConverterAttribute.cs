@@ -10,16 +10,14 @@ namespace CsvConverter
         /// <summary>Default constructor.  Do NOT use this unless you have overriden GetConverter!</summary>
         public CsvConverterAttribute() { }
 
-        /// <summary>Use this if you have not override GetCoverter and want the default code to run and create a 
+        /// <summary>Use this if you have not override GetConverter and want the default code to run and create a 
         /// type converters.</summary>
         /// <param name="converterType"></param>
         public CsvConverterAttribute(Type converterType)
         {
             ConverterType = converterType;
         }
-
-      
-
+        
         /// <summary>READING CSV FILES: It is used ONLY when there is NOT a header row.  If the CSV file has a header row this is ignored.  
         /// If there is NOT a header row, this is mandatory and represents the column index (ONE based) position of the column in the CSV file.
         /// WRITING CSV FILES: It is used to determine the column order of the CSV files.  If not specified, we will order by ColumnName.</summary>
@@ -68,10 +66,10 @@ namespace CsvConverter
                        $" {nameof(CsvConverterAttribute)}, but a {nameof(TargetPropertyType)} was NOT specified.");
             }
 
-            if (IsColumIndexSpecified())
+            if (IsColumnIndexSpecified())
             {
                 throw new CsvConverterAttributeException($"The {theClassType.Name} class has a class level attribute " +
-                    $"that inherits {nameof(CsvConverterAttribute)} that is specifying a ColumIndex.  You can only " +
+                    $"that inherits {nameof(CsvConverterAttribute)} that is specifying a ColumnIndex.  You can only " +
                     $"specify ColumnIndex if the attribute is on the property!");
             }
 
@@ -126,12 +124,18 @@ namespace CsvConverter
 
             return oneTypeConverter;
         }
-
-
+        
         /// <summary>Indicates if a column index was specified.</summary>
-        public bool IsColumIndexSpecified()
+        public bool IsColumnIndexSpecified()
         {
             return ColumnIndex != int.MaxValue;
+        }
+
+        /// <summary>Indicates if a column index was specified.</summary>
+        [Obsolete("Please use IsColumnIndexSpecified. There is a typo here.")]
+        public bool IsColumIndexSpecified()
+        {
+            return IsColumnIndexSpecified();
         }
 
         /// <summary>Indicates if a column name was specified.</summary>
@@ -152,8 +156,8 @@ namespace CsvConverter
         {
             return $"The '{propInfo.Name}' property on the {theClassType.Name} class specified an attribute that inherits from " +
                 $"{nameof(CsvConverterAttribute)} attribute, but there is a problem!  We could NOT create the converter it is specifying.  " +
-                $"Please note, that all of converters should implement the {nameof(ICsvConverter)} intefaace so the {nameof(this.ConverterType)} " +
-                $"type can be found.  The coverter specified in the attribute that inherits from " +
+                $"Please note, that all of converters should implement the {nameof(ICsvConverter)} interface so the {nameof(this.ConverterType)} " +
+                $"type can be found.  The converter specified in the attribute that inherits from " +
                 $"{nameof(CsvConverterAttribute)} is not a proper converter.";
         }
 
@@ -163,7 +167,7 @@ namespace CsvConverter
         {
             return $"The {theClassType.Name} class is using an attribute that inherits from the {nameof(CsvConverterAttribute)} " +
                 $"attribute, but there is a problem!  We could NOT create the converter it is specifying.  Please note," +
-                $"that all converters must implement the {nameof(ICsvConverter)} intefaace so the {nameof(this.ConverterType)} " +
+                $"that all converters must implement the {nameof(ICsvConverter)} interface so the {nameof(this.ConverterType)} " +
                 $"type can be found.  The converter found in the attribute that inherits from " +
                 $"{nameof(CsvConverterAttribute)} is not a proper converter.";
         }

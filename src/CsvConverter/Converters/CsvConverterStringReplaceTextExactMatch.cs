@@ -2,14 +2,15 @@
 
 namespace CsvConverter
 {
-    /// <summary>Replaces the text specified in the OldValue attribute with text in the NewValue attribute.</summary>
+    /// <summary>This converter replaces the text specified in the OldValue attribute with text in the NewValue attribute if and only if it is an EXACT match.
+    /// <see href="https://github.com/madcodemonkey/CsvConverter/wiki/Advanced-Converters-CsvConverterStringReplaceTextExactMatch">Documentation here.</see></summary>
     public class CsvConverterStringReplaceTextExactMatch : CsvConverterStringBase, ICsvConverterString
     {
         private string _newValue;
         private string _oldValue;
         private bool _isCaseSensitive = true;
 
-        /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+        /// <summary>Can this converter turn a CSV column string into the property type specified?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>
         public bool CanRead(Type propertyType)
         {

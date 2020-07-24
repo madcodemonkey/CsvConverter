@@ -10,7 +10,7 @@ namespace CsvConverter.RowTools
 
         /// <summary>Indicates the number of columns that were read the last time we read a row.  It always starts a zero when first initialized,
         /// but the first row read should give you a number greater than zero.  If the number changes from row to row, it is an indication that 
-        /// the columns are incorrectly formatted (e.g., text with commans is NOT surrounded by quotes and causing the column count to increase)</summary>
+        /// the columns are incorrectly formatted (e.g., text with commas is NOT surrounded by quotes and causing the column count to increase)</summary>
         int LastColumnCount { get; }
 
         /// <summary>The current row being read.</summary>

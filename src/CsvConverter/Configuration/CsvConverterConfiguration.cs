@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CsvConverter
+﻿namespace CsvConverter
 {
     /// <summary>Main configuration class.</summary>
     public class CsvConverterConfiguration

@@ -7,7 +7,7 @@ namespace CsvConverter
     /// <summary>A converter designed to convert decimal properties to string values.</summary>
     public class CsvConverterDefaultDecimal : CsvConverterTypeBase, ICsvConverter
     {
-        /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+        /// <summary>Can this converter turn a CSV column string into the property type specified?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>
         public bool CanRead(Type propertyType)
         {
@@ -24,7 +24,7 @@ namespace CsvConverter
         /// <summary>Mode is used when AllowRounding is true.  It is used with the Math.Round function.</summary>
         public MidpointRounding Mode { get; set; } = MidpointRounding.AwayFromZero;
 
-        /// <summary>Default is FALSE to not lose percision.  If true, Mode is used with Math.Round; otherwise, Math.Floor
+        /// <summary>Default is FALSE to not lose precision.  If true, Mode is used with Math.Round; otherwise, Math.Floor
         /// is used and NO rounding takes place.</summary>
         public bool AllowRounding { get; set; } = false; 
 

@@ -3,12 +3,13 @@ using System;
 
 namespace CsvConverter
 {
-    /// <summary>Turns a string that is a percentage into a decimal value or throws an exception if the conversion fails.</summary>
+    /// <summary>Turns a string that is a percentage into a decimal value or throws an exception if the conversion fails.
+    /// <see href="https://github.com/madcodemonkey/CsvConverter/wiki/Advanced-Converters-CsvConverterPercentage">Documentation here.</see></summary>
     public class CsvConverterPercentage : CsvConverterTypeBase, ICsvConverter
     {
         private ICsvConverter _decimalConverter;
 
-        /// <summary>Can this converter turn a CSV column string into the property type specifed?</summary>
+        /// <summary>Can this converter turn a CSV column string into the property type specified?</summary>
         /// <param name="propertyType">The type that should be returned from the GetReadData method.</param>
         public bool CanRead(Type propertyType)
         {

@@ -6,7 +6,8 @@ using System.IO;
 
 namespace CsvConverter
 {
-    /// <summary>Converts Class into a CSV row.  The class instances will of type T.</summary>
+    /// <summary>Converts Class into a CSV row.  The class instances will of type T.
+    ///<see href="https://github.com/madcodemonkey/CsvConverter/wiki/Writing">Documentation here</see> </summary>
     /// <typeparam name="T">Class instance type</typeparam>
     public class CsvWriterService<T> : CsvServiceBase, ICsvWriterService<T> where T : class, new()
     {

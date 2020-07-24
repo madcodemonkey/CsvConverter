@@ -11,7 +11,7 @@ namespace CsvConverter
         public CsvConverterDateTimeAttribute() : base() { }
 
         /// <summary>Constructor to use when you want to provide your own converter.</summary>
-        /// <param name="converterType">A cstom converter</param>
+        /// <param name="converterType">A custom converter</param>
         public CsvConverterDateTimeAttribute(Type converterType) : base(converterType) { }
 
         /// <summary>The style to use with the DateTime ParseExact method when converting strings to dates.</summary>

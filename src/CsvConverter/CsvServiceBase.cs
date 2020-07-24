@@ -5,15 +5,11 @@ using System.Linq;
 
 namespace CsvConverter
 {
+    /// <summary>Base class for <see cref="CsvReaderService{T}"/> and <see cref="CsvWriterService{T}"/>  </summary>
     public abstract class CsvServiceBase
     {
         private IDefaultTypeConverterFactory _defaultConverterFactory = new DefaultTypeConverterFactory();
         protected bool _initialized = false;
-
-        public CsvServiceBase()
-        {
-
-        }
 
         /// <summary>Information about each column. It is not initialized till Init method is called 
         /// and that is done automatically upon using a read or write method.</summary>
@@ -49,15 +45,15 @@ namespace CsvConverter
 
         /// <summary>Retrieves a list of Column maps based on the converter being used by the property. 
         /// Call this method AFTER calling Init() or the result will be a count of zero.</summary>
-        /// <param name="typeOfConveter">Converter type</param>
+        /// <param name="typeOfConverter">Converter type</param>
         /// <returns>List of columns using the converter.</returns>
-        public List<ColumnToPropertyMap> FindColumnsByConverterType(Type typeOfConveter)
+        public List<ColumnToPropertyMap> FindColumnsByConverterType(Type typeOfConverter)
         {
             if (_initialized == false)
                 return new List<ColumnToPropertyMap>();
 
             return ColumnMapList
-                .Where(w => w.ReadConverter.GetType() == typeOfConveter)
+                .Where(w => w.ReadConverter.GetType() == typeOfConverter)
                 .ToList();
         }
 

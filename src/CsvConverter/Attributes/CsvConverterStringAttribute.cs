@@ -10,7 +10,7 @@ namespace CsvConverter
         /// <summary>Default constructor.  Do NOT use this unless you have overriden GetConverter!</summary>
         public CsvConverterStringAttribute() { }
 
-        /// <summary>Use this if you have not override GetCoverter and want the default code to run and create a 
+        /// <summary>Use this if you have not override GetConverter and want the default code to run and create a 
         /// type converters.</summary>
         /// <param name="converterType"></param>
         public CsvConverterStringAttribute(Type converterType)
@@ -38,11 +38,18 @@ namespace CsvConverter
         /// <summary>An optional, order for pre and post converters in case there are more than one decorating a property or class.</summary>
         public int Order { get; set; } = 999;
 
+        /// <summary>Creates a converter for a property on a class based on the type specified by ConverterType OR ou can 
+        /// dynamically create a converter based on the property information passed into the method.</summary>
+        /// <param name="theClassType">The class were the property resides so that it can be named to help the user
+        /// find the particular property in question if they have more than class decorated with converter attributes.</param>
+        /// <param name="propInfo">Property information about the property that this attribute was on.</param>
+        /// <param name="defaultFactory">The default type converter factory.</param>
+        /// <returns>A converter or null if one is not specified.</returns>
         public override ICsvConverter CreateConverterForProperty(Type theClassType, PropertyInfo propInfo, 
             IDefaultTypeConverterFactory defaultFactory)
         {
             bool isPreOrPostConverter = IsPreConverter || IsPostConverter;
-            if (isPreOrPostConverter && IsColumIndexSpecified())
+            if (isPreOrPostConverter && IsColumnIndexSpecified())
             {
                 ThrowDoNotUseAttributePropertyException(theClassType, propInfo, "ColumnIndex");
             }

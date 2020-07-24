@@ -10,12 +10,11 @@
     <projectUrl>https://github.com/madcodemonkey/CsvConverter</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Fixed a quote problem where an extra line with null or empty text was part of the quoted text.</releaseNotes>
+    <releaseNotes>Documentation updates (added to XML comments to point to the wiki tab, fixed typos and removed readme.txt).</releaseNotes>
     <copyright>2020</copyright>
     <tags>CSV converter</tags>
   </metadata>
   <files>
     <file src="..\..\LICENSE" target="License\LICENSE" />
-    <file src="readme.txt" target="readme.txt" />
   </files>
 </package>
