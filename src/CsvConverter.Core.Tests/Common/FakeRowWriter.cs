@@ -6,7 +6,9 @@ namespace CsvConverter.Core.Tests
 {
     internal class FakeRowWriter : IRowWriter
     {
+        public char EscapeChar { get; set; } = '"';
         public int RowNumber { get; set; } = 1;
+        public char SplitChar { get; set; } = ',';
 
         public string WriteString { get; set; }
         public List<List<string>> Rows { get; set; } = new List<List<string>>();

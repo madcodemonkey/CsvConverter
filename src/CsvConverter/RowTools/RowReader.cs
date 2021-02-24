@@ -50,42 +50,50 @@ namespace CsvConverter.RowTools
             for (int i = 0; i < oneLine.Length; i++)
             {
                 char c = oneLine[i];
-                switch (c)
+                if (c == EscapeChar)
                 {
-                    case EscapeChar:
-                        if (!inEscape)
-                            inEscape = true;
-                        else
+                    if (!inEscape)
+                    {
+                        inEscape = true;
+                    }
+                    else
+                    {
+                        // Trying to escape an escape character?  
+                        // Quotes are usually the escape character and they are escaped
+                        // by putting two next to each other.
+                        if (!priorEscape)
                         {
-                            // Trying to escape an escape character?  
-                            // Quotes are usually the escape character and they are escaped
-                            // by putting two next to each other.
-                            if (!priorEscape)
+                            if (i + 1 < oneLine.Length && oneLine[i + 1] == EscapeChar)
                             {
-                                if (i + 1 < oneLine.Length && oneLine[i + 1] == EscapeChar)
-                                    priorEscape = true;
-                                else
-                                    inEscape = false;
+                                priorEscape = true;
                             }
                             else
                             {
-                                _sb.Append(c);
-                                priorEscape = false;
+                                inEscape = false;
                             }
                         }
-                        break;
-                    case SplitChar:
-                        if (inEscape) 
-                            _sb.Append(c);
                         else
                         {
-                            AddColumn(result, _sb.ToString());
-                            _sb.Length = 0;
+                            _sb.Append(c);
+                            priorEscape = false;
                         }
-                        break;
-                    default:
+                    }
+                }
+                else if (c == SplitChar)
+                {
+                    if (inEscape)
+                    {
                         _sb.Append(c);
-                        break;
+                    }
+                    else
+                    {
+                        AddColumn(result, _sb.ToString());
+                        _sb.Length = 0;
+                    }
+                }
+                else
+                {
+                    _sb.Append(c);
                 }
 
                 if (inEscape && i == _lengthBeforeExit)

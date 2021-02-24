@@ -11,7 +11,7 @@ namespace CsvConverter
     /// <typeparam name="T">Class instance type</typeparam>
     public class CsvReaderService<T> : CsvServiceBase, ICsvReaderService<T> where T : class, new()
     {
-        private IRowReader _rowReader;
+        private readonly IRowReader _rowReader;
         private int? _columnCount = null;
         private Dictionary<int, ColumnToPropertyMap> _columnDictionary = new Dictionary<int, ColumnToPropertyMap>();
         
@@ -25,7 +25,7 @@ namespace CsvConverter
         /// <param name="rowReader"></param>
         public CsvReaderService(IRowReader rowReader)
         {
-            _rowReader = rowReader ?? throw new ArgumentNullException(
+            _rowReader = rowReader ?? throw new ArgumentNullException(nameof(rowReader),
                 "Row reader cannot be null. Note that this constructor is mainly used for testing purposes.");
         }
    
@@ -34,6 +34,15 @@ namespace CsvConverter
         public bool CanRead()
         {
             return _rowReader != null && _rowReader.CanRead();
+        }
+
+        /// <summary>If called explicitly by the user, it will read the header row and create mappings; otherwise, it will be called
+        /// the first time you call a read or write method.</summary>
+        public override void Init()
+        {
+            _rowReader.EscapeChar = this.Configuration.EscapeChar;
+            _rowReader.SplitChar = this.Configuration.SplitChar;
+            base.Init();
         }
 
         /// <summary>Indicates the current row number.</summary>

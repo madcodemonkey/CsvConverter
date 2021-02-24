@@ -10,14 +10,35 @@ namespace SimpleCoreExample1
     {
         static void Main(string[] args)
         {
-            string readFile = @"C:\Temp\Book2.csv";
-            var items = ReadItems(readFile);
+            var items = CreateItems();
 
-            string writeFile = @"C:\Temp\Book2a.csv";
+            string writeFile = @"C:\Temp\Book2.csv";
             WriteItems(items, writeFile);
+
+            string readFile = @"C:\Temp\Book2.csv";
+            ReadItems(readFile);
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static List<TestData> CreateItems()
+        {
+            Random rand = new Random(DateTime.Now.Millisecond);
+
+            var data = new List<TestData>();
+            for (int i = 0; i < 20; i++)
+            {
+                data.Add(new TestData()
+                {
+                    FieldName = $"Field{i}",
+                    FieldDescription = $"This is field number {i}",
+                    EndPosition = $"some end data {rand.Next(1, 200000)}",
+                    StartPosition = $"{rand.Next(1, 5000000)} some start data "
+                });
+            }
+
+            return data;
         }
 
         private static void WriteItems(List<TestData> items, string fileName)
@@ -36,11 +57,8 @@ namespace SimpleCoreExample1
             }
         }
 
-        private static List<TestData> ReadItems(string fileName)
+        private static void ReadItems(string fileName)
         {
-            var items = new List<TestData>();
-
-
             using (var fs = File.OpenRead(fileName))
             using (var sr = new StreamReader(fs))
             {
@@ -52,13 +70,10 @@ namespace SimpleCoreExample1
                     TestData item = reader.GetRecord();
                     if (item != null)
                     {
-                        items.Add(item);
                         Console.WriteLine(item.FieldDescription);
                     }
                 }
             }
-
-            return items;
         }
     }
 }

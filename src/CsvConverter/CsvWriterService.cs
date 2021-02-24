@@ -12,7 +12,7 @@ namespace CsvConverter
     public class CsvWriterService<T> : CsvServiceBase, ICsvWriterService<T> where T : class, new()
     {
         private const int ColumnIndexDefaultValue = 9999;
-        private IRowWriter _rowWriter;
+        private readonly IRowWriter _rowWriter;
         private bool _headerWritten = false;
        
         /// <summary>Constructor.  This is the standard constructor were you pass in a StreamWriter that is already connected to an open stream.</summary>
@@ -22,13 +22,22 @@ namespace CsvConverter
         /// a row is written by implementing the interface.</summary>
         public CsvWriterService(IRowWriter rowWriter)
         {
-            _rowWriter = rowWriter ?? throw new ArgumentNullException(
+            _rowWriter = rowWriter ?? throw new ArgumentNullException(nameof(rowWriter),
                 "Row writer cannot be null. Note that this constructor is mainly used for testing purposes.");
         }
    
         /// <summary>Indicates the current row number.</summary>
         public int RowNumber { get { return _rowWriter != null ? _rowWriter.RowNumber : 0; } }
-     
+
+        /// <summary>If called explicitly by the user, it will read the header row and create mappings; otherwise, it will be called
+        /// the first time you call a read or write method.</summary>
+        public override void Init()
+        {
+            _rowWriter.EscapeChar = this.Configuration.EscapeChar;
+            _rowWriter.SplitChar = this.Configuration.SplitChar;
+            base.Init();
+        }
+
         /// <summary>Writes a single row to the CSV file.</summary>
         /// <param name="record">What to write to the CSV file</param>
         public void WriteRecord(T record)
@@ -122,5 +131,6 @@ namespace CsvConverter
             var mapper = new ColumnToPropertyMapper<T>(Configuration, DefaultConverterFactory, ColumnIndexDefaultValue);
             ColumnMapList.AddRange(mapper.CreateWriteMap());
         }
+
     }
 }
