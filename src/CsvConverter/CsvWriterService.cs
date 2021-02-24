@@ -24,14 +24,20 @@ namespace CsvConverter
         {
             _rowWriter = rowWriter ?? throw new ArgumentNullException(nameof(rowWriter),
                 "Row writer cannot be null. Note that this constructor is mainly used for testing purposes.");
-
-            _rowWriter.EscapeChar = this.Configuration.EscapeChar;
-            _rowWriter.SplitChar = this.Configuration.SplitChar;
         }
    
         /// <summary>Indicates the current row number.</summary>
         public int RowNumber { get { return _rowWriter != null ? _rowWriter.RowNumber : 0; } }
-     
+
+        /// <summary>If called explicitly by the user, it will read the header row and create mappings; otherwise, it will be called
+        /// the first time you call a read or write method.</summary>
+        public override void Init()
+        {
+            _rowWriter.EscapeChar = this.Configuration.EscapeChar;
+            _rowWriter.SplitChar = this.Configuration.SplitChar;
+            base.Init();
+        }
+
         /// <summary>Writes a single row to the CSV file.</summary>
         /// <param name="record">What to write to the CSV file</param>
         public void WriteRecord(T record)
@@ -125,5 +131,6 @@ namespace CsvConverter
             var mapper = new ColumnToPropertyMapper<T>(Configuration, DefaultConverterFactory, ColumnIndexDefaultValue);
             ColumnMapList.AddRange(mapper.CreateWriteMap());
         }
+
     }
 }

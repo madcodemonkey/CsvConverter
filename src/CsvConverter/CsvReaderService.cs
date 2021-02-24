@@ -27,9 +27,6 @@ namespace CsvConverter
         {
             _rowReader = rowReader ?? throw new ArgumentNullException(nameof(rowReader),
                 "Row reader cannot be null. Note that this constructor is mainly used for testing purposes.");
-
-            _rowReader.EscapeChar = this.Configuration.EscapeChar;
-            _rowReader.SplitChar = this.Configuration.SplitChar;
         }
    
         /// <summary>Indicates if there is more to read from the file.</summary>
@@ -37,6 +34,15 @@ namespace CsvConverter
         public bool CanRead()
         {
             return _rowReader != null && _rowReader.CanRead();
+        }
+
+        /// <summary>If called explicitly by the user, it will read the header row and create mappings; otherwise, it will be called
+        /// the first time you call a read or write method.</summary>
+        public override void Init()
+        {
+            _rowReader.EscapeChar = this.Configuration.EscapeChar;
+            _rowReader.SplitChar = this.Configuration.SplitChar;
+            base.Init();
         }
 
         /// <summary>Indicates the current row number.</summary>
