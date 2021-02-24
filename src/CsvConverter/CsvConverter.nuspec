@@ -10,8 +10,8 @@
     <projectUrl>https://github.com/madcodemonkey/CsvConverter</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Documentation updates (added to XML comments to point to the wiki tab, fixed typos and removed readme.txt).</releaseNotes>
-    <copyright>2020</copyright>
+    <releaseNotes>Surfaced SplitChar and EscapeChar to configuration settings.</releaseNotes>
+    <copyright>2021</copyright>
     <tags>CSV converter</tags>
   </metadata>
   <files>
