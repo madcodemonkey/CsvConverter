@@ -12,7 +12,7 @@ namespace CsvConverter
     public class CsvWriterService<T> : CsvServiceBase, ICsvWriterService<T> where T : class, new()
     {
         private const int ColumnIndexDefaultValue = 9999;
-        private IRowWriter _rowWriter;
+        private readonly IRowWriter _rowWriter;
         private bool _headerWritten = false;
        
         /// <summary>Constructor.  This is the standard constructor were you pass in a StreamWriter that is already connected to an open stream.</summary>
@@ -22,8 +22,11 @@ namespace CsvConverter
         /// a row is written by implementing the interface.</summary>
         public CsvWriterService(IRowWriter rowWriter)
         {
-            _rowWriter = rowWriter ?? throw new ArgumentNullException(
+            _rowWriter = rowWriter ?? throw new ArgumentNullException(nameof(rowWriter),
                 "Row writer cannot be null. Note that this constructor is mainly used for testing purposes.");
+
+            _rowWriter.EscapeChar = this.Configuration.EscapeChar;
+            _rowWriter.SplitChar = this.Configuration.SplitChar;
         }
    
         /// <summary>Indicates the current row number.</summary>

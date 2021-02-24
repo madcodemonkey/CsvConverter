@@ -5,6 +5,10 @@ namespace CsvConverter.RowTools
     /// <summary>Used for reading rows from a stream.</summary>
     public interface IRowReader
     {
+        /// <summary>The Escape character needed if the SplitChar is found in the actual value in a column.  So, this is a comma separated file
+        /// and the data contains a comma, we should escape the data with a double quote (someData, "someData,WithComman", other data)</summary>
+        char EscapeChar { get; set; }
+
         /// <summary>Indicates if the row that was read is blank (meaning that it was NOTHING but commas with NO spaces)</summary>
         bool IsRowBlank { get; }
 
@@ -15,6 +19,9 @@ namespace CsvConverter.RowTools
 
         /// <summary>The current row being read.</summary>
         int RowNumber { get; }
+
+        /// <summary>The character that delimits the data.</summary>
+        char SplitChar  { get; set; }
 
         /// <summary>Indicates if the stream can be read.  In other words, is there more data in the file.</summary>
         bool CanRead();

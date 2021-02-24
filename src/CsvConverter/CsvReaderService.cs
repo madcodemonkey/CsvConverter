@@ -11,7 +11,7 @@ namespace CsvConverter
     /// <typeparam name="T">Class instance type</typeparam>
     public class CsvReaderService<T> : CsvServiceBase, ICsvReaderService<T> where T : class, new()
     {
-        private IRowReader _rowReader;
+        private readonly IRowReader _rowReader;
         private int? _columnCount = null;
         private Dictionary<int, ColumnToPropertyMap> _columnDictionary = new Dictionary<int, ColumnToPropertyMap>();
         
@@ -25,8 +25,11 @@ namespace CsvConverter
         /// <param name="rowReader"></param>
         public CsvReaderService(IRowReader rowReader)
         {
-            _rowReader = rowReader ?? throw new ArgumentNullException(
+            _rowReader = rowReader ?? throw new ArgumentNullException(nameof(rowReader),
                 "Row reader cannot be null. Note that this constructor is mainly used for testing purposes.");
+
+            _rowReader.EscapeChar = this.Configuration.EscapeChar;
+            _rowReader.SplitChar = this.Configuration.SplitChar;
         }
    
         /// <summary>Indicates if there is more to read from the file.</summary>
