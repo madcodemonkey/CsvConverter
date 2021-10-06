@@ -7,7 +7,7 @@
     <authors>David Yates</authors>
     <owners>David Yates</owners>
 	<license type="file">License\LICENSE</license>
-	<icon>icon.png</icon>
+	<icon>images\icon.png</icon>
     <projectUrl>https://github.com/madcodemonkey/CsvConverter</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
@@ -17,5 +17,6 @@
   </metadata>
   <files>
     <file src="..\..\LICENSE" target="License\LICENSE" />
+    <file src="..\..\icon.png" target="images\" />
   </files>
 </package>
