@@ -4,6 +4,7 @@ using System.Reflection;
 
 namespace CsvConverter
 {
+    /// <summary>Csv Converter main attribute</summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = true)]
     public class CsvConverterAttribute : Attribute
     {

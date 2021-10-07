@@ -13,7 +13,7 @@ namespace CsvConverter.RowTools
         /// <param name="sw">An instance of the StreamWriter class.</param>
         public RowWriter(StreamWriter sw)
         {
-            _streamWriter = sw ?? throw new ArgumentNullException("StreamWriter cannot be null.");
+            _streamWriter = sw ?? throw new ArgumentNullException(nameof(sw), "StreamWriter cannot be null.");
         }
 
         /// <summary>Used to write out a line of data (Assumes that the split character is already in the line of text</summary>
@@ -29,7 +29,7 @@ namespace CsvConverter.RowTools
         public void Write(List<string> fieldList)
         {
             if (fieldList == null)
-                throw new ArgumentNullException("fieldList cannot be null.");
+                throw new ArgumentNullException(nameof(fieldList), "fieldList cannot be null.");
 
             _sb.Length = 0;
             int indexOfLastField = fieldList.Count - 1;

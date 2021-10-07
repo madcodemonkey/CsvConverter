@@ -20,8 +20,10 @@ namespace CsvConverter
             return propertyType == typeof(string);
         }
 
+        /// <summary>The type of trim action to perform.</summary>
         public CsvConverterTrimEnum TrimAction { get; set; } = CsvConverterTrimEnum.All;
 
+        /// <summary>Returns a trimmed string</summary>
         public object GetReadData(Type targetType, string value, string columnName, int columnIndex, int rowNumber)
         {
             return TrimTheString(value);

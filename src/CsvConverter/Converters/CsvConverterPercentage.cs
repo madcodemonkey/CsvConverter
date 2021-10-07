@@ -61,6 +61,7 @@ namespace CsvConverter
             return _decimalConverter.GetWriteData(inputType, value, columnName, columnIndex, rowNumber);
         }
 
+        /// <summary>Initializes the converter with an attribute</summary>
         public override void Initialize(CsvConverterAttribute attribute,
             IDefaultTypeConverterFactory defaultFactory)
         {
@@ -75,10 +76,10 @@ namespace CsvConverter
 
             if (string.IsNullOrWhiteSpace(oneAttribute.StringFormat))
             {
-                int percession = oneAttribute.NumberOfDecimalPlaces - 2;
-                if (percession < 0)
-                    percession = 0;
-                oneAttribute.StringFormat = $"P{percession}";
+                int precession = oneAttribute.NumberOfDecimalPlaces - 2;
+                if (precession < 0)
+                    precession = 0;
+                oneAttribute.StringFormat = $"P{precession}";
             }
 
             _decimalConverter = defaultFactory.CreateConverter(typeof(decimal));

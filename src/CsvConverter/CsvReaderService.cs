@@ -13,7 +13,7 @@ namespace CsvConverter
     {
         private readonly IRowReader _rowReader;
         private int? _columnCount = null;
-        private Dictionary<int, ColumnToPropertyMap> _columnDictionary = new Dictionary<int, ColumnToPropertyMap>();
+        private readonly Dictionary<int, ColumnToPropertyMap> _columnDictionary = new Dictionary<int, ColumnToPropertyMap>();
         
         /// <summary>Constructor.  This is the standard constructor were you pass in a StreamReader that is already connected to an
         /// open stream.</summary>
@@ -46,7 +46,7 @@ namespace CsvConverter
         }
 
         /// <summary>Indicates the current row number.</summary>
-        public int RowNumber { get { return _rowReader != null ? _rowReader.RowNumber : 0; } }
+        public int RowNumber { get { return _rowReader?.RowNumber ?? 0; } }
 
         /// <summary>Reads a row, creates an instance of a class of type T and populates the class with data from the row.</summary>
         public T GetRecord()
@@ -75,8 +75,7 @@ namespace CsvConverter
             {
                 int zeroBasedIndex = columnIndex - 1;
                 string fieldValue = oneRow[zeroBasedIndex];
-                ColumnToPropertyMap columnMap;
-                if (_columnDictionary.TryGetValue(columnIndex, out columnMap))
+                if (_columnDictionary.TryGetValue(columnIndex, out var columnMap))
                 {
                     if (columnMap.IgnoreWhenReading)
                         continue;

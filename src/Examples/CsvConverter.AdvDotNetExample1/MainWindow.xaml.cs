@@ -176,19 +176,23 @@ namespace AdvExample1
 
         private Microsoft.Win32.OpenFileDialog LoadFile(string fileName)
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.InitialDirectory = string.IsNullOrEmpty(fileName) ?
-            "c:\\" : Path.GetDirectoryName(fileName);
-            dialog.FileName = fileName;
+            var dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                InitialDirectory = string.IsNullOrWhiteSpace(fileName) ?
+                    "c:\\" : Path.GetDirectoryName(fileName),
+                FileName = fileName
+            };
             return dialog;
         }
 
         private Microsoft.Win32.SaveFileDialog SaveFile(string fileName)
         {
-            var dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.InitialDirectory = string.IsNullOrEmpty(fileName) ?
-                "c:\\" : Path.GetDirectoryName(fileName);
-            dialog.FileName = fileName;
+            var dialog = new Microsoft.Win32.SaveFileDialog
+            {
+                InitialDirectory = string.IsNullOrWhiteSpace(fileName) ?
+                    "c:\\" : Path.GetDirectoryName(fileName),
+                FileName = fileName
+            };
             return dialog;
         }
 
@@ -218,8 +222,10 @@ namespace AdvExample1
         {
             if (Dispatcher.CheckAccess())
             {
-                var p = new Paragraph(new Run(message));
-                p.Foreground = Brushes.Black;
+                var p = new Paragraph(new Run(message))
+                {
+                    Foreground = Brushes.Black
+                };
                 RtbLog.Document.Blocks.Add(p);
             }
             else this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(LogMessage), message);

@@ -7,14 +7,14 @@ namespace CsvConverter.RowTools
     /// <summary>A class for reading rows.</summary>
     public class RowReader : RowBase, IRowReader
     {
-        private StreamReader _streamReader;
+        private readonly StreamReader _streamReader;
         private int _lengthBeforeExit;
 
         /// <summary>Constructor</summary>
         /// <param name="sr">An instance of a StreamReader class.</param>
         public RowReader(StreamReader sr)
         {
-            _streamReader = sr ?? throw new ArgumentNullException("StreadReader cannot be null.");
+            _streamReader = sr ?? throw new ArgumentNullException(nameof(sr), "StreamReader cannot be null.");
         }
 
         /// <summary>Indicates if a row is blank (contains no data)</summary>

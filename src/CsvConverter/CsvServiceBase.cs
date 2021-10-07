@@ -9,6 +9,8 @@ namespace CsvConverter
     public abstract class CsvServiceBase
     {
         private IDefaultTypeConverterFactory _defaultConverterFactory = new DefaultTypeConverterFactory();
+
+        /// <summary>Indicates if the service has been initialized.</summary>
         protected bool _initialized = false;
 
         /// <summary>Information about each column. It is not initialized till Init method is called 
@@ -26,7 +28,7 @@ namespace CsvConverter
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException("You cannot set the DefaultConverterFactory to null!");
+                    throw new ArgumentNullException(nameof(value), "You cannot set the DefaultConverterFactory to null!");
                 _defaultConverterFactory = value;
             }
         }
@@ -71,6 +73,7 @@ namespace CsvConverter
                 .ToList();
         }
 
+        /// <summary>Creates the column to property mapper</summary>
         protected abstract void CreateMappings();
 
 

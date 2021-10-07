@@ -20,8 +20,7 @@ namespace CsvConverter
             if (stringValue.Contains("%"))
             {
                 string stringWithoutPercentageSign = stringValue.Replace("%", "");
-                double number;
-                if (double.TryParse(stringWithoutPercentageSign, out number) == false)
+                if (double.TryParse(stringWithoutPercentageSign, out var number) == false)
                     return stringValue;
 
                 number = number / 100.0;

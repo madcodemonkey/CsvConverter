@@ -11,7 +11,7 @@
     <projectUrl>https://github.com/madcodemonkey/CsvConverter</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Surfaced SplitChar and EscapeChar to configuration settings.</releaseNotes>
+    <releaseNotes>Fixed typos, added readonly to some properties, fixed ArgumentNullException usage, upgraded test project to .NET Core 3.1 and added an icon to nuspec file.</releaseNotes>
     <copyright>2021</copyright>
     <tags>CSV converter</tags>
   </metadata>

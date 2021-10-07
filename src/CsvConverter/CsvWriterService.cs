@@ -18,7 +18,7 @@ namespace CsvConverter
         /// <summary>Constructor.  This is the standard constructor were you pass in a StreamWriter that is already connected to an open stream.</summary>
         public CsvWriterService(StreamWriter sw) : this(new RowWriter(sw)) { }
 
-        /// <summary>Constructor for dependency injection that is used primarly for TESTING; however, a user could override how 
+        /// <summary>Constructor for dependency injection that is used primarily for TESTING; however, a user could override how 
         /// a row is written by implementing the interface.</summary>
         public CsvWriterService(IRowWriter rowWriter)
         {
@@ -125,6 +125,7 @@ namespace CsvConverter
             _headerWritten = true;
         }
 
+        /// <summary>Creates the column to property mapper</summary>
         protected override void CreateMappings()
         {
             ColumnMapList.Clear();
