@@ -3,19 +3,19 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<NuspecFile>$(MSBuildThisFileDirectory)$(MSBuildProjectName).nuspec</NuspecFile>
-    <Version>2.0.0.5</Version>
+    <Version>2.0.0.6</Version>
     <Authors>David Yates</Authors>
     <Company>David Yates</Company>
     <Description>A simple .NET Standard 2.0 library for writing and reading CSV files using a List of T as the input or received output of the operation.</Description>
-    <Copyright>2021</Copyright>
+    <Copyright>2023</Copyright>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/madcodemonkey/CsvConverter/CsvConverter.ico</PackageProjectUrl>
     <PackageIconUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/</PackageIconUrl>
     <RepositoryUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/</RepositoryUrl>
     <PackageTags>CSV converter</PackageTags>
-    <PackageReleaseNotes>Fixed typos, added readonly to some properties, fixed ArgumentNullException usage, upgraded test project to .NET Core 3.1 and added an icon to nuspec file.</PackageReleaseNotes>
-    <AssemblyVersion>2.0.0.5</AssemblyVersion>
-    <FileVersion>2.0.0.5</FileVersion>
+    <PackageReleaseNotes>Fixed a bug where new line by itself (rather than newline and carriage return) is not escaped properly.</PackageReleaseNotes>
+    <AssemblyVersion>2.0.0.6</AssemblyVersion>
+    <FileVersion>2.0.0.6</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

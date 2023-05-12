@@ -16,7 +16,9 @@ namespace CsvConverter.RowTools
             _streamWriter = sw ?? throw new ArgumentNullException(nameof(sw), "StreamWriter cannot be null.");
         }
 
-        /// <summary>Used to write out a line of data (Assumes that the split character is already in the line of text</summary>
+        /// <summary>Used to write out a line of data.  Warning!  This method assumes you have already escaped
+        /// quotes, carriage returns, etc and have add the split character (comma by default) and want to write directly into
+        /// the stream.  If this is NOT the case, use the other overloaded method.</summary>
         /// <param name="line"></param>
         public void Write(string line)
         {
@@ -38,7 +40,7 @@ namespace CsvConverter.RowTools
                 string field = fieldList[index];
                 if (field != null)
                 {
-                    if (field.IndexOf(SplitChar) == -1 && field.IndexOf(EscapeChar) == -1 && field.Contains("\r\n") == false)
+                    if (field.IndexOf(SplitChar) == -1 && field.IndexOf(EscapeChar) == -1 && field.Contains("\r") == false && field.Contains("\n") == false)
                         _sb.Append(field);
                     else
                     {
