@@ -32,6 +32,11 @@ steps:
 
 - task: VSTest@2
   inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\bin\**\*Tests.dll
+      !**\*TestAdapter.dll
+      !**\obj\**  
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
