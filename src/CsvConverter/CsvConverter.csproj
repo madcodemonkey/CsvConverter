@@ -13,7 +13,7 @@
     <PackageIconUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/</PackageIconUrl>
     <RepositoryUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/</RepositoryUrl>
     <PackageTags>CSV converter</PackageTags>
-    <PackageReleaseNotes>Fixed a bug where new line by itself (rather than newline and carriage return) is not escaped properly.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed a bug where a new line was by itself (rather than newline and carriage return) is not escaped properly. Upgraded test projects to .NET 4.8 and .NET Core 6.</PackageReleaseNotes>
     <AssemblyVersion>2.0.0.6</AssemblyVersion>
     <FileVersion>2.0.0.6</FileVersion>
   </PropertyGroup>

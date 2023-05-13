@@ -11,8 +11,8 @@
     <projectUrl>https://github.com/madcodemonkey/CsvConverter</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Fixed typos, added readonly to some properties, fixed ArgumentNullException usage, upgraded test project to .NET Core 3.1 and added an icon to nuspec file.</releaseNotes>
-    <copyright>2021</copyright>
+    <releaseNotes>Fixed a bug where a new line was by itself (rather than newline and carriage return) is not escaped properly. Upgraded test projects to .NET 4.8 and .NET Core 6.</releaseNotes>
+    <copyright>2023</copyright>
     <tags>CSV converter</tags>
   </metadata>
   <files>
