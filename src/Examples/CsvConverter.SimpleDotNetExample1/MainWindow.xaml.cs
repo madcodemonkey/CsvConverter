@@ -1,11 +1,11 @@
-﻿using System;
+﻿using CsvConverter;
+using System;
 using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Threading;
-using CsvConverter;
 
 namespace SimpleDotNetExample1
 {
@@ -15,8 +15,6 @@ namespace SimpleDotNetExample1
         {
             InitializeComponent();
         }
-
-      
 
         private void CreateCsvButton_Click(object sender, RoutedEventArgs e)
         {
@@ -37,7 +35,7 @@ namespace SimpleDotNetExample1
                     {
                         var newEmp = new Employee()
                         {
-                            FirstName = $"First{rand.Next(1,5000)}",
+                            FirstName = $"First{rand.Next(1, 5000)}",
                             LastName = $"Last{rand.Next(1, 5000)}",
                             Age = rand.Next(5, 80),
                             PercentageBodyFat = rand.Next(1, 20) / 1.2m,

@@ -1,9 +1,7 @@
-﻿using CsvConverter;
-using CsvConverter.RowTools;
+﻿using CsvConverter.RowTools;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -38,7 +36,7 @@ namespace AdvExample3
                         {
                             PrintColumnList(reader.ReadRow());
                         }
-                    }                     
+                    }
                 }
             }
             catch (Exception ex)
@@ -51,12 +49,14 @@ namespace AdvExample3
         {
             try
             {
-                List<string> stringList = new List<string>();
-                stringList.Add("This");
-                stringList.Add("is");
-                stringList.Add("a");
-                stringList.Add("quote, comma");
-                stringList.Add("test");
+                var stringList = new List<string>
+                {
+                    "This",
+                    "is",
+                    "a",
+                    "quote, comma",
+                    "test"
+                };
 
                 using (MemoryStream ms = new MemoryStream())
                 using (StreamWriter sw = new StreamWriter(ms))
@@ -66,16 +66,14 @@ namespace AdvExample3
                     sw.Flush();
 
                     ms.Seek(0, SeekOrigin.Begin);
-                    using(StreamReader sr = new StreamReader(ms))
+                    using (StreamReader sr = new StreamReader(ms))
                     {
-                        while(sr.EndOfStream == false)
+                        while (sr.EndOfStream == false)
                         {
                             LogMessage(sr.ReadLine());
                         }
                     }
-
                 }
-                    
             }
             catch (Exception ex)
             {
@@ -88,15 +86,15 @@ namespace AdvExample3
         {
             try
             {
-                var columnList = new List<string>();
-
-                List<string> stringList = new List<string>();
-                stringList.Add("jack, says");
-                stringList.Add("he ");
-                stringList.Add("ran");
-                stringList.Add("over");
-                stringList.Add("John's");
-                stringList.Add("foot");
+                var stringList = new List<string>
+                {
+                    "jack, says",
+                    "he ",
+                    "ran",
+                    "over",
+                    "John's",
+                    "foot"
+                };
 
                 using (MemoryStream ms = new MemoryStream())
                 using (StreamWriter sw = new StreamWriter(ms))
@@ -128,24 +126,6 @@ namespace AdvExample3
             {
                 LogMessage($"Column data --->{column}<---");
             }
-        }
-
-        private Microsoft.Win32.OpenFileDialog LoadFile(string fileName)
-        {
-            var dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.InitialDirectory = string.IsNullOrEmpty(fileName) ?
-            "c:\\" : Path.GetDirectoryName(fileName);
-            dialog.FileName = fileName;
-            return dialog;
-        }
-
-        private Microsoft.Win32.SaveFileDialog SaveFile(string fileName)
-        {
-            var dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.InitialDirectory = string.IsNullOrEmpty(fileName) ?
-                "c:\\" : Path.GetDirectoryName(fileName);
-            dialog.FileName = fileName;
-            return dialog;
         }
 
         #region Logging
@@ -209,11 +189,6 @@ namespace AdvExample3
                 myTextRange.Save(fs, DataFormats.Text);
             }
         }
-
-
-
         #endregion
-
-    
     }
 }

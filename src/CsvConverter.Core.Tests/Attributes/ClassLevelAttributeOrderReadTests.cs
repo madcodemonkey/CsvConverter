@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CsvConverter.RowTools;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using CsvConverter.RowTools;
 using Moq;
 
 namespace CsvConverter.Core.Tests.Attributes
@@ -92,7 +89,7 @@ namespace CsvConverter.Core.Tests.Attributes
         public int Order { get; set; }
 
         [CsvConverterString(ColumnName = "Animal Type")]
-        public string AnimalType { get; set; }
+        public string AnimalType { get; set; } = string.Empty;
     }
 
 
@@ -106,6 +103,6 @@ namespace CsvConverter.Core.Tests.Attributes
         public int Order { get; set; }
 
         [CsvConverterString(ColumnName = "Animal Type")]
-        public string AnimalType { get; set; }
+        public string AnimalType { get; set; } = string.Empty;
     }
 }

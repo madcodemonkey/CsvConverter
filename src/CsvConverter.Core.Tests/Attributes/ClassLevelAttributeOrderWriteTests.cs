@@ -1,5 +1,3 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 namespace CsvConverter.Core.Tests.Attributes
 {
     [TestClass]
@@ -71,7 +69,7 @@ namespace CsvConverter.Core.Tests.Attributes
         TargetPropertyType = typeof(string), OldValue = "dog", NewValue = "cat", Order = 2, IsPostConverter = true)]
     internal class ClassLevelAttributeOrderWriteData1
     {
-        public string AnimalType { get; set; }
+        public string AnimalType { get; set; } = string.Empty;
     }
 
 
@@ -82,6 +80,6 @@ namespace CsvConverter.Core.Tests.Attributes
         TargetPropertyType = typeof(string), OldValue = "dog", NewValue = "cat", Order = 1, IsPostConverter = true)]
     internal class ClassLevelAttributeOrderWriteData2
     {
-        public string AnimalType { get; set; }
+        public string AnimalType { get; set; } = string.Empty;
     }
 }

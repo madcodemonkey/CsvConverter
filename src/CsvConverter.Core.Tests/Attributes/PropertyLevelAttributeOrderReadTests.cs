@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CsvConverter.RowTools;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using CsvConverter.RowTools;
 using Moq;
 
 namespace CsvConverter.Core.Tests.Attributes
@@ -46,7 +43,7 @@ namespace CsvConverter.Core.Tests.Attributes
 
 
 
-        // Atrribute Order REVERSED.  1st converter does an exact match  and 2nd converter remove spaces
+        // Attribute Order REVERSED.  1st converter does an exact match  and 2nd converter remove spaces
         [DataTestMethod]
         [DataRow("1", "dog", "cat")]        // 1st converter gets a match and 2nd converter has no spaces to remove 
         [DataRow("1", " dog", "dog")]       // 1st converter gets NO match and 2nd converter REMOVES spaces
@@ -82,7 +79,7 @@ namespace CsvConverter.Core.Tests.Attributes
     }
 
 
-     internal class PropLevelAttributeOrderReadData1
+    internal class PropLevelAttributeOrderReadData1
     {
         public int Order { get; set; }
 
@@ -92,7 +89,7 @@ namespace CsvConverter.Core.Tests.Attributes
            OldValue = " ", NewValue = "", Order = 1, IsPreConverter = true)]
         [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch),
            OldValue = "dog", NewValue = "cat", Order = 2, IsPreConverter = true)]
-        public string AnimalType { get; set; }
+        public string AnimalType { get; set; } = string.Empty;
     }
 
 
@@ -106,6 +103,6 @@ namespace CsvConverter.Core.Tests.Attributes
            OldValue = " ", NewValue = "", Order = 2, IsPreConverter = true)]
         [CsvConverterStringOldAndNew(typeof(CsvConverterStringReplaceTextExactMatch),
            OldValue = "dog", NewValue = "cat", Order = 1, IsPreConverter = true)]
-        public string AnimalType { get; set; }
+        public string AnimalType { get; set; } = string.Empty;
     }
 }

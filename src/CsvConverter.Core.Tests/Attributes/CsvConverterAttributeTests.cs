@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CsvConverter.RowTools;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using CsvConverter.RowTools;
 using Moq;
 
 namespace CsvConverter.Core.Tests.Attributes
@@ -107,7 +103,7 @@ namespace CsvConverter.Core.Tests.Attributes
 
             // Act
             var row1 = classUnderTest.GetRecord();
-            
+
             // Assert
             Assert.Fail("An exception should have been genearted for using ColumnIndex at the class level");
         }
@@ -334,10 +330,10 @@ namespace CsvConverter.Core.Tests.Attributes
         public bool Tall { get; set; }
 
         [CsvConverter(IgnoreWhenReading = true, IgnoreWhenWriting = true)]
-        public CsvConverterAttributeData2 Other1 { get; set; }
+        public CsvConverterAttributeData2 Other1 { get; set; } = new CsvConverterAttributeData2();
 
         // You don't need the attribute!
-        public CsvConverterAttributeData2 Other2 { get; set; }
+        public CsvConverterAttributeData2 Other2 { get; set; } = new CsvConverterAttributeData2();
     }
 
     public class CsvConverterAttributeData3
@@ -351,88 +347,88 @@ namespace CsvConverter.Core.Tests.Attributes
     {
         [CsvConverterStringTrim(typeof(CsvConverterStringTrimmer), IgnoreWhenWriting = true)]
         [CsvConverter(IgnoreWhenReading = true)] // default converter
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
 
         [CsvConverter(IgnoreWhenWriting = true)] // default converter
         [CsvConverterStringTrim(typeof(CsvConverterStringTrimmer), IgnoreWhenReading = true)]
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
     }
 
     [CsvConverter(TargetPropertyType = typeof(string), ColumnIndex = 1)]
     public class CsvConverterAttributeData5
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 
     [CsvConverter(TargetPropertyType = typeof(string), ColumnName = "Stuff2")]
     public class CsvConverterAttributeData6
     {
-        public string Stuff { get; set; }
+        public string Stuff { get; set; } = string.Empty;
     }
 
     [CsvConverter(TargetPropertyType = typeof(string), AltColumnNames = "Stuff2")]
     public class CsvConverterAttributeData7
     {
-        public string Stuff { get; set; }
+        public string Stuff { get; set; } = string.Empty;
     }
 
     public class CsvConverterAttributeData8
     {
         [CsvConverterStringTrim(typeof(CsvConverterStringTrimmer), ColumnName = "FName", IgnoreWhenWriting = true)]
-        [CsvConverter(ColumnName = "FName", IgnoreWhenReading = true)] 
-        public string FirstName { get; set; }
+        [CsvConverter(ColumnName = "FName", IgnoreWhenReading = true)]
+        public string FirstName { get; set; } = string.Empty;
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
     }
 
     public class CsvConverterAttributeData9
     {
         [CsvConverterStringTrim(typeof(CsvConverterStringTrimmer), ColumnName = "FName", IsPreConverter = true)]
-         public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
     }
 
     public class CsvConverterAttributeData10
     {
         [CsvConverterStringTrim(typeof(CsvConverterStringTrimmer), ColumnName = "FName", IsPostConverter = true)]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
     }
 
     public class CsvConverterAttributeData11
     {
         [CsvConverterStringTrim(typeof(CsvConverterStringTrimmer), ColumnIndex = 1, IsPreConverter = true)]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
     }
 
     public class CsvConverterAttributeData12
     {
         [CsvConverterStringTrim(typeof(CsvConverterStringTrimmer), ColumnIndex = 1, IsPostConverter = true)]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
     }
 
 
     public class CsvConverterAttributeData13
     {
         [CsvConverterStringTrim(typeof(CsvConverterStringTrimmer), AltColumnNames = "FName", IsPreConverter = true)]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
     }
 
     public class CsvConverterAttributeData14
     {
         [CsvConverterStringTrim(typeof(CsvConverterStringTrimmer), AltColumnNames = "FName", IsPostConverter = true)]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
     }
 
 }

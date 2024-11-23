@@ -1,14 +1,12 @@
-﻿using System;
-
-namespace CsvConverter.Core.IntegrationTests
+﻿namespace CsvConverter.Core.IntegrationTests
 {
     public class Graduation
     {
         [CsvConverterString(ColumnName = "First Name", ColumnIndex = 1)]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
         [CsvConverterString(ColumnName = "Last Name", ColumnIndex = 2)]
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
 
         // June 15, 1992 4:30 PM
         [CsvConverterDateTime(ColumnName = "Date and Time of Birth", ColumnIndex = 3, StringFormat = "MMMM d, yyyy h:mm tt")]
@@ -41,16 +39,16 @@ namespace CsvConverter.Core.IntegrationTests
         public bool HonorStudent { get; set; }
 
         [CsvConverterString(ColumnName = "Mother's First Name", ColumnIndex = 9)]
-        public string MotherFirstName { get; set; }
+        public string MotherFirstName { get; set; } = string.Empty;
 
         [CsvConverterString(ColumnName = "Mother's Last Name", ColumnIndex = 10)]
-        public string MotherLastName { get; set; }
+        public string MotherLastName { get; set; } = string.Empty;
 
         // 1972/5/27  
         [CsvConverterDateTime(ColumnName = "Mother's Birthdate", ColumnIndex = 11, StringFormat = "yyyy/M/d")]
         public DateTime? MotherBirthDate { get; set; }
 
         [CsvConverterString(ColumnIndex = 12)]
-        public string Comments { get; set; }
+        public string Comments { get; set; } = string.Empty;
     }
 }

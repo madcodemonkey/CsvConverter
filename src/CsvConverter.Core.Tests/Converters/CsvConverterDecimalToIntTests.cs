@@ -1,17 +1,13 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-
-namespace CsvConverter.Core.Tests.Converters
+﻿namespace CsvConverter.Core.Tests.Converters
 {
     [TestClass]
     public class CsvConverterDecimalToIntTests
     {
-        // Default is AllowRounding = false so that we don't lose percision by default!
+        // Default is AllowRounding = false so that we don't lose precision by default!
         [DataTestMethod]
         [DataRow("12345.251", 12345)]
         [DataRow("12,345.65", 12346)]
-        [DataRow("2.3%", 0)] 
+        [DataRow("2.3%", 0)]
         [DataRow("", 0)]
         [DataRow(null, 0)]
         public void GetReadData_CanConvertNonNullableDecimalsWithoutAnAttribute_ValuesConverted(string inputData, int? expected)
@@ -20,7 +16,7 @@ namespace CsvConverter.Core.Tests.Converters
             var attribute = new CsvConverterNumberAttribute();
             var cut = new CsvConverterDecimalToInt();
             cut.Initialize(attribute, new DefaultTypeConverterFactory());
-                       
+
             // Act
             int actual = (int)cut.GetReadData(typeof(int), inputData, "Column1", 1, 1);
 
@@ -60,7 +56,7 @@ namespace CsvConverter.Core.Tests.Converters
             cut.Initialize(attribute, new DefaultTypeConverterFactory());
 
             // Act
-            decimal actual = (decimal)cut.GetReadData(typeof(decimal), inputData, "Column1", 1, 1);
+            cut.GetReadData(typeof(decimal), inputData, "Column1", 1, 1);
 
             // Assert
             Assert.Fail("Exception should be thrown when invalid values are passed into the parser!");

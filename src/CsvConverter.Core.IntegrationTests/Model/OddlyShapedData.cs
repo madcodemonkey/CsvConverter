@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CsvConverter.Core.IntegrationTests
+﻿namespace CsvConverter.Core.IntegrationTests
 {
     public class OddlyShapedData
-    { 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+    {
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
         public int Age { get; set; }
         public int HeightInInches { get; set; }
     }

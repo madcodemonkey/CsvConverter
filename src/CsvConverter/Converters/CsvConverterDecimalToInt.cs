@@ -3,7 +3,6 @@ using System;
 
 namespace CsvConverter
 {
-    // TODO: Continue testing this class
     /// <summary>Converts a string to a decimal or double value and then rounds it to the nearest integer.</summary>
     public class CsvConverterDecimalToInt : CsvConverterTypeBase, ICsvConverter
     {
@@ -35,7 +34,7 @@ namespace CsvConverter
 
                 return 0;
             }
-            
+
             var number = (decimal)_readDecimalConverter.GetReadData(typeof(decimal), value, columnName, columnIndex, rowNumber);
             return (int)number;
         }
@@ -45,7 +44,7 @@ namespace CsvConverter
         {
             if (inputType.HelpIsNullable())
             {
-                
+
                 return _writeDecimalConverter.GetWriteData(typeof(decimal?),
                    value != null ? Convert.ToDecimal((int)value) : (decimal?)null,
                    columnName, columnIndex, rowNumber);
@@ -76,6 +75,6 @@ namespace CsvConverter
             oneAttribute.NumberOfDecimalPlaces = 0;
             _readDecimalConverter = defaultFactory.CreateConverter(typeof(decimal));
             _readDecimalConverter.Initialize(oneAttribute, defaultFactory);
-        }     
+        }
     }
 }
