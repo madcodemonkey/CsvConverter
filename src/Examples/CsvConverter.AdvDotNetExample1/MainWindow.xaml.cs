@@ -73,9 +73,12 @@ namespace AdvExample1
                     {
                         Person record = reader.GetRecord();
                         if (record != null)
-                           LogMessage(record.ToString());
+                            LogMessage(record.ToString());
                     }
                 }
+
+                // switch to the log tab
+                mainTabControl.SelectedIndex = 2;
             }
             catch (Exception ex)
             {
@@ -118,7 +121,7 @@ namespace AdvExample1
                             Make = rand.Next(1, 100) > 50 ? $"M{rand.Next(1, 5000000)}" : "M",
                             Model = rand.Next(1, 100) > 50 ? $"M{rand.Next(1, 5000000)}" : "M",
                             Year = rand.Next(1995, 2018),
-                            PurchasePrice = (decimal) currentValue * 1.2m,
+                            PurchasePrice = (decimal)currentValue * 1.2m,
                             CurrentValue = currentValue
                         };
 
@@ -152,9 +155,12 @@ namespace AdvExample1
                     {
                         Car record = csv.GetRecord();
                         if (record != null)
-                           LogMessage(record.ToString());
+                            LogMessage(record.ToString());
                     }
                 }
+
+                // switch to the log tab
+                mainTabControl.SelectedIndex = 2;
             }
             catch (Exception ex)
             {

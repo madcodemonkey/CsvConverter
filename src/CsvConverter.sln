@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCoreExample1", "Examp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{33FABC1D-20AA-4F37-AE6B-33CABE5783AC}"
 	ProjectSection(SolutionItems) = preProject
-		Examples\Examples Directory.md = Examples\Examples Directory.md
+		Examples\Readme.md = Examples\Readme.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvDotNetExample1", "Examples\CsvConverter.AdvDotNetExample1\AdvDotNetExample1.csproj", "{9440032C-AE95-4BAC-9764-D5F07711C815}"
