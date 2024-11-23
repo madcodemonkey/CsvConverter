@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CsvConverter.Core.IntegrationTests
+﻿namespace CsvConverter.Core.IntegrationTests
 {
     public class ClassWithOneProperty
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 }

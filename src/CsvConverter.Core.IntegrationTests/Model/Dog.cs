@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CsvConverter.Core.IntegrationTests
+﻿namespace CsvConverter.Core.IntegrationTests
 {
     public class Dog
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int Age { get; set; }
     }
 }

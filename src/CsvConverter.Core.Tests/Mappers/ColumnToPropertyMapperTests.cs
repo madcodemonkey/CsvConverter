@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CsvConverter.Mapper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using CsvConverter.Mapper;
 
 namespace CsvConverter.Core.Tests.HeaderTests
 {
@@ -18,11 +15,10 @@ namespace CsvConverter.Core.Tests.HeaderTests
             var listOfHeaders = new List<string>() { "Data1", "Data2", "Order" };
 
             // Act
-            List<ColumnToPropertyMap> maps =  classUnderTest.CreateReadMap(listOfHeaders);
+            List<ColumnToPropertyMap> maps = classUnderTest.CreateReadMap(listOfHeaders);
 
             // Assert
-            ColumnToPropertyMap map = maps.Where(w => w.ColumnName == "Order").SingleOrDefault();
-            Assert.IsNotNull(map);
+            ColumnToPropertyMap map = maps.Single(w => w.ColumnName == "Order");
             Assert.IsTrue(map.IgnoreWhenReading);
             Assert.IsNull(map.ReadConverter);
         }
@@ -40,8 +36,7 @@ namespace CsvConverter.Core.Tests.HeaderTests
             List<ColumnToPropertyMap> maps = classUnderTest.CreateReadMap(listOfHeaders);
 
             // Assert
-            ColumnToPropertyMap map = maps.Where(w => w.ColumnName == "Length").SingleOrDefault();
-            Assert.IsNotNull(map);
+            ColumnToPropertyMap map = maps.Single(w => w.ColumnName == "Length");
             Assert.IsTrue(map.IgnoreWhenReading);
             Assert.IsNull(map.ReadConverter);
         }
@@ -65,8 +60,7 @@ namespace CsvConverter.Core.Tests.HeaderTests
             List<ColumnToPropertyMap> maps = classUnderTest.CreateReadMap(listOfHeaders);
 
             // Assert
-            ColumnToPropertyMap map = maps.Where(w => w.ColumnName == "PercentageMuscle").SingleOrDefault();
-            Assert.IsNotNull(map);
+            ColumnToPropertyMap map = maps.Single(w => w.ColumnName == "PercentageMuscle");
             Assert.IsFalse(map.IgnoreWhenReading);
             Assert.IsNotNull(map.ReadConverter);
         }
@@ -87,8 +81,7 @@ namespace CsvConverter.Core.Tests.HeaderTests
             List<ColumnToPropertyMap> maps = classUnderTest.CreateReadMap(listOfHeaders);
 
             // Assert
-            ColumnToPropertyMap map = maps.Where(w => w.ColumnName == "HasJumperCables").SingleOrDefault();
-            Assert.IsNotNull(map);
+            ColumnToPropertyMap map = maps.Single(w => w.ColumnName == "HasJumperCables");
             Assert.IsFalse(map.IgnoreWhenReading);
             Assert.IsNotNull(map.ReadConverter);
         }
@@ -105,7 +98,7 @@ namespace CsvConverter.Core.Tests.HeaderTests
             List<ColumnToPropertyMap> maps = classUnderTest.CreateWriteMap();
 
             // Assert
-            ColumnToPropertyMap map = maps.Where(w => w.ColumnName == "PercentageBodyFat").FirstOrDefault();
+            ColumnToPropertyMap? map = maps.SingleOrDefault(w => w.ColumnName == "PercentageBodyFat");
             Assert.IsNull(map);
         }
 
@@ -120,7 +113,7 @@ namespace CsvConverter.Core.Tests.HeaderTests
             List<ColumnToPropertyMap> maps = classUnderTest.CreateWriteMap();
 
             // Assert
-            ColumnToPropertyMap map = maps.Where(w => w.ColumnName == "Length").FirstOrDefault();
+            ColumnToPropertyMap? map = maps.SingleOrDefault(w => w.ColumnName == "Length");
             Assert.IsNull(map);
         }
 
@@ -141,8 +134,7 @@ namespace CsvConverter.Core.Tests.HeaderTests
             List<ColumnToPropertyMap> maps = classUnderTest.CreateWriteMap();
 
             // Assert
-            ColumnToPropertyMap map = maps.Where(w => w.ColumnName == "PercentageMuscle").SingleOrDefault();
-            Assert.IsNotNull(map);
+            ColumnToPropertyMap map = maps.Single(w => w.ColumnName == "PercentageMuscle");
             Assert.IsFalse(map.IgnoreWhenWriting);
             Assert.IsNotNull(map.WriteConverter);
         }
@@ -160,8 +152,7 @@ namespace CsvConverter.Core.Tests.HeaderTests
             List<ColumnToPropertyMap> maps = classUnderTest.CreateWriteMap();
 
             // Assert
-            ColumnToPropertyMap map = maps.Where(w => w.ColumnName == "HasJumperCables").SingleOrDefault();
-            Assert.IsNotNull(map);
+            ColumnToPropertyMap map = maps.Single(w => w.ColumnName == "HasJumperCables");
             Assert.IsFalse(map.IgnoreWhenWriting);
             Assert.IsNotNull(map.WriteConverter);
         }
@@ -192,6 +183,6 @@ namespace CsvConverter.Core.Tests.HeaderTests
 
         [CsvConverterNumber(NumberOfDecimalPlaces = 4)]
         public double Data2 { get; set; }
-    } 
+    }
 
 }

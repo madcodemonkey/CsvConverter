@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using CsvConverter.RowTools;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using CsvConverter.RowTools;
 using Moq;
+using System.Globalization;
 
 namespace CsvConverter.Core.Tests.Attributes
 {
@@ -84,6 +81,7 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(year1, row1.SomeDate1.Year);
             Assert.AreEqual(month1, row1.SomeDate1.Month);
             Assert.AreEqual(day1, row1.SomeDate1.Day);
+            Assert.IsNotNull(row1.SomeDate2);
             Assert.AreEqual(year2, row1.SomeDate2.Value.Year);
             Assert.AreEqual(month2, row1.SomeDate2.Value.Month);
             Assert.AreEqual(day2, row1.SomeDate2.Value.Day);
@@ -118,6 +116,7 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(year1, row1.SomeDate1.Year);
             Assert.AreEqual(month1, row1.SomeDate1.Month);
             Assert.AreEqual(day1, row1.SomeDate1.Day);
+            Assert.IsNotNull(row1.SomeDate2);
             Assert.AreEqual(year2, row1.SomeDate2.Value.Year);
             Assert.AreEqual(month2, row1.SomeDate2.Value.Month);
             Assert.AreEqual(day2, row1.SomeDate2.Value.Day);

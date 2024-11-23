@@ -1,10 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace CsvConverter.Core.Tests.HeaderTests
+﻿namespace CsvConverter.Core.Tests.HeaderTests
 {
     [TestClass]
     public class Write_NoHeaderTests
-    {   
+    {
         [DataTestMethod]
         [DataRow(0, 5, "James", "0", "5", "James")]
         [DataRow(1, 4, "James", "1", "4", "James")]
@@ -43,6 +41,6 @@ namespace CsvConverter.Core.Tests.HeaderTests
         public int Age { get; set; }
 
         [CsvConverterString(ColumnIndex = 1)]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 }

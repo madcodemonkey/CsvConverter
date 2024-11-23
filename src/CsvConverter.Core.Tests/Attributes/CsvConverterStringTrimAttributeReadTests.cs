@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CsvConverter.RowTools;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using CsvConverter.RowTools;
 using Moq;
 
 namespace CsvConverter.Core.Tests.Attributes
@@ -94,8 +91,8 @@ namespace CsvConverter.Core.Tests.Attributes
         public int Order { get; set; }
 
         [CsvConverterStringTrim(typeof(CsvConverterStringTrimmer), TrimAction = CsvConverterTrimEnum.TrimEnd)]
-        public string SomeText { get; set; }
-        public string OtherText { get; set; }
+        public string SomeText { get; set; } = string.Empty;
+        public string OtherText { get; set; } = string.Empty;
     }
 
     [CsvConverterStringTrim(typeof(CsvConverterStringTrimmer), TrimAction = CsvConverterTrimEnum.All,
@@ -103,7 +100,7 @@ namespace CsvConverter.Core.Tests.Attributes
     internal class CsvConverterStringTrimReadData2
     {
         public int Order { get; set; }
-        public string SomeText { get; set; }
-        public string OtherText { get; set; }
+        public string SomeText { get; set; } = string.Empty;
+        public string OtherText { get; set; } = string.Empty;
     }
 }

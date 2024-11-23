@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace CsvConverter.Core.Tests.HeaderTests
+﻿namespace CsvConverter.Core.Tests.HeaderTests
 {
     [TestClass]
     public class Write_HeaderTests
@@ -38,6 +36,6 @@ namespace CsvConverter.Core.Tests.HeaderTests
         public int Age { get; set; }
 
         [CsvConverterString(ColumnIndex = 3)]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 }
