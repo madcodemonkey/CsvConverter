@@ -56,7 +56,7 @@
             cut.Initialize(attribute, new DefaultTypeConverterFactory());
 
             // Act
-            decimal actual = (decimal)cut.GetReadData(typeof(decimal), inputData, "Column1", 1, 1);
+            cut.GetReadData(typeof(decimal), inputData, "Column1", 1, 1);
 
             // Assert
             Assert.Fail("Exception should be thrown when invalid values are passed into the parser!");

@@ -3,8 +3,7 @@ using System.Text;
 
 namespace CsvConverter
 {
-    // TODO: Tests needed for this class
-    /// <summary>Turns a comma delimited array of integers into an int array or throws an exception if they cannot be parsed.</summary>
+    /// <summary>Turns a comma-delimited array of integers into an int array or throws an exception if they cannot be parsed.</summary>
     public class CsvConverterCommaDelimitedIntArray : CsvConverterTypeBase, ICsvConverter
     {
         /// <summary>Can this converter turn a CSV column string into the property type specified?</summary>
@@ -24,24 +23,22 @@ namespace CsvConverter
         /// <summary>Converts a string to an int[]</summary>
         public object GetReadData(Type inputType, string value, string columnName, int columnIndex, int rowNumber)
         {
+            int[] result = Array.Empty<int>();
+
             if (string.IsNullOrWhiteSpace(value))
             {
-                return null;
+                return result;
             }
 
-            int[] result = null;
-
-            if (value != null)
+            string[] source = value.Split(',');
+            result = new int[source.Length];
+            for (int index = 0; index < source.Length; index++)
             {
-                string[] source = value.Split(',');
-                result = new int[source.Length];
-                for (int index = 0; index < source.Length; index++)
+                if (int.TryParse(source[index], out result[index]) == false)
                 {
-                    if (int.TryParse(source[index], out result[index]) == false)
-                    {
-                        throw new ArgumentException($"The {nameof(CsvConverterCommaDelimitedIntArray)} converter cannot parse the '{value}' string.  " +
-                            $"The value at index {index} is is not an integer: '{source[index]}' on row number {rowNumber}.");
-                    }
+                    throw new ArgumentException(
+                        $"The {nameof(CsvConverterCommaDelimitedIntArray)} converter cannot parse the '{value}' string.  " +
+                        $"The value at index {index} is is not an integer: '{source[index]}' on row number {rowNumber}.");
                 }
             }
 
@@ -53,10 +50,10 @@ namespace CsvConverter
         {
             int[] input = value as int[];
             if (input == null || input.Length == 0)
-                return null;
+                return string.Empty;
 
             StringBuilder sb = new StringBuilder();
-            foreach(int number in input)
+            foreach (int number in input)
             {
                 if (sb.Length > 0)
                     sb.Append(",");

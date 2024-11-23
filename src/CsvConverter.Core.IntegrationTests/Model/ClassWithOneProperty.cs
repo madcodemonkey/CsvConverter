@@ -1,7 +1,6 @@
-﻿namespace CsvConverter.Core.IntegrationTests
+﻿namespace CsvConverter.Core.IntegrationTests;
+
+public class ClassWithOneProperty
 {
-    public class ClassWithOneProperty
-    {
-        public string Name { get; set; } = string.Empty;
-    }
+    public string Name { get; set; } = string.Empty;
 }
