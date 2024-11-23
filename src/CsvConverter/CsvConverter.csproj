@@ -1,39 +1,40 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-	<NuspecFile>$(MSBuildThisFileDirectory)$(MSBuildProjectName).nuspec</NuspecFile>
-    <Version>2.0.0.7</Version>
-    <Authors>David Yates</Authors>
-    <Company>David Yates</Company>
-    <Description>A simple .NET Standard 2.0 library for writing and reading CSV files using a List of T as the input or received output of the operation.</Description>
-    <Copyright>2023</Copyright>
-    <PackageLicenseUrl></PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/madcodemonkey/CsvConverter/CsvConverter.ico</PackageProjectUrl>
-    <PackageIconUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/</PackageIconUrl>
-    <RepositoryUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/</RepositoryUrl>
-    <PackageTags>CSV converter</PackageTags>
-    <PackageReleaseNotes>Fixed CsvConverterCommaDelimitedIntArray converter so that it returns an empty array instead of null.  More unit tests added. Upgraded test projects to .NET 4.8.1 and .NET Core 8.</PackageReleaseNotes>
-    <AssemblyVersion>2.0.0.7</AssemblyVersion>
-    <FileVersion>2.0.0.7</FileVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<NuspecFile>$(MSBuildThisFileDirectory)$(MSBuildProjectName).nuspec</NuspecFile>
+		<Version>2.0.0.7</Version>
+		<Authors>David Yates</Authors>
+		<Company>David Yates</Company>
+		<Description>A simple .NET Standard 2.0 library for writing and reading CSV files using a List of T as the input or received output of the operation.</Description>
+		<Copyright>2024</Copyright>
+		<PackageLicenseUrl></PackageLicenseUrl>
+		<PackageProjectUrl>https://github.com/madcodemonkey/CsvConverter/CsvConverter.ico</PackageProjectUrl>
+		<PackageIconUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/</PackageIconUrl>
+		<RepositoryUrl>https://github.com/madcodemonkey/CsvConverter/blob/master/</RepositoryUrl>
+		<PackageTags>CSV converter</PackageTags>
+		<PackageReleaseNotes>Fixed CsvConverterCommaDelimitedIntArray converter so that it returns an empty array instead of null.  More unit tests added. Upgraded test projects to .NET 4.8.1 and .NET Core 8.</PackageReleaseNotes>
+		<AssemblyVersion>2.0.0.7</AssemblyVersion>
+		<FileVersion>2.0.0.7</FileVersion>
+		<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
-  </PropertyGroup>
-  
-  <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
-    <PropertyGroup>
-      <NuspecProperties>$(NuspecProperties);id=$(AssemblyName)</NuspecProperties>
-      <NuspecProperties>$(NuspecProperties);config=$(Configuration)</NuspecProperties>
-      <NuspecProperties>$(NuspecProperties);version=$(PackageVersion)</NuspecProperties>
-      <NuspecProperties>$(NuspecProperties);description=$(Description)</NuspecProperties>
-      <NuspecProperties>$(NuspecProperties);authors=$(Authors)</NuspecProperties>
-    </PropertyGroup>
-  </Target>  
-  
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
+		<PropertyGroup>
+			<NuspecProperties>$(NuspecProperties);id=$(AssemblyName)</NuspecProperties>
+			<NuspecProperties>$(NuspecProperties);config=$(Configuration)</NuspecProperties>
+			<NuspecProperties>$(NuspecProperties);version=$(PackageVersion)</NuspecProperties>
+			<NuspecProperties>$(NuspecProperties);description=$(Description)</NuspecProperties>
+			<NuspecProperties>$(NuspecProperties);authors=$(Authors)</NuspecProperties>
+		</PropertyGroup>
+	</Target>
+
 </Project>
