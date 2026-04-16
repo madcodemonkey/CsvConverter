@@ -1,10 +1,10 @@
-﻿namespace CsvConverter.Core.Tests.Converters;
+namespace CsvConverter.Core.Tests.Converters;
 
 [TestClass]
 public class CsvConverterCommaDelimitedIntArrayTests
 {
     // Default is AllowRounding = false so that we don't lose precision by default!
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("1,2,3,4", "1,2,3,4")]
     [DataRow("1 ,2 ,3 , 4 ", "1,2,3,4")]
     public void GetReadData_CanConvertStringToIntArray_ValuesConverted(string inputData, string expected)
@@ -27,7 +27,7 @@ public class CsvConverterCommaDelimitedIntArrayTests
         }
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("1,b,3,4")] // letter and not number
     [DataRow("1,2,,4")]  // empty string
     public void GetReadData_BadData_ReturnsException(string inputData)

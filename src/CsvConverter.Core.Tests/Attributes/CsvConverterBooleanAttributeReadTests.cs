@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using CsvConverter.RowTools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -48,7 +48,7 @@ namespace CsvConverter.Core.Tests.Attributes
             rowReaderMock.VerifyAll();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", "Dog", true, "Frog", true)]
         [DataRow("1", "Cat", false, "Pond", false)]
         public void GetRecord_CanConvertCustomTextToBooleanWhenSpecifiedOnProperty_ValuesConverted(string order,
@@ -79,7 +79,7 @@ namespace CsvConverter.Core.Tests.Attributes
             rowReaderMock.VerifyAll();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", "Dog", true, "Cat", false)]
         [DataRow("1", "Cat", false, "Dog", true)]
         public void GetRecord_WhenClassAttributeIsUsedBooleansAreConvertedTheSameWay_ValuesConverted(string order,
@@ -110,7 +110,7 @@ namespace CsvConverter.Core.Tests.Attributes
             rowReaderMock.VerifyAll();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", "Dog", true, "Frog", true)]
         [DataRow("1", "Cat", false, "Pond", false)]
         public void GetRecord_WhenClassAttributeIsUsedYouCanOverrideIndividualProperties_ValuesConverted(string order,
@@ -141,10 +141,9 @@ namespace CsvConverter.Core.Tests.Attributes
             rowReaderMock.VerifyAll();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", "Dog")]
         [DataRow("1", "Cat")]
-        [ExpectedException(typeof(CsvConverterException))]
         public void GetRecord_ThrowsExceptionsForBogusData_ExceptionThrown(string order, string canJump)
         {
             // Arrange
@@ -158,12 +157,12 @@ namespace CsvConverter.Core.Tests.Attributes
             var classUnderTest = new CsvReaderService<CsvConverterBooleanAttributeReadData2>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
-            // Act
-            CsvConverterBooleanAttributeReadData2 row1 = classUnderTest.GetRecord();
-            CsvConverterBooleanAttributeReadData2 row2 = classUnderTest.GetRecord();
-
-            // Assert
-            Assert.Fail("Should recieve an exception above for bogus input data");
+            // Act & Assert
+            Assert.Throws<CsvConverterException>(() =>
+            {
+                CsvConverterBooleanAttributeReadData2 row1 = classUnderTest.GetRecord();
+                CsvConverterBooleanAttributeReadData2 row2 = classUnderTest.GetRecord();
+            });
         }
 
     }

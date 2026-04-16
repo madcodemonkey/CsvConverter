@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CsvConverter.Core.Tests.Converters
@@ -6,7 +6,7 @@ namespace CsvConverter.Core.Tests.Converters
     [TestClass]
     public class CsvConverterDefaultShortTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("12345", (short)12345)]
         [DataRow("12,345", (short)12345)]
         [DataRow("", (short)0)]
@@ -24,7 +24,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expected, actual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("12345", (short)12345)]
         [DataRow("12,345", (short)12345)]
         [DataRow("", null)]
@@ -42,25 +42,24 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expected, actual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("abc")]
         [DataRow("5488e4$#@#")]
-        [ExpectedException(typeof(ArgumentException))]
         public void GetReadData_CannotHandleNonNumericStrings_ThrowsException(string inputData)
         {
             // Arrange
             var cut = new CsvConverterDefaultShort();
             cut.Initialize(null, new DefaultTypeConverterFactory());
 
-            // Act
-            short actual = (short)cut.GetReadData(typeof(short), inputData, "Column1", 1, 1);
-
-            // Assert
-            Assert.Fail("Exception should be thrown when invalid values are passed into the parser!");
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                short actual = (short)cut.GetReadData(typeof(short), inputData, "Column1", 1, 1);
+            });
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow((short)1, "1", null)]
         [DataRow((short)23, "23", null)]
         [DataRow((short)2000, "2000", null)]
@@ -86,7 +85,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expectedData, actualData);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, null, null)]
         [DataRow((short)1, "1", null)]
         [DataRow((short)23, "23", null)]

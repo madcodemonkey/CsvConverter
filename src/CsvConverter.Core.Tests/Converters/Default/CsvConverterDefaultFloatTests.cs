@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -7,7 +7,7 @@ namespace CsvConverter.Core.Tests.Converters
     [TestClass]
     public class CsvConverterDefaultFloatTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(1.0f, "1", null)]
         [DataRow(23.0f, "23", null)]
         [DataRow(2000.0f, "2000", null)]
@@ -34,7 +34,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expectedData, actualData);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, null, null)]
         [DataRow(1.0f, "1", null)]
         [DataRow(23.0f, "23", null)]
@@ -63,7 +63,7 @@ namespace CsvConverter.Core.Tests.Converters
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("12345.25", "12345.25")]
         [DataRow("12,345.25", "12345.25")]
         [DataRow("2.3%", "0.023")]
@@ -83,7 +83,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expected, actual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("58.575", "58.58", 2, true)]
         [DataRow("58.574", "58.57", 2, true)]
         [DataRow("58.575", "58.6", 1, true)]
@@ -105,7 +105,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expected, actual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("12345.254", "12345.254")]
         [DataRow("12,345.25", "12345.25")]
         [DataRow("2.3%", "0.023")]
@@ -126,21 +126,20 @@ namespace CsvConverter.Core.Tests.Converters
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("abc")]
         [DataRow("5488e4$#@#")]
-        [ExpectedException(typeof(ArgumentException))]
         public void GetReadData_CannotHandleNonNumericStrings_ThrowsException(string inputData)
         {
             // Arrange
             var cut = new CsvConverterDefaultFloat();
             cut.Initialize(null, new DefaultTypeConverterFactory());
 
-            // Act
-            float actual = (float)cut.GetReadData(typeof(float), inputData, "Column1", 1, 1);
-
-            // Assert
-            Assert.Fail("Exception should be thrown when invalid values are passed into the parser!");
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                float actual = (float)cut.GetReadData(typeof(float), inputData, "Column1", 1, 1);
+            });
         }
 
 

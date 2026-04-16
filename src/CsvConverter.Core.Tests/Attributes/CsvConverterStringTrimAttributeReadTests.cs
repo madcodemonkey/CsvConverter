@@ -1,4 +1,4 @@
-﻿using CsvConverter.RowTools;
+using CsvConverter.RowTools;
 using Moq;
 
 namespace CsvConverter.Core.Tests.Attributes

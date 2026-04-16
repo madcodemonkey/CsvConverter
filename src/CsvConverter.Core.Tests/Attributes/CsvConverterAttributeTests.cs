@@ -1,4 +1,4 @@
-﻿using CsvConverter.RowTools;
+using CsvConverter.RowTools;
 using Moq;
 
 namespace CsvConverter.Core.Tests.Attributes
@@ -86,7 +86,6 @@ namespace CsvConverter.Core.Tests.Attributes
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void IfColumnIndexIsSpecifiedAtTheClassLevel_YouGetCsvConverterAttributeException()
         {
             // Arrange
@@ -101,15 +100,14 @@ namespace CsvConverter.Core.Tests.Attributes
                 rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
-            // Act
-            var row1 = classUnderTest.GetRecord();
-
-            // Assert
-            Assert.Fail("An exception should have been genearted for using ColumnIndex at the class level");
+            // Act & Assert
+            Assert.Throws<CsvConverterAttributeException>(() =>
+            {
+                var row1 = classUnderTest.GetRecord();
+            });
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void IfAltColumnNamesIsSpecifiedAtTheClassLevel_YouGetCsvConverterAttributeException()
         {
             // Arrange
@@ -124,16 +122,15 @@ namespace CsvConverter.Core.Tests.Attributes
                 rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
-            // Act
-            var row1 = classUnderTest.GetRecord();
-
-            // Assert
-            Assert.Fail("An exception should have been genearted for using ColumnIndex at the class level");
+            // Act & Assert
+            Assert.Throws<CsvConverterAttributeException>(() =>
+            {
+                var row1 = classUnderTest.GetRecord();
+            });
         }
 
 
         [TestMethod]
-        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void IfColumnNameIsSpecifiedAtTheClassLevel_YouGetCsvConverterAttributeException()
         {
             // Arrange
@@ -148,15 +145,14 @@ namespace CsvConverter.Core.Tests.Attributes
                 rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
-            // Act
-            var row1 = classUnderTest.GetRecord();
-
-            // Assert
-            Assert.Fail("An exception should have been genearted for using ColumnIndex at the class level");
+            // Act & Assert
+            Assert.Throws<CsvConverterAttributeException>(() =>
+            {
+                var row1 = classUnderTest.GetRecord();
+            });
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void IfTheUserSpecifiesTheColumnNameOnMoreThanOneAttribute_YouGetCsvConverterAttributeException()
         {
             // Arrange
@@ -171,15 +167,14 @@ namespace CsvConverter.Core.Tests.Attributes
                 rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
-            // Act
-            var row1 = classUnderTest.GetRecord();
-
-            // Assert
-            Assert.Fail("Should have got an error for specifing the column name twice");
+            // Act & Assert
+            Assert.Throws<CsvConverterAttributeException>(() =>
+            {
+                var row1 = classUnderTest.GetRecord();
+            });
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void SpecifyingColumnNameOnAPreConverter_YouGetCsvConverterAttributeException()
         {
             // Arrange
@@ -194,15 +189,14 @@ namespace CsvConverter.Core.Tests.Attributes
                 rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
-            // Act
-            var row1 = classUnderTest.GetRecord();
-
-            // Assert
-            Assert.Fail("Should have got an error for specifing the ColumnName on a pre-converter");
+            // Act & Assert
+            Assert.Throws<CsvConverterAttributeException>(() =>
+            {
+                var row1 = classUnderTest.GetRecord();
+            });
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void SpecifyingColumnNameOnAPostConverter_YouGetCsvConverterAttributeException()
         {
             // Arrange
@@ -217,16 +211,15 @@ namespace CsvConverter.Core.Tests.Attributes
                 rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
-            // Act
-            var row1 = classUnderTest.GetRecord();
-
-            // Assert
-            Assert.Fail("Should have got an error for specifing the ColumnName on a post-converter");
+            // Act & Assert
+            Assert.Throws<CsvConverterAttributeException>(() =>
+            {
+                var row1 = classUnderTest.GetRecord();
+            });
         }
 
 
         [TestMethod]
-        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void SpecifyingColumnIndexOnAPreConverter_YouGetCsvConverterAttributeException()
         {
             // Arrange
@@ -241,15 +234,14 @@ namespace CsvConverter.Core.Tests.Attributes
                 rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
-            // Act
-            var row1 = classUnderTest.GetRecord();
-
-            // Assert
-            Assert.Fail("Should have got an error for specifing the ColumnIndex on a pre-converter");
+            // Act & Assert
+            Assert.Throws<CsvConverterAttributeException>(() =>
+            {
+                var row1 = classUnderTest.GetRecord();
+            });
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void SpecifyingColumnIndexOnAPostConverter_YouGetCsvConverterAttributeException()
         {
             // Arrange
@@ -264,15 +256,14 @@ namespace CsvConverter.Core.Tests.Attributes
                 rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
-            // Act
-            var row1 = classUnderTest.GetRecord();
-
-            // Assert
-            Assert.Fail("Should have got an error for specifing the ColumnIndex on a post-converter");
+            // Act & Assert
+            Assert.Throws<CsvConverterAttributeException>(() =>
+            {
+                var row1 = classUnderTest.GetRecord();
+            });
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void SpecifyingAltColumnNamesOnAPreConverter_YouGetCsvConverterAttributeException()
         {
             // Arrange
@@ -287,15 +278,14 @@ namespace CsvConverter.Core.Tests.Attributes
                 rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
-            // Act
-            var row1 = classUnderTest.GetRecord();
-
-            // Assert
-            Assert.Fail("Should have got an error for specifing the AltColumnNames on a pre-converter");
+            // Act & Assert
+            Assert.Throws<CsvConverterAttributeException>(() =>
+            {
+                var row1 = classUnderTest.GetRecord();
+            });
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void SpecifyingAltColumnNamesOnAPostConverter_YouGetCsvConverterAttributeException()
         {
             // Arrange
@@ -310,11 +300,11 @@ namespace CsvConverter.Core.Tests.Attributes
                 rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
-            // Act
-            var row1 = classUnderTest.GetRecord();
-
-            // Assert
-            Assert.Fail("Should have got an error for specifing the AltColumnNames on a post-converter");
+            // Act & Assert
+            Assert.Throws<CsvConverterAttributeException>(() =>
+            {
+                var row1 = classUnderTest.GetRecord();
+            });
         }
 
     }

@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CsvConverter.Core.Tests.Attributes
 {
     [TestClass]
     public class CsvConverterBooleanAttributeWriteTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(true, "1", true, "T", true, "True", true, "Yes", true, "Y")]
         [DataRow(false, "0", false, "F", false, "False", false, "No", false, "N")]
         [DataRow(true, "1", true, "T", null, "", true, "Yes", true, "Y")]
@@ -37,7 +37,7 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(bool5ExpectedOutput, dataRow[4]);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(true, "Yes", true, "Yes", true, "Yes", true, "Yes", true, "Yes")]
         [DataRow(false, "No", false, "No", false, "No", false, "No", false, "No")]
         [DataRow(false, "No", false, "No", null, "", false, "No", false, "No")]
@@ -70,7 +70,7 @@ namespace CsvConverter.Core.Tests.Attributes
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(true, "Yes", true, "Yes", true, "Yes", true, "Yes", true, "Y")]
         [DataRow(false, "No", false, "No", false, "No", false, "No", false, "N")]
         [DataRow(false, "No", false, "No", null, "", false, "No", false, "N")]

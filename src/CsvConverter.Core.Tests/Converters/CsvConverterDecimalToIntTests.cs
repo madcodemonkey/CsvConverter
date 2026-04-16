@@ -1,10 +1,10 @@
-﻿namespace CsvConverter.Core.Tests.Converters
+namespace CsvConverter.Core.Tests.Converters
 {
     [TestClass]
     public class CsvConverterDecimalToIntTests
     {
         // Default is AllowRounding = false so that we don't lose precision by default!
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("12345.251", 12345)]
         [DataRow("12,345.65", 12346)]
         [DataRow("2.3%", 0)]
@@ -24,7 +24,7 @@
             Assert.AreEqual(expected, actual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("58.12", 58, true, 3)] // decimal places are IGNORED during reading!
         [DataRow("58.50", 59, true, 3)] // decimal places are IGNORED during reading!
         [DataRow("58.51", 59, true, 2)] // decimal places are IGNORED during reading!
@@ -44,10 +44,9 @@
             Assert.AreEqual(expected, actual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("abc")]
         [DataRow("5488e4$#@#")]
-        [ExpectedException(typeof(ArgumentException))]
         public void GetReadData_CannotHandleNonNumericStrings_ThrowsException(string inputData)
         {
             // Arrange
@@ -55,14 +54,14 @@
             var cut = new CsvConverterDecimalToInt();
             cut.Initialize(attribute, new DefaultTypeConverterFactory());
 
-            // Act
-            cut.GetReadData(typeof(decimal), inputData, "Column1", 1, 1);
-
-            // Assert
-            Assert.Fail("Exception should be thrown when invalid values are passed into the parser!");
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                cut.GetReadData(typeof(decimal), inputData, "Column1", 1, 1);
+            });
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(1, "1", null)]
         [DataRow(23, "23", null)]
         [DataRow(2000, "2000", null)]
@@ -91,7 +90,7 @@
             Assert.AreEqual(expectedData, actualData);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, null, null)]
         [DataRow(1, "1", null)]
         [DataRow(23, "23", null)]

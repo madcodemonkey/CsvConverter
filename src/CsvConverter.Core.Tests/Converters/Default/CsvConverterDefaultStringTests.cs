@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,7 +8,7 @@ namespace CsvConverter.Core.Tests.Converters
     [TestClass]
     public class CsvConverterDefaultStringTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("12345", "12345")]
         [DataRow("Text with spaces", "Text with spaces")]
         [DataRow("", "")]

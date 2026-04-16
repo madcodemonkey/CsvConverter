@@ -1,4 +1,4 @@
-﻿using CsvConverter.RowTools;
+using CsvConverter.RowTools;
 using Moq;
 using System.Globalization;
 
@@ -55,7 +55,7 @@ namespace CsvConverter.Core.Tests.Attributes
             rowReaderMock.VerifyAll();
         }
         // 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", "5/8/2017", 5, 8, 2017, "5/18/2018", 5, 18, 2018)]
         public void GetRecord_WhenClassAttributeIsUsedDatesAreConvertedTheSameWay_ValuesConverted(string order,
             string someDate1, int month1, int day1, int year1,
@@ -90,7 +90,7 @@ namespace CsvConverter.Core.Tests.Attributes
             rowReaderMock.VerifyAll();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", "5/8/2017", 5, 8, 2017, "2018/5/18", 5, 18, 2018)]
         public void GetRecord_WhenClassAttributeIsUsedYouCanOverrideIndividualProperties__ValuesConverted(string order,
             string someDate1, int month1, int day1, int year1,

@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CsvConverter.Core.Tests.Converters
 {
@@ -9,7 +9,7 @@ namespace CsvConverter.Core.Tests.Converters
         const int ColumnIndex = 0;
         const int RowNumber = 1;
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("test", "test", CsvConverterTrimEnum.All)]
         [DataRow(" test", "test", CsvConverterTrimEnum.All)]
         [DataRow("test ", "test", CsvConverterTrimEnum.All)]
@@ -42,7 +42,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expectedData, actualData);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("test", "test", CsvConverterTrimEnum.All)]
         [DataRow(" test", "test", CsvConverterTrimEnum.All)]
         [DataRow("test ", "test", CsvConverterTrimEnum.All)]

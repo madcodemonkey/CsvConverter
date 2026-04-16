@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using CsvConverter.RowTools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -55,7 +55,7 @@ namespace CsvConverter.Core.Tests.Attributes
             rowReaderMock.VerifyAll();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", 1, "35.344", 35.3, "74.454", 74.5)]
         [DataRow("2", 2, "15.244", 15.2, "21.6454", 21.6)]
         public void GetRecord_WhenClassAttributeIsUsedDoublesAreConvertedTheSameWay_ValuesComputed(
@@ -87,7 +87,7 @@ namespace CsvConverter.Core.Tests.Attributes
             rowReaderMock.VerifyAll();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", 1, "35.34", 35.3, "35.34", 35.3, "74.454", 74.454)]
         [DataRow("2", 2, "-3.45", -3.4, "-3.45", -3.5, "21.6454", 21.6454)]
         [DataRow("3", 3, "3.45", 3.4, "3.45", 3.5, "21.6454", 21.6454)]
@@ -123,11 +123,10 @@ namespace CsvConverter.Core.Tests.Attributes
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", 1, "teee", 35.3, "35.34", 35.3, "74.454", 74.454)]
         [DataRow("2", 2, "case", -3.4, "-3.45", -3.5, "21.6454", 21.6454)]
         [DataRow("3", 3, "gege", 3.4, "3.45", 3.5, "21.6454", 21.6454)]
-        [ExpectedException(typeof(CsvConverterException))]
         public void GetRecord_ThrowsExceptionsForBogusData_ExceptionThrown(string orderInput, int orderExpected,
             string perBodyFatInput1, double perBodyFatExpected1,
             string perBodyFatInput2, double perBodyFatExpected2,
@@ -144,12 +143,12 @@ namespace CsvConverter.Core.Tests.Attributes
             var classUnderTest = new CsvReaderService<CsvConverterNumberDoubleReadData3>(rowReaderMock.Object);
             classUnderTest.Configuration.HasHeaderRow = true;
 
-            // Act
-            CsvConverterNumberDoubleReadData3 row1 = classUnderTest.GetRecord();
-            CsvConverterNumberDoubleReadData3 row2 = classUnderTest.GetRecord();
-
-            // Assert
-            Assert.Fail("Should recieve an exception above for bogus input data");
+            // Act & Assert
+            Assert.Throws<CsvConverterException>(() =>
+            {
+                CsvConverterNumberDoubleReadData3 row1 = classUnderTest.GetRecord();
+                CsvConverterNumberDoubleReadData3 row2 = classUnderTest.GetRecord();
+            });
         }
 
 

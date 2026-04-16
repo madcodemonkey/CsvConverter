@@ -4,7 +4,7 @@ namespace CsvConverter.Core.Tests.Attributes
     public class PropertyLevelAttributeOrderWriteTests
     {
         // 1st converter remove spaces and 2nd converter does an exact match
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("dog", "cat")]        // 1st converter has no spaces to remove and 2nd converter gets a match
         [DataRow(" dog", "cat")]       // 1st converter should REMOVE spaces and 2nd converter gets a match
         [DataRow(" dog ", "cat")]      // 1st converter should REMOVE spaces and 2nd converter gets a match
@@ -32,7 +32,7 @@ namespace CsvConverter.Core.Tests.Attributes
         }
 
         // Attribute Order REVERSED.  1st converter does an exact match  and 2nd converter remove spaces
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("dog", "cat")]        // 1st converter gets a match and 2nd converter has no spaces to remove 
         [DataRow(" dog", "dog")]       // 1st converter gets NO match and 2nd converter REMOVES spaces
         [DataRow(" dog ", "dog")]      // 1st converter gets NO match and 2nd converter REMOVES spaces

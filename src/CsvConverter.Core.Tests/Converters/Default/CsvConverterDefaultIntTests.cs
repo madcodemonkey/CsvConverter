@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,7 +8,7 @@ namespace CsvConverter.Core.Tests.Converters
     [TestClass]
     public class CsvConverterDefaultIntTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("12345", 12345)]
         [DataRow("12,345", 12345)]
         [DataRow("", 0)]
@@ -26,7 +26,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expected, actual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("12345", 12345)]
         [DataRow("12,345", 12345)]
         [DataRow("", null)]
@@ -44,26 +44,25 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expected, actual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("abc")]
         [DataRow("5488e4$#@#")]
-        [ExpectedException(typeof(ArgumentException))]
         public void GetReadData_CannotHandleNonNumericStrings_ThrowsException(string inputData)
         {
             // Arrange
             var cut = new CsvConverterDefaultInt();
             cut.Initialize(null, new DefaultTypeConverterFactory());
 
-            // Act
-            int actual = (int)cut.GetReadData(typeof(int), inputData, "Column1", 1, 1);
-
-            // Assert
-            Assert.Fail("Exception should be thrown when invalid values are passed into the parser!");
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                int actual = (int)cut.GetReadData(typeof(int), inputData, "Column1", 1, 1);
+            });
         }
 
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(1, "1", null)]
         [DataRow(23, "23", null)]
         [DataRow(2000, "2000", null)]
@@ -89,7 +88,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expectedData, actualData);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, null, null)]
         [DataRow(1, "1", null)]
         [DataRow(23, "23", null)]

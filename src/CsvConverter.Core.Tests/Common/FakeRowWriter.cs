@@ -1,4 +1,4 @@
-﻿using CsvConverter.RowTools;
+using CsvConverter.RowTools;
 
 namespace CsvConverter.Core.Tests
 {

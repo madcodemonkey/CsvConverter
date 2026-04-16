@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CsvConverter.Core.Tests.Attributes
 {
     [TestClass]
     public class CsvConverterNumber_IntegerWriteTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(2000, "2,000", 2000, "2,000.0", 2000, "$2,000.00", 1, "100%")]
         [DataRow(1234, "1,234", 1234, "1,234.0", 1234, "$1,234.00", 2, "200%")]
         [DataRow(5678, "5,678", 5678, "5,678.0", 5678, "$5,678.00", 3, "300%")]
@@ -40,7 +40,7 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(expectedData4, dataRow[index++].Replace(" ", ""), $"Problem with input {index} -> {inputData4}");
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(2000, "2,000", 2000, "2,000", 2000, "2,000", 2000, "2,000")]
         [DataRow(1234, "1,234", 1234, "1,234", 1234, "1,234", 1234, "1,234")]
         [DataRow(5678, "5,678", 5678, "5,678", 5678, "5,678", 5678, "5,678")]
@@ -73,7 +73,7 @@ namespace CsvConverter.Core.Tests.Attributes
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(2000, "2,000", 2000, "$2,000.00", 2000, "2,000", 2000, "2,000")]
         [DataRow(1234, "1,234", 1234, "$1,234.00", 1234, "1,234", 1234, "1,234")]
         [DataRow(5678, "5,678", 5678, "$5,678.00", 5678, "5,678", 5678, "5,678")]

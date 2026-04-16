@@ -1,9 +1,9 @@
-﻿namespace CsvConverter.Core.Tests.HeaderTests
+namespace CsvConverter.Core.Tests.HeaderTests
 {
     [TestClass]
     public class Write_NoHeaderTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(0, 5, "James", "0", "5", "James")]
         [DataRow(1, 4, "James", "1", "4", "James")]
         [DataRow(2, 3, "James", "2", "3", "James")]

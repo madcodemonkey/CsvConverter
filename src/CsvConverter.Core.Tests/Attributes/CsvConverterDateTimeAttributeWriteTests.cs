@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CsvConverter.Core.Tests.Attributes
@@ -6,7 +6,7 @@ namespace CsvConverter.Core.Tests.Attributes
     [TestClass]
     public class CsvConverterDateTimeAttributeWriteTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(2017, 5, 8, 14, 40, 12, "2017-05-08 14:40:12", "Monday, May 08, 2017 2:40 PM", "5/8/2017")]
         public void Convert_WhenSpecifiedOnEachProperty_DatesAreConvertedAccordingToAttributes(int year, int month, int day, int hour, int minute, int second,
             string expectedStringRow1, string expectedStringRow2, string expectedStringRow3)
@@ -36,7 +36,7 @@ namespace CsvConverter.Core.Tests.Attributes
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(2017, 5, 8, 14, 40, 12, "2017-05-08 14:40:12", "2017-05-08 14:40:12", "2017-05-08 14:40:12")]
         public void Convert_WhenSpecifiedOnTheClass_DatesAreAllConvertedTheSameWay(
             int year, int month, int day, int hour, int minute, int second,
@@ -67,7 +67,7 @@ namespace CsvConverter.Core.Tests.Attributes
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(2017, 5, 8, 14, 40, 12, "2017-05-08 14:40:12", "2017-05-08 14:40:12", "5/8/2017")]
         public void Convert_WhenSpecifiedTheClassPropertyAttributesCanOverrideClassAttributes_PropertiesTakePrecedence(
             int year, int month, int day, int hour, int minute, int second,
