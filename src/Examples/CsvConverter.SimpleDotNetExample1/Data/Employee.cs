@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace SimpleDotNetExample1
 {
     public class Employee
     {
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }
@@ -12,12 +13,7 @@ namespace SimpleDotNetExample1
 
         public override string ToString()
         {
-            return string.Format("FirstName: {0} LastName: {1} Age: {2} PercentageBodyFat: {3} AvgHeartRate: {4}",
-                FirstName,
-                LastName,
-                Age,
-                PercentageBodyFat,
-                AvgHeartRate);
+            return $"Id: {Id} FirstName: {FirstName} LastName: {LastName} Age: {Age} PercentageBodyFat: {PercentageBodyFat} AvgHeartRate: {AvgHeartRate}";
         }
     }
 }
