@@ -1,5 +1,5 @@
-﻿using System;
-using CsvConverter.Reflection;
+﻿using CsvConverter.Reflection;
+using System;
 
 namespace CsvConverter
 {
@@ -29,20 +29,20 @@ namespace CsvConverter
         /// <summary>Returns value</summary>
         public object GetReadData(Type inputType, string value, string columnName, int columnIndex, int rowNumber)
         {
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrWhiteSpace(value))
             {
                 if (inputType.HelpIsNullable())
                     return null;
 
                 return Guid.Empty;
             }
-            
+
             if (Guid.TryParse(value, out Guid guid))
                 return guid;
-            
+
             ThrowConvertErrorWhileReading(typeof(CsvConverterDefaultGuid),
                 inputType, value, columnName, columnIndex, rowNumber);
-            
+
             return null; // Not called, but removes compiler warning
         }
     }

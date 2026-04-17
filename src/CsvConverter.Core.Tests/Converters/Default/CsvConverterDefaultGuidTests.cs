@@ -16,7 +16,7 @@ public class CsvConverterDefaultGuidTests
         cut.Initialize(null, new DefaultTypeConverterFactory());
 
         // Act
-        Guid actual = (Guid)cut.GetReadData(typeof(int), inputData, "Column1", 1, 1);
+        Guid actual = (Guid)cut.GetReadData(typeof(Guid), inputData, "Column1", 1, 1);
 
         // Assert
         Assert.AreEqual(expectedGuid, actual);
