@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,7 +8,7 @@ namespace CsvConverter.Core.Tests.Converters
     [TestClass]
     public class CsvConverterStringReplaceTextEveryMatchTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Hey, diddle, diddle,", "c", "b", true, "Hey, diddle, diddle,")] // no changes
         [DataRow("The cat and the fiddle,", "T", "G", true, "Ghe cat and the fiddle,")]  // target captial letter
         [DataRow("The cow jumped over the moon;", " ", "", true, "Thecowjumpedoverthemoon;")] // Remove spaces
@@ -51,7 +51,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expectedResult, actualResult);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Hey, diddle, diddle,", "c", "b", true, "Hey, diddle, diddle,")] // no changes
         [DataRow("The cat and the fiddle,", "T", "G", true, "Ghe cat and the fiddle,")]  // target captial letter
         [DataRow("The cow jumped over the moon;", " ", "", true, "Thecowjumpedoverthemoon;")] // Remove spaces
@@ -95,16 +95,17 @@ namespace CsvConverter.Core.Tests.Converters
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void Initialize_PassingInTheWrongTypeOfAttributeToThePostConverter_ResultsInException()
         {
             // Arrange 
             var attribute = new CsvConverterBooleanAttribute(typeof(CsvConverterStringReplaceTextEveryMatch));
             var classUnderTest = new CsvConverterStringReplaceTextEveryMatch();
-            classUnderTest.Initialize(attribute, new DefaultTypeConverterFactory());
 
-            // Assert
-            Assert.Fail("Should have received an exception for passing in wrong type of attribute.");
+            // Act & Assert
+            Assert.Throws<CsvConverterAttributeException>(() =>
+            {
+                classUnderTest.Initialize(attribute, new DefaultTypeConverterFactory());
+            });
         }
     }
 

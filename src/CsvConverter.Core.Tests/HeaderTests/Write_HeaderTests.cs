@@ -1,4 +1,4 @@
-﻿namespace CsvConverter.Core.Tests.HeaderTests
+namespace CsvConverter.Core.Tests.HeaderTests
 {
     [TestClass]
     public class Write_HeaderTests

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
 using CsvConverter.RowTools;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+using NSubstitute;
 
 namespace CsvConverter.Core.Tests.Attributes
 {
@@ -14,16 +11,17 @@ namespace CsvConverter.Core.Tests.Attributes
         public void GetRecord_CanComputeDoublePlacesOnMultipleRows_ValuesComputed()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "PercentageBodyFat", "PercentageMuscle", "Length", "LengthArms" })
-                .Returns(new List<string> { "1", "34.56789", "78.33212", "98.34222", "67.94783" })
-                .Returns(new List<string> { "2", "67.89004", "79.33212", "87.38278", "68.94783" })
-                .Returns(new List<string> { "3", "948.5334", "80.33212", "7645.322", "69.94783" });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "PercentageBodyFat", "PercentageMuscle", "Length", "LengthArms" },
+                    new List<string> { "1", "34.56789", "78.33212", "98.34222", "67.94783" },
+                    new List<string> { "2", "67.89004", "79.33212", "87.38278", "68.94783" },
+                    new List<string> { "3", "948.5334", "80.33212", "7645.322", "69.94783" });
 
-            var classUnderTest = new CsvReaderService<CsvConverterNumberDoubleReadData1>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterNumberDoubleReadData1>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -52,10 +50,9 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(69.9478, row3.LengthArms);
 
             Assert.IsNull(row4, "There is no 4th row!");
-            rowReaderMock.VerifyAll();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", 1, "35.344", 35.3, "74.454", 74.5)]
         [DataRow("2", 2, "15.244", 15.2, "21.6454", 21.6)]
         public void GetRecord_WhenClassAttributeIsUsedDoublesAreConvertedTheSameWay_ValuesComputed(
@@ -64,14 +61,15 @@ namespace CsvConverter.Core.Tests.Attributes
             string perBodyMuscelInput, double perBodyMuscleExpected)
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "PercentageBodyFat", "PercentageMuscle" })
-                .Returns(new List<string> { orderInput, perBodyFatInput, perBodyMuscelInput });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "PercentageBodyFat", "PercentageMuscle" },
+                    new List<string> { orderInput, perBodyFatInput, perBodyMuscelInput });
 
-            var classUnderTest = new CsvReaderService<CsvConverterNumberDoubleReadData2>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterNumberDoubleReadData2>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -84,10 +82,9 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(perBodyMuscleExpected, row1.PercentageMuscle);
 
             Assert.IsNull(row2, "There is no 2nd row!");
-            rowReaderMock.VerifyAll();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", 1, "35.34", 35.3, "35.34", 35.3, "74.454", 74.454)]
         [DataRow("2", 2, "-3.45", -3.4, "-3.45", -3.5, "21.6454", 21.6454)]
         [DataRow("3", 3, "3.45", 3.4, "3.45", 3.5, "21.6454", 21.6454)]
@@ -98,14 +95,15 @@ namespace CsvConverter.Core.Tests.Attributes
             string perBodyMuscelInput, double perBodyMuscleExpected)
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "PercentageBodyFat1", "PercentageBodyFat2", "PercentageMuscle" })
-                .Returns(new List<string> { orderInput, perBodyFatInput1, perBodyFatInput2, perBodyMuscelInput });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "PercentageBodyFat1", "PercentageBodyFat2", "PercentageMuscle" },
+                    new List<string> { orderInput, perBodyFatInput1, perBodyFatInput2, perBodyMuscelInput });
 
-            var classUnderTest = new CsvReaderService<CsvConverterNumberDoubleReadData3>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterNumberDoubleReadData3>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -119,37 +117,36 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(perBodyMuscleExpected, row1.PercentageMuscle);
 
             Assert.IsNull(row2, "There is no 2nd row!");
-            rowReaderMock.VerifyAll();
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", 1, "teee", 35.3, "35.34", 35.3, "74.454", 74.454)]
         [DataRow("2", 2, "case", -3.4, "-3.45", -3.5, "21.6454", 21.6454)]
         [DataRow("3", 3, "gege", 3.4, "3.45", 3.5, "21.6454", 21.6454)]
-        [ExpectedException(typeof(CsvConverterException))]
         public void GetRecord_ThrowsExceptionsForBogusData_ExceptionThrown(string orderInput, int orderExpected,
             string perBodyFatInput1, double perBodyFatExpected1,
             string perBodyFatInput2, double perBodyFatExpected2,
             string perBodyMuscelInput, double perBodyMuscleExpected)
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "PercentageBodyFat1", "PercentageBodyFat2", "PercentageMuscle" })
-                .Returns(new List<string> { orderInput, perBodyFatInput1, perBodyFatInput2, perBodyMuscelInput });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "PercentageBodyFat1", "PercentageBodyFat2", "PercentageMuscle" },
+                    new List<string> { orderInput, perBodyFatInput1, perBodyFatInput2, perBodyMuscelInput });
 
-            var classUnderTest = new CsvReaderService<CsvConverterNumberDoubleReadData3>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterNumberDoubleReadData3>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
-            // Act
-            CsvConverterNumberDoubleReadData3 row1 = classUnderTest.GetRecord();
-            CsvConverterNumberDoubleReadData3 row2 = classUnderTest.GetRecord();
-
-            // Assert
-            Assert.Fail("Should recieve an exception above for bogus input data");
+            // Act & Assert
+            Assert.Throws<CsvConverterException>(() =>
+            {
+                CsvConverterNumberDoubleReadData3 row1 = classUnderTest.GetRecord();
+                CsvConverterNumberDoubleReadData3 row2 = classUnderTest.GetRecord();
+            });
         }
 
 

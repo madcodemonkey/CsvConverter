@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
@@ -8,7 +8,7 @@ namespace CsvConverter.Core.Tests.Converters
     public class CsvConverterDefaultDecimalTests
     {
         // Default is AllowRounding = false so that we don't lose percision by default!
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("12345.251", "12345.251")]
         [DataRow("12,346.25", "12346.25")]
         [DataRow("2.3%", "0.023")] 
@@ -28,7 +28,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expected, actual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("58.5751234", "58.575", true, 3)]
         [DataRow("58.5750001", "58.58", true, 2)]
         [DataRow("58.5749999", "58.57", true, 2)]
@@ -51,7 +51,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expected, actual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("12345.254", "12345.254")]
         [DataRow("12,345.25", "12345.25")]
         [DataRow("2.3%", "0.023")]
@@ -71,24 +71,23 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expected, actual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("abc")]
         [DataRow("5488e4$#@#")]
-        [ExpectedException(typeof(ArgumentException))]
         public void GetReadData_CannotHandleNonNumericStrings_ThrowsException(string inputData)
         {
             // Arrange
             var cut = new CsvConverterDefaultDecimal();
             cut.Initialize(null, new DefaultTypeConverterFactory());
 
-            // Act
-            decimal actual = (decimal)cut.GetReadData(typeof(decimal), inputData, "Column1", 1, 1);
-
-            // Assert
-            Assert.Fail("Exception should be thrown when invalid values are passed into the parser!");
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                decimal actual = (decimal)cut.GetReadData(typeof(decimal), inputData, "Column1", 1, 1);
+            });
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1.0", "1.0", null)]
         [DataRow("23.0", "23.0", null)]
         [DataRow("2000.0", "2000.0", null)]
@@ -118,7 +117,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expectedData, actualData);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, null, null)]
         [DataRow("1.0", "1.0", null)]
         [DataRow("23.0", "23.0", null)]

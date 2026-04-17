@@ -35,6 +35,7 @@ namespace SimpleDotNetExample1
                     {
                         var newEmp = new Employee()
                         {
+                            Id = Guid.NewGuid(),
                             FirstName = $"First{rand.Next(1, 5000)}",
                             LastName = $"Last{rand.Next(1, 5000)}",
                             Age = rand.Next(5, 80),

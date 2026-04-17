@@ -74,7 +74,7 @@ namespace CsvConverter
             return _converters.ContainsKey(theType);
         }
 
-        private Dictionary<Type, Type> _converters = new Dictionary<Type, Type>();
+        private readonly Dictionary<Type, Type> _converters = new Dictionary<Type, Type>();
 
         private void RegisterBuiltInDefaultConverters()
         {
@@ -105,6 +105,9 @@ namespace CsvConverter
             AddConverter(typeof(DateTime), typeof(CsvConverterDefaultDateTime));
             AddConverter(typeof(DateTime?), typeof(CsvConverterDefaultDateTime));
 
+            AddConverter(typeof(Guid), typeof(CsvConverterDefaultGuid));
+            AddConverter(typeof(Guid?), typeof(CsvConverterDefaultGuid));
+            
             AddConverter(typeof(string), typeof(CsvConverterDefaultString));
         }
     }

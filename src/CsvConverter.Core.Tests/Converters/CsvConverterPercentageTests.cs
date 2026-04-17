@@ -1,8 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 namespace CsvConverter.Core.Tests.Converters
 {
     [TestClass]
@@ -13,21 +8,19 @@ namespace CsvConverter.Core.Tests.Converters
         const int RowNumber = 1;
 
         [TestMethod]
-        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void GetReadData_CannotCovertJunkStrings()
         {
-            // Arrange
-            var classUnderTest = new CsvConverterPercentage();
-            classUnderTest.Initialize(null, new DefaultTypeConverterFactory());
-            // Act
-            classUnderTest.GetReadData(typeof(decimal), "3d5%", ColumName, ColumnIndex, RowNumber);
-
-            // Assert
-            throw new Exception("Should have encountered exception above because the string is invalid!");
+            // Arrange & Act & Assert
+            Assert.Throws<CsvConverterAttributeException>(() =>
+            {
+                var classUnderTest = new CsvConverterPercentage();
+                classUnderTest.Initialize(null, new DefaultTypeConverterFactory());
+                classUnderTest.GetReadData(typeof(decimal), "3d5%", ColumName, ColumnIndex, RowNumber);
+            });
         }
 
         // Using same data as below, I just switch the function parameters around
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("35%", ".35", 2)]
         [DataRow("35.34%", ".3534", 4)]
         [DataRow("35.123%", ".35123", 5)]
@@ -54,7 +47,7 @@ namespace CsvConverter.Core.Tests.Converters
 
         // Using same data as above, I just switch the function parameters around
         // and you'll always get a percentage sign on output!
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("35%", ".35", 2)]
         [DataRow("35.34%", ".3534", 4)]
         [DataRow("35.123%", ".35123", 5)]
@@ -77,7 +70,7 @@ namespace CsvConverter.Core.Tests.Converters
 
             // Windows 7 and Windows 10 format strings differently so remove the space so that for the test it doesn't matter
             if (actual != null)
-               actual = actual.Replace(" ", "");
+                actual = actual.Replace(" ", "");
 
 
             // Assert

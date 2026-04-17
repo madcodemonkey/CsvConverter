@@ -1,5 +1,5 @@
-﻿using CsvConverter.RowTools;
-using Moq;
+using CsvConverter.RowTools;
+using NSubstitute;
 
 namespace CsvConverter.Core.Tests.Attributes
 {
@@ -7,7 +7,7 @@ namespace CsvConverter.Core.Tests.Attributes
     public class ClassLevelAttributeOrderReadTests
     {
         // 1st converter remove spaces and 2nd converter does an exact match
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", "dog", "cat")]        // 1st converter has no spaces to remove and 2nd converter gets a match
         [DataRow("1", " dog", "cat")]       // 1st converter should REMOVE spaces and 2nd converter gets a match
         [DataRow("1", " dog ", "cat")]      // 1st converter should REMOVE spaces and 2nd converter gets a match
@@ -18,14 +18,14 @@ namespace CsvConverter.Core.Tests.Attributes
            string animalTypeInput, string animalTypeExpected)
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "Animal Type" })
-                .Returns(new List<string> { order, animalTypeInput });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow().Returns(
+                new List<string> { "Order", "Animal Type" },
+                new List<string> { order, animalTypeInput });
 
-            var classUnderTest = new CsvReaderService<ClassLevelAttributeOrderReadData1>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<ClassLevelAttributeOrderReadData1>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -37,14 +37,13 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(animalTypeExpected, row1.AnimalType);
 
             Assert.IsNull(row2, "There is no 2nd row!");
-            rowReaderMock.VerifyAll();
         }
 
 
 
 
         // Atrribute Order REVERSED.  1st converter does an exact match  and 2nd converter remove spaces
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", "dog", "cat")]        // 1st converter gets a match and 2nd converter has no spaces to remove 
         [DataRow("1", " dog", "dog")]       // 1st converter gets NO match and 2nd converter REMOVES spaces
         [DataRow("1", " dog ", "dog")]      // 1st converter gets NO match and 2nd converter REMOVES spaces
@@ -55,14 +54,14 @@ namespace CsvConverter.Core.Tests.Attributes
            string animalTypeInput, string animalTypeExpected)
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "Animal Type" })
-                .Returns(new List<string> { order, animalTypeInput });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow().Returns(
+                new List<string> { "Order", "Animal Type" },
+                new List<string> { order, animalTypeInput });
 
-            var classUnderTest = new CsvReaderService<ClassLevelAttributeOrderReadData2>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<ClassLevelAttributeOrderReadData2>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -74,7 +73,6 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(animalTypeExpected, row1.AnimalType);
 
             Assert.IsNull(row2, "There is no 2nd row!");
-            rowReaderMock.VerifyAll();
         }
     }
 

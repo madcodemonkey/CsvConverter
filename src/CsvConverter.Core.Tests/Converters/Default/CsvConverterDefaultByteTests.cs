@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,7 +8,7 @@ namespace CsvConverter.Core.Tests.Converters
     [TestClass]
     public class CsvConverterDefaultByteTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("255", (byte)255)]
         [DataRow("23", (byte)23)]
         [DataRow("", (byte)0)]
@@ -26,7 +26,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expected, actual);
         }
         
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("255", (byte)255)]
         [DataRow("34", (byte)34)]
         [DataRow("", null)]
@@ -44,24 +44,23 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expected, actual);
         }
         
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("abc")]
         [DataRow("5488e4$#@#")]
-        [ExpectedException(typeof(ArgumentException))]
         public void GetReadData_CannotHandleNonNumericStrings_ThrowsException(string inputData)
         {
             // Arrange
             var cut = new CsvConverterDefaultByte();
             cut.Initialize(null, new DefaultTypeConverterFactory());
 
-            // Act
-            byte actual = (byte)cut.GetReadData(typeof(byte), inputData, "Column1", 1, 1);
-
-            // Assert
-            Assert.Fail("Exception should be thrown when invalid values are passed into the parser!");
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                byte actual = (byte)cut.GetReadData(typeof(byte), inputData, "Column1", 1, 1);
+            });
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow((byte)1, "1", null)]
         [DataRow((byte)23, "23", null)]
         [DataRow((byte)255, "255", null)]
@@ -89,7 +88,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expectedData, actualData);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, null, null)]
         [DataRow((byte)1, "1", null)]
         [DataRow((byte)23, "23", null)]

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,7 +8,7 @@ namespace CsvConverter.Core.Tests.Converters
     [TestClass]
     public class CsvConverterDefaultDateTimeTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(2018, 5, 2, 9, 51, 2, null, "5/2/2018 9:51:02 AM")]
         [DataRow(2018, 5, 2, 9, 51, 2, "", "5/2/2018 9:51:02 AM")]
         [DataRow(2018, 5, 2, 9, 51, 2, "  ", "5/2/2018 9:51:02 AM")]
@@ -32,7 +32,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expectedData, actualData);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(0, 0, 0, 0, 0, 0, null, null)]
         [DataRow(2018, 5, 2, 9, 51, 2, null, "5/2/2018 9:51:02 AM")]
         [DataRow(2018, 5, 2, 9, 51, 2, "", "5/2/2018 9:51:02 AM")]
@@ -58,7 +58,7 @@ namespace CsvConverter.Core.Tests.Converters
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(2017, 5, 6, 0, 0, 0, "yyyyMMdd", "20170506")]
         [DataRow(0001, 1, 1, 0, 0, 0, "yyyyMMdd", "")]
         [DataRow(0001, 1, 1, 0, 0, 0, "yyyyMMdd", "   ")]
@@ -97,7 +97,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expectedSeconds, actual.Second);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(16, 5, 0, "h:mm tt", "4:05 PM")]
         [DataRow(16, 5, 7, "h:mm:ss tt", "4:05:07 PM")]
         public void GetReadData_CanConvertTimesWithFormat_ValuesConverted(
@@ -121,21 +121,20 @@ namespace CsvConverter.Core.Tests.Converters
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("abc")]
         [DataRow("5488e4$#@#")]
-        [ExpectedException(typeof(ArgumentException))]
         public void GetReadData_CannotHandleNonDateStrings_ThrowsException(string inputData)
         {
             // Arrange
             var cut = new CsvConverterDefaultDateTime();
             cut.Initialize(null, new DefaultTypeConverterFactory());
 
-            // Act
-            DateTime actual = (DateTime)cut.GetReadData(typeof(DateTime), inputData, "Column1", 1, 1);
-
-            // Assert
-            Assert.Fail("Exception should be thrown when invalid values are passed into the parser!");
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                DateTime actual = (DateTime)cut.GetReadData(typeof(DateTime), inputData, "Column1", 1, 1);
+            });
         }
 
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -7,7 +7,7 @@ namespace CsvConverter.Core.Tests.Converters
     [TestClass]
     public class CsvConverterDefaultBooleanTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(true, "1", "0", "1")]
         [DataRow(false, "1", "0", "0")]
         [DataRow(true, "T", "F", "T")]
@@ -34,7 +34,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expectedData, actualData);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(true, "1", "0", "1")]
         [DataRow(false, "1", "0", "0")]
         [DataRow(true, "T", "F", "T")]
@@ -61,7 +61,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expectedData, actualData);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("True", true)]
         [DataRow("true", true)]
         [DataRow("TRUE", true)]
@@ -96,7 +96,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expected, actual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("", null)]
         [DataRow("   ", null)]
         [DataRow("True", true)]
@@ -131,24 +131,23 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expected, actual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("abc")]
         [DataRow("5488e4$#@#")]
-        [ExpectedException(typeof(ArgumentException))]
         public void GetReadData_CanHandleNonIntegerStrings_ThrowsException(string inputData)
         {
             // Arrange
             var cut = new CsvConverterDefaultBoolean();
             cut.Initialize(null, new DefaultTypeConverterFactory());
 
-            // Act
-            bool actual = (bool)cut.GetReadData(typeof(bool), inputData, "Column1", 1, 1);
-
-            // Assert
-            Assert.Fail("Exception should be thrown when invalid values are passed into the parser!");
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                bool actual = (bool)cut.GetReadData(typeof(bool), inputData, "Column1", 1, 1);
+            });
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("", false)]
         [DataRow(" ", false)]
         [DataRow("Frog", false)]

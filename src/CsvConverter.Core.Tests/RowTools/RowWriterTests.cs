@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using CsvConverter.RowTools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,7 +8,7 @@ namespace CsvConverter.Core.Tests;
 [TestClass]
 public class RowWriterTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("Finish with new laptop setup.  Go to UPS store and return laptop", "Finish with new laptop setup.  Go to UPS store and return laptop", "Normal string should work properly")]
     [DataRow("Finish with new laptop setup, Go to UPS store and return laptop", "\"Finish with new laptop setup, Go to UPS store and return laptop\"", "Split character ',' in the string should be escaped.")]
     [DataRow("Finish with new laptop setup.\nGo to UPS store and return laptop", "\"Finish with new laptop setup.\nGo to UPS store and return laptop\"", "New line in the string should be escaped.")]

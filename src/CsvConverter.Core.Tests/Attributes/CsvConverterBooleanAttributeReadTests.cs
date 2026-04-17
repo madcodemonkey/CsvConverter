@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
 using CsvConverter.RowTools;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+using NSubstitute;
 
 namespace CsvConverter.Core.Tests.Attributes
 {
@@ -13,15 +10,16 @@ namespace CsvConverter.Core.Tests.Attributes
         public void GetRecord_ConvertBooleansOfVariousFormatsWithoutAnAttribute_ValuesConverted()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "Bool1", "Bool2", "Bool3", "Bool4", "Bool5" })
-                .Returns(new List<string> { "1", "Yes", "Y", "True", "T", "1" })
-                .Returns(new List<string> { "2", "No", "N", "False", "F", "0" });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "Bool1", "Bool2", "Bool3", "Bool4", "Bool5" },
+                    new List<string> { "1", "Yes", "Y", "True", "T", "1" },
+                    new List<string> { "2", "No", "N", "False", "F", "0" });
 
-            var classUnderTest = new CsvReaderService<CsvConverterBooleanAttributeReadData1>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterBooleanAttributeReadData1>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -45,10 +43,9 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(false, row2.Bool5);
 
             Assert.IsNull(row3, "There is no 3rd row!");
-            rowReaderMock.VerifyAll();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", "Dog", true, "Frog", true)]
         [DataRow("1", "Cat", false, "Pond", false)]
         public void GetRecord_CanConvertCustomTextToBooleanWhenSpecifiedOnProperty_ValuesConverted(string order,
@@ -56,14 +53,15 @@ namespace CsvConverter.Core.Tests.Attributes
             string frogsJumpInput, bool frogsJumpExpected)
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "CatsOrDogsJump", "FrogsJump" })
-                .Returns(new List<string> { order, catsOrDogsJumpInput, frogsJumpInput });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "CatsOrDogsJump", "FrogsJump" },
+                    new List<string> { order, catsOrDogsJumpInput, frogsJumpInput });
 
-            var classUnderTest = new CsvReaderService<CsvConverterBooleanAttributeReadData3>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterBooleanAttributeReadData3>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -76,10 +74,9 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(frogsJumpExpected, row1.FrogsJump);
 
             Assert.IsNull(row2, "There is no 2nd row!");
-            rowReaderMock.VerifyAll();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", "Dog", true, "Cat", false)]
         [DataRow("1", "Cat", false, "Dog", true)]
         public void GetRecord_WhenClassAttributeIsUsedBooleansAreConvertedTheSameWay_ValuesConverted(string order,
@@ -87,14 +84,15 @@ namespace CsvConverter.Core.Tests.Attributes
             string frogsJumpInput, bool frogsJumpExpected)
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "CatsOrDogsJump", "FrogsJump" })
-                .Returns(new List<string> { order, catsOrDogsJumpInput, frogsJumpInput });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "CatsOrDogsJump", "FrogsJump" },
+                    new List<string> { order, catsOrDogsJumpInput, frogsJumpInput });
 
-            var classUnderTest = new CsvReaderService<CsvConverterBooleanAttributeReadData4>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterBooleanAttributeReadData4>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -107,10 +105,9 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(frogsJumpExpected, row1.FrogsJump);
 
             Assert.IsNull(row2, "There is no 2nd row!");
-            rowReaderMock.VerifyAll();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", "Dog", true, "Frog", true)]
         [DataRow("1", "Cat", false, "Pond", false)]
         public void GetRecord_WhenClassAttributeIsUsedYouCanOverrideIndividualProperties_ValuesConverted(string order,
@@ -118,14 +115,15 @@ namespace CsvConverter.Core.Tests.Attributes
              string frogsJumpInput, bool frogsJumpExpected)
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "CatsOrDogsJump", "FrogsJump" })
-                .Returns(new List<string> { order, catsOrDogsJumpInput, frogsJumpInput });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "CatsOrDogsJump", "FrogsJump" },
+                    new List<string> { order, catsOrDogsJumpInput, frogsJumpInput });
 
-            var classUnderTest = new CsvReaderService<CsvConverterBooleanAttributeReadData5>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterBooleanAttributeReadData5>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -138,32 +136,31 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(frogsJumpExpected, row1.FrogsJump);
 
             Assert.IsNull(row2, "There is no 2nd row!");
-            rowReaderMock.VerifyAll();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1", "Dog")]
         [DataRow("1", "Cat")]
-        [ExpectedException(typeof(CsvConverterException))]
         public void GetRecord_ThrowsExceptionsForBogusData_ExceptionThrown(string order, string canJump)
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "CanJump" })
-                .Returns(new List<string> { order, canJump });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "CanJump" },
+                    new List<string> { order, canJump });
 
-            var classUnderTest = new CsvReaderService<CsvConverterBooleanAttributeReadData2>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterBooleanAttributeReadData2>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
-            // Act
-            CsvConverterBooleanAttributeReadData2 row1 = classUnderTest.GetRecord();
-            CsvConverterBooleanAttributeReadData2 row2 = classUnderTest.GetRecord();
-
-            // Assert
-            Assert.Fail("Should recieve an exception above for bogus input data");
+            // Act & Assert
+            Assert.Throws<CsvConverterException>(() =>
+            {
+                CsvConverterBooleanAttributeReadData2 row1 = classUnderTest.GetRecord();
+                CsvConverterBooleanAttributeReadData2 row2 = classUnderTest.GetRecord();
+            });
         }
 
     }

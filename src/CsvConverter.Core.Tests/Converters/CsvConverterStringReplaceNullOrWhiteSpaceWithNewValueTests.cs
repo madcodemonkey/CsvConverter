@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,7 +8,7 @@ namespace CsvConverter.Core.Tests.Converters
     [TestClass]
     public class CsvConverterStringReplaceNullOrWhiteSpaceWithNewValueTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("cache", "c", "cache")]
         [DataRow("cat", "cat", "cat")]
         [DataRow("", "c", "c")]
@@ -34,7 +34,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expectedResult, actualResult);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("cache", "c", "cache")]
         [DataRow("cat", "cat", "cat")]
         [DataRow("", "c", "c")]
@@ -61,16 +61,17 @@ namespace CsvConverter.Core.Tests.Converters
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void Initialize_PassingInTheWrongTypeOfAttributeToThePostConverter_ResultsInException()
         {
             // Arrange 
             var attribute = new CsvConverterBooleanAttribute(typeof(CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue));
             var classUnderTest = new CsvConverterStringReplaceNullOrWhiteSpaceWithNewValue();
-            classUnderTest.Initialize(attribute, new DefaultTypeConverterFactory());
 
-            // Assert
-            Assert.Fail("Should have received an exception for passing in wrong type of attribute.");
+            // Act & Assert
+            Assert.Throws<CsvConverterAttributeException>(() =>
+            {
+                classUnderTest.Initialize(attribute, new DefaultTypeConverterFactory());
+            });
         }
     }
 }

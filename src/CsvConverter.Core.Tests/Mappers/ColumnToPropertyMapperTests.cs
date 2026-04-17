@@ -1,4 +1,4 @@
-﻿using CsvConverter.Mapper;
+using CsvConverter.Mapper;
 
 namespace CsvConverter.Core.Tests.HeaderTests
 {

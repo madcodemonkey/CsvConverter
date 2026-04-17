@@ -48,7 +48,7 @@ public class CsvReaderService_Test
         }
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(5, true)]
     [DataRow(8, false)]
     public void GetRecord_CanHandelClassWithOneProperty_DataRead(int expectedNumberOfRows, bool blankRowsAreReturnedAsNull)

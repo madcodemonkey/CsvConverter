@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,7 +8,7 @@ namespace CsvConverter.Core.Tests.Converters
     [TestClass]
     public class CsvConverterStringReplaceTextExactMatchTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("cache", "c", "b", true, "cache")]  // not a whole word
         [DataRow("cat", "cat", "bat", true, "bat")]
         [DataRow(null, null, "bat", true, "bat")]
@@ -39,7 +39,7 @@ namespace CsvConverter.Core.Tests.Converters
             Assert.AreEqual(expectedResult, actualResult);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("cache", "c", "b", true, "cache")]  // not a whole word
         [DataRow("cat", "cat", "bat", true, "bat")]
         [DataRow(null, null, "bat", true, "bat")]
@@ -71,16 +71,17 @@ namespace CsvConverter.Core.Tests.Converters
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CsvConverterAttributeException))]
         public void Initialize_PassingInTheWrongTypeOfAttributeToThePostConverter_ResultsInException()
         {
             // Arrange 
             var attribute = new CsvConverterBooleanAttribute(typeof(CsvConverterStringReplaceTextExactMatch));
             var classUnderTest = new CsvConverterStringReplaceTextExactMatch();
-            classUnderTest.Initialize(attribute, new DefaultTypeConverterFactory());
 
-            // Assert
-            Assert.Fail("Should have received an exception for passing in wrong type of attribute.");
+            // Act & Assert
+            Assert.Throws<CsvConverterAttributeException>(() =>
+            {
+                classUnderTest.Initialize(attribute, new DefaultTypeConverterFactory());
+            });
         }
     }
 }
