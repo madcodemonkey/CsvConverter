@@ -1,5 +1,5 @@
 using CsvConverter.RowTools;
-using Moq;
+using NSubstitute;
 
 namespace CsvConverter.Core.Tests.Attributes
 {
@@ -10,15 +10,13 @@ namespace CsvConverter.Core.Tests.Attributes
         public void YouCanSpecifyBothAnIgnoreReadAndWriteOnAnObjectAndNotGetAnException()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "Tall" })
-                .Returns(new List<string> { "1", "true", });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(new List<string> { "Order", "Tall" }, new List<string> { "1", "true", });
 
-            var classUnderTest = new CsvReaderService<CsvConverterAttributeData1>(
-                rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterAttributeData1>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -29,22 +27,19 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(1, row1.Order);
 
             Assert.IsNull(row2, "There is no 2nd row!");
-            rowReaderMock.VerifyAll();
         }
 
         [TestMethod]
         public void IfTheUserDoesNotSpecifyAConverterOneIsCreatedAndUsed()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Number", "Tall" })
-                .Returns(new List<string> { "1", "true", });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(new List<string> { "Number", "Tall" }, new List<string> { "1", "true", });
 
-            var classUnderTest = new CsvReaderService<CsvConverterAttributeData3>(
-                rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterAttributeData3>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -55,22 +50,19 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(1, row1.Order);
 
             Assert.IsNull(row2, "There is no 2nd row!");
-            rowReaderMock.VerifyAll();
         }
 
         [TestMethod]
         public void UserCanHaveOneConveterForReadingAndAnotherForWriting()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "FirstName", "LastName" })
-                .Returns(new List<string> { " John ", " Doe ", });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(new List<string> { "FirstName", "LastName" }, new List<string> { " John ", " Doe ", });
 
-            var classUnderTest = new CsvReaderService<CsvConverterAttributeData4>(
-                rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterAttributeData4>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -82,22 +74,19 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(" Doe ", row1.LastName);
 
             Assert.IsNull(row2, "There is no 2nd row!");
-            rowReaderMock.VerifyAll();
         }
 
         [TestMethod]
         public void IfColumnIndexIsSpecifiedAtTheClassLevel_YouGetCsvConverterAttributeException()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Name" })
-                .Returns(new List<string> { "John" });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(new List<string> { "Name" }, new List<string> { "John" });
 
-            var classUnderTest = new CsvReaderService<CsvConverterAttributeData7>(
-                rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterAttributeData7>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act & Assert
@@ -111,15 +100,13 @@ namespace CsvConverter.Core.Tests.Attributes
         public void IfAltColumnNamesIsSpecifiedAtTheClassLevel_YouGetCsvConverterAttributeException()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Name" })
-                .Returns(new List<string> { "John" });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(new List<string> { "Name" }, new List<string> { "John" });
 
-            var classUnderTest = new CsvReaderService<CsvConverterAttributeData7>(
-                rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterAttributeData7>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act & Assert
@@ -134,15 +121,13 @@ namespace CsvConverter.Core.Tests.Attributes
         public void IfColumnNameIsSpecifiedAtTheClassLevel_YouGetCsvConverterAttributeException()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Name" })
-                .Returns(new List<string> { "John" });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(new List<string> { "Name" }, new List<string> { "John" });
 
-            var classUnderTest = new CsvReaderService<CsvConverterAttributeData6>(
-                rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterAttributeData6>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act & Assert
@@ -156,15 +141,13 @@ namespace CsvConverter.Core.Tests.Attributes
         public void IfTheUserSpecifiesTheColumnNameOnMoreThanOneAttribute_YouGetCsvConverterAttributeException()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "FName", "LastName" })
-                .Returns(new List<string> { " John ", " Doe ", });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(new List<string> { "FName", "LastName" }, new List<string> { " John ", " Doe ", });
 
-            var classUnderTest = new CsvReaderService<CsvConverterAttributeData8>(
-                rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterAttributeData8>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act & Assert
@@ -178,15 +161,13 @@ namespace CsvConverter.Core.Tests.Attributes
         public void SpecifyingColumnNameOnAPreConverter_YouGetCsvConverterAttributeException()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "FName", "LastName" })
-                .Returns(new List<string> { " John ", " Doe ", });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(new List<string> { "FName", "LastName" }, new List<string> { " John ", " Doe ", });
 
-            var classUnderTest = new CsvReaderService<CsvConverterAttributeData9>(
-                rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterAttributeData9>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act & Assert
@@ -200,15 +181,13 @@ namespace CsvConverter.Core.Tests.Attributes
         public void SpecifyingColumnNameOnAPostConverter_YouGetCsvConverterAttributeException()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "FName", "LastName" })
-                .Returns(new List<string> { " John ", " Doe ", });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(new List<string> { "FName", "LastName" }, new List<string> { " John ", " Doe ", });
 
-            var classUnderTest = new CsvReaderService<CsvConverterAttributeData10>(
-                rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterAttributeData10>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act & Assert
@@ -223,15 +202,13 @@ namespace CsvConverter.Core.Tests.Attributes
         public void SpecifyingColumnIndexOnAPreConverter_YouGetCsvConverterAttributeException()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "FName", "LastName" })
-                .Returns(new List<string> { " John ", " Doe ", });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(new List<string> { "FName", "LastName" }, new List<string> { " John ", " Doe ", });
 
-            var classUnderTest = new CsvReaderService<CsvConverterAttributeData11>(
-                rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterAttributeData11>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act & Assert
@@ -245,15 +222,13 @@ namespace CsvConverter.Core.Tests.Attributes
         public void SpecifyingColumnIndexOnAPostConverter_YouGetCsvConverterAttributeException()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "FName", "LastName" })
-                .Returns(new List<string> { " John ", " Doe ", });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(new List<string> { "FName", "LastName" }, new List<string> { " John ", " Doe ", });
 
-            var classUnderTest = new CsvReaderService<CsvConverterAttributeData12>(
-                rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterAttributeData12>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act & Assert
@@ -267,15 +242,13 @@ namespace CsvConverter.Core.Tests.Attributes
         public void SpecifyingAltColumnNamesOnAPreConverter_YouGetCsvConverterAttributeException()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "FName", "LastName" })
-                .Returns(new List<string> { " John ", " Doe ", });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(new List<string> { "FName", "LastName" }, new List<string> { " John ", " Doe ", });
 
-            var classUnderTest = new CsvReaderService<CsvConverterAttributeData13>(
-                rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterAttributeData13>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act & Assert
@@ -289,15 +262,13 @@ namespace CsvConverter.Core.Tests.Attributes
         public void SpecifyingAltColumnNamesOnAPostConverter_YouGetCsvConverterAttributeException()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "FName", "LastName" })
-                .Returns(new List<string> { " John ", " Doe ", });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(new List<string> { "FName", "LastName" }, new List<string> { " John ", " Doe ", });
 
-            var classUnderTest = new CsvReaderService<CsvConverterAttributeData14>(
-                rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterAttributeData14>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act & Assert

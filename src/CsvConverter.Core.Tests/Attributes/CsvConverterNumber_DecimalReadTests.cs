@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using CsvConverter.RowTools;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+using NSubstitute;
 
 namespace CsvConverter.Core.Tests.Attributes
 {
@@ -15,16 +12,17 @@ namespace CsvConverter.Core.Tests.Attributes
         public void GetRecord_CanComputeDecimalPlacesOnMultipleRows_ValuesComputed()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "PercentageBodyFat", "PercentageMuscle", "Length", "LengthArms" })
-                .Returns(new List<string> { "1", "34.56789", "78.33212", "98.34222", "67.94783" })
-                .Returns(new List<string> { "2", "67.89004", "79.33212", "87.38278", "68.94783" })
-                .Returns(new List<string> { "3", "948.5334", "80.33212", "7645.322", "69.94783" });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "PercentageBodyFat", "PercentageMuscle", "Length", "LengthArms" },
+                    new List<string> { "1", "34.56789", "78.33212", "98.34222", "67.94783" },
+                    new List<string> { "2", "67.89004", "79.33212", "87.38278", "68.94783" },
+                    new List<string> { "3", "948.5334", "80.33212", "7645.322", "69.94783" });
 
-            var classUnderTest = new CsvReaderService<CsvConverterNumberDecimalReadData1>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterNumberDecimalReadData1>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -53,7 +51,6 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(69.9478m, row3.LengthArms);
 
             Assert.IsNull(row4, "There is no 4th row!");
-            rowReaderMock.VerifyAll();
         }
 
         [TestMethod]
@@ -65,14 +62,15 @@ namespace CsvConverter.Core.Tests.Attributes
             string perBodyMuscelInput, double perBodyMuscleExpected)
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "PercentageBodyFat", "PercentageMuscle" })
-                .Returns(new List<string> { orderInput, perBodyFatInput, perBodyMuscelInput });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "PercentageBodyFat", "PercentageMuscle" },
+                    new List<string> { orderInput, perBodyFatInput, perBodyMuscelInput });
 
-            var classUnderTest = new CsvReaderService<CsvConverterNumberDecimalReadData2>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterNumberDecimalReadData2>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -85,7 +83,6 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual((decimal)perBodyMuscleExpected, row1.PercentageMuscle);
 
             Assert.IsNull(row2, "There is no 2nd row!");
-            rowReaderMock.VerifyAll();
         }
 
         [TestMethod]
@@ -99,14 +96,15 @@ namespace CsvConverter.Core.Tests.Attributes
             string perBodyMuscelInput, double perBodyMuscleExpected)
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "PercentageBodyFat1", "PercentageBodyFat2", "PercentageMuscle" })
-                .Returns(new List<string> { orderInput, perBodyFatInput1, perBodyFatInput2, perBodyMuscelInput });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "PercentageBodyFat1", "PercentageBodyFat2", "PercentageMuscle" },
+                    new List<string> { orderInput, perBodyFatInput1, perBodyFatInput2, perBodyMuscelInput });
 
-            var classUnderTest = new CsvReaderService<CsvConverterNumberDecimalReadData3>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterNumberDecimalReadData3>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -120,7 +118,6 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual((decimal)perBodyMuscleExpected, row1.PercentageMuscle);
 
             Assert.IsNull(row2, "There is no 2nd row!");
-            rowReaderMock.VerifyAll();
         }
 
 
@@ -134,14 +131,15 @@ namespace CsvConverter.Core.Tests.Attributes
             string perBodyMuscelInput, double perBodyMuscleExpected)
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "PercentageBodyFat1", "PercentageBodyFat2", "PercentageMuscle" })
-                .Returns(new List<string> { orderInput, perBodyFatInput1, perBodyFatInput2, perBodyMuscelInput });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "PercentageBodyFat1", "PercentageBodyFat2", "PercentageMuscle" },
+                    new List<string> { orderInput, perBodyFatInput1, perBodyFatInput2, perBodyMuscelInput });
 
-            var classUnderTest = new CsvReaderService<CsvConverterNumberDecimalReadData3>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterNumberDecimalReadData3>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act & Assert

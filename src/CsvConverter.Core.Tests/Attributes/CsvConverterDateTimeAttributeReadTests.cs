@@ -1,5 +1,5 @@
 using CsvConverter.RowTools;
-using Moq;
+using NSubstitute;
 using System.Globalization;
 
 namespace CsvConverter.Core.Tests.Attributes
@@ -11,16 +11,17 @@ namespace CsvConverter.Core.Tests.Attributes
         public void GetRecord_ConvertDatesOfVariousFormats()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "SomeDate1", "SomeDate2", "SomeDate3", "SomeDate4", "SomeDate5" })
-                .Returns(new List<string> { "1", "2017-05-08 14:40:12", "5/8/2017", "Sunday, March 09, 2008", "3/9/2008 4:05 PM", "March, 2008" })
-                .Returns(new List<string> { "2", "2018-05-27 08:50:18", "6/14/2019", "Saturday, May 05, 2018", "8/11/2018 5:15 PM", "June, 2018" })
-                .Returns(new List<string> { "3", "2016-09-08 18:21:02", "9/18/2011", "Wednesday, March 19, 2008", "8/9/2008 4:05 PM", "January, 2014" });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "SomeDate1", "SomeDate2", "SomeDate3", "SomeDate4", "SomeDate5" },
+                    new List<string> { "1", "2017-05-08 14:40:12", "5/8/2017", "Sunday, March 09, 2008", "3/9/2008 4:05 PM", "March, 2008" },
+                    new List<string> { "2", "2018-05-27 08:50:18", "6/14/2019", "Saturday, May 05, 2018", "8/11/2018 5:15 PM", "June, 2018" },
+                    new List<string> { "3", "2016-09-08 18:21:02", "9/18/2011", "Wednesday, March 19, 2008", "8/9/2008 4:05 PM", "January, 2014" });
 
-            var classUnderTest = new CsvReaderService<CsvConverterDateTimeReadData1>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterDateTimeReadData1>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -52,7 +53,6 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(new DateTime(2014, 1, 1, 00, 00, 00), row3.SomeDate5);
 
             Assert.IsNull(row4, "There is no 4th row!");
-            rowReaderMock.VerifyAll();
         }
         // 
         [TestMethod]
@@ -62,14 +62,15 @@ namespace CsvConverter.Core.Tests.Attributes
             string someDate2, int month2, int day2, int year2)
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "SomeDate1", "SomeDate2" })
-                .Returns(new List<string> { order, someDate1, someDate2 });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "SomeDate1", "SomeDate2" },
+                    new List<string> { order, someDate1, someDate2 });
 
-            var classUnderTest = new CsvReaderService<CsvConverterDateTimeReadData2>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterDateTimeReadData2>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -87,7 +88,6 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(day2, row1.SomeDate2.Value.Day);
 
             Assert.IsNull(row2, "There is no 2nd row!");
-            rowReaderMock.VerifyAll();
         }
 
         [TestMethod]
@@ -97,14 +97,15 @@ namespace CsvConverter.Core.Tests.Attributes
             string someDate2, int month2, int day2, int year2)
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Order", "SomeDate1", "SomeDate2" })
-                .Returns(new List<string> { order, someDate1, someDate2 });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                    new List<string> { "Order", "SomeDate1", "SomeDate2" },
+                    new List<string> { order, someDate1, someDate2 });
 
-            var classUnderTest = new CsvReaderService<CsvConverterDateTimeReadData3>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<CsvConverterDateTimeReadData3>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // Act
@@ -122,7 +123,6 @@ namespace CsvConverter.Core.Tests.Attributes
             Assert.AreEqual(day2, row1.SomeDate2.Value.Day);
 
             Assert.IsNull(row2, "There is no 2nd row!");
-            rowReaderMock.VerifyAll();
         }
 
     }

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 namespace CsvConverter.Core.Tests.Converters
 {
     [TestClass]
@@ -75,7 +70,7 @@ namespace CsvConverter.Core.Tests.Converters
 
             // Windows 7 and Windows 10 format strings differently so remove the space so that for the test it doesn't matter
             if (actual != null)
-               actual = actual.Replace(" ", "");
+                actual = actual.Replace(" ", "");
 
 
             // Assert

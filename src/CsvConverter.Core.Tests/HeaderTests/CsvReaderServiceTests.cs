@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using CsvConverter.RowTools;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+using NSubstitute;
 
 namespace CsvConverter.Core.Tests.HeaderTests
 {
@@ -13,15 +10,16 @@ namespace CsvConverter.Core.Tests.HeaderTests
         public void GetRecord_CanLoadHeaderRow_ValuesComputed()
         {
             // Arrange
-            var rowReaderMock = new Mock<IRowReader>();
-            rowReaderMock.SetupSequence(m => m.CanRead()).Returns(true).Returns(true).Returns(true).Returns(false);
-            rowReaderMock.Setup(m => m.IsRowBlank).Returns(false);
-            rowReaderMock.SetupSequence(m => m.ReadRow())
-                .Returns(new List<string> { "Number", "PercentageBodyFat", "PercentageMuscle", "Length", "LengthArms" })
-                .Returns(new List<string> { "1", "34.56789", "78.33212", "98.34222", "67.94783" })
-                .Returns(new List<string> { "2", "67.89004", "79.33212", "87.38278", "68.94783" });
+            var rowReaderMock = Substitute.For<IRowReader>();
+            rowReaderMock.CanRead().Returns(true, true, false);
+            rowReaderMock.IsRowBlank.Returns(false);
+            rowReaderMock.ReadRow()
+                .Returns(
+                   new List<string> { "Number", "PercentageBodyFat", "PercentageMuscle", "Length", "LengthArms" },
+                   new List<string> { "1", "34.56789", "78.33212", "98.34222", "67.94783" },
+                   new List<string> { "2", "67.89004", "79.33212", "87.38278", "68.94783" });
 
-            var classUnderTest = new CsvReaderService<ReadHeaderTestsData1>(rowReaderMock.Object);
+            var classUnderTest = new CsvReaderService<ReadHeaderTestsData1>(rowReaderMock);
             classUnderTest.Configuration.HasHeaderRow = true;
 
             // TODO: TESTING Mapping
@@ -46,7 +44,6 @@ namespace CsvConverter.Core.Tests.HeaderTests
             Assert.AreEqual(68.9478, row2.LengthArms);
 
             Assert.IsNull(row3, "There is no 3rd row!");
-            rowReaderMock.VerifyAll();
         }
     }
 
@@ -66,6 +63,6 @@ namespace CsvConverter.Core.Tests.HeaderTests
 
         [CsvConverterNumber(NumberOfDecimalPlaces = 4)]
         public double LengthArms { get; set; }
-    } 
+    }
 
 }

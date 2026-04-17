@@ -1,5 +1,3 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 namespace CsvConverter.Core.Tests.Attributes
 {
     [TestClass]
